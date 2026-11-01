@@ -1,5 +1,7 @@
 'use client';
 
+import { requestSqlEvaluation } from '@/lib/evaluation/sqlClientEvaluation';
+
 import React, { useState } from 'react';
 import { SqlQuestion, SqlTrackProgressData, SqlAttempt } from '@/types/sqlTrack';
 import { getSqlIncidentQuestions } from '@/data/sql';
@@ -49,16 +51,7 @@ export function SqlIncidentView({ progress, onProgressUpdate }: SqlIncidentViewP
     if (!candidateAnalysis.trim()) return;
     setIsEvaluating(true);
     try {
-      const res = await fetch('/api/sql/evaluate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          questionId: selectedIncident.id,
-          candidateAnalysis,
-          isIncident: true
-        })
-      });
-      const data = await res.json();
+      const data = await requestSqlEvaluation(selectedIncident, { candidateAnalysis, isIncident: true });
       setEvalResult(data);
 
       if (data && typeof data.scoreOutOf100 === 'number') {

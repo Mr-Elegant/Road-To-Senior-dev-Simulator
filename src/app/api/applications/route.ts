@@ -1,9 +1,11 @@
+import { apiError, requireApiSession } from '@/lib/auth/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { queryApplications } from '@/data/mockLoans';
 import { LoanStatus, LoanType, RiskRating, SortField, SortOrder } from '@/types/loan';
 
 export async function GET(request: NextRequest) {
   try {
+    const user = await requireApiSession(request);
     const { searchParams } = new URL(request.url);
 
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
@@ -17,7 +19,7 @@ export async function GET(request: NextRequest) {
 
     // Optional simulation headers
     const simulateDelay = parseInt(request.headers.get('x-simulate-delay') || '0', 10);
-    if (simulateDelay > 0) {
+    if (simulateDelay > 0 && simulateDelay <= 10000) {
       await new Promise((r) => setTimeout(r, simulateDelay));
     }
 
@@ -32,7 +34,8 @@ export async function GET(request: NextRequest) {
       { search, status, loanType, riskRating },
       { field: sortBy, order: sortOrder },
       page,
-      limit
+      limit,
+      user.id
     );
 
     return NextResponse.json({
@@ -42,11 +45,8 @@ export async function GET(request: NextRequest) {
       requestId: `srv-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       timestamp: Date.now(),
     });
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err?.message || 'Internal server error while fetching loan applications' },
-      { status: 500 }
-    );
+  } catch (err: unknown) {
+    return apiError(err);
   }
 }
 

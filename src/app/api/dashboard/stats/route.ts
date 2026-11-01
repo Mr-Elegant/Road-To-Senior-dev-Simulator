@@ -1,10 +1,12 @@
+import { apiError, requireApiSession } from '@/lib/auth/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { computeDashboardStats } from '@/data/mockLoans';
 
 export async function GET(request: NextRequest) {
   try {
+    const user = await requireApiSession(request);
     const simulateDelay = parseInt(request.headers.get('x-simulate-delay') || '0', 10);
-    if (simulateDelay > 0) {
+    if (simulateDelay > 0 && simulateDelay <= 10000) {
       await new Promise((r) => setTimeout(r, simulateDelay));
     }
 
@@ -15,13 +17,10 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const stats = computeDashboardStats();
+    const stats = computeDashboardStats(user.id);
     return NextResponse.json(stats);
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err?.message || 'Failed to compute dashboard statistics' },
-      { status: 500 }
-    );
+  } catch (err: unknown) {
+    return apiError(err);
   }
 }
 

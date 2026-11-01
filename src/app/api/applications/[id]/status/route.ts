@@ -1,3 +1,6 @@
+import { apiError, requireApiSession } from '@/lib/auth/server';
+import { readBoundedJson } from '@/lib/auth/request';
+import { z } from 'zod';
 import { NextRequest, NextResponse } from 'next/server';
 import { updateLoanStatusInDatabase, getLiveApplications } from '@/data/mockLoans';
 import { LoanStatus } from '@/types/loan';
@@ -7,8 +10,11 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const user = await requireApiSession(request);
     const { id } = await params;
-    const body = await request.json();
+    const parsed = z.object({ status: z.enum(['PENDING', 'UNDER_REVIEW', 'APPROVED', 'REJECTED']), officerName: z.string().max(100).optional(), note: z.string().max(5000).optional(), forceFail: z.boolean().optional() }).safeParse(await readBoundedJson(request, 10000));
+    if (!parsed.success) return NextResponse.json({ error: 'Invalid loan status update.' }, { status: 422 });
+    const body = parsed.data;
 
     const { status, officerName, note } = body as {
       status: LoanStatus;
@@ -25,7 +31,7 @@ export async function PATCH(
 
     // Optional simulation headers
     const simulateDelay = parseInt(request.headers.get('x-simulate-delay') || '0', 10);
-    if (simulateDelay > 0) {
+    if (simulateDelay > 0 && simulateDelay <= 10000) {
       await new Promise((r) => setTimeout(r, simulateDelay));
     }
 
@@ -42,8 +48,9 @@ export async function PATCH(
     const updated = updateLoanStatusInDatabase(
       id,
       status,
-      officerName || 'Staff Underwriter',
-      note
+      user.name || 'Staff Underwriter',
+      note,
+      user.id
     );
 
     if (!updated) {
@@ -54,11 +61,8 @@ export async function PATCH(
     }
 
     return NextResponse.json(updated);
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err?.message || 'Failed to update loan application status' },
-      { status: 500 }
-    );
+  } catch (err: unknown) {
+    return apiError(err);
   }
 }
 

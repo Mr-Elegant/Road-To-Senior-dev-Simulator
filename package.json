@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "typecheck": "tsc --noEmit --incremental false",
+    "db:generate": "prisma generate",
+    "db:migrate": "node scripts/prisma-auth.mjs migrate deploy",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -18,13 +21,15 @@
     "@prisma/client": "^6.1.0",
     "@reduxjs/toolkit": "^2.13.0",
     "alasql": "^4.22.0",
+    "better-auth": "1.7.15",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
     "next": "^15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.3.1",
-    "tailwind-merge": "^2.6.0"
+    "tailwind-merge": "^2.6.0",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",

@@ -2,6 +2,7 @@ import { UserProgressData, AttemptSubmission } from '@/types/userProgress';
 import { Tier1ProgressData, Tier1Attempt } from '@/types/tier1';
 import { SqlTrackProgressData, SqlAttempt, SqlTierLevel } from '@/types/sqlTrack';
 import { StorageAdapter } from './storageAdapter';
+import { mergeProgress, progressSchema } from './progressMerge';
 
 const STORAGE_KEY = 'fullstack_interview_lab_progress_v1';
 const TIER1_STORAGE_KEY = 'fullstack_interview_lab_tier1_v1';
@@ -44,7 +45,12 @@ export class LocalStorageAdapter implements StorageAdapter {
   private inMemoryFallback: UserProgressData = { ...DEFAULT_PROGRESS };
   private tier1Fallback: Tier1ProgressData = { ...DEFAULT_TIER1_PROGRESS };
   private sqlFallback: SqlTrackProgressData = { ...DEFAULT_SQL_PROGRESS };
-  private userId: string = 'default-user';
+  private accountId: string | null = null;
+  private pendingSync: Promise<void> = Promise.resolve();
+
+  public setAccount(userId: string | null): void { this.accountId = userId; }
+  public scopedKey(key: string): string { return this.accountId ? `${key}:user:${this.accountId}` : key; }
+  public getAccountId(): string | null { return this.accountId; }
 
   private isClient(): boolean {
     return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
@@ -54,19 +60,21 @@ export class LocalStorageAdapter implements StorageAdapter {
    * Non-blocking background sync to PostgreSQL via Next.js route handlers
    */
   private async syncToRemote(endpoint: string, body?: any, method: string = 'POST'): Promise<void> {
-    if (!this.isClient()) return;
-    try {
-      fetch(endpoint, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: body !== undefined ? JSON.stringify(body) : undefined,
-      }).catch((e) => {
-        // Silently log in debug, does not block user interaction
-        console.debug('Background DB sync notice:', e?.message);
-      });
-    } catch {
-      // Offline fallback
-    }
+    if (!this.isClient() || !this.accountId) return;
+    const accountId = this.accountId;
+    this.pendingSync = this.pendingSync.then(async () => {
+      if (this.accountId !== accountId) return;
+      try {
+        const response = await fetch(endpoint, {
+          method, headers: { 'Content-Type': 'application/json' },
+          body: body === undefined || body === null ? undefined : JSON.stringify(body),
+        });
+        if (!response.ok) window.dispatchEvent(new CustomEvent('progress-sync-error', { detail: response.status === 401 ? 'Your session expired. Sign in again to sync. Your work is still saved on this device.' : 'Cloud sync failed. Your work is still saved on this device. Retry from Settings.' }));
+      } catch {
+        window.dispatchEvent(new CustomEvent('progress-sync-error', { detail: 'You are offline. Your work is still saved on this device.' }));
+      }
+    });
+    return this.pendingSync;
   }
 
   private calculateStreak(lastActive: string, currentStreak: number): { streak: number; today: string } {
@@ -97,10 +105,8 @@ export class LocalStorageAdapter implements StorageAdapter {
     }
 
     try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
+      const raw = window.localStorage.getItem(this.scopedKey(STORAGE_KEY));
       if (!raw) {
-        // If localStorage is empty, try hydrating from PostgreSQL in the background
-        this.fetchFromPostgres().catch(() => {});
         return DEFAULT_PROGRESS;
       }
       const parsed = JSON.parse(raw);
@@ -128,7 +134,7 @@ export class LocalStorageAdapter implements StorageAdapter {
   private save(data: UserProgressData): void {
     if (this.isClient()) {
       try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        window.localStorage.setItem(this.scopedKey(STORAGE_KEY), JSON.stringify(data));
       } catch (e) {
         console.error('Failed to save to localStorage:', e);
       }
@@ -158,7 +164,6 @@ export class LocalStorageAdapter implements StorageAdapter {
 
     // Asynchronously sync to PostgreSQL
     this.syncToRemote('/api/progress/attempt', {
-      userId: this.userId,
       attempt,
     });
 
@@ -181,8 +186,8 @@ export class LocalStorageAdapter implements StorageAdapter {
 
     // Asynchronously sync to PostgreSQL
     this.syncToRemote('/api/progress/bookmark', {
-      userId: this.userId,
       scenarioId,
+      bookmarked: !isBookmarked,
     });
 
     return updatedBookmarks;
@@ -201,7 +206,6 @@ export class LocalStorageAdapter implements StorageAdapter {
 
     // Asynchronously sync to PostgreSQL
     this.syncToRemote('/api/progress/notes', {
-      userId: this.userId,
       scenarioId,
       notes,
     });
@@ -214,9 +218,9 @@ export class LocalStorageAdapter implements StorageAdapter {
 
   async importProgressJson(jsonString: string): Promise<boolean> {
     try {
-      const parsed = JSON.parse(jsonString);
-      if (!parsed || typeof parsed !== 'object') return false;
-      if (!Array.isArray(parsed.attempts)) return false;
+      const validation = progressSchema.safeParse(JSON.parse(jsonString));
+      if (!validation.success) return false;
+      const parsed = validation.data;
 
       const sanitized: UserProgressData = {
         attempts: parsed.attempts,
@@ -224,6 +228,8 @@ export class LocalStorageAdapter implements StorageAdapter {
         streakDays: Number(parsed.streakDays) || 0,
         lastActiveDate: String(parsed.lastActiveDate || ''),
         customNotes: parsed.customNotes || {},
+        tier1Progress: parsed.tier1Progress,
+        sqlProgress: parsed.sqlProgress,
       };
 
       if (parsed.tier1Progress) {
@@ -238,8 +244,7 @@ export class LocalStorageAdapter implements StorageAdapter {
 
       // Asynchronously sync the full imported payload to PostgreSQL
       this.syncToRemote('/api/progress/import', {
-        userId: this.userId,
-        progress: sanitized,
+          progress: sanitized,
       });
 
       return true;
@@ -255,23 +260,25 @@ export class LocalStorageAdapter implements StorageAdapter {
     await this.resetSqlProgress();
 
     // Reset in PostgreSQL
-    this.syncToRemote(`/api/progress/reset?userId=${encodeURIComponent(this.userId)}`, null, 'DELETE');
+    this.syncToRemote('/api/progress/reset', null, 'DELETE');
   }
 
   /**
    * Sync complete local state to PostgreSQL
    */
   async syncAllToPostgres(): Promise<{ success: boolean; message: string }> {
+    if (!this.accountId) return { success: false, message: 'Sign in to sync account progress.' };
+    await this.pendingSync;
     try {
       const current = await this.getProgress();
       const res = await fetch('/api/progress/import', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: this.userId, progress: current }),
+        body: JSON.stringify({ progress: current }),
       });
       return {
         success: res.ok,
-        message: res.ok ? 'Local progress successfully pushed to PostgreSQL.' : 'Failed to push to PostgreSQL.',
+        message: res.ok ? 'Progress merged into your account. Existing records were preserved.' : 'Could not merge progress. Your local data is unchanged.',
       };
     } catch (e: any) {
       return { success: false, message: e?.message || 'Network error syncing to PostgreSQL' };
@@ -282,10 +289,15 @@ export class LocalStorageAdapter implements StorageAdapter {
    * Fetch latest state from PostgreSQL and hydrate local storage
    */
   async fetchFromPostgres(): Promise<{ success: boolean; message: string }> {
+    if (!this.accountId) return { success: false, message: 'Sign in to load account progress.' };
+    const accountId = this.accountId;
+    await this.pendingSync;
     try {
-      const res = await fetch(`/api/progress?userId=${encodeURIComponent(this.userId)}`);
+      const res = await fetch('/api/progress');
       if (!res.ok) return { success: false, message: 'Remote database returned error status' };
-      const data = await res.json();
+      const remote = await res.json();
+      if (this.accountId !== accountId) return { success: false, message: 'Account changed. Please retry.' };
+      const data = mergeProgress(remote, await this.getProgress());
       if (data && Array.isArray(data.attempts)) {
         this.save(data);
         if (data.tier1Progress) {
@@ -312,7 +324,7 @@ export class LocalStorageAdapter implements StorageAdapter {
     }
 
     try {
-      const raw = window.localStorage.getItem(TIER1_STORAGE_KEY);
+      const raw = window.localStorage.getItem(this.scopedKey(TIER1_STORAGE_KEY));
       if (!raw) {
         return DEFAULT_TIER1_PROGRESS;
       }
@@ -335,7 +347,7 @@ export class LocalStorageAdapter implements StorageAdapter {
   private saveTier1Direct(data: Tier1ProgressData): void {
     if (this.isClient()) {
       try {
-        window.localStorage.setItem(TIER1_STORAGE_KEY, JSON.stringify(data));
+        window.localStorage.setItem(this.scopedKey(TIER1_STORAGE_KEY), JSON.stringify(data));
       } catch (e) {
         console.error('Failed to save Tier 1 progress to localStorage:', e);
       }
@@ -372,7 +384,6 @@ export class LocalStorageAdapter implements StorageAdapter {
 
     // Asynchronously sync to PostgreSQL
     this.syncToRemote('/api/progress/tier1', {
-      userId: this.userId,
       attempt,
     });
 
@@ -395,8 +406,8 @@ export class LocalStorageAdapter implements StorageAdapter {
 
     // Asynchronously sync to PostgreSQL
     this.syncToRemote('/api/progress/tier1', {
-      userId: this.userId,
       bookmarkQuestionId: questionId,
+      bookmarked: !isBookmarked,
     });
 
     return updatedBookmarks;
@@ -417,7 +428,7 @@ export class LocalStorageAdapter implements StorageAdapter {
     }
 
     try {
-      const raw = window.localStorage.getItem(SQL_STORAGE_KEY);
+      const raw = window.localStorage.getItem(this.scopedKey(SQL_STORAGE_KEY));
       if (!raw) {
         return DEFAULT_SQL_PROGRESS;
       }
@@ -450,7 +461,7 @@ export class LocalStorageAdapter implements StorageAdapter {
   public saveSqlDirect(data: SqlTrackProgressData): void {
     if (this.isClient()) {
       try {
-        window.localStorage.setItem(SQL_STORAGE_KEY, JSON.stringify(data));
+        window.localStorage.setItem(this.scopedKey(SQL_STORAGE_KEY), JSON.stringify(data));
       } catch (e) {
         console.error('Failed to save SQL progress to localStorage:', e);
       }
@@ -507,7 +518,6 @@ export class LocalStorageAdapter implements StorageAdapter {
 
     // Asynchronously sync to PostgreSQL
     this.syncToRemote('/api/progress/sql', {
-      userId: this.userId,
       attempt,
     });
 
@@ -536,8 +546,8 @@ export class LocalStorageAdapter implements StorageAdapter {
 
     // Asynchronously sync to PostgreSQL
     this.syncToRemote('/api/progress/sql', {
-      userId: this.userId,
       bookmarkQuestionId: questionId,
+      bookmarked: !isBookmarked,
       tier: tierLevel,
     });
 
@@ -548,6 +558,29 @@ export class LocalStorageAdapter implements StorageAdapter {
     const reset = { ...DEFAULT_SQL_PROGRESS };
     this.saveSqlDirect(reset);
   }
+  public getAnonymousProgress(): UserProgressData {
+    const main = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || JSON.stringify(DEFAULT_PROGRESS));
+    const tier1 = JSON.parse(window.localStorage.getItem(TIER1_STORAGE_KEY) || JSON.stringify(DEFAULT_TIER1_PROGRESS));
+    const sql = JSON.parse(window.localStorage.getItem(SQL_STORAGE_KEY) || JSON.stringify(DEFAULT_SQL_PROGRESS));
+    return progressSchema.parse({ ...main, tier1Progress: tier1, sqlProgress: sql });
+  }
+
+  public async mergeAnonymousProgress(): Promise<{ success: boolean; message: string }> {
+    if (!this.accountId) return { success: false, message: 'Sign in before importing progress.' };
+    try {
+      await this.pendingSync;
+      const progress = this.getAnonymousProgress();
+      const response = await fetch('/api/progress/import', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ progress }),
+      });
+      if (!response.ok) return { success: false, message: 'Import failed. Anonymous data is unchanged. Check the progress format or sign in again.' };
+      await this.fetchFromPostgres();
+      return { success: true, message: 'Anonymous progress merged into your account. The original device data is preserved.' };
+    } catch {
+      return { success: false, message: 'Could not import progress. Your anonymous data is unchanged.' };
+    }
+  }
+
 }
 
 export const storage = new LocalStorageAdapter();

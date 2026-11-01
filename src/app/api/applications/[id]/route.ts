@@ -1,13 +1,15 @@
+import { apiError, requireApiSession } from '@/lib/auth/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { getLiveApplications } from '@/data/mockLoans';
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const user = await requireApiSession(request);
     const { id } = await params;
-    const all = getLiveApplications();
+    const all = getLiveApplications(user.id);
     const found = all.find((app) => app.id.toLowerCase() === id.toLowerCase());
 
     if (!found) {
@@ -18,11 +20,8 @@ export async function GET(
     }
 
     return NextResponse.json(found);
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err?.message || 'Error retrieving application' },
-      { status: 500 }
-    );
+  } catch (err: unknown) {
+    return apiError(err);
   }
 }
 

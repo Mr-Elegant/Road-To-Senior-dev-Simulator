@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { authClient } from '@/lib/auth-client';
 import {
   Sparkles,
   Send,
@@ -59,6 +61,13 @@ const DURATIONS = [
 ];
 
 export function AiInterviewerWorkspace() {
+  const { data: userSession, isPending } = authClient.useSession();
+  if (isPending) return <p role="status" className="p-6 text-sm text-zinc-500">Checking your session…</p>;
+  if (!userSession) return <div className="rounded-xl border border-zinc-200 p-6 dark:border-zinc-800"><h2 className="text-lg font-semibold">Sign in for an AI interview</h2><p className="mt-2 text-sm text-zinc-500">Keep your interview history in your account. Beginner practice and timed challenge tracks remain available without an account.</p><Link href="/login?next=/interview?mode=ai" className="mt-4 inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white">Login to continue</Link></div>;
+  return <AuthenticatedAiInterviewerWorkspace />;
+}
+
+function AuthenticatedAiInterviewerWorkspace() {
   const [session, setSession] = useState<AiInterviewSession | null>(null);
   const [selectedRole, setSelectedRole] = useState(ROLES[0]);
   const [selectedTech, setSelectedTech] = useState(TECHNOLOGIES[0]);

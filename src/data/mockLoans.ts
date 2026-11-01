@@ -683,7 +683,21 @@ export const initialLoanApplications: LoanApplication[] = [
 // In-memory data store for live simulation
 let liveLoanDatabase: LoanApplication[] = JSON.parse(JSON.stringify(initialLoanApplications));
 
-export function getLiveApplications(): LoanApplication[] {
+const accountSimulations = new Map<string, { applications: LoanApplication[]; touchedAt: number }>();
+
+export function getLiveApplications(userId?: string): LoanApplication[] {
+  if (userId) {
+    const now = Date.now();
+    for (const [key, value] of accountSimulations) if (now - value.touchedAt > 3600000) accountSimulations.delete(key);
+    let simulation = accountSimulations.get(userId);
+    if (!simulation) {
+      if (accountSimulations.size >= 1000) accountSimulations.delete(accountSimulations.keys().next().value!);
+      simulation = { applications: structuredClone(initialLoanApplications), touchedAt: now };
+      accountSimulations.set(userId, simulation);
+    }
+    simulation.touchedAt = now;
+    return simulation.applications;
+  }
   return liveLoanDatabase;
 }
 
@@ -695,9 +709,10 @@ export function queryApplications(
   filters: Partial<LoanFilters> = {},
   sort: SortConfig = { field: 'applicationDate', order: 'desc' },
   page: number = 1,
-  limit: number = 10
+  limit: number = 10,
+  userId?: string
 ): { items: LoanApplication[]; totalCount: number; totalPages: number } {
-  let filtered = [...liveLoanDatabase];
+  let filtered = [...getLiveApplications(userId)];
 
   // 1. Search Query
   if (filters.search && filters.search.trim()) {
@@ -761,8 +776,8 @@ export function queryApplications(
   return { items, totalCount, totalPages };
 }
 
-export function computeDashboardStats(): DashboardStats {
-  const all = liveLoanDatabase;
+export function computeDashboardStats(userId?: string): DashboardStats {
+  const all = getLiveApplications(userId);
   const totalApplications = all.length;
   let pendingApplications = 0;
   let underReviewApplications = 0;
@@ -817,12 +832,14 @@ export function updateLoanStatusInDatabase(
   id: string,
   newStatus: LoanApplication['status'],
   officerName: string = 'Current Employee',
-  note?: string
+  note?: string,
+  userId?: string
 ): LoanApplication | null {
-  const index = liveLoanDatabase.findIndex((a) => a.id === id);
+  const database = getLiveApplications(userId);
+  const index = database.findIndex((a) => a.id === id);
   if (index === -1) return null;
 
-  const existing = liveLoanDatabase[index];
+  const existing = database[index];
   const oldStatus = existing.status;
 
   const updated: LoanApplication = {
@@ -843,7 +860,7 @@ export function updateLoanStatusInDatabase(
     ],
   };
 
-  liveLoanDatabase[index] = updated;
+  database[index] = updated;
   return updated;
 }
 

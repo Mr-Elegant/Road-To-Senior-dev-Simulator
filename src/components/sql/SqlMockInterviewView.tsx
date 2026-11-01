@@ -1,5 +1,7 @@
 'use client';
 
+import { requestSqlEvaluation } from '@/lib/evaluation/sqlClientEvaluation';
+
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import {
@@ -114,16 +116,7 @@ export function SqlMockInterviewView({
         feedback = `Automated tests: ${execRes.allPassed ? 'Passed 100%' : 'Partial/Failed'}`;
       } else {
         // Evaluate with API
-        const res = await fetch('/api/sql/evaluate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            questionId: currentQ.id,
-            candidateAnswer: candidateExplanation,
-            candidateSql: candidateSql
-          })
-        });
-        const evalData = await res.json();
+        const evalData = await requestSqlEvaluation(currentQ, { candidateAnswer: candidateExplanation, candidateSql });
         score = evalData.scoreOutOf100 ?? 60;
         passed = evalData.passed ?? (score >= 70);
         feedback = evalData.feedback?.technicalCorrectness || 'Evaluation recorded.';

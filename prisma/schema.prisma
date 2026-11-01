@@ -11,6 +11,8 @@ model User {
   id            String            @id @default(uuid())
   email         String?           @unique
   name          String?
+  emailVerified Boolean           @default(false)
+  image         String?
   streakDays    Int               @default(0)
   lastActive    DateTime?
   tier1Progress Json?
@@ -20,6 +22,60 @@ model User {
   attempts      ScenarioAttempt[]
   bookmarks     Bookmark[]
   notes         UserNote[]
+  sessions      Session[]
+  accounts      Account[]
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@unique([providerId, accountId])
+  @@index([userId])
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+}
+
+model RateLimit {
+  id          String @id
+  key         String @unique
+  count       Int
+  lastRequest BigInt
 }
 
 model ScenarioAttempt {
@@ -33,6 +89,8 @@ model ScenarioAttempt {
   passedTestsCount      Int      @default(0)
   totalTestsCount       Int      @default(0)
   submittedCode         String?  @db.Text
+  reviewComments        Json?
+  clientAttemptId       String?
   rootCauseAnalysis     String?  @db.Text
   immediateMitigation   String?  @db.Text
   permanentFix          String?  @db.Text
@@ -46,6 +104,7 @@ model ScenarioAttempt {
   user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, scenarioId])
+  @@unique([userId, clientAttemptId])
   @@index([scenarioId])
 }
 

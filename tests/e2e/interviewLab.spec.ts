@@ -1,4 +1,11 @@
 import { test, expect } from '@playwright/test';
+import { signInTestAccount } from './support/account';
+
+let cleanAccount: (() => Promise<void>) | undefined;
+test.beforeEach(async ({ page }, info) => {
+  if (/Conversational AI|Enterprise Loan/.test(info.title)) cleanAccount = await signInTestAccount(page);
+});
+test.afterEach(async () => { await cleanAccount?.(); cleanAccount = undefined; });
 
 test.describe('Full Stack Engineering Interview Lab E2E Flows', () => {
   test('Dashboard displays metrics, readiness report, and filters', async ({ page }) => {

@@ -25,6 +25,7 @@ import {
 import { useTheme } from './ThemeProvider';
 import { storage } from '@/lib/persistence/localStorageAdapter';
 import { UserProgressData } from '@/types/userProgress';
+import { AccountMenu } from '@/components/auth/AccountMenu';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -79,13 +80,13 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 group-hover:shadow-indigo-500/35 transition-all">
             <Terminal className="w-5 h-5" />
           </div>
-          <div className="hidden min-[400px]:block">
+          <div className="hidden sm:block">
             <div className="font-bold text-zinc-900 dark:text-zinc-100 text-sm leading-tight tracking-tight flex items-center gap-1.5">
               <span>Full Stack Interview Lab</span>
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -97,7 +98,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden xl:flex items-center gap-0.5">
+        <nav className="hidden min-[1800px]:flex items-center gap-0.5">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive =
@@ -132,7 +133,7 @@ export function Navbar() {
         </nav>
 
         {/* Compressed Desktop Nav for Large Screens (1024px - 1280px) */}
-        <nav className="hidden lg:flex xl:hidden items-center gap-1">
+        <nav className="hidden min-[1200px]:flex min-[1800px]:hidden items-center gap-1">
           {navItems.slice(0, 5).map((item) => {
             const Icon = item.icon;
             const isActive = item.href === '/' ? safePathname === '/' : safePathname.startsWith(item.href.split('?')[0]);
@@ -161,10 +162,10 @@ export function Navbar() {
         </nav>
 
         {/* Right side widgets: streak, completed, bookmarks, theme, mobile toggle */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className="flex items-center gap-1 sm:gap-2.5">
           {/* Streak pill */}
           <div
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 shadow-xs"
+            className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 shadow-xs"
             title="Current Practice Streak"
           >
             <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500 animate-pulse" />
@@ -174,7 +175,7 @@ export function Navbar() {
           {/* Completed count pill */}
           <Link
             href="/progress"
-            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors shadow-xs"
+            className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-colors shadow-xs"
             title="Completed Challenges"
           >
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
@@ -184,7 +185,7 @@ export function Navbar() {
           {/* Bookmarks link */}
           <Link
             href="/library?filter=bookmarked"
-            className="p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors relative"
+            className="hidden sm:block p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors relative"
             title="Bookmarked Challenges"
           >
             <Bookmark className="w-4 h-4" />
@@ -203,9 +204,10 @@ export function Navbar() {
           </button>
 
           {/* Mobile menu button */}
+          <AccountMenu />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors xl:hidden"
+            className="p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors min-[1800px]:hidden"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -215,7 +217,7 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="xl:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl px-4 py-4 space-y-1 shadow-lg animate-in slide-in-from-top duration-200">
+        <div className="min-[1800px]:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl px-4 py-4 space-y-1 shadow-lg animate-in slide-in-from-top duration-200">
           <div className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 dark:text-zinc-500 px-3 pb-1">
             Navigation Menu
           </div>

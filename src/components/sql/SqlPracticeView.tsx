@@ -1,5 +1,7 @@
 'use client';
 
+import { requestSqlEvaluation } from '@/lib/evaluation/sqlClientEvaluation';
+
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
@@ -175,18 +177,7 @@ export function SqlPracticeView({
     if (!activeQuestion) return;
     setIsEvaluatingAi(true);
     try {
-      const res = await fetch('/api/sql/evaluate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          questionId: activeQuestion.id,
-          candidateAnswer: candidateExplanation,
-          candidateSql: candidateCode,
-          isIncident: activeQuestion.questionType === 'incident'
-        })
-      });
-
-      const data = await res.json();
+      const data = await requestSqlEvaluation(activeQuestion, { candidateAnswer: candidateExplanation, candidateSql: candidateCode, isIncident: activeQuestion.questionType === 'incident' });
       setAiFeedback(data);
 
       if (data && typeof data.scoreOutOf100 === 'number') {

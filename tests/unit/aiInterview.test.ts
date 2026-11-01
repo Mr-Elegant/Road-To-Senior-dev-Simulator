@@ -14,6 +14,13 @@ import {
 } from '@/lib/gemini/offlineFallback';
 import { GET, POST } from '@/app/api/ai-interview/route';
 import { AiInterviewConfig } from '@/types/aiInterview';
+import { requireApiSession } from '@/lib/auth/server';
+
+vi.mock('@/lib/auth/server', async (importOriginal) => ({
+  ...await importOriginal<typeof import('@/lib/auth/server')>(),
+  requireApiSession: vi.fn().mockResolvedValue({ id: 'unit-user', name: 'Unit Candidate' }),
+}));
+vi.mock('@/lib/auth/aiQuota', () => ({ consumeAiQuota: vi.fn().mockResolvedValue(undefined) }));
 
 describe('Gemini AI Interviewer Engine & API Verification', () => {
   const sampleConfig: AiInterviewConfig = {
@@ -126,6 +133,12 @@ describe('Gemini AI Interviewer Engine & API Verification', () => {
   });
 
   describe('Server Route Handler: /api/ai-interview', () => {
+    it('rejects unauthenticated interview API calls', async () => {
+      const { AccessError } = await import('@/lib/auth/server');
+      vi.mocked(requireApiSession).mockRejectedValueOnce(new AccessError(401, 'Sign in to continue.'));
+      const response = await POST(new Request('http://localhost/api/ai-interview', { method: 'POST', body: JSON.stringify({ action: 'start' }) }));
+      expect(response.status).toBe(401);
+    });
     it('GET endpoint returns configuration status without leaking keys', async () => {
       const response = await GET();
       expect(response.status).toBe(200);

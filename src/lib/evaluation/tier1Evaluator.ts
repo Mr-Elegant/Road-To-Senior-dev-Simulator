@@ -171,6 +171,8 @@ export async function evaluateTier1Answer(
   answer: string,
   submittedCode?: string
 ): Promise<Tier1EvaluationResult> {
+  const { storage } = await import('@/lib/persistence/localStorageAdapter');
+  if (!storage.getAccountId()) return evaluateTier1AnswerWithRubric(question, answer, submittedCode);
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 3500);

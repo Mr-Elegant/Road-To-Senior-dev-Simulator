@@ -1,5 +1,7 @@
 # Full Stack Engineering Interview Lab
 
+Authentication is implemented with email/password signup, secure database sessions, account-scoped progress, and deliberate anonymous-history import. See [Authentication setup and migration guide](docs/AUTHENTICATION.md) before configuring or deploying this application. After `npm ci`, run `npm run db:generate`; set `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, and the existing `DATABASE_URL` before production use.
+
 An interactive engineering simulation platform designed for developers with 2–10 years of experience preparing for senior full-stack, staff engineer, and technical leadership interviews.
 
 Unlike static flashcard or question bank sites, this is an **interactive engineering simulation platform** featuring realistic production incidents, code reviews, deep event-loop and memory debugging, system design architecture diagrams, senior hiring committee rubric evaluations, and a dedicated **in-browser coding practice environment**.

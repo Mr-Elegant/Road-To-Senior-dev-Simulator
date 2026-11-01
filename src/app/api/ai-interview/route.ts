@@ -1,6 +1,10 @@
+import { apiError, requireApiSession } from '@/lib/auth/server';
+import { consumeAiQuota } from '@/lib/auth/aiQuota';
+import { readBoundedJson } from '@/lib/auth/request';
+import { aiRequestSchema } from '@/lib/auth/validation';
 import { NextResponse } from 'next/server';
 import { geminiService } from '@/lib/gemini/service';
-import { AiInterviewRequest, AiInterviewConfig } from '@/types/aiInterview';
+import { AiInterviewConfig } from '@/types/aiInterview';
 
 export const runtime = 'nodejs';
 
@@ -30,27 +34,11 @@ export async function GET() {
  */
 export async function POST(request: Request) {
   try {
-    let body: AiInterviewRequest;
-    try {
-      body = await request.json();
-    } catch {
-      return NextResponse.json(
-        { success: false, error: 'Invalid JSON request payload.' },
-        { status: 400 }
-      );
-    }
-
-    const { action, config, sessionState, candidateAnswer } = body;
-
-    if (!action || !['start', 'reply', 'hint', 'evaluate'].includes(action)) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "Invalid 'action'. Must be one of: 'start', 'reply', 'hint', 'evaluate'.",
-        },
-        { status: 400 }
-      );
-    }
+    const user = await requireApiSession(request);
+    await consumeAiQuota(user.id);
+    const parsed = aiRequestSchema.safeParse(await readBoundedJson(request));
+    if (!parsed.success) return NextResponse.json({ success: false, error: parsed.error.issues[0].message }, { status: 400 });
+    const { action, config, sessionState, candidateAnswer } = parsed.data;
 
     // 1. ACTION: START NEW INTERVIEW
     if (action === 'start') {
@@ -154,15 +142,8 @@ export async function POST(request: Request) {
       { success: false, error: 'Unsupported operation.' },
       { status: 400 }
     );
-  } catch (err: any) {
-    console.error('Unhandled API error in /api/ai-interview:', err);
-    return NextResponse.json(
-      {
-        success: false,
-        error: err?.message || 'Internal server error processing AI interview request.',
-      },
-      { status: 500 }
-    );
+  } catch (err: unknown) {
+    return apiError(err);
   }
 }
 
