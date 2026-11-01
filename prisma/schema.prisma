@@ -1,0 +1,73 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String            @id @default(uuid())
+  email         String?           @unique
+  name          String?
+  streakDays    Int               @default(0)
+  lastActive    DateTime?
+  tier1Progress Json?
+  sqlProgress   Json?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  attempts      ScenarioAttempt[]
+  bookmarks     Bookmark[]
+  notes         UserNote[]
+}
+
+model ScenarioAttempt {
+  id                    String   @id @default(uuid())
+  userId                String
+  scenarioId            String
+  timestamp             DateTime @default(now())
+  timeSpentSeconds      Int
+  hintsUsedCount        Int      @default(0)
+  totalScorePercentage  Float
+  passedTestsCount      Int      @default(0)
+  totalTestsCount       Int      @default(0)
+  submittedCode         String?  @db.Text
+  rootCauseAnalysis     String?  @db.Text
+  immediateMitigation   String?  @db.Text
+  permanentFix          String?  @db.Text
+  testingStrategy       String?  @db.Text
+  monitoringPlan        String?  @db.Text
+  systemDesignNotes     Json?
+  interviewAnswers      Json?
+  rubricScores          Json     // Array of criteria scores
+  failedTestCases       Json?    // Array of failed test case names
+  selfAssessmentDone    Boolean  @default(false)
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, scenarioId])
+  @@index([scenarioId])
+}
+
+model Bookmark {
+  id         String   @id @default(uuid())
+  userId     String
+  scenarioId String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, scenarioId])
+  @@index([userId])
+}
+
+model UserNote {
+  id         String   @id @default(uuid())
+  userId     String
+  scenarioId String
+  notes      String   @db.Text
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, scenarioId])
+}
+

@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full Stack Engineering Interview Lab — System Architecture & Technical Specifications</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --indigo: #4f46e5;
+      --purple: #7c3aed;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --emerald-600: #059669;
+      --emerald-50: #ecfdf5;
+      --amber-600: #d97706;
+      --amber-50: #fffbeb;
+      --rose-600: #e11d48;
+      --rose-50: #fff1f2;
+      --border-color: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.55;
+      font-size: 9.5pt;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    code, pre, .font-mono {
+      font-family: 'JetBrains Mono', Consolas, monospace;
+    }
+
+    /* Print & Pagination */
+    @page {
+      size: A4 portrait;
+      margin: 16mm 14mm 16mm 14mm;
+    }
+
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    .no-break {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Cover Page */
+    .cover-container {
+      min-height: 900px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px 10px 20px 10px;
+    }
+
+    .cover-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 9999px;
+      color: #1d4ed8;
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 20px;
+    }
+
+    .cover-title {
+      font-size: 30pt;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+
+    .cover-title span {
+      background: linear-gradient(135deg, #2563eb, #4f46e5, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cover-subtitle {
+      font-size: 12pt;
+      color: #475569;
+      line-height: 1.6;
+      max-width: 680px;
+      margin-bottom: 20px;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+      margin-bottom: 28px;
+    }
+
+    .cover-meta-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 16px;
+    }
+
+    .cover-meta-card .label {
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748b;
+      letter-spacing: 0.05em;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 3px;
+    }
+
+    .cover-meta-card .value {
+      font-size: 9.5pt;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .cover-footer {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8pt;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Typography & Hierarchy */
+    h1, h2, h3, h4 {
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    h2 {
+      font-size: 16pt;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 7px;
+      margin-top: 24px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    h2 .section-tag {
+      font-size: 8pt;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #2563eb;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 2px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      font-size: 12pt;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      color: #1e293b;
+    }
+
+    h4 {
+      font-size: 10pt;
+      margin-top: 12px;
+      margin-bottom: 5px;
+      color: #334155;
+    }
+
+    p {
+      margin-bottom: 9px;
+      color: #334155;
+      line-height: 1.6;
+    }
+
+    ul, ol {
+      margin-left: 18px;
+      margin-bottom: 10px;
+      color: #334155;
+    }
+
+    li {
+      margin-bottom: 3px;
+    }
+
+    /* Callout Boxes */
+    .callout {
+      border-radius: 10px;
+      padding: 11px 15px;
+      margin: 12px 0;
+      font-size: 8.8pt;
+      line-height: 1.55;
+      border-left: 4px solid;
+    }
+
+    .callout-info {
+      background: #f0f7ff;
+      border-color: #2563eb;
+      color: #1e40af;
+    }
+
+    .callout-success {
+      background: #f0fdf4;
+      border-color: #16a34a;
+      color: #166534;
+    }
+
+    .callout-warning {
+      background: #fffbeb;
+      border-color: #d97706;
+      color: #92400e;
+    }
+
+    .callout-purple {
+      background: #faf5ff;
+      border-color: #7c3aed;
+      color: #5b21b6;
+    }
+
+    /* Architectural Diagram Boxes */
+    .arch-diagram-container {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 14px;
+      margin: 14px 0;
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.2pt;
+      line-height: 1.38;
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    .diagram-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .diagram-col {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .diagram-col h4 {
+      font-size: 8pt;
+      font-weight: 800;
+      color: #0f172a;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 5px;
+      margin-bottom: 7px;
+    }
+
+    .diagram-col ul {
+      list-style: none;
+      font-size: 7.8pt;
+      color: #475569;
+      margin-left: 0;
+    }
+
+    .diagram-col ul li {
+      padding: 2.5px 0;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+
+    .diagram-col ul li:last-child {
+      border-bottom: none;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px 0;
+      font-size: 7.8pt;
+    }
+
+    th {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 7pt;
+      letter-spacing: 0.05em;
+      padding: 6px 8px;
+      text-align: left;
+      border: 1px solid #0f172a;
+    }
+
+    td {
+      padding: 5px 8px;
+      border: 1px solid #e2e8f0;
+      vertical-align: top;
+      color: #334155;
+    }
+
+    tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 6.8pt;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .badge-blue { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .badge-purple { background: #faf5ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+    .badge-emerald { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .badge-amber { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .badge-rose { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; }
+    .badge-slate { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+
+    /* Screenshot Container */
+    .screenshot-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 14px 0;
+      page-break-inside: avoid;
+    }
+
+    .screenshot-header {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 6px 11px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 7.8pt;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .screenshot-header .title {
+      font-weight: 700;
+    }
+
+    .screenshot-header .tag {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 6.6pt;
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .screenshot-caption {
+      padding: 7px 11px;
+      background: #f8fafc;
+      font-size: 7.8pt;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    .screenshot-caption strong {
+      color: #0f172a;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .stat-pill {
+      flex: 1;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 7px 9px;
+      text-align: center;
+    }
+
+    .stat-pill .num {
+      font-size: 14pt;
+      font-weight: 900;
+      font-family: 'JetBrains Mono', monospace;
+      color: #2563eb;
+    }
+
+    .stat-pill .lbl {
+      font-size: 6.8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-top: 2px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================= -->
+  <!-- COVER PAGE -->
+  <!-- ========================================================================= -->
+  <div class="cover-container">
+    <div>
+      <div class="cover-header-badge">
+        <span>Engineering Field Manual • Technical Architecture &amp; System Catalog</span>
+      </div>
+
+      <h1 class="cover-title">
+        Full Stack Engineering<br>
+        <span>Interview Lab</span>
+      </h1>
+
+      <p class="cover-subtitle">
+        A production-grade, interactive engineering simulation platform and architectural diagnosis lab built for senior software engineers, staff architects, database engineers, and engineering leadership candidates.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-pill">
+          <div class="num">51</div>
+          <div class="lbl">Senior/Staff Scenarios</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num">63</div>
+          <div class="lbl">Tier 1 Foundations</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num">120</div>
+          <div class="lbl">SQL &amp; Postgres Lab</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num">8</div>
+          <div class="lbl">NBFC Concurrency Bugs</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num">6</div>
+          <div class="lbl">Monaco Sandboxes</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num">Gemini AI</div>
+          <div class="lbl">Dual Evaluation Engine</div>
+        </div>
+        <div class="stat-pill">
+          <div class="num">Neon PG</div>
+          <div class="lbl">Connected Database</div>
+        </div>
+      </div>
+
+      <div class="cover-meta-grid">
+        <div class="cover-meta-card">
+          <div class="label">Architecture &amp; Framework</div>
+          <div class="value">Next.js 15.5 App Router, React 19, TypeScript 5, Tailwind CSS, Redux Toolkit</div>
+        </div>
+        <div class="cover-meta-card">
+          <div class="label">In-Browser Sandboxing</div>
+          <div class="value">Web Worker JS Sandbox, TS Stripper, AlaSQL Relational SQL-99 Engine</div>
+        </div>
+        <div class="cover-meta-card">
+          <div class="label">AI Integration Engine</div>
+          <div class="value">Official @google/genai SDK (gemini-3.5-flash / gemini-2.0-flash) + Deterministic Fallback</div>
+        </div>
+        <div class="cover-meta-card">
+          <div class="label">Connected Database &amp; ORM</div>
+          <div class="value">Neon Serverless PostgreSQL, Prisma ORM, Decoupled StorageAdapter Sync</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <div>DOCUMENT VER: 2.0.0 • COMPREHENSIVE ARCHITECTURAL SPECIFICATION</div>
+      <div>CONFIDENTIAL &amp; AUDITABLE ENGINEERING GUIDE • 248 TOTAL CHALLENGES</div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 1: SYSTEM OVERVIEW & ARCHITECTURE -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+
+  <h2>
+    <span>1. Whole System Architecture &amp; Topology</span>
+    <span class="section-tag">Core Topology</span>
+  </h2>
+
+  <p>
+    The <strong>Full Stack Engineering Interview Lab</strong> is engineered as a zero-latency, high-fidelity technical interview simulator. Unlike static question banks, the platform models real-world production incident triage, distributed system architectural trade-offs, concurrency race conditions, relational database internals, and hiring committee evaluations.
+  </p>
+
+  <div class="arch-diagram-container">+--------------------------------------------------------------------------------------------------------------------+
+|                                    CLIENT BROWSER (Next.js 15.5 App Router / React 19)                             |
+|                                                                                                                    |
+|  [Presentation Layer]              [State Management Layer]                [In-Browser Execution Sandboxes]         |
+|  - Cockpit Dashboard (Metrics/KPI) - Redux Toolkit Store                   - Web Worker JS Runtime (Guarded)        |
+|  - Monaco Code Editor (JS/TS/SQL)   * applicationsSlice (Loan Table)       - Regex TypeScript Stripper              |
+|  - 4-Tier Interview Hub             * dashboardSlice (Loan Stats)          - AlaSQL In-Memory Relational Engine     |
+|  - SQL & Postgres 4-Tier Hub        * uiSlice (Modals/Drawers)             - 1500ms Timeout & Infinite Loop Guards  |
+|  - AI Interviewer Chat Workspace   - LocalStorageAdapter (Optimistic Sync)                                          |
++--------------------------------------------------+-----------------------------------------------------------------+
+                                                   | HTTPS JSON API
+                                                   v
++--------------------------------------------------------------------------------------------------------------------+
+|                                  SERVERLESS / BACKEND (Node.js Route Handlers)                                     |
+|                                                                                                                    |
+|  /api/ai-interview (Route Handler)           /api/sql/evaluate (Gemini AI SQL)      /api/progress/* (CRUD &amp; Sync)  |
+|  - Rate Limiter (30 req/min per worker)      - Query &amp; Incident Diagnostician       - GET /api/progress (Full Sync)   |
+|  - Gemini Flash SDK Invocation               - 0-100 Rubric &amp; Plan Scorer           - POST /api/progress/attempt      |
+|  - Deterministic Offline Fallback            - Deterministic Offline Fallback       - POST /api/progress/sql          |
+|                                                                                     - POST /api/progress/tier1        |
+|  /api/applications &amp; /api/dashboard          Prisma ORM Client Layer                - POST /api/progress/reset        |
+|  - Paginated Applications Mock Engine        - Singleton PrismaClient Instance      - POST /api/progress/import       |
++--------------------------------------------------+----------------------------------+------------------------------+
+                                                   |                                  |
+                                                   v                                  v
++-----------------------------------------------------------------------+  +-----------------------------------------+
+|                    EXTERNAL AI PROVIDER: GOOGLE GEMINI                |  |       PRODUCTION DATABASE: NEON POSTGRES|
+|  Model: gemini-3.5-flash / gemini-2.0-flash (@google/genai SDK)       |  |  Serverless AWS Neon PostgreSQL Instance|
+|  Capabilities: Dynamic Scenarios, Multi-Turn Follow-Ups, Bar Raiser   |  |  Tables: User, attempts, bookmarks,     |
+|  Scorecard Synthesis, SQL Optimization &amp; Incident Post-Mortems      |  |          customNotes, tier1, sqlProgress|
++-----------------------------------------------------------------------+  +-----------------------------------------+</div>
+
+  <div class="diagram-grid">
+    <div class="diagram-col">
+      <h4>1. Presentation</h4>
+      <ul>
+        <li>Next.js 15 App Router</li>
+        <li>React 19 Server/Client</li>
+        <li>Tailwind CSS 3.4 Design</li>
+        <li>Monaco Editor Integration</li>
+        <li>Lucide Engineering Icons</li>
+        <li>Accessible Dark/Light Mesh</li>
+      </ul>
+    </div>
+    <div class="diagram-col">
+      <h4>2. State &amp; Data</h4>
+      <ul>
+        <li>Redux Toolkit Store</li>
+        <li>createSlice Architecture</li>
+        <li>Optimistic Status Updates</li>
+        <li>Rollback Error Handlers</li>
+        <li>Debounced Search (300ms)</li>
+        <li>Memoized Selector Trees</li>
+      </ul>
+    </div>
+    <div class="diagram-col">
+      <h4>3. Safe Execution</h4>
+      <ul>
+        <li>In-Browser JS Sandbox</li>
+        <li>Console Output Interceptor</li>
+        <li>AlaSQL In-Memory Engine</li>
+        <li>TypeScript Transform</li>
+        <li>1500ms Infinite Loop Guard</li>
+        <li>Zero Server Remote Exec</li>
+      </ul>
+    </div>
+    <div class="diagram-col">
+      <h4>4. Persistence</h4>
+      <ul>
+        <li>StorageAdapter Interface</li>
+        <li>LocalStorageAdapter (Cache)</li>
+        <li>Prisma Neon PostgreSQL</li>
+        <li>JSON Backup Export/Import</li>
+        <li>Streak &amp; Bookmark Logs</li>
+        <li>Multi-Tier Attempt Records</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Connected Production Database Architecture (Neon PostgreSQL + Prisma)</h3>
+  <p>
+    The application features a fully configured, live Neon Serverless PostgreSQL database synchronized via Prisma ORM. Persistence follows a decoupled <strong>StorageAdapter</strong> pattern: candidate actions (attempts, bookmarks, code submissions, custom notes, Tier 1 progress, and SQL track progress) are instantly committed to browser local storage for zero-latency UX, while simultaneously dispatching non-blocking background synchronization requests to the PostgreSQL backend route handlers.
+  </p>
+
+  <div class="callout callout-success">
+    <strong>PostgreSQL Schema Specification (prisma/schema.prisma):</strong><br>
+    The database tracks user entities with unified JSON progress trees:
+    <code>model User { id String @id @default(uuid()), email String? @unique, attempts Json @default("[]"), bookmarkedIds Json @default("[]"), notes Json @default("{}"), tier1Progress Json?, sqlProgress Json?, streak Int @default(0), lastActive DateTime @default(now()), createdAt DateTime @default(now()), updatedAt DateTime @updatedAt }</code>.
+  </div>
+
+  <h3>Security Rationale: Why Arbitrary Code Never Executes on the Server</h3>
+  <div class="callout callout-warning">
+    <strong>Security Boundary Isolation:</strong> In many naive interview platforms, user-submitted code is sent to the backend and executed inside containers. This introduces container breakout vulnerabilities, crypto-mining attacks, and severe resource exhaustion. In Full Stack Interview Lab, all user code executes strictly inside client-side isolated sandboxes (Web Workers and isolated IFrames) and in-browser SQL relational engines (AlaSQL). The server route handlers remain stateless, fast, and protected from arbitrary code execution.
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 2: HOW THE AI INTERVIEW FEATURE WORKS -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+
+  <h2>
+    <span>2. Deep Dive: Conversational AI Interviewer</span>
+    <span class="section-tag">AI Architecture</span>
+  </h2>
+
+  <p>
+    The <strong>AI Interviewer</strong> is powered by the official <code>@google/genai</code> JavaScript SDK and connected to Google's <code>gemini-3.5-flash</code> (with fallback to <code>gemini-2.0-flash</code>). It simulates an adaptive, multi-turn interview with a Principal Engineer or Hiring Committee Bar Raiser.
+  </p>
+
+  <div class="arch-diagram-container">[Candidate UI: Role / Tech Selection]
+                 |
+                 v  POST /api/ai-interview { action: 'start' }
+[Route Handler] --&gt; [Rate Limiter Check (30/min)] --&gt; [Gemini Flash SDK]
+                                                             |
+                                      &lt;----------------------+
+                                     v
+[Generated Scenario &amp; Architectural Question Displayed]
+                 |
+                 v  POST /api/ai-interview { action: 'reply', candidateAnswer: '...' }
+[Route Handler] --&gt; [Append History] --&gt; [Gemini Analyzes Reasoning &amp; Trade-offs]
+                                                 |
+                                      &lt;----------+
+                                     v
+[Turn Feedback + Probing Contextual Follow-Up Question Displayed]
+                 |
+                 v  (Repeats for Turn 2 .. Turn N)
+                 |
+                 v  POST /api/ai-interview { action: 'evaluate' }
+[Route Handler] --&gt; [Bar Raiser Scorecard Prompt] --&gt; [Gemini Synthesizes Evaluation]
+                                                             |
+                                      &lt;----------------------+
+                                     v
+[Final Scorecard: Hiring Verdict, Overall Score, Competency Matrix, Actionable Roadmap]</div>
+
+  <h3>Key Engineering Pillars of the AI Interview Engine</h3>
+
+  <h4>1. Strict Server-Side Isolation of Credentials</h4>
+  <p>
+    The Gemini API key is read exclusively from <code>process.env.GEMINI_API_KEY</code> on the server side in <code>src/app/api/ai-interview/route.ts</code> and <code>src/app/api/sql/evaluate/route.ts</code>. The key is never serialized, never sent to client-side components, and never returned in network responses.
+  </p>
+
+  <h4>2. Multi-Turn Session State Machine</h4>
+  <p>
+    The interview state is tracked through a structured session state machine:
+  </p>
+  <ul>
+    <li><code>config</code>: Role (e.g. Senior Full-Stack Engineer L5, Database Architect L6), Technology Domain, Seniority Bar, and Turn Limit.</li>
+    <li><code>currentQuestion</code>: The dynamic scenario statement generated by Gemini.</li>
+    <li><code>history</code>: The chronologically preserved conversation turns (Candidate answers and AI questions).</li>
+    <li><code>turnFeedback</code>: Per-turn technical critique evaluating trade-offs, potential edge cases, and architectural reasoning.</li>
+    <li><code>finalAssessment</code>: Generated upon interview conclusion across 4 key dimensions: System Architecture, Correctness &amp; Edge Cases, Production Readiness, and Trade-off Analysis.</li>
+  </ul>
+
+  <h4>3. High-Fidelity Deterministic Offline Fallback</h4>
+  <div class="callout callout-success">
+    <strong>Zero-Downtime Guarantee:</strong> If <code>GEMINI_API_KEY</code> is not provided, if the API rate limit is reached, or if the client is working in an offline environment, the system gracefully shifts to the deterministic offline simulator in <code>src/lib/gemini/offlineFallback.ts</code> and <code>src/lib/gemini/sqlPrompts.ts</code>. Candidates can continue practicing without UI crashes or frozen screens.
+  </div>
+
+  <h4>4. Rate Limiting &amp; Timeout Protections</h4>
+  <p>
+    The service implements an in-memory sliding-window rate limiter restricting traffic to 30 requests per minute per server process. Every outbound call to Google Gemini is wrapped with a strict 35-second timeout guard using <code>AbortSignal.timeout(35000)</code> to prevent hanging connections.
+  </p>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 3: COMPREHENSIVE SQL & POSTGRESQL INTERVIEW TRACK (120 QUESTIONS) -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+
+  <h2>
+    <span>3. SQL &amp; PostgreSQL Interview Track (120 Questions)</span>
+    <span class="section-tag">Database Track</span>
+  </h2>
+
+  <p>
+    The <strong>SQL and PostgreSQL Interview Track</strong> is a comprehensive database engineering curriculum designed to take candidates from relational fundamentals to staff-level production database engineering. It comprises <strong>120 original questions</strong> evenly distributed across 4 seniority tiers and 18 specialized architectural domains.
+  </p>
+
+  <div class="stat-row">
+    <div class="stat-pill">
+      <div class="num">30</div>
+      <div class="lbl">Tier 1: Beginner SQL</div>
+    </div>
+    <div class="stat-pill">
+      <div class="num">30</div>
+      <div class="lbl">Tier 2: Intermediate SQL</div>
+    </div>
+    <div class="stat-pill">
+      <div class="num">30</div>
+      <div class="lbl">Tier 3: Advanced Postgres</div>
+    </div>
+    <div class="stat-pill">
+      <div class="num">30</div>
+      <div class="lbl">Tier 4: Senior SRE / DBA</div>
+    </div>
+    <div class="stat-pill">
+      <div class="num">33</div>
+      <div class="lbl">Executable Sandboxes</div>
+    </div>
+    <div class="stat-pill">
+      <div class="num">10</div>
+      <div class="lbl">Incident Cockpits</div>
+    </div>
+  </div>
+
+  <h3>The 4 Progression Tiers</h3>
+  <ul>
+    <li><strong>Tier 1: Beginner SQL (30 Qs):</strong> Relational fundamentals, SELECT, WHERE, ORDER BY, LIMIT, INNER/LEFT/RIGHT JOINs, GROUP BY &amp; HAVING, NULL semantics (IS NULL, COALESCE), and Primary/Foreign Key constraints.</li>
+    <li><strong>Tier 2: Intermediate SQL (30 Qs):</strong> Analytical window functions (DENSE_RANK, SUM OVER, LAG/LEAD), subqueries, Common Table Expressions (CTEs), ACID transaction boundaries, surrogate vs natural keys, UUIDv4 page fragmentation, and ON CONFLICT upsert mechanics.</li>
+    <li><strong>Tier 3: Advanced PostgreSQL Internals (30 Qs):</strong> B-Tree leaf pages, page splits, fillfactor tuning, EXPLAIN (ANALYZE, BUFFERS) query plan interpretation, GIN/GiST/BRIN index architectures, MVCC tuple headers (xmin, xmax, t_ctid), declarative table partitioning, PgBouncer pool modes, and Row-Level Security (RLS).</li>
+    <li><strong>Tier 4: Senior PostgreSQL &amp; Production Engineering (30 Qs):</strong> Multi-transaction deadlock graph post-mortems, zero-downtime online schema migrations (expand/contract column rename), replication lag mitigation, table bloat remediation (pg_repack vs VACUUM FULL), checkpoint WAL bursts, disaster Point-In-Time Recovery (PITR), and high-availability Patroni split-brain fencing.</li>
+  </ul>
+
+  <h3>3 Real-World Relational Practice Datasets</h3>
+  <p>
+    The track embeds 3 rich relational datasets with comprehensive DDL schemas, primary keys, foreign keys, CHECK constraints, and realistic seed data:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Dataset Domain</th>
+        <th style="width: 30%;">Tables &amp; Relational Entities</th>
+        <th style="width: 50%;">Testing Scenarios &amp; Realistic Business Logic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-emerald">E-Commerce</span></td>
+        <td><code>customers</code>, <code>products</code>, <code>orders</code>, <code>order_items</code>, <code>payments</code>, <code>inventory</code>, <code>refunds</code> (7 tables)</td>
+        <td>Multi-item basket calculations, customer lifetime value (LTV), inventory stock reservation, partial refunds, payment gateway status reconciliation, and duplicate order detection.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-blue">Loan Management NBFC</span></td>
+        <td><code>customers</code>, <code>loan_applications</code>, <code>loans</code>, <code>emi_schedule</code>, <code>repayments</code>, <code>transactions</code> (6 tables)</td>
+        <td>Underwriting credit workflows, monthly EMI amortisation schedules, payment allocation (fees &gt; interest &gt; principal), 30/60/90 DPD delinquency tracking, and overdraft penalties.</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-purple">SaaS Analytics</span></td>
+        <td><code>users</code>, <code>subscriptions</code>, <code>events</code>, <code>invoices</code>, <code>audit_logs</code> (5 tables)</td>
+        <td>Monthly Recurring Revenue (MRR), subscription tier transitions (trial, active, past_due, canceled), user retention cohort analysis, high-throughput event telemetry, and compliance audit trails.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Dual Execution Sandbox &amp; AI Evaluation Architecture</h3>
+  <div class="callout callout-info">
+    <strong>In-Browser AlaSQL Sandbox vs Real PostgreSQL:</strong><br>
+    The platform explicitly distinguishes generic SQL practice from engine-specific PostgreSQL practice. Executable SQL queries run client-side inside an in-browser AlaSQL-99 relational engine with schema introspection, query timeout limits, and row-order normalization. For PostgreSQL-specific architecture (e.g. WAL, MVCC, B-Tree splits, deadlock graphs), the candidate submits their query plan or diagnostic strategy to the <strong>Gemini AI Database Evaluator</strong> (<code>/api/sql/evaluate</code>), which analyzes query optimality, index usage, and production failure risks against an authoritative rubric.
+  </div>
+
+  <h3>Complete SQL &amp; PostgreSQL Track Catalog (120 Questions)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 15%;">Tier</th>
+        <th style="width: 25%;">Category</th>
+        <th style="width: 15%;">Identifier</th>
+        <th style="width: 33%;">Problem / Scenario Title</th>
+        <th style="width: 12%;">Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{SQL_QUESTIONS_TABLE}}
+    </tbody>
+  </table>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 4: SENIOR & STAFF CHALLENGES CATALOG (51 SCENARIOS) -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+
+  <h2>
+    <span>4. Senior &amp; Staff Challenge Library (51 Scenarios)</span>
+    <span class="section-tag">51 Challenges</span>
+  </h2>
+
+  <p>
+    The library contains <strong>51 production-grade engineering scenarios</strong> covering deep runtime behaviors, deadlock mitigation, distributed systems, and real-world incidents.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Domain</th>
+        <th style="width: 20%;">Identifier</th>
+        <th style="width: 35%;">Scenario Title</th>
+        <th style="width: 12%;">Difficulty</th>
+        <th style="width: 13%;">Format</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{SCENARIOS_TABLE}}
+    </tbody>
+  </table>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 5: TIER 1 BEGINNER TRACK (63 QUESTIONS) -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+
+  <h2>
+    <span>5. Tier 1 Beginner Track Catalog (63 Questions)</span>
+    <span class="section-tag">63 Questions</span>
+  </h2>
+
+  <p>
+    The <strong>Tier 1 Beginner Track</strong> is built specifically for junior and mid-level full-stack engineers to solidify their fundamental understanding. It spans 6 critical categories with interactive explanations, progressive guidance hints, and starter coding tasks.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Category</th>
+        <th style="width: 15%;">Question ID</th>
+        <th style="width: 45%;">Question Title</th>
+        <th style="width: 15%;">Code Task</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{TIER1_TABLE}}
+    </tbody>
+  </table>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 6: IN-BROWSER CODING & LOAN BUG SCENARIOS -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+
+  <h2>
+    <span>6. Monaco Coding Practice &amp; Enterprise Loan Lab</span>
+    <span class="section-tag">Specialized Labs</span>
+  </h2>
+
+  <h3>In-Browser Monaco Coding Practice Problems</h3>
+  <p>
+    Integrated Monaco coding environment with live in-browser execution sandboxes, sample inputs, expected outputs, hints, and automated test runners.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 15%;">Language</th>
+        <th style="width: 20%;">Identifier</th>
+        <th style="width: 45%;">Problem Title</th>
+        <th style="width: 20%;">Difficulty</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{PRACTICE_TABLE}}
+    </tbody>
+  </table>
+
+  <h3>Enterprise Loan Management Dashboard: 8 Production Concurrency Bug Scenarios</h3>
+  <p>
+    An enterprise Non-Banking Financial Company (NBFC) dashboard managing thousands of loan applications. The interactive <strong>8 Production Bugs Explorer</strong> challenges engineers to diagnose and resolve high-stakes frontend bugs:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 10%;">Bug #</th>
+        <th style="width: 20%;">Category</th>
+        <th style="width: 35%;">Problem Title</th>
+        <th style="width: 35%;">Root Cause &amp; Senior Mitigation Strategy</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{LOAN_BUGS_TABLE}}
+    </tbody>
+  </table>
+
+  <!-- ========================================================================= -->
+  <!-- SECTION 7: LIVE SYSTEM SCREENSHOTS & FEATURE WALKTHROUGH -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+
+  <h2>
+    <span>7. Live System Walkthrough &amp; Feature Screenshots</span>
+    <span class="section-tag">14 Screenshots</span>
+  </h2>
+
+  <p>
+    The following high-resolution screenshots are captured directly from the running production instance of the <strong>Full Stack Engineering Interview Lab</strong>, illustrating its modern design system and interactive surfaces.
+  </p>
+
+  <!-- Screenshot 1 -->
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 01: Engineering Cockpit Dashboard</span>
+      <span class="tag">Route: /</span>
+    </div>
+    <img src="{{IMG_01}}" alt="Engineering Cockpit Dashboard">
+    <div class="screenshot-caption">
+      <strong>Main Cockpit:</strong> Displays the interview readiness radial ring meter, real-time learning streak flame counter, quick action launchpad (including the new SQL &amp; Postgres Lab button), domain mastery progress matrix, and active challenge filter preview.
+    </div>
+  </div>
+
+  <!-- Screenshot 2 -->
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 02: Curated Scenario Catalog (51 Challenges)</span>
+      <span class="tag">Route: /library</span>
+    </div>
+    <img src="{{IMG_02}}" alt="Curated Scenario Catalog">
+    <div class="screenshot-caption">
+      <strong>Challenge Library:</strong> Live search and multi-dimensional filter bar (Topic, Seniority Bar, Format, Bookmark, and Completion status) with pass-rate badges and time estimates.
+    </div>
+  </div>
+
+  <!-- Screenshot 3 -->
+  <div class="page-break"></div>
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 03: Interactive Challenge Workspace &amp; Code Editor</span>
+      <span class="tag">Route: /challenge/js-event-loop-microtasks</span>
+    </div>
+    <img src="{{IMG_03}}" alt="Interactive Challenge Workspace">
+    <div class="screenshot-caption">
+      <strong>Engineering Workspace:</strong> Problem specification panel, production business incident context, telemetry monitoring charts, integrated code editor, progressive hint revelation, and transparent rubric evaluation drawer.
+    </div>
+  </div>
+
+  <!-- Screenshot 4 -->
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 04: Monaco Coding Practice Lab</span>
+      <span class="tag">Route: /practice</span>
+    </div>
+    <img src="{{IMG_04}}" alt="Monaco Coding Practice Lab">
+    <div class="screenshot-caption">
+      <strong>In-Browser Coding Practice:</strong> Monaco code editor supporting JavaScript, TypeScript, and SQL with real-time in-browser sandboxed execution, automated test case validation, and output terminal.
+    </div>
+  </div>
+
+  <!-- Screenshot 5 -->
+  <div class="page-break"></div>
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 05: Conversational AI Interviewer Console (Gemini)</span>
+      <span class="tag">Route: /interview?mode=ai</span>
+    </div>
+    <img src="{{IMG_05}}" alt="AI Interviewer Console">
+    <div class="screenshot-caption">
+      <strong>Gemini AI Interviewer:</strong> Setup matrix allowing candidates to configure target engineering role (L5–L7), technology domain specialization, hiring committee bar, and turn depth with rate-protected backend execution.
+    </div>
+  </div>
+
+  <!-- Screenshot 6 -->
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 06: Tier 1 Beginner Track Studio (63 Questions)</span>
+      <span class="tag">Route: /interview?tier=tier-1</span>
+    </div>
+    <img src="{{IMG_06}}" alt="Tier 1 Beginner Track">
+    <div class="screenshot-caption">
+      <strong>Tier 1 Practice Studio:</strong> Question navigator across 6 categories (JavaScript, HTML/CSS, React, Redux Toolkit, TypeScript, Node.js), expected concepts tag matrix, progressive hints, and immediate benchmark evaluation.
+    </div>
+  </div>
+
+  <!-- Screenshot 7 -->
+  <div class="page-break"></div>
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 07: Tier 1 Mock Interview Simulation Runner</span>
+      <span class="tag">Route: /interview?tier=tier-1 (Mock Mode)</span>
+    </div>
+    <img src="{{IMG_07}}" alt="Tier 1 Mock Interview Runner">
+    <div class="screenshot-caption">
+      <strong>Mock Interview Simulation:</strong> Timed sequential interview runner hiding solutions until submission, instant feedback per turn, and comprehensive category performance scorecard upon completion.
+    </div>
+  </div>
+
+  <!-- Screenshot 8 -->
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 08: Enterprise Loan Management Dashboard (NBFC Redux Lab)</span>
+      <span class="tag">Route: /challenges/loan-management</span>
+    </div>
+    <img src="{{IMG_08}}" alt="Enterprise Loan Dashboard">
+    <div class="screenshot-caption">
+      <strong>Loan Dashboard:</strong> Redux Toolkit state architecture with debounced search, status filter pills, sortable paginated table, optimistic updates, and slide-over loan underwriting details drawer.
+    </div>
+  </div>
+
+  <!-- Screenshot 9 -->
+  <div class="page-break"></div>
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 09: Production Concurrency &amp; Bug Scenarios Explorer</span>
+      <span class="tag">Route: /challenges/loan-management (Bug Explorer)</span>
+    </div>
+    <img src="{{IMG_09}}" alt="Bug Scenarios Explorer">
+    <div class="screenshot-caption">
+      <strong>8 Production Bug Scenarios:</strong> Interactive explorer covering race conditions, direct Redux state mutation, optimistic update failures without rollback, memory leaks, and network failure recovery.
+    </div>
+  </div>
+
+  <!-- Screenshot 10 -->
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 10: Progress Analytics, Benchmarking &amp; Portability</span>
+      <span class="tag">Route: /progress</span>
+    </div>
+    <img src="{{IMG_10}}" alt="Progress Analytics">
+    <div class="screenshot-caption">
+      <strong>Progress &amp; Analytics:</strong> Complete auditable submission history log, benchmark tier rating, streak tracking, Tier 1 category masteries, and one-click JSON backup export/import portability.
+    </div>
+  </div>
+
+  <!-- Screenshot 11 -->
+  <div class="page-break"></div>
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 11: SQL &amp; PostgreSQL Track Hub &amp; 4-Tier Progression</span>
+      <span class="tag">Route: /sql</span>
+    </div>
+    <img src="{{IMG_11}}" alt="SQL &amp; PostgreSQL Track Hub">
+    <div class="screenshot-caption">
+      <strong>SQL Track Hub:</strong> 4 progression tier cards (Tier 1: Beginner SQL, Tier 2: Intermediate SQL, Tier 3: Advanced PostgreSQL, Tier 4: Senior SRE/DBA) with live completion percentage meters, question breakdown counters, and navigation tabs.
+    </div>
+  </div>
+
+  <!-- Screenshot 12 -->
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 12: Interactive SQL Playground &amp; Schema Explorer</span>
+      <span class="tag">Route: /sql (Playground Tab)</span>
+    </div>
+    <img src="{{IMG_12}}" alt="SQL Playground">
+    <div class="screenshot-caption">
+      <strong>SQL Playground:</strong> Monaco SQL code editor running queries against in-memory relational datasets (E-commerce, Loan Management, SaaS Analytics), live schema table explorer, instant tabular result viewer, and reset dataset control.
+    </div>
+  </div>
+
+  <!-- Screenshot 13 -->
+  <div class="page-break"></div>
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 13: SRE &amp; Database Production Incident Cockpit</span>
+      <span class="tag">Route: /sql (Incidents Tab)</span>
+    </div>
+    <img src="{{IMG_13}}" alt="SRE Incident Cockpit">
+    <div class="screenshot-caption">
+      <strong>SRE Incident Cockpit:</strong> High-severity database outage simulator featuring real-time CPU/IOPS telemetry charts, database server log streams, candidate root-cause diagnostic editor, and Gemini AI post-mortem evaluation.
+    </div>
+  </div>
+
+  <!-- Screenshot 14 -->
+  <div class="screenshot-card">
+    <div class="screenshot-header">
+      <span class="title">Screen 14: SQL Timed Mock Interview Simulator</span>
+      <span class="tag">Route: /sql (Mock Interview Tab)</span>
+    </div>
+    <img src="{{IMG_14}}" alt="SQL Timed Mock Interview">
+    <div class="screenshot-caption">
+      <strong>SQL Mock Interview:</strong> Timed sequential database technical interview runner with question count configuration, live countdown timer, solution masking during attempt, and comprehensive evaluation scorecard.
+    </div>
+  </div>
+
+</body>
+</html>

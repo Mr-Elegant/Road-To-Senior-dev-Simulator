@@ -1,0 +1,181 @@
+import { SqlDataset } from '@/types/sqlTrack';
+
+export const saasAnalyticsDataset: SqlDataset = {
+  id: 'saas_analytics',
+  name: 'CloudPulse B2B SaaS Platform',
+  tagline: 'Multi-Tenant Product Telemetry, Subscription Billing & Audit Trail',
+  description:
+    'Modern B2B enterprise multi-tenant analytics relational schema capturing user organizations, recurring subscription revenue, high-volume event streams, invoices, and security audit logs.',
+  tables: [
+    {
+      name: 'users',
+      description: 'Multi-tenant team members with organizational roles and login telemetry',
+      sampleRowCount: 8,
+      columns: [
+        { name: 'id', type: 'INT', isPrimaryKey: true },
+        { name: 'email', type: 'VARCHAR(120)' },
+        { name: 'organization_id', type: 'INT' },
+        { name: 'role', type: 'VARCHAR(30)' }, // 'OWNER', 'ADMIN', 'MEMBER', 'GUEST'
+        { name: 'last_login_at', type: 'VARCHAR(30)' },
+        { name: 'created_at', type: 'VARCHAR(30)' },
+      ],
+    },
+    {
+      name: 'subscriptions',
+      description: 'Recurring SaaS tiers with MRR pricing and subscription status',
+      sampleRowCount: 6,
+      columns: [
+        { name: 'id', type: 'INT', isPrimaryKey: true },
+        { name: 'organization_id', type: 'INT' },
+        { name: 'plan_name', type: 'VARCHAR(40)' }, // 'STARTER', 'GROWTH', 'ENTERPRISE'
+        { name: 'monthly_price', type: 'DECIMAL(10,2)' },
+        { name: 'status', type: 'VARCHAR(20)' }, // 'ACTIVE', 'PAST_DUE', 'CANCELLED'
+        { name: 'start_date', type: 'VARCHAR(30)' },
+        { name: 'current_period_end', type: 'VARCHAR(30)' },
+      ],
+    },
+    {
+      name: 'events',
+      description: 'User engagement product interactions and feature usage telemetry',
+      sampleRowCount: 16,
+      columns: [
+        { name: 'id', type: 'INT', isPrimaryKey: true },
+        { name: 'user_id', type: 'INT', isForeignKey: true, references: 'users.id' },
+        { name: 'organization_id', type: 'INT' },
+        { name: 'event_name', type: 'VARCHAR(60)' }, // 'DASHBOARD_VIEW', 'REPORT_EXPORTED', 'INVITE_SENT'
+        { name: 'page_url', type: 'VARCHAR(120)' },
+        { name: 'created_at', type: 'VARCHAR(30)' },
+      ],
+    },
+    {
+      name: 'invoices',
+      description: 'Monthly recurring billing statements and payment settlement timestamps',
+      sampleRowCount: 10,
+      columns: [
+        { name: 'id', type: 'INT', isPrimaryKey: true },
+        { name: 'subscription_id', type: 'INT', isForeignKey: true, references: 'subscriptions.id' },
+        { name: 'organization_id', type: 'INT' },
+        { name: 'amount', type: 'DECIMAL(10,2)' },
+        { name: 'status', type: 'VARCHAR(20)' }, // 'PAID', 'PENDING', 'OVERDUE'
+        { name: 'billing_date', type: 'VARCHAR(30)' },
+        { name: 'paid_at', type: 'VARCHAR(30)' },
+      ],
+    },
+    {
+      name: 'audit_logs',
+      description: 'Security and governance tracking of privileged team actions',
+      sampleRowCount: 10,
+      columns: [
+        { name: 'id', type: 'INT', isPrimaryKey: true },
+        { name: 'user_id', type: 'INT', isForeignKey: true, references: 'users.id' },
+        { name: 'action', type: 'VARCHAR(60)' }, // 'API_KEY_ROTATED', 'ROLE_CHANGED', 'SSO_ENABLED'
+        { name: 'resource_type', type: 'VARCHAR(40)' },
+        { name: 'resource_id', type: 'VARCHAR(40)' },
+        { name: 'ip_address', type: 'VARCHAR(50)' },
+        { name: 'created_at', type: 'VARCHAR(30)' },
+      ],
+    },
+  ],
+  schemaSql: `
+CREATE TABLE users (
+  id INT PRIMARY KEY,
+  email VARCHAR(120),
+  organization_id INT,
+  role VARCHAR(30),
+  last_login_at VARCHAR(30),
+  created_at VARCHAR(30)
+);
+
+CREATE TABLE subscriptions (
+  id INT PRIMARY KEY,
+  organization_id INT,
+  plan_name VARCHAR(40),
+  monthly_price DECIMAL(10,2),
+  status VARCHAR(20),
+  start_date VARCHAR(30),
+  current_period_end VARCHAR(30)
+);
+
+CREATE TABLE events (
+  id INT PRIMARY KEY,
+  user_id INT,
+  organization_id INT,
+  event_name VARCHAR(60),
+  page_url VARCHAR(120),
+  created_at VARCHAR(30)
+);
+
+CREATE TABLE invoices (
+  id INT PRIMARY KEY,
+  subscription_id INT,
+  organization_id INT,
+  amount DECIMAL(10,2),
+  status VARCHAR(20),
+  billing_date VARCHAR(30),
+  paid_at VARCHAR(30)
+);
+
+CREATE TABLE audit_logs (
+  id INT PRIMARY KEY,
+  user_id INT,
+  action VARCHAR(60),
+  resource_type VARCHAR(40),
+  resource_id VARCHAR(40),
+  ip_address VARCHAR(50),
+  created_at VARCHAR(30)
+);
+  `.trim(),
+  seedSql: `
+INSERT INTO users VALUES (1, 'alex@acmecorp.com', 101, 'OWNER', '2024-03-20 09:15:00', '2023-10-01 10:00:00');
+INSERT INTO users VALUES (2, 'sarah@acmecorp.com', 101, 'ADMIN', '2024-03-19 16:40:00', '2023-10-05 11:30:00');
+INSERT INTO users VALUES (3, 'david@acmecorp.com', 101, 'MEMBER', '2024-03-10 14:00:00', '2023-11-01 08:20:00');
+INSERT INTO users VALUES (4, 'elena@novatech.io', 102, 'OWNER', '2024-03-20 11:10:00', '2023-11-15 15:00:00');
+INSERT INTO users VALUES (5, 'marcus@novatech.io', 102, 'MEMBER', '2024-02-28 10:20:00', '2023-12-01 09:00:00');
+INSERT INTO users VALUES (6, 'rachel@finscale.org', 103, 'OWNER', '2024-03-18 17:30:00', '2024-01-10 12:00:00');
+INSERT INTO users VALUES (7, 'tom@scalezero.net', 104, 'OWNER', '2024-03-01 08:00:00', '2024-01-20 14:40:00');
+INSERT INTO users VALUES (8, 'lisa@cloudorbit.dev', 105, 'OWNER', '2024-03-15 13:25:00', '2024-02-05 16:10:00');
+
+INSERT INTO subscriptions VALUES (1, 101, 'ENTERPRISE', 999.00, 'ACTIVE', '2023-10-01', '2024-04-01');
+INSERT INTO subscriptions VALUES (2, 102, 'GROWTH', 299.00, 'ACTIVE', '2023-11-15', '2024-04-15');
+INSERT INTO subscriptions VALUES (3, 103, 'ENTERPRISE', 999.00, 'ACTIVE', '2024-01-10', '2024-04-10');
+INSERT INTO subscriptions VALUES (4, 104, 'STARTER', 49.00, 'PAST_DUE', '2024-01-20', '2024-03-20');
+INSERT INTO subscriptions VALUES (5, 105, 'GROWTH', 299.00, 'ACTIVE', '2024-02-05', '2024-04-05');
+INSERT INTO subscriptions VALUES (6, 106, 'STARTER', 49.00, 'CANCELLED', '2023-12-01', '2024-01-01');
+
+INSERT INTO events VALUES (1, 1, 101, 'DASHBOARD_VIEW', '/dashboard', '2024-03-20 09:16:00');
+INSERT INTO events VALUES (2, 1, 101, 'REPORT_EXPORTED', '/analytics/export', '2024-03-20 09:25:00');
+INSERT INTO events VALUES (3, 2, 101, 'INVITE_SENT', '/settings/team', '2024-03-19 16:45:00');
+INSERT INTO events VALUES (4, 4, 102, 'DASHBOARD_VIEW', '/dashboard', '2024-03-20 11:12:00');
+INSERT INTO events VALUES (5, 4, 102, 'BILLING_UPDATED', '/billing', '2024-03-20 11:30:00');
+INSERT INTO events VALUES (6, 6, 103, 'DASHBOARD_VIEW', '/dashboard', '2024-03-18 17:32:00');
+INSERT INTO events VALUES (7, 6, 103, 'PIPELINE_TRIGGERED', '/pipelines/run', '2024-03-18 17:45:00');
+INSERT INTO events VALUES (8, 2, 101, 'DASHBOARD_VIEW', '/dashboard', '2024-03-15 10:00:00');
+INSERT INTO events VALUES (9, 3, 101, 'DASHBOARD_VIEW', '/dashboard', '2024-03-10 14:05:00');
+INSERT INTO events VALUES (10, 5, 102, 'DASHBOARD_VIEW', '/dashboard', '2024-02-28 10:22:00');
+INSERT INTO events VALUES (11, 8, 105, 'DASHBOARD_VIEW', '/dashboard', '2024-03-15 13:27:00');
+INSERT INTO events VALUES (12, 1, 101, 'API_KEY_CREATED', '/settings/api', '2024-03-01 11:00:00');
+INSERT INTO events VALUES (13, 6, 103, 'ALERT_CONFIGURED', '/alerts', '2024-03-12 15:10:00');
+INSERT INTO events VALUES (14, 4, 102, 'INTEGRATION_CONNECTED', '/integrations/github', '2024-03-05 14:00:00');
+INSERT INTO events VALUES (15, 7, 104, 'DASHBOARD_VIEW', '/dashboard', '2024-03-01 08:05:00');
+INSERT INTO events VALUES (16, 2, 101, 'REPORT_EXPORTED', '/analytics/export', '2024-03-18 14:20:00');
+
+INSERT INTO invoices VALUES (1, 1, 101, 999.00, 'PAID', '2024-01-01', '2024-01-02 08:30:00');
+INSERT INTO invoices VALUES (2, 1, 101, 999.00, 'PAID', '2024-02-01', '2024-02-02 09:10:00');
+INSERT INTO invoices VALUES (3, 1, 101, 999.00, 'PAID', '2024-03-01', '2024-03-02 08:45:00');
+INSERT INTO invoices VALUES (4, 2, 102, 299.00, 'PAID', '2024-01-15', '2024-01-16 11:20:00');
+INSERT INTO invoices VALUES (5, 2, 102, 299.00, 'PAID', '2024-02-15', '2024-02-16 10:40:00');
+INSERT INTO invoices VALUES (6, 2, 102, 299.00, 'PAID', '2024-03-15', '2024-03-16 09:15:00');
+INSERT INTO invoices VALUES (7, 3, 103, 999.00, 'PAID', '2024-02-10', '2024-02-11 14:00:00');
+INSERT INTO invoices VALUES (8, 3, 103, 999.00, 'PAID', '2024-03-10', '2024-03-11 13:50:00');
+INSERT INTO invoices VALUES (9, 4, 104, 49.00, 'OVERDUE', '2024-02-20', null);
+INSERT INTO invoices VALUES (10, 5, 105, 299.00, 'PAID', '2024-03-05', '2024-03-06 16:30:00');
+
+INSERT INTO audit_logs VALUES (1, 1, 'API_KEY_CREATED', 'ApiKey', 'key_prod_9918', '192.168.1.10', '2024-03-01 11:00:00');
+INSERT INTO audit_logs VALUES (2, 2, 'ROLE_UPDATED', 'User', 'usr_3', '192.168.1.15', '2024-03-02 14:20:00');
+INSERT INTO audit_logs VALUES (3, 4, 'SSO_SAML_CONFIGURED', 'SecuritySetting', 'sso_okta_01', '10.0.4.22', '2024-03-05 15:30:00');
+INSERT INTO audit_logs VALUES (4, 6, 'WEBHOOK_ENDPOINT_ADDED', 'Webhook', 'whk_prod_441', '172.16.0.8', '2024-03-12 16:00:00');
+INSERT INTO audit_logs VALUES (5, 1, 'USER_DEPROVISIONED', 'User', 'usr_archived_9', '192.168.1.10', '2024-03-14 18:10:00');
+INSERT INTO audit_logs VALUES (6, 4, 'PAYMENT_METHOD_CHANGED', 'BillingProfile', 'card_visa_881', '10.0.4.22', '2024-03-20 11:32:00');
+  `.trim(),
+};
+
