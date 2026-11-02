@@ -1,0 +1,44 @@
+{
+  "id": "nextjs-server-client-boundary",
+  "title": "Secret Key Leakage Across Next.js Server-Client Boundary",
+  "type": "debugging",
+  "topic": "Next.js",
+  "subtopic": "Server and Client Components",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "A fintech startup operates a subscription billing portal built with Next.js App Router. A security vulnerability report flags that the live production JavaScript bundle downloaded by customers in their browser contains `sk_live_...` Stripe Secret API keys in plain text.",
+  "problemStatement": "A Server Component page fetched tenant payment settings and passed the entire database configuration object as a prop into a Client Component `<PaymentSettingsForm />` decorated with `\"use client\"`. Even though the form only displayed the currency and public key, Next.js serialized the entire prop object into the client HTML payload (`self.__next_f.push(...)`), exposing the live private secret key.",
+  "constraints": [
+    "Stripe secret keys must never be bundled or serialized into client HTML/JS payloads.",
+    "Only public publishable keys (`pk_live_...`) may be exposed to the browser.",
+    "Use package `server-only` to guarantee build-time enforcement against server module importation into client code."
+  ],
+  "starterCode": "// app/billing/page.tsx (Server Component)\nimport { getTenantPaymentConfig } from '@/lib/payment-db';\nimport PaymentSettingsForm from './PaymentSettingsForm';\n\nexport default async function BillingPage({ params }) {\n  // Config object contains: { publishableKey: 'pk_...', secretKey: 'sk_...', webhookSecret: 'whsec_...' }\n  const config = await getTenantPaymentConfig(params.tenantId);\n\n  // VULNERABILITY: Passing entire config object to a \"use client\" component\n  // Next.js serializes all props into window.__next_f, leaking the private secret key!\n  return (\n    <div>\n      <h1>Billing Configuration</h1>\n      <PaymentSettingsForm paymentConfig={config} />\n    </div>\n  );\n}\n\nfunction solution(input) {\n  return \"isolated_server_boundary\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain how Next.js App Router serializes props passed from Server Components to Client Components.",
+    "Refactor the page to sanitize props and only pass explicitly allowed public fields: `{ publishableKey, currency }`.",
+    "Explain how `import \"server-only\"` works at build time to prevent accidental secret leakage."
+  ],
+  "hints": [
+    "Props passed to \"use client\" components are serialized into JSON within the RSC flight payload embedded in HTML.",
+    "Never pass raw database models or config objects directly across the client boundary; project or DTO-sanitize them first."
+  ],
+  "testCases": [
+    {
+      "id": "tc-sec-boundary-1",
+      "name": "Prevents secret key serialization across RSC boundary",
+      "inputDescription": "null",
+      "expectedOutput": "\"isolated_server_boundary\"",
+      "explanation": "Enforces strict data transfer object projection."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using Server Actions for sensitive operations so secrets never touch the client at all.",
+    "Using experimental taint API: `experimental_taintUniqueValue` or `experimental_taintObjectReference` in React/Next.js."
+  ],
+  "commonMistakes": [
+    "Thinking \"use client\" components run only in the browser and cannot access server data: they receive whatever props the server passes to them.",
+    "Naming secret environment variables with NEXT_PUBLIC_, which automatically bakes them into client JS bundles."
+  ]
+}

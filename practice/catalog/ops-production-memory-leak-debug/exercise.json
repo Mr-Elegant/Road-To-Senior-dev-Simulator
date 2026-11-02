@@ -1,0 +1,118 @@
+{
+  "id": "ops-production-memory-leak-debug",
+  "title": "Production Incident: Node.js Container OOMKilled Memory Leak",
+  "type": "incident",
+  "topic": "Engineering Operations",
+  "subtopic": "Production incident response",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "The core API service in the production Kubernetes cluster is crashing every 4 hours with exit code 137 (OOMKilled). Customer checkout requests are intermittently dropped during pod restarts, and P99 latency degrades significantly before each crash.",
+  "problemStatement": "Investigate the production incident using the provided Prometheus memory metrics, application logs, and recent commit diffs. Formulate the root-cause hypothesis, identify immediate mitigation, implement a permanent fix, define regression tests, and configure monitoring alerts to prevent future occurrences.",
+  "constraints": [
+    "Immediate mitigation must stabilize production within 10 minutes without data loss.",
+    "Must identify exact memory retention pattern in application code.",
+    "Permanent fix must keep RSS memory flat under 250MB."
+  ],
+  "incidentTelemetry": {
+    "logs": [
+      {
+        "timestamp": "14:22:10.104",
+        "level": "INFO",
+        "service": "api-gateway",
+        "message": "Worker pod api-core-7f89d-v2k8w ready to accept traffic"
+      },
+      {
+        "timestamp": "15:10:05.320",
+        "level": "WARN",
+        "service": "api-core",
+        "message": "V8 heap memory usage reached 75% of limit (768MB / 1024MB)"
+      },
+      {
+        "timestamp": "16:04:18.991",
+        "level": "WARN",
+        "service": "api-core",
+        "message": "High event loop delay detected: 1420ms across 5 samples"
+      },
+      {
+        "timestamp": "16:15:42.012",
+        "level": "FATAL",
+        "service": "kubelet",
+        "message": "Container api-core exceeded memory limit (1024Mi). Sending SIGKILL (exit code 137)"
+      },
+      {
+        "timestamp": "16:15:45.109",
+        "level": "ERROR",
+        "service": "ingress-nginx",
+        "message": "502 Bad Gateway while connecting to upstream pod api-core-7f89d-v2k8w"
+      }
+    ],
+    "metrics": [
+      {
+        "metricName": "container_memory_rss_bytes",
+        "baseline": "180 MB",
+        "incidentPeak": "1024 MB (Limit)",
+        "unit": "MB",
+        "status": "critical",
+        "trend": "Strictly monotonic increase (+200MB/hr)"
+      },
+      {
+        "metricName": "nodejs_eventloop_lag_seconds",
+        "baseline": "0.012 s",
+        "incidentPeak": "1.450 s",
+        "unit": "s",
+        "status": "critical",
+        "trend": "Spikes correlated with memory ceiling"
+      },
+      {
+        "metricName": "http_server_requests_5xx_rate",
+        "baseline": "0.01%",
+        "incidentPeak": "8.4%",
+        "unit": "%",
+        "status": "critical",
+        "trend": "Spikes immediately during pod OOM death"
+      }
+    ],
+    "customerReports": [
+      {
+        "id": "CR-101",
+        "reporter": "Acme Corp (Enterprise)",
+        "impact": "High",
+        "quote": "Our bulk inventory sync was aborted mid-way around 16:15 with 502 Bad Gateway."
+      },
+      {
+        "id": "CR-102",
+        "reporter": "Zendesk Ticket #9948",
+        "impact": "Medium",
+        "quote": "Checkout button showed spinning wheel for 30s before failing."
+      }
+    ],
+    "recentDeployments": [
+      {
+        "commitHash": "c4e910a",
+        "author": "dev-jason",
+        "message": "feat: add telemetry cache for recent user requests",
+        "timeAgo": "4 hours ago",
+        "diffSnippet": "+ const requestHistory = []; // Global array in module scope\n+ function logRequestTelemetry(req) {\n+   requestHistory.push({ path: req.path, user: req.user, body: req.body, time: Date.now() });\n+ }"
+      }
+    ]
+  },
+  "candidateTasks": [
+    "Step 1: State the root-cause hypothesis supported by specific evidence from logs, metrics, and git diff.",
+    "Step 2: Propose immediate mitigation to stop the crash loop immediately.",
+    "Step 3: Provide permanent code fix (bounded LRU cache or stream buffer with max size and TTL).",
+    "Step 4: Write regression test verifying memory usage does not scale linearly with request count.",
+    "Step 5: Define Prometheus alerting rule (`container_memory_working_set_bytes > 85% for 5m`)."
+  ],
+  "hints": [
+    "Look closely at the recent deployment commit `c4e910a`: an unbounded array `requestHistory` in global module scope.",
+    "Every HTTP request appends `req.body` and user objects into `requestHistory`, which is never cleaned or pruned.",
+    "Immediate mitigation: Roll back to previous commit `c4e910a^` or scale deployment with a temporary increased memory limit."
+  ],
+  "alternativeApproaches": [
+    "Sending structured logs to stdout and letting Fluentbit / Vector ship logs to Datadog/Elasticsearch."
+  ],
+  "commonMistakes": [
+    "Increasing pod memory limit from 1GB to 4GB: an unbounded leak will simply take 16 hours to crash instead of 4 hours.",
+    "Trying to manually run `global.gc()` in production."
+  ]
+}

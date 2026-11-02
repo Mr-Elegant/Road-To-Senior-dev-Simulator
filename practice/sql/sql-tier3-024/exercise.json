@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-024",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 24,
+  "title": "Custom PostgreSQL Types: DOMAIN vs ENUM vs Composite Types",
+  "category": "PostgreSQL Data Types",
+  "questionType": "conceptual",
+  "datasetId": "loan_management",
+  "realWorldScenario": "Your engineering team is debating how to represent currency amounts and loan statuses. Some suggest `VARCHAR(20) CHECK (status IN (...))`, others propose `CREATE TYPE loan_status AS ENUM (...)`, and a senior engineer suggests `CREATE DOMAIN`.",
+  "questionStatement": "Compare PostgreSQL `ENUM`, `DOMAIN`, and `COMPOSITE TYPE`. What are the storage characteristics, type-safety benefits, and operational risks of each? Specifically, what are the migration hazards of altering an existing ENUM type in production?",
+  "expectedConcepts": [
+    "4-byte internal storage of ENUM vs text storage",
+    "ENUM operational hazard (cannot easily remove or reorder enum values)",
+    "DOMAIN as constrained primitive type with reusable CHECK rules",
+    "COMPOSITE TYPE for multi-attribute structured models and function returns",
+    "Comparison with standard VARCHAR + CHECK constraint table pattern"
+  ],
+  "hints": [
+    "Can you delete a value from a PostgreSQL ENUM without recreating the type?",
+    "How does CREATE DOMAIN allow centralized check constraint definitions?",
+    "Think about 4-byte enum storage vs 20-byte strings."
+  ]
+}

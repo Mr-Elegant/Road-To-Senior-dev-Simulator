@@ -1,0 +1,18 @@
+{
+  "id": "t1-ts-06",
+  "title": "How do optional properties (?) and optional chaining (?.) work in TypeScript?",
+  "category": "TypeScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 6,
+  "expectedConcepts": [
+    "Optional property syntax (property?: type in interfaces)",
+    "How optional properties equate to type | undefined",
+    "Optional chaining operator (?.) preventing \"cannot read property of undefined\" errors at runtime",
+    "Nullish coalescing operator (??) for default fallbacks"
+  ],
+  "hints": [
+    "What character indicates a field in an interface is optional?",
+    "How does obj?.user?.name prevent runtime crashes?"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-19",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 19,
+  "title": "PostgreSQL GIN (Generalized Inverted) Indexes on JSONB",
+  "category": "JSONB and PostgreSQL-specific features",
+  "questionType": "conceptual",
+  "realWorldScenario": "An audit log query `SELECT * FROM audit_logs WHERE properties @> '{\"ip_country\": \"DE\"}';` takes 4 seconds on 5 million records.",
+  "questionStatement": "Why is a standard B-Tree index incapable of accelerating arbitrary JSONB key/value searches? How does a GIN index work on JSONB columns?",
+  "expectedConcepts": [
+    "Inverted index structure",
+    "Tokens mapping to row ID posting lists",
+    "Acceleration of containment operator (@>)",
+    "Write overhead of GIN indexes"
+  ],
+  "hints": [
+    "Think of GIN like an index at the back of a textbook mapping terms to page numbers."
+  ]
+}

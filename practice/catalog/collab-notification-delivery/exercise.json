@@ -1,0 +1,85 @@
+{
+  "id": "collab-notification-delivery",
+  "title": "Collaboration: Deduplicate Notifications and Respect Preferences",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "Real-time collaboration / Messaging and meetings",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "A reconnect replay sends the same mention notification repeatedly, including muted channels and messages the recipient wrote.",
+  "problemStatement": "Implement solution({ recipientId, mutedChannels, mentionsOnly, events }). Events are valid { id, authorId, channelId, mentionIds } with nonempty string IDs and arrays of string mentionIds. Process in arrival order. An already-seen event id => duplicate; first occurrences consume the ID even if suppressed. Then authorId==recipientId => self; muted channel => muted; mentionsOnly without recipient in mentionIds => skipped; otherwise delivered. Return { delivered: [event IDs], outcomes }. A replay with changed contents still uses the first event decision. No actual delivery is performed.",
+  "constraints": [
+    "Implement the synchronous solution(input) contract exactly. Do not mutate input; all inputs are JSON data.",
+    "This is a deterministic state model. It does not open sockets, send notifications, authorize real users, or establish media connections."
+  ],
+  "candidateTasks": [
+    "Reproduce the starter failure, implement the invariant, and pass every authored case.",
+    "How would an outbox and provider idempotency key handle a crash after sending but before recording success?"
+  ],
+  "starterCode": "function solution({events}) { return {delivered:events.map(e=>e.id),outcomes:events.map(()=>'delivered')}; }",
+  "testCases": [
+    {
+      "id": "notify-1",
+      "name": "Deliver a normal message",
+      "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":false,\"events\":[{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[]}]}",
+      "expectedOutput": "{\"delivered\":[\"a\"],\"outcomes\":[\"delivered\"]}",
+      "hidden": false
+    },
+    {
+      "id": "notify-2",
+      "name": "Retry delivers only once",
+      "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":false,\"events\":[{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[]},{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[]}]}",
+      "expectedOutput": "{\"delivered\":[\"a\"],\"outcomes\":[\"delivered\",\"duplicate\"]}",
+      "hidden": false
+    },
+    {
+      "id": "notify-3",
+      "name": "Suppress own messages",
+      "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":false,\"events\":[{\"id\":\"a\",\"authorId\":\"u\",\"channelId\":\"c\",\"mentionIds\":[]}]}",
+      "expectedOutput": "{\"delivered\":[],\"outcomes\":[\"self\"]}",
+      "hidden": true
+    },
+    {
+      "id": "notify-4",
+      "name": "Mute takes precedence over mention",
+      "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[\"c\"],\"mentionsOnly\":true,\"events\":[{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[\"u\"]}]}",
+      "expectedOutput": "{\"delivered\":[],\"outcomes\":[\"muted\"]}",
+      "hidden": true
+    },
+    {
+      "id": "notify-5",
+      "name": "Mentions-only skips unrelated recipients",
+      "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":true,\"events\":[{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[]},{\"id\":\"b\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[\"u\"]}]}",
+      "expectedOutput": "{\"delivered\":[\"b\"],\"outcomes\":[\"skipped\",\"delivered\"]}",
+      "hidden": true
+    },
+    {
+      "id": "notify-6",
+      "name": "Suppressed ID remains consumed on changed replay",
+      "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":false,\"events\":[{\"id\":\"a\",\"authorId\":\"u\",\"channelId\":\"c\",\"mentionIds\":[]},{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[]}]}",
+      "expectedOutput": "{\"delivered\":[],\"outcomes\":[\"self\",\"duplicate\"]}",
+      "hidden": true
+    },
+    {
+      "id": "notify-7",
+      "name": "Empty event batch produces no notifications",
+      "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":false,\"events\":[]}",
+      "expectedOutput": "{\"delivered\":[],\"outcomes\":[]}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "Write down validation and replay precedence before changing state.",
+    "Use stable IDs and monotonic sequence/version values; preserve input ownership."
+  ],
+  "alternativeApproaches": [
+    "Use an append-only event log with transactional projections.",
+    "Use a database snapshot plus a versioned resume cursor."
+  ],
+  "commonMistakes": [
+    "Trusting delivery order or treating retries as new operations.",
+    "Mutating caller-owned arrays or accepting cross-channel data.",
+    "Presenting a fixture result as a guarantee of real-time delivery or media connectivity."
+  ],
+  "codeLanguage": "javascript"
+}

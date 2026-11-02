@@ -1,0 +1,23 @@
+{
+  "id": "sql-tier3-002",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 2,
+  "title": "EXPLAIN (ANALYZE, BUFFERS): Plan Reading & Scan Types",
+  "category": "Indexes and Query Planning",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A dashboard query filtering `orders` by `customer_id` and `status` takes 1.8 seconds in staging. The developer ran `EXPLAIN (ANALYZE, BUFFERS)` and asks you to interpret the output.",
+  "questionStatement": "Analyze the four primary scan types in PostgreSQL: Sequential Scan, Index Scan, Index Only Scan, and Bitmap Index Scan. Under what exact conditions does the planner choose a Bitmap Index Scan over a normal Index Scan? What do `Buffers: shared hit, read, dirtied` signify?",
+  "expectedConcepts": [
+    "Seq Scan vs Index Scan vs Index Only Scan vs Bitmap Index Scan",
+    "Bitmap Heap Scan reading physical pages in sequential order",
+    "Visibility map requirement for Index Only Scans",
+    "shared_buffers hit vs read vs dirtied"
+  ],
+  "hints": [
+    "Consider why random disk seeks are slower than sequential reads when fetching 5,000 scattered rows.",
+    "Check the role of the visibility map in index-only scans.",
+    "Buffers shared hit comes from PostgreSQL memory cache."
+  ]
+}

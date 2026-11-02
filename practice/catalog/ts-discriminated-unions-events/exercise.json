@@ -1,0 +1,44 @@
+{
+  "id": "ts-discriminated-unions-events",
+  "title": "Multi-Gateway Webhook Event Normalization & Exhaustive Narrowing",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "Discriminated unions",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A global subscription SaaS platform receives webhook events from Stripe, PayPal, and Adyen. Currently, developers use `any` casting, causing runtime crashes when payment gateway payload versions change or when unhandled event types slip through into billing ledger workers.",
+  "problemStatement": "Build a strongly-typed webhook event dispatch system using discriminated unions and an exhaustive checking utility (`assertNever`). The compiler must enforce that every possible payment event type is handled at compile time, rejecting any PR that adds a new event without an exhaustive handler.",
+  "constraints": [
+    "Zero usage of `any` or loose `unknown` casts.",
+    "Must enforce compile-time exhaustiveness: if a new event is added to the union, omission in the dispatcher must cause a TypeScript compilation error.",
+    "Must provide type narrowing on `event.payload` based on `event.provider` and `event.type`."
+  ],
+  "starterCode": "/**\n * Multi-Gateway Webhook Ingestion\n */\ntype StripeChargeSucceeded = {\n  provider: 'stripe';\n  type: 'charge.succeeded';\n  payload: { chargeId: string; amountInCents: number; customerId: string };\n};\n\ntype StripeInvoicePaymentFailed = {\n  provider: 'stripe';\n  type: 'invoice.payment_failed';\n  payload: { invoiceId: string; reason: string; attemptCount: number };\n};\n\ntype PayPalOrderApproved = {\n  provider: 'paypal';\n  type: 'ORDER.APPROVED';\n  payload: { orderId: string; grossAmount: string; payerEmail: string };\n};\n\ntype AdyenPaymentCaptured = {\n  provider: 'adyen';\n  type: 'CAPTURE_SUCCESS';\n  payload: { pspReference: string; originalReference: string; value: number };\n};\n\nexport type WebhookEvent =\n  | StripeChargeSucceeded\n  | StripeInvoicePaymentFailed\n  | PayPalOrderApproved\n  | AdyenPaymentCaptured;\n\n// Helper to enforce exhaustiveness at compile time\nexport function assertNever(value: never): never {\n  throw new Error(`Unhandled union member: ${JSON.stringify(value)}`);\n}\n\nexport function handleWebhookEvent(event: WebhookEvent): string {\n  // TODO: Implement exhaustive handling based on discriminated union\n  switch (event.type) {\n    case 'charge.succeeded':\n      return `Processed Stripe charge: ${event.payload.chargeId}`;\n    // Complete remaining cases and exhaustiveness check\n    default:\n      return \"unhandled\";\n  }\n}\n\nfunction solution(input) {\n  const sampleEvent = {\n    provider: 'stripe',\n    type: 'charge.succeeded',\n    payload: { chargeId: 'ch_123', amountInCents: 5000, customerId: 'cus_999' }\n  };\n  return handleWebhookEvent(sampleEvent);\n}",
+  "codeLanguage": "typescript",
+  "candidateTasks": [
+    "Implement switch cases covering all union members with safe payload access.",
+    "Use `assertNever(event)` in the default branch to enforce compile-time verification.",
+    "Explain how discriminated unions differ from nominal typing or runtime schema validators like Zod."
+  ],
+  "hints": [
+    "TypeScript can discriminate unions using literal string properties like `type` or combination of `provider` and `type`.",
+    "Passing `event` to `assertNever(event)` in `default` ensures that if any union case is omitted, TypeScript flags a type error because the variable has not been narrowed to `never`."
+  ],
+  "testCases": [
+    {
+      "id": "tc-ts-1",
+      "name": "Processes Stripe charge succeeded",
+      "inputDescription": "null",
+      "expectedOutput": "\"Processed Stripe charge: ch_123\"",
+      "explanation": "Correctly extracts type-safe payload fields."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using a lookup object mapping event type to handler functions with Record<WebhookEvent[\"type\"], (event: any) => string> constrained by generics.",
+    "Combining with Zod / Valibot for runtime validation at the HTTP edge before passing into typed domain logic."
+  ],
+  "commonMistakes": [
+    "Using \"as any\" inside the cases instead of letting TypeScript naturally narrow the payload.",
+    "Forgetting the assertNever call, leaving unhandled cases silently ignored at compile time."
+  ]
+}

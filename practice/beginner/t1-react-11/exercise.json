@@ -1,0 +1,18 @@
+{
+  "id": "t1-react-11",
+  "title": "What are the main component lifecycle concepts in modern functional React?",
+  "category": "React Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 11,
+  "expectedConcepts": [
+    "Mounting: Component is created and inserted into the DOM for the first time",
+    "Updating: Component re-renders because state or props changed",
+    "Unmounting: Component is removed from the DOM",
+    "How useEffect maps to these phases (mount [], update [deps], unmount cleanup)"
+  ],
+  "hints": [
+    "What are the 3 major phases: when it appears, when it changes, and when it disappears?",
+    "Which lifecycle phase does the return function in useEffect correspond to?"
+  ]
+}

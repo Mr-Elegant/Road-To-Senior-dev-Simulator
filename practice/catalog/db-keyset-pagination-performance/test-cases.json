@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-keyset-1",
+    "name": "Uses keyset cursor for constant time O(1) page access",
+    "inputDescription": "null",
+    "expectedOutput": "\"keyset_cursor_pagination_implemented\"",
+    "explanation": "Enables high-performance scrolling across millions of records."
+  }
+]

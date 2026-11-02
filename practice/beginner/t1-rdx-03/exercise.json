@@ -1,0 +1,19 @@
+{
+  "id": "t1-rdx-03",
+  "title": "What are the three core principles and concepts of Redux: Store, Actions, and Reducers?",
+  "category": "Redux Toolkit Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 3,
+  "expectedConcepts": [
+    "Store: The single source of truth holding the entire state tree",
+    "Action: Plain JavaScript object describing \"what happened\" (type, payload)",
+    "Reducer: Pure function taking (previousState, action) => newState",
+    "One-way data flow: View -> Dispatch Action -> Reducer updates Store -> View re-renders"
+  ],
+  "hints": [
+    "What object holds the whole state tree?",
+    "What plain object tells the reducer what happened?",
+    "What function takes the old state and produces the new state?"
+  ]
+}

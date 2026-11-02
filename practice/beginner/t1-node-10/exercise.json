@@ -1,0 +1,17 @@
+{
+  "id": "t1-node-10",
+  "title": "What are the basic differences between Relational (SQL) and Document (NoSQL) databases for beginners?",
+  "category": "Node.js and API Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 10,
+  "expectedConcepts": [
+    "SQL / Relational: Tables with fixed schemas (columns/rows), primary keys, foreign key relationships, ACID transactions (e.g. PostgreSQL, MySQL)",
+    "NoSQL / Document: Flexible JSON-like documents, dynamic schemas, collections (e.g. MongoDB)",
+    "When to choose SQL (structured data, financial transactions, clear relations) vs NoSQL (unstructured or rapidly evolving schema)"
+  ],
+  "hints": [
+    "Which database type uses tables with columns and rows: SQL or NoSQL?",
+    "Which database type stores data looking like nested JSON objects?"
+  ]
+}

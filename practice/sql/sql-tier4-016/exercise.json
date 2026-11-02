@@ -1,0 +1,38 @@
+{
+  "id": "sql-tier4-016",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 16,
+  "title": "Zero-Downtime Deduplication of 50 Million Records Under Live Write Load",
+  "category": "Query Optimization",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Due to an idempotent webhook failure, duplicate payment records were inserted into `payments` for the same `order_id` and `transaction_ref`. You must delete all duplicate rows, keeping only the earliest record (`MIN(id)`), while thousands of concurrent orders continue inserting into the table.",
+  "questionStatement": "Write a chunked batch deduplication script using keyset ranges that identifies duplicate rows in `payments` by `(order_id, transaction_ref)` and deletes duplicates in small transactions (e.g. 5,000 IDs per iteration) to prevent locking the table or generating unmanageable WAL volume.",
+  "starterCode": "-- Chunked batch deduplication\nWITH duplicates_in_chunk AS (\n    SELECT id\n    FROM (\n        SELECT \n            id,\n            ROW_NUMBER() OVER (\n                PARTITION BY order_id, transaction_ref \n                ORDER BY id ASC\n            ) AS rn\n        FROM payments\n        WHERE id BETWEEN 1 AND 5000\n    ) ranked\n    WHERE rn > 1\n)\nDELETE FROM payments\nWHERE id IN (SELECT id FROM duplicates_in_chunk)\nRETURNING id;",
+  "expectedConcepts": [
+    "Why monolithic DELETE fails in production (locks, WAL explosion, replication lag)",
+    "Chunked keyset pagination (id BETWEEN x AND y)",
+    "ROW_NUMBER() window partitioning for duplicate identification",
+    "Small batch transactions with sleep throttle",
+    "CREATE UNIQUE INDEX CONCURRENTLY to prevent recurrence"
+  ],
+  "hints": [
+    "ROW_NUMBER() OVER (PARTITION BY order_id, transaction_ref ORDER BY id) identifies duplicates when row_num > 1.",
+    "Why must the query be restricted to an ID range like WHERE id BETWEEN 1 AND 5000?",
+    "Concurrently create a UNIQUE index after cleanup."
+  ],
+  "testCases": [
+    {
+      "id": "tc-tier4-016-1",
+      "description": "Verify chunked duplicate deletion keeping lowest ID",
+      "setupSql": "CREATE TABLE payments (id INT PRIMARY KEY, order_id INT, transaction_ref VARCHAR(20), amount NUMERIC);\nINSERT INTO payments VALUES (1, 101, 'TXN_A', 100), (2, 101, 'TXN_A', 100), (3, 102, 'TXN_B', 200);",
+      "expectedRows": [
+        {
+          "id": 2
+        }
+      ],
+      "orderMatters": true
+    }
+  ]
+}

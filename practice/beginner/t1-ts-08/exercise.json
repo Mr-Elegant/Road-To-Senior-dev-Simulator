@@ -1,0 +1,17 @@
+{
+  "id": "t1-ts-08",
+  "title": "What is the difference between any and unknown in TypeScript and why is unknown safer?",
+  "category": "TypeScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 8,
+  "expectedConcepts": [
+    "any disables all type checking (escape hatch back to unchecked JavaScript)",
+    "unknown represents any value but forbids operations until narrowed",
+    "Type-safety: unknown forces developers to verify the type before accessing methods or properties"
+  ],
+  "hints": [
+    "Which one completely shuts down TypeScript’s compiler checks?",
+    "Which one requires you to check if (typeof x === ...) before using it?"
+  ]
+}

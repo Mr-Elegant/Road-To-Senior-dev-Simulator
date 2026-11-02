@@ -1,0 +1,5 @@
+-- Filter orders in February 2024
+SELECT id, customer_id, order_date, total_amount
+FROM orders
+WHERE order_date >= '2024-02-01' AND order_date < '2024-03-01'
+ORDER BY order_date ASC;

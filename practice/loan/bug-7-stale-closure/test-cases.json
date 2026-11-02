@@ -1,0 +1,167 @@
+[
+  {
+    "id": "latest",
+    "name": "A delayed refresh uses the latest filters and page",
+    "input": {
+      "initial": {
+        "filters": {
+          "search": "",
+          "loanType": "Business"
+        },
+        "pagination": {
+          "page": 1,
+          "limit": 20
+        }
+      },
+      "events": [
+        {
+          "state": {
+            "filters": {
+              "search": "Mina",
+              "loanType": "Mortgage"
+            },
+            "pagination": {
+              "page": 3,
+              "limit": 50
+            }
+          },
+          "call": true
+        }
+      ]
+    },
+    "expected": [
+      {
+        "search": "Mina",
+        "loanType": "Mortgage",
+        "page": 3,
+        "limit": 50
+      }
+    ],
+    "explanation": "Read current state at callback execution time.",
+    "sample": true
+  },
+  {
+    "id": "two-calls",
+    "name": "The same callback sees successive state changes",
+    "input": {
+      "initial": {
+        "filters": {
+          "search": "",
+          "loanType": "Business"
+        },
+        "pagination": {
+          "page": 1,
+          "limit": 20
+        }
+      },
+      "events": [
+        {
+          "call": true
+        },
+        {
+          "state": {
+            "filters": {
+              "search": "Mina",
+              "loanType": "Mortgage"
+            },
+            "pagination": {
+              "page": 3,
+              "limit": 50
+            }
+          },
+          "call": true
+        }
+      ]
+    },
+    "expected": [
+      {
+        "search": "",
+        "loanType": "Business",
+        "page": 1,
+        "limit": 20
+      },
+      {
+        "search": "Mina",
+        "loanType": "Mortgage",
+        "page": 3,
+        "limit": 50
+      }
+    ],
+    "explanation": "A previously sent request must remain unchanged when later state changes.",
+    "sample": true
+  },
+  {
+    "id": "no-call",
+    "name": "Creating the callback does not send a request",
+    "input": {
+      "initial": {
+        "filters": {
+          "search": "",
+          "loanType": "Business"
+        },
+        "pagination": {
+          "page": 1,
+          "limit": 20
+        }
+      },
+      "events": [
+        {
+          "state": {
+            "filters": {
+              "search": "Mina",
+              "loanType": "Mortgage"
+            },
+            "pagination": {
+              "page": 3,
+              "limit": 50
+            }
+          }
+        }
+      ]
+    },
+    "expected": [],
+    "explanation": "Registration and execution are separate events.",
+    "sample": false
+  },
+  {
+    "id": "page-only",
+    "name": "A pagination-only update is also current",
+    "input": {
+      "initial": {
+        "filters": {
+          "search": "",
+          "loanType": "Business"
+        },
+        "pagination": {
+          "page": 1,
+          "limit": 20
+        }
+      },
+      "events": [
+        {
+          "state": {
+            "filters": {
+              "search": "",
+              "loanType": "Business"
+            },
+            "pagination": {
+              "page": 8,
+              "limit": 10
+            }
+          },
+          "call": true
+        }
+      ]
+    },
+    "expected": [
+      {
+        "search": "",
+        "loanType": "Business",
+        "page": 8,
+        "limit": 10
+      }
+    ],
+    "explanation": "Freshness applies to pagination as well as search.",
+    "sample": false
+  }
+]

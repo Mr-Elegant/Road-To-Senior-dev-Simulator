@@ -1,0 +1,45 @@
+{
+  "id": "sql-tier4-012",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 12,
+  "title": "Two-Phase Commit (2PC) and Orphaned Prepared Transaction Disasters",
+  "category": "Transactions and ACID",
+  "questionType": "incident",
+  "datasetId": "loan_management",
+  "realWorldScenario": "An external microservice coordinator used PostgreSQL Two-Phase Commit (`PREPARE TRANSACTION`) to coordinate loan disbursements across a banking ledger and core PostgreSQL. The coordinator service crashed midway. Days later, table bloat explodes and autovacuum is paralyzed.",
+  "questionStatement": "Explain Two-Phase Commit (2PC) in PostgreSQL (`PREPARE TRANSACTION` and `COMMIT PREPARED`). What happens when a prepared transaction is orphaned? Why do orphaned prepared transactions lock table rows indefinitely and prevent VACUUM from freezing dead tuples across the entire database?",
+  "incidentDetails": {
+    "symptoms": [
+      "Autovacuum unable to clean dead rows",
+      "Table and index bloat increasing by 15 GB/day",
+      "Rows locked by non-existent connection",
+      "pg_prepared_xacts shows transaction open for 14 days"
+    ],
+    "systemTelemetry": {
+      "activeConnections": 45,
+      "lockWaitsCount": 8,
+      "cpuUtilizationPercent": 22,
+      "bufferCacheHitRatio": 98.2,
+      "logSnippet": "2026-11-01 03:00:00 UTC [102]: [1-1] WARNING:  oldest active transaction id is 981204, held by prepared transaction \"disburse_loan_49102\"\n2026-11-01 03:00:00 UTC [102]: [2-1] DETAIL:  Transaction prepared 340 hours ago."
+    },
+    "candidateTasks": [
+      "Inspect pg_prepared_xacts catalog table",
+      "Explain why prepared transactions survive client disconnects and server restarts",
+      "Analyze how an orphaned 2PC holds back the global xmin horizon",
+      "Execute ROLLBACK PREPARED to recover the database"
+    ]
+  },
+  "expectedConcepts": [
+    "PREPARE TRANSACTION and pg_twophase durability",
+    "Prepared transactions surviving client disconnection and server restarts",
+    "Infinite row lock retention",
+    "Holding back catalog xmin horizon and preventing VACUUM across the entire database",
+    "ROLLBACK PREPARED remediation"
+  ],
+  "hints": [
+    "Does a prepared transaction abort when the client connection closes?",
+    "What catalog table lists all open prepared transactions?",
+    "Why does an old transaction ID prevent VACUUM from removing dead rows anywhere?"
+  ]
+}

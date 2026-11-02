@@ -1,0 +1,1 @@
+function solution({messages,limit}) { return {messages:messages.slice(0,limit),nextBefore:null,hasMore:false}; }

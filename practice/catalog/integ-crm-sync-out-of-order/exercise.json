@@ -1,0 +1,44 @@
+{
+  "id": "integ-crm-sync-out-of-order",
+  "title": "Bi-Directional CRM Sync Out-of-Order Customer Data Rollback",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "Out-of-order events",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "An enterprise SaaS platform syncs customer data bi-directionally with HubSpot and Salesforce. Sales reps noticed that customer email addresses and subscription tiers were mysteriously reverting to old values.",
+  "problemStatement": "Because webhooks travel over asynchronous public internet networks, network delays can cause Event #2 (User upgraded to Enterprise at 10:05) to arrive BEFORE Event #1 (User updated profile email at 10:01). The sync handler blind-updates the database whenever an event arrives, causing the older Event #1 to overwrite newer data from Event #2. Implement monotonic versioning or Lamport timestamps to reject out-of-order writes.",
+  "constraints": [
+    "Must guarantee stale older events can never overwrite newer state.",
+    "Must handle events arriving out-of-order or duplicate deliveries.",
+    "Update database only if `event.version > record.version` or `event.timestamp > record.updated_at`."
+  ],
+  "starterCode": "/**\n * Fragile CRM Ingestion: Blind Overwrites\n */\nasync function syncCustomerFromCrm(db, crmEvent) {\n  // crmEvent = { customerId: 'c-100', email: 'alice@acme.com', tier: 'PRO', eventTimestamp: 1672531200000 }\n  \n  // BUG: Blindly overwrites the database row with whatever payload arrives,\n  // even if this event is 10 minutes older than the data already in the database!\n  await db.query(\n    'UPDATE customers SET email = $1, tier = $2 WHERE id = $3',\n    [crmEvent.email, crmEvent.tier, crmEvent.customerId]\n  );\n}\n\nfunction solution(input) {\n  return \"monotonic_version_guard_applied\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain why network delivery order cannot be assumed in distributed webhooks.",
+    "Implement conditional SQL updates: `UPDATE customers SET ... WHERE id = $1 AND updated_at < $2`.",
+    "Explain how Distributed Tracing and event versioning prevent split-brain updates."
+  ],
+  "hints": [
+    "Add a condition to the UPDATE query: `WHERE id = $1 AND updated_at < $eventTimestamp`.",
+    "If `rowCount === 0`, check if the row exists; if it exists with a higher timestamp, discard the event as a stale out-of-order event."
+  ],
+  "testCases": [
+    {
+      "id": "tc-crm-1",
+      "name": "Rejects stale out-of-order updates",
+      "inputDescription": "null",
+      "expectedOutput": "\"monotonic_version_guard_applied\"",
+      "explanation": "Enforces strict monotonic state progression."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using an Event Sourcing model (Kafka / EventStore) with consumer partition ordering by CustomerId.",
+    "Vector Clocks / Lamport Timestamps across multiple distributed writing systems."
+  ],
+  "commonMistakes": [
+    "Doing `SELECT updated_at` in JavaScript, checking `if (eventTime > dbTime)`, and then executing `UPDATE`: this creates a race condition between concurrent webhook workers.",
+    "Relying on server wall-clock arrival time instead of the event payload generation timestamp."
+  ]
+}

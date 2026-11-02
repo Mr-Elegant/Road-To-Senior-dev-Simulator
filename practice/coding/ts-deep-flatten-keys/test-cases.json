@@ -1,0 +1,16 @@
+[
+  {
+    "id": "tc-path-1",
+    "name": "Resolves deeply nested auth.jwt.issuer path key",
+    "inputDescription": "\"auth.jwt.issuer\"",
+    "expectedOutput": "auth.enterprise.io",
+    "explanation": "Deep property access succeeds safely."
+  },
+  {
+    "id": "tc-path-2",
+    "name": "Resolves nested database.pool.max numeric key",
+    "inputDescription": "\"database.pool.max\"",
+    "expectedOutput": "20",
+    "explanation": "Deep property access returns numeric primitive stringified."
+  }
+]

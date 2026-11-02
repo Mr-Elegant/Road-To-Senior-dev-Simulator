@@ -1,15 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { signInTestAccount } from './support/account';
 
-test('Enterprise Labs navigation opens three honest project overviews and working exercise links', async ({ page }) => {
+test('Enterprise Labs navigation opens four project overviews and working exercise links', async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto('/');
   await page.getByRole('link', { name: 'Enterprise Labs', exact: true }).focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { name: 'Enterprise Labs', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Enterprise Labs', exact: true })).toHaveAttribute('aria-current', 'page');
-  await expect(page.getByText('14 hands-on exercises', { exact: true })).toBeVisible();
-  for (const title of ['Loan Operations', 'Commerce Operations', 'Multi-Tenant SaaS']) {
+  await expect(page.getByText('22 hands-on exercises', { exact: true })).toBeVisible();
+  for (const title of ['Loan Operations', 'Commerce Operations', 'Multi-Tenant SaaS', 'Real-Time Collaboration']) {
     await page.getByRole('link', { name: `Open ${title} lab`, exact: true }).click();
     await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
     if (title === 'Loan Operations') {
@@ -19,7 +19,7 @@ test('Enterprise Labs navigation opens three honest project overviews and workin
     } else {
       await expect(page.getByText('This collection currently focuses on coding exercises.', { exact: false })).toBeVisible();
       const exercises = page.getByRole('region', { name: 'Project exercises' });
-      await expect(exercises.getByRole('listitem')).toHaveCount(3);
+      await expect(exercises.getByRole('listitem')).toHaveCount(title === 'Real-Time Collaboration' ? 8 : 3);
       await exercises.getByRole('link').first().click();
       await expect(page.getByRole('button', { name: 'Submit & Evaluate', exact: true })).toBeVisible();
       await page.goBack();
@@ -82,14 +82,14 @@ test('project navigation and content fit mobile and desktop in both themes', asy
       await page.getByRole('button', { name: 'Toggle theme', exact: true }).click();
     }
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-    for (const slug of ['loan-operations', 'commerce-operations', 'multi-tenant-saas']) {
+    for (const slug of ['loan-operations', 'commerce-operations', 'multi-tenant-saas', 'real-time-collaboration']) {
       await page.goto(`/enterprise-labs/${slug}`);
       await expect(page.getByRole('heading', { name: 'Project exercises', exact: true })).toBeVisible();
       await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     }
   }
   await page.getByRole('button', { name: 'Toggle theme', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Multi-Tenant SaaS', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Real-Time Collaboration', exact: true })).toBeVisible();
   await page.screenshot({ path: '.playwright-mcp/enterprise-project-desktop.png', fullPage: true });
   await page.goto('/enterprise-labs');
   await expect(page.getByRole('heading', { name: 'Enterprise Labs', exact: true })).toBeVisible();

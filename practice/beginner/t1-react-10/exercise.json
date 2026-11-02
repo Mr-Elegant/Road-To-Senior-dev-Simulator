@@ -1,0 +1,17 @@
+{
+  "id": "t1-react-10",
+  "title": "How does parent-to-child and child-to-parent communication work in React?",
+  "category": "React Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 10,
+  "expectedConcepts": [
+    "Parent to child: Passing data/props down",
+    "Child to parent: Passing callback functions down, which child invokes with data",
+    "Lifting state up to the closest common ancestor"
+  ],
+  "hints": [
+    "Can a child change a prop directly?",
+    "How does a child trigger an action in its parent?"
+  ]
+}

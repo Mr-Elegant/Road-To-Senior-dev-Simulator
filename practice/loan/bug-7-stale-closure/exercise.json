@@ -1,0 +1,182 @@
+{
+  "bugId": "bug-7-stale-closure",
+  "title": "Read current filters when a refresh actually runs",
+  "entryPoint": "createRefresh",
+  "kind": "refresh",
+  "contract": "Implement createRefresh(getState, send), returning a synchronous refresh callback. On each callback invocation, read the current state {filters,pagination} and call send once with {...filters,page:pagination.page,limit:pagination.limit}. Do not send while creating the callback. The same callback must work after filters and pagination are replaced. Capture a fresh request snapshot; do not mutate state or previously sent requests.",
+  "starterCode": "function createRefresh(getState, send) {\n  const state = getState();\n  return () => send({ ...state.filters, page: state.pagination.page, limit: state.pagination.limit });\n}",
+  "hints": [
+    "The callback may run long after it is created. Which values does its closure retain?",
+    "Read getState inside the returned callback, then build a new request object."
+  ],
+  "tests": [
+    {
+      "id": "latest",
+      "name": "A delayed refresh uses the latest filters and page",
+      "input": {
+        "initial": {
+          "filters": {
+            "search": "",
+            "loanType": "Business"
+          },
+          "pagination": {
+            "page": 1,
+            "limit": 20
+          }
+        },
+        "events": [
+          {
+            "state": {
+              "filters": {
+                "search": "Mina",
+                "loanType": "Mortgage"
+              },
+              "pagination": {
+                "page": 3,
+                "limit": 50
+              }
+            },
+            "call": true
+          }
+        ]
+      },
+      "expected": [
+        {
+          "search": "Mina",
+          "loanType": "Mortgage",
+          "page": 3,
+          "limit": 50
+        }
+      ],
+      "explanation": "Read current state at callback execution time.",
+      "sample": true
+    },
+    {
+      "id": "two-calls",
+      "name": "The same callback sees successive state changes",
+      "input": {
+        "initial": {
+          "filters": {
+            "search": "",
+            "loanType": "Business"
+          },
+          "pagination": {
+            "page": 1,
+            "limit": 20
+          }
+        },
+        "events": [
+          {
+            "call": true
+          },
+          {
+            "state": {
+              "filters": {
+                "search": "Mina",
+                "loanType": "Mortgage"
+              },
+              "pagination": {
+                "page": 3,
+                "limit": 50
+              }
+            },
+            "call": true
+          }
+        ]
+      },
+      "expected": [
+        {
+          "search": "",
+          "loanType": "Business",
+          "page": 1,
+          "limit": 20
+        },
+        {
+          "search": "Mina",
+          "loanType": "Mortgage",
+          "page": 3,
+          "limit": 50
+        }
+      ],
+      "explanation": "A previously sent request must remain unchanged when later state changes.",
+      "sample": true
+    },
+    {
+      "id": "no-call",
+      "name": "Creating the callback does not send a request",
+      "input": {
+        "initial": {
+          "filters": {
+            "search": "",
+            "loanType": "Business"
+          },
+          "pagination": {
+            "page": 1,
+            "limit": 20
+          }
+        },
+        "events": [
+          {
+            "state": {
+              "filters": {
+                "search": "Mina",
+                "loanType": "Mortgage"
+              },
+              "pagination": {
+                "page": 3,
+                "limit": 50
+              }
+            }
+          }
+        ]
+      },
+      "expected": [],
+      "explanation": "Registration and execution are separate events.",
+      "sample": false
+    },
+    {
+      "id": "page-only",
+      "name": "A pagination-only update is also current",
+      "input": {
+        "initial": {
+          "filters": {
+            "search": "",
+            "loanType": "Business"
+          },
+          "pagination": {
+            "page": 1,
+            "limit": 20
+          }
+        },
+        "events": [
+          {
+            "state": {
+              "filters": {
+                "search": "",
+                "loanType": "Business"
+              },
+              "pagination": {
+                "page": 8,
+                "limit": 10
+              }
+            },
+            "call": true
+          }
+        ]
+      },
+      "expected": [
+        {
+          "search": "",
+          "loanType": "Business",
+          "page": 8,
+          "limit": 10
+        }
+      ],
+      "explanation": "Freshness applies to pagination as well as search.",
+      "sample": false
+    }
+  ],
+  "businessContext": "A background polling interval or debounced callback dispatches a refresh request using stale filter values captured when the callback was initially created.",
+  "productionSymptom": "After switching filters from \"Business\" to \"Mortgage\", a background refresh fires 10 seconds later and silently flips the view back to \"Business\" loans.",
+  "dashboardBuggyCode": "// ❌ BUGGY: Captures 'filters' at creation time in closure\nuseEffect(() => {\n  const interval = setInterval(() => {\n    // ⚠️ Stale closure: 'filters' never updates inside this interval!\n    dispatch(fetchApplications(filters));\n  }, 10000);\n  return () => clearInterval(interval);\n}, []); // Empty dependencies!"
+}

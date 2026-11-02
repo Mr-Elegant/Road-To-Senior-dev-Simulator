@@ -1,0 +1,28 @@
+[
+  {
+    "id": "tc-t2-07",
+    "description": "Verify single top-priced product per category",
+    "expectedRows": [
+      {
+        "category": "Apparel",
+        "name": "Waterproof Trail Running Shoes",
+        "price": 135
+      },
+      {
+        "category": "Books",
+        "name": "Database Internals in Practice",
+        "price": 52
+      },
+      {
+        "category": "Electronics",
+        "name": "Ultra-Wide 4K Gaming Monitor",
+        "price": 549
+      },
+      {
+        "category": "Home & Kitchen",
+        "name": "Smart Induction Espresso Machine",
+        "price": 249.99
+      }
+    ]
+  }
+]

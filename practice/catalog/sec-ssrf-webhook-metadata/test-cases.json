@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-ssrf-1",
+    "name": "Blocks internal IPs and pins verified public IP",
+    "inputDescription": "null",
+    "expectedOutput": "\"ssrf_firewall_and_dns_pinning_applied\"",
+    "explanation": "Enforces complete SSRF mitigation."
+  }
+]

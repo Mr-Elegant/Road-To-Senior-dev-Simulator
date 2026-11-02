@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-tier3-025-1",
+    "description": "Verify partial expression query execution",
+    "setupSql": "CREATE TABLE orders (id INT, customer_email VARCHAR(50), total_amount NUMERIC, status VARCHAR(20));\nINSERT INTO orders VALUES (1, 'ALICE@EXAMPLE.COM', 150, 'PENDING'), (2, 'BOB@EXAMPLE.COM', 200, 'DELIVERED'), (3, 'alice@example.com', 90, 'FAILED');",
+    "expectedOutputSql": "SELECT id, customer_email, total_amount, status FROM orders WHERE lower(customer_email) = 'alice@example.com' AND status = 'PENDING';",
+    "orderMatters": true
+  }
+]

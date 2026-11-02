@@ -1,0 +1,498 @@
+{
+  "id": "incident-migration-lock",
+  "title": "Migration Lock: A Small DDL Change Stops Orders",
+  "type": "incident",
+  "topic": "Databases",
+  "subtopic": "Evolving production incident",
+  "difficulty": "Staff/Principal",
+  "estimatedMinutes": 35,
+  "businessContext": "An orders table has 80 million rows. A deployment runs ALTER TABLE while a reporting transaction holds an older snapshot and a conflicting table lock. New order traffic begins queuing behind the waiting DDL.",
+  "problemStatement": "Order creation p99 reaches 30 seconds immediately after a schema migration starts; database CPU remains low. Work through three timed developments, justify your actions, and write an evidence-based incident response. The simulation starts paused; advancing time can expire unanswered decisions.",
+  "constraints": [
+    "Preserve committed orders and capture blocking evidence before intervention.",
+    "Do not kill all sessions or rewrite the large table during peak traffic.",
+    "Application rollback must remain compatible with the expanded schema.",
+    "All telemetry is synthetic. Actions only affect this practice simulation."
+  ],
+  "candidateTasks": [
+    "Contain customer impact while preserving evidence and data integrity.",
+    "Respond to each new development and explain the selected action.",
+    "Cite telemetry supporting the root cause; distinguish observation from inference.",
+    "Define a permanent correction, regression coverage, recovery gates, and stakeholder update."
+  ],
+  "incidentTelemetry": {
+    "logs": [
+      {
+        "timestamp": "T+00:00",
+        "level": "WARN",
+        "service": "orders-db",
+        "message": "Order creation p99 reaches 30 seconds immediately after a schema migration starts; database CPU remains low."
+      }
+    ],
+    "metrics": [
+      {
+        "metricName": "affected_operations_percent",
+        "baseline": "0.1",
+        "incidentPeak": "35",
+        "unit": "%",
+        "status": "critical",
+        "trend": "Latest observation after the selected action; not a live production metric"
+      }
+    ],
+    "customerReports": [
+      {
+        "id": "incident-migration-lock-report",
+        "reporter": "Incident commander",
+        "impact": "Active customer impact",
+        "quote": "Order creation p99 reaches 30 seconds immediately after a schema migration starts; database CPU remains low."
+      }
+    ],
+    "recentDeployments": [
+      {
+        "commitHash": "n-lock-r1",
+        "author": "service-team",
+        "message": "Run unbounded DDL in the deployment transaction",
+        "timeAgo": "12 minutes before the alert",
+        "diffSnippet": "BEGIN;\nALTER TABLE orders ADD COLUMN risk_band text;\n-- no lock_timeout\nCOMMIT;"
+      }
+    ]
+  },
+  "incidentSimulation": {
+    "version": 1,
+    "initialSeverity": "SEV1",
+    "stages": [
+      {
+        "id": "development-1",
+        "atSeconds": 0,
+        "title": "The waiting DDL forms a queue",
+        "briefing": "Migration PID 812 waits for AccessExclusiveLock; report PID 601 has run for 14 minutes. New order writes are blocked behind the migration request.",
+        "branches": {
+          "effective": "The migration is no longer building a blocking queue.",
+          "partial": "Some impact remains. A waiting high-conflict DDL request can continue delaying new work even before it acquires its lock.",
+          "harmful": "A waiting high-conflict DDL request can continue delaying new work even before it acquires its lock.",
+          "timeout": "The previous deadline passed without a response. A waiting high-conflict DDL request can continue delaying new work even before it acquires its lock."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+00:00",
+              "level": "WARN",
+              "service": "orders-db",
+              "message": "pg_blocking_pids(812) = {601}; lock_waiting_sessions = 126; report transaction age = 14m."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "1-partial",
+            "label": "Increase API timeouts while investigating",
+            "outcome": "partial",
+            "consequence": "Clients wait longer, but the lock queue and migration remain unchanged.",
+            "customerImpact": "Order submission stays unreliable.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "orders-db",
+                  "message": "Clients wait longer, but the lock queue and migration remain unchanged."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "27",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-harmful",
+            "label": "Restart PostgreSQL to clear every lock",
+            "outcome": "harmful",
+            "consequence": "All active transactions are interrupted, including healthy order processing.",
+            "customerImpact": "The outage expands and reconciliation work increases.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "orders-db",
+                  "message": "All active transactions are interrupted, including healthy order processing."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "80",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-effective",
+            "label": "Capture the blocker graph, then cancel the waiting migration",
+            "outcome": "effective",
+            "consequence": "The migration rolls back its uncommitted DDL and queued order statements resume.",
+            "customerImpact": "Order creation starts recovering without discarding committed data.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "orders-db",
+                  "message": "The migration rolls back its uncommitted DDL and queued order statements resume."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "5",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"The waiting DDL forms a queue\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+00:00",
+                "level": "WARN",
+                "service": "orders-db",
+                "message": "Decision deadline missed: pg_blocking_pids(812) = {601}; lock_waiting_sessions = 126; report transaction age = 14m."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "1-effective",
+          "reasoning": "Identify the lock chain and remove the waiting DDL when safe; use cancellation first. A restart or blanket termination introduces a much larger blast radius."
+        }
+      },
+      {
+        "id": "development-2",
+        "atSeconds": 120,
+        "title": "Deployment rollback is not schema rollback",
+        "briefing": "The application team wants to retry the same migration immediately. The reporting transaction is still open, and old app instances remain active.",
+        "branches": {
+          "effective": "Orders are flowing; use that breathing room to prepare a safe migration window.",
+          "partial": "Some impact remains. Cancel the conflicting DDL before retrying; the same blocker would recreate the queue.",
+          "harmful": "Cancel the conflicting DDL before retrying; the same blocker would recreate the queue.",
+          "timeout": "The previous deadline passed without a response. Cancel the conflicting DDL before retrying; the same blocker would recreate the queue."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+02:00",
+              "level": "WARN",
+              "service": "orders-db",
+              "message": "Report PID 601 remains idle in transaction; old and new app versions both serve traffic."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "2-harmful",
+            "label": "Drop the old column before all old instances drain",
+            "outcome": "harmful",
+            "consequence": "Old binaries reference a missing column and return errors even after locks clear.",
+            "customerImpact": "Order processing breaks for mixed-version traffic.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "orders-db",
+                  "message": "Old binaries reference a missing column and return errors even after locks clear."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "57",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-effective",
+            "label": "Coordinate the report, add a short lock timeout, and expand compatibly",
+            "outcome": "effective",
+            "consequence": "The report owner ends the abandoned transaction; the additive change either acquires a short lock or fails fast.",
+            "customerImpact": "Orders continue while old and new binaries coexist.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "orders-db",
+                  "message": "The report owner ends the abandoned transaction; the additive change either acquires a short lock or fails fast."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "1",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-partial",
+            "label": "Retry DDL with a statement timeout only",
+            "outcome": "partial",
+            "consequence": "Overall duration is bounded, but lock acquisition can still queue traffic for most of that timeout.",
+            "customerImpact": "Customers may encounter another avoidable pause.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "orders-db",
+                  "message": "Overall duration is bounded, but lock acquisition can still queue traffic for most of that timeout."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "12",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Deployment rollback is not schema rollback\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+02:00",
+                "level": "WARN",
+                "service": "orders-db",
+                "message": "Decision deadline missed: Report PID 601 remains idle in transaction; old and new app versions both serve traffic."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "2-effective",
+          "reasoning": "Use a short lock_timeout plus a suitable statement_timeout and expand-contract compatibility. Coordinate blockers explicitly rather than repeatedly taking locks."
+        }
+      },
+      {
+        "id": "development-3",
+        "atSeconds": 300,
+        "title": "Backfill without another incident",
+        "briefing": "The new nullable column exists. A proposed single transaction would backfill all 80 million rows before the deploy finishes.",
+        "branches": {
+          "effective": "The schema expansion succeeded; data movement must now respect replication and write capacity.",
+          "partial": "Some impact remains. Resolve version compatibility and lock pressure before any bulk data movement.",
+          "harmful": "Resolve version compatibility and lock pressure before any bulk data movement.",
+          "timeout": "The previous deadline passed without a response. Resolve version compatibility and lock pressure before any bulk data movement."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+05:00",
+              "level": "WARN",
+              "service": "orders-db",
+              "message": "Replica replay lag = 18s; proposed UPDATE targets 80000000 rows; disk headroom = 22%."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "3-effective",
+            "label": "Backfill in resumable batches with lag and disk gates",
+            "outcome": "effective",
+            "consequence": "Small committed batches make progress; the worker pauses when replication lag or disk pressure crosses the budget.",
+            "customerImpact": "Orders remain available while migration progress is measurable.",
+            "severity": "SEV3",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "orders-db",
+                  "message": "Small committed batches make progress; the worker pauses when replication lag or disk pressure crosses the budget."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "0.1",
+                  "unit": "%",
+                  "status": "normal",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-partial",
+            "label": "Run the backfill off-peak without resumable checkpoints",
+            "outcome": "partial",
+            "consequence": "Traffic contention is lower, but a failure may repeat expensive work and an oversized transaction remains risky.",
+            "customerImpact": "Recovery time for an interrupted backfill is uncertain.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "orders-db",
+                  "message": "Traffic contention is lower, but a failure may repeat expensive work and an oversized transaction remains risky."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "6",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-harmful",
+            "label": "Backfill all rows in one peak-time transaction",
+            "outcome": "harmful",
+            "consequence": "WAL volume, row versions and lock duration increase sharply; replicas fall further behind.",
+            "customerImpact": "Orders and reads degrade again.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "orders-db",
+                  "message": "WAL volume, row versions and lock duration increase sharply; replicas fall further behind."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "49",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Backfill without another incident\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+05:00",
+                "level": "WARN",
+                "service": "orders-db",
+                "message": "Decision deadline missed: Replica replay lag = 18s; proposed UPDATE targets 80000000 rows; disk headroom = 22%."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "3-effective",
+          "reasoning": "Separate schema expansion, resumable bounded backfill and final contraction. Gate each batch on replication lag, transaction duration and disk headroom."
+        }
+      }
+    ],
+    "endSeconds": 480
+  },
+  "hints": [
+    "Migration PID 812 waits on PID 601 according to pg_blocking_pids.",
+    "Record session age, query text, lock modes and blocker relationships; redact customer values.",
+    "Use expand-contract releases with a short lock_timeout; keep both application versions compatible with the expanded schema."
+  ],
+  "alternativeApproaches": [
+    "Schedule a reviewed low-traffic window with reporting coordination for DDL requiring stronger locks.",
+    "For an index-only change, consider CREATE INDEX CONCURRENTLY with its own operational constraints; it does not make arbitrary ALTER TABLE operations concurrent."
+  ],
+  "commonMistakes": [
+    "Assuming every ALTER TABLE rewrites the table or that metadata-only means lock-free.",
+    "Terminating every session without inspecting blockers.",
+    "Combining DDL, full-table backfill and destructive contraction in one release."
+  ]
+}

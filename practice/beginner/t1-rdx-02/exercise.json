@@ -1,0 +1,17 @@
+{
+  "id": "t1-rdx-02",
+  "title": "What is the difference between local component state and global state?",
+  "category": "Redux Toolkit Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 2,
+  "expectedConcepts": [
+    "Local state (managed with useState/useReducer inside a single component)",
+    "Global state (accessible application-wide via store)",
+    "Decision criteria: Who needs the data? Does it persist across page navigation?"
+  ],
+  "hints": [
+    "Does the navbar need to know that a modal in the footer is open?",
+    "If you refresh or leave the page, should the data survive navigation?"
+  ]
+}

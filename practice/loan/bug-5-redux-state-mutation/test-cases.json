@@ -1,0 +1,153 @@
+[
+  {
+    "id": "amount-asc",
+    "name": "Frozen state sorts by numeric amount ascending",
+    "input": {
+      "items": [
+        {
+          "id": "a",
+          "applicantName": "Aarav",
+          "loanAmount": 500,
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "applicantName": "Sophia",
+          "loanAmount": 100,
+          "status": "APPROVED"
+        },
+        {
+          "id": "c",
+          "applicantName": "Mina",
+          "loanAmount": 500,
+          "status": "PENDING"
+        }
+      ],
+      "sorting": {
+        "field": "loanAmount",
+        "order": "asc"
+      }
+    },
+    "expected": [
+      "b",
+      "a",
+      "c"
+    ],
+    "explanation": "Copying the array avoids mutating the frozen store; equal amounts remain stable.",
+    "sample": true
+  },
+  {
+    "id": "amount-desc",
+    "name": "Descending amounts keep stable ties",
+    "input": {
+      "items": [
+        {
+          "id": "a",
+          "applicantName": "Aarav",
+          "loanAmount": 500,
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "applicantName": "Sophia",
+          "loanAmount": 100,
+          "status": "APPROVED"
+        },
+        {
+          "id": "c",
+          "applicantName": "Mina",
+          "loanAmount": 500,
+          "status": "PENDING"
+        }
+      ],
+      "sorting": {
+        "field": "loanAmount",
+        "order": "desc"
+      }
+    },
+    "expected": [
+      "a",
+      "c",
+      "b"
+    ],
+    "explanation": "The comparator must handle equality in either direction.",
+    "sample": true
+  },
+  {
+    "id": "name",
+    "name": "Names sort in descending string order",
+    "input": {
+      "items": [
+        {
+          "id": "a",
+          "applicantName": "Aarav",
+          "loanAmount": 500,
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "applicantName": "Sophia",
+          "loanAmount": 100,
+          "status": "APPROVED"
+        },
+        {
+          "id": "c",
+          "applicantName": "Mina",
+          "loanAmount": 500,
+          "status": "PENDING"
+        }
+      ],
+      "sorting": {
+        "field": "applicantName",
+        "order": "desc"
+      }
+    },
+    "expected": [
+      "b",
+      "c",
+      "a"
+    ],
+    "explanation": "Select the requested field rather than always sorting amounts.",
+    "sample": false
+  },
+  {
+    "id": "empty",
+    "name": "An empty list is valid",
+    "input": {
+      "items": [],
+      "sorting": {
+        "field": "loanAmount",
+        "order": "asc"
+      }
+    },
+    "expected": [],
+    "explanation": "No special mutation or fabricated record is needed for empty input.",
+    "sample": false
+  },
+  {
+    "id": "numeric",
+    "name": "Amounts are compared numerically, not as strings",
+    "input": {
+      "items": [
+        {
+          "id": "small",
+          "loanAmount": 9
+        },
+        {
+          "id": "large",
+          "loanAmount": 100
+        }
+      ],
+      "sorting": {
+        "field": "loanAmount",
+        "order": "asc"
+      }
+    },
+    "expected": [
+      "small",
+      "large"
+    ],
+    "explanation": "String comparison would place 100 before 9.",
+    "sample": false
+  }
+]

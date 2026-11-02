@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-20",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 20,
+  "title": "PostgreSQL Read Committed vs. Repeatable Read Isolation Levels",
+  "category": "Isolation Levels and MVCC",
+  "questionType": "conceptual",
+  "realWorldScenario": "An analytical report queries customer balances at 10:00 AM, then executes a second query at 10:01 AM inside the same transaction. The second query returns different numbers because other users made payments in the interim.",
+  "questionStatement": "Explain why this Non-Repeatable Read anomaly occurs under PostgreSQL's default `Read Committed` isolation level. How does `Repeatable Read` prevent this using snapshot isolation?",
+  "expectedConcepts": [
+    "Read Committed statement-level snapshot",
+    "Repeatable Read transaction-level snapshot",
+    "Non-repeatable read anomaly definition",
+    "MVCC snapshot isolation"
+  ],
+  "hints": [
+    "Does a transaction see commits that happened after the transaction started, or after each statement started?"
+  ]
+}

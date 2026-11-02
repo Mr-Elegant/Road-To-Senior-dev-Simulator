@@ -1,0 +1,58 @@
+[
+  {
+    "id": "sub-1",
+    "name": "Active pro subscription can export",
+    "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[],\"now\":100}",
+    "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":true,\"outcomes\":[]}",
+    "hidden": false
+  },
+  {
+    "id": "sub-2",
+    "name": "Expiry boundary denies export",
+    "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"trialing\",\"plan\":\"pro\",\"periodEnd\":100,\"cancelAtPeriodEnd\":false},\"snapshots\":[],\"now\":100}",
+    "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"trialing\",\"plan\":\"pro\",\"periodEnd\":100,\"cancelAtPeriodEnd\":false},\"canExport\":false,\"outcomes\":[]}",
+    "hidden": false
+  },
+  {
+    "id": "sub-3",
+    "name": "Stale and replayed snapshots cannot restore canceled access",
+    "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":3,\"status\":\"canceled\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"a\",\"version\":2,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},{\"tenantId\":\"a\",\"version\":3,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false}],\"now\":100}",
+    "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":3,\"status\":\"canceled\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":false,\"outcomes\":[\"stale\",\"stale\"]}",
+    "hidden": true
+  },
+  {
+    "id": "sub-4",
+    "name": "Cancellation scheduled for period end preserves current access",
+    "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"a\",\"version\":2,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":true}],\"now\":100}",
+    "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":2,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":true},\"canExport\":true,\"outcomes\":[\"applied\"]}",
+    "hidden": true
+  },
+  {
+    "id": "sub-5",
+    "name": "Cross-tenant snapshot is rejected",
+    "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"starter\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"b\",\"version\":2,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false}],\"now\":100}",
+    "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"starter\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":false,\"outcomes\":[\"mismatch\"]}",
+    "hidden": true
+  },
+  {
+    "id": "sub-6",
+    "name": "Past due does not grant an implicit grace period",
+    "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"a\",\"version\":2,\"status\":\"past_due\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false}],\"now\":100}",
+    "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":2,\"status\":\"past_due\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":false,\"outcomes\":[\"applied\"]}",
+    "hidden": true
+  },
+  {
+    "id": "sub-7",
+    "name": "Invalid internal version is not applied",
+    "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"a\",\"version\":2.5,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false}],\"now\":100}",
+    "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":true,\"outcomes\":[\"invalid\"]}",
+    "hidden": true
+  },
+  {
+    "id": "sub-8",
+    "name": "A newer downgrade removes exports",
+    "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"trialing\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"a\",\"version\":2,\"status\":\"active\",\"plan\":\"starter\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false}],\"now\":100}",
+    "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":2,\"status\":\"active\",\"plan\":\"starter\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":false,\"outcomes\":[\"applied\"]}",
+    "hidden": true
+  }
+]

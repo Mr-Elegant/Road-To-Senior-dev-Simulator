@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-trace-1",
+    "name": "Eliminates sequential RPC waterfall and batches remote calls",
+    "inputDescription": "null",
+    "expectedOutput": "\"batch_rpc_and_w3c_trace_propagated\"",
+    "explanation": "Reduces latency from 3,600ms to < 200ms."
+  }
+]

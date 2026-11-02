@@ -1,0 +1,28 @@
+[
+  {
+    "id": "tc-t1-09",
+    "description": "Verify product catalog breakdown by category",
+    "expectedRows": [
+      {
+        "category": "Electronics",
+        "product_count": 4,
+        "avg_price": 225.87
+      },
+      {
+        "category": "Apparel",
+        "product_count": 2,
+        "avg_price": 112
+      },
+      {
+        "category": "Home & Kitchen",
+        "product_count": 2,
+        "avg_price": 149.97
+      },
+      {
+        "category": "Books",
+        "product_count": 2,
+        "avg_price": 48.5
+      }
+    ]
+  }
+]

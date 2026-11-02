@@ -1,0 +1,45 @@
+{
+  "id": "sql-tier4-001",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 1,
+  "title": "Production Incident: Multi-Transaction Deadlock Graph & Lock Queue Analysis",
+  "category": "Locks and Deadlocks",
+  "questionType": "incident",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "During Black Friday peak traffic, 40 API pods fail with HTTP 500 errors. Database CPU hits 100%, and application logs show repeating `ERROR: 40P01: deadlock detected`. The PostgreSQL log displays a complex lock cycle between three concurrent transactions.",
+  "questionStatement": "Analyze the PostgreSQL deadlock detection mechanism (`deadlock_timeout`). Given the telemetry and log snippet below, trace the cycle in the lock graph. Explain why deadlocks occur even when individual queries are fast, and detail architectural strategies to eliminate deadlocks permanently.",
+  "incidentDetails": {
+    "symptoms": [
+      "Massive API latency spike (p99 > 30s)",
+      "HTTP 500 responses across checkout and refund endpoints",
+      "Active PostgreSQL backend connections maxed out at 400",
+      "Database logs flooded with ERROR: 40P01: deadlock detected"
+    ],
+    "systemTelemetry": {
+      "activeConnections": 395,
+      "lockWaitsCount": 182,
+      "cpuUtilizationPercent": 98,
+      "bufferCacheHitRatio": 99.2,
+      "logSnippet": "2026-11-01 10:14:02 UTC [1201]: [3-1] user=app,db=ecommerce ERROR:  deadlock detected\nDETAIL:  Process 1201 waits for ShareLock on transaction 89104; blocked by process 1204.\nProcess 1204 waits for ExclusiveLock on tuple (48, 12) of relation 16402 of database 16384; blocked by process 1209.\nProcess 1209 waits for ShareLock on transaction 89102; blocked by process 1201.\nHINT:  See server log for query details.\nSTATEMENT:  UPDATE payments SET status = 'CAPTURED' WHERE order_id = 91823;"
+    },
+    "candidateTasks": [
+      "Decode the 3-process lock dependency cycle from the error log",
+      "Explain why deadlock_timeout (default 1s) prevents infinite lock hangs",
+      "Provide the exact query to inspect live lock contention in pg_locks and pg_stat_activity",
+      "Detail the two permanent architectural remediations: strict resource acquisition ordering and optimistic concurrency"
+    ]
+  },
+  "expectedConcepts": [
+    "Circular wait graph analysis (1201 -> 1204 -> 1209 -> 1201)",
+    "deadlock_timeout and background cycle detection algorithm",
+    "pg_locks and pg_stat_activity join query for diagnosing blocking chains",
+    "Strict deterministic lock acquisition ordering (sorting IDs)",
+    "Never holding DB locks during external network I/O"
+  ],
+  "hints": [
+    "Follow the processes in the log snippet: who is holding what transaction ID?",
+    "Why does PostgreSQL wait 1 second before checking for a deadlock?",
+    "How does sorting IDs before locking prevent cycles?"
+  ]
+}

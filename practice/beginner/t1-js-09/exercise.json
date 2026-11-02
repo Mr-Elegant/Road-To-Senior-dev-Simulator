@@ -1,0 +1,24 @@
+{
+  "id": "t1-js-09",
+  "title": "What is variable scope and what is a closure in simple terms?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 9,
+  "expectedConcepts": [
+    "Global scope, Function scope, and Block scope",
+    "Lexical scoping (inner functions can see outer variables)",
+    "Closure: A function that remembers the variables from its outer lexical scope even after that outer function has returned"
+  ],
+  "hints": [
+    "Think about where a variable is born and where it can be seen.",
+    "When an outer function returns an inner function, what happens to the variables in the outer function?"
+  ],
+  "codingExercise": {
+    "instruction": "Complete the createMultiplier(factor) function so that it returns a function that multiplies any input number by the given factor.",
+    "starterCode": "function createMultiplier(factor) {\n  // Return an inner function that accepts (num) and multiplies by factor\n}",
+    "language": "javascript",
+    "sampleInput": "const triple = createMultiplier(3); triple(4)",
+    "expectedOutput": "12"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-24",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 24,
+  "title": "PostgreSQL Autovacuum and Table Bloat",
+  "category": "Isolation Levels and MVCC",
+  "questionType": "conceptual",
+  "realWorldScenario": "A high-frequency orders table receives 500,000 updates daily. Over two months, disk usage doubled even though the active row count remained constant at 1 million rows.",
+  "questionStatement": "What causes Table Bloat in PostgreSQL? Explain what the VACUUM process does, and why VACUUM FULL should be used with extreme caution.",
+  "expectedConcepts": [
+    "Dead tuple accumulation from UPDATE/DELETE",
+    "Standard VACUUM reclaims space internally without blocking",
+    "VACUUM FULL acquires ACCESS EXCLUSIVE lock and rewrites file",
+    "Table bloat impact on memory cache and sequential scans"
+  ],
+  "hints": [
+    "Standard VACUUM is online; VACUUM FULL is an exclusive lock rewrite."
+  ]
+}

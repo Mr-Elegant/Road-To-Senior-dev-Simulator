@@ -1,0 +1,98 @@
+{
+  "id": "commerce-payment-reconciliation",
+  "title": "E-commerce: Reconcile Duplicate Payment Notifications",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "E-commerce / Payment reconciliation",
+  "difficulty": "Senior",
+  "estimatedMinutes": 40,
+  "businessContext": "A retailer dispatches an order twice after two different notification IDs describe the same successful payment. A delayed failure then changes a paid order back to failed.",
+  "problemStatement": "Implement solution({ orders, events }) returning { orders, outcomes }. Orders have unique id, total in integer minor units, currency, and status pending/failed/paid. Each normalized event has id, paymentId, orderId, amount, currency, type succeeded/failed, and verified. The fixture starts with no processed notifications or payment ledger. Process events in order. verified represents a trusted adapter decision, not a cryptographic check performed by this function. Do not mutate input orders.",
+  "constraints": [
+    "In order: reject verified !== true as unverified; unknown types as ignored; missing orders, mismatched amount/currency, or a nonpositive/non-safe-integer amount as mismatch. Rejected events are not recorded.",
+    "For valid events, previously seen event IDs return duplicate. For a succeeded event: a paymentId already applied to the same order returns duplicate, one applied to a different order returns conflict, and a new payment for an already paid order returns review without recording it. Otherwise mark paid, record payment identity, and return paid.",
+    "A failed event returns ignored if the order is already paid; otherwise mark failed and return failed. Remember valid event IDs except review/conflict. IDs are nonempty strings; event ID payloads are immutable in this normalized fixture."
+  ],
+  "candidateTasks": [
+    "Fix event deduplication, payment identity, order validation, and paid-state monotonicity.",
+    "Describe durable atomic processing, signature verification, and handling a real second payment."
+  ],
+  "starterCode": "function solution({ orders, events }) {\n  const copy = orders.map(order => ({ ...order }));\n  const outcomes = events.map(event => {\n    const order = copy.find(order => order.id === event.orderId);\n    if (!order) return \"mismatch\";\n    order.status = event.type === \"succeeded\" ? \"paid\" : \"failed\";\n    return order.status;\n  });\n  return { orders: copy, outcomes };\n}",
+  "testCases": [
+    {
+      "id": "payment-1",
+      "name": "Confirmed payment marks matching order paid",
+      "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+      "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"paid\"]}",
+      "hidden": false
+    },
+    {
+      "id": "payment-2",
+      "name": "Unverified notification cannot change an order",
+      "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":false}]}",
+      "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"outcomes\":[\"unverified\"]}",
+      "hidden": false
+    },
+    {
+      "id": "payment-3",
+      "name": "Repeated event and distinct event for same payment apply once",
+      "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true},{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true},{\"id\":\"e2\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+      "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"paid\",\"duplicate\",\"duplicate\"]}",
+      "hidden": true
+    },
+    {
+      "id": "payment-4",
+      "name": "Delayed failure cannot revoke paid state",
+      "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"failed\",\"verified\":true}]}",
+      "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"ignored\"]}",
+      "hidden": true
+    },
+    {
+      "id": "payment-5",
+      "name": "Mismatch does not consume the event ID",
+      "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":99,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true},{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+      "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"mismatch\",\"paid\"]}",
+      "hidden": true
+    },
+    {
+      "id": "payment-6",
+      "name": "Same payment cannot pay two orders",
+      "inputDescription": "{\"orders\":[{\"id\":\"a\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"},{\"id\":\"b\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e0\",\"paymentId\":\"p1\",\"orderId\":\"a\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true},{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"b\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+      "expectedOutput": "{\"orders\":[{\"id\":\"a\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"},{\"id\":\"b\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"outcomes\":[\"paid\",\"conflict\"]}",
+      "hidden": true
+    },
+    {
+      "id": "payment-7",
+      "name": "Second distinct payment needs review",
+      "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"new-payment\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+      "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"review\"]}",
+      "hidden": true
+    },
+    {
+      "id": "payment-8",
+      "name": "Currency and missing-order mismatches are rejected",
+      "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"EUR\",\"type\":\"succeeded\",\"verified\":true},{\"id\":\"e2\",\"paymentId\":\"p2\",\"orderId\":\"missing\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+      "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"outcomes\":[\"mismatch\",\"mismatch\"]}",
+      "hidden": true
+    },
+    {
+      "id": "payment-9",
+      "name": "Failed payment can recover; unsupported notification is ignored",
+      "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e0\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"unknown\",\"verified\":true},{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"failed\",\"verified\":true},{\"id\":\"e2\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+      "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"ignored\",\"failed\",\"paid\"]}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "Delivery identity and business payment identity solve different duplication problems.",
+    "Paid state must survive older failures; a second genuine payment requires reconciliation rather than another dispatch."
+  ],
+  "alternativeApproaches": [
+    "Persist verified deliveries to a durable inbox and reconcile payments in a worker; acknowledge only after the inbox commit."
+  ],
+  "commonMistakes": [
+    "Deduplicating notification IDs while allowing two events for the same payment to dispatch twice.",
+    "Assuming delivery order equals payment state order."
+  ],
+  "codeLanguage": "javascript"
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "payment-1",
+    "name": "Confirmed payment marks matching order paid",
+    "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+    "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"paid\"]}",
+    "hidden": false
+  },
+  {
+    "id": "payment-2",
+    "name": "Unverified notification cannot change an order",
+    "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":false}]}",
+    "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"outcomes\":[\"unverified\"]}",
+    "hidden": false
+  },
+  {
+    "id": "payment-3",
+    "name": "Repeated event and distinct event for same payment apply once",
+    "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true},{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true},{\"id\":\"e2\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+    "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"paid\",\"duplicate\",\"duplicate\"]}",
+    "hidden": true
+  },
+  {
+    "id": "payment-4",
+    "name": "Delayed failure cannot revoke paid state",
+    "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"failed\",\"verified\":true}]}",
+    "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"ignored\"]}",
+    "hidden": true
+  },
+  {
+    "id": "payment-5",
+    "name": "Mismatch does not consume the event ID",
+    "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":99,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true},{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+    "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"mismatch\",\"paid\"]}",
+    "hidden": true
+  },
+  {
+    "id": "payment-6",
+    "name": "Same payment cannot pay two orders",
+    "inputDescription": "{\"orders\":[{\"id\":\"a\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"},{\"id\":\"b\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e0\",\"paymentId\":\"p1\",\"orderId\":\"a\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true},{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"b\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+    "expectedOutput": "{\"orders\":[{\"id\":\"a\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"},{\"id\":\"b\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"outcomes\":[\"paid\",\"conflict\"]}",
+    "hidden": true
+  },
+  {
+    "id": "payment-7",
+    "name": "Second distinct payment needs review",
+    "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"new-payment\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+    "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"review\"]}",
+    "hidden": true
+  },
+  {
+    "id": "payment-8",
+    "name": "Currency and missing-order mismatches are rejected",
+    "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"EUR\",\"type\":\"succeeded\",\"verified\":true},{\"id\":\"e2\",\"paymentId\":\"p2\",\"orderId\":\"missing\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+    "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"outcomes\":[\"mismatch\",\"mismatch\"]}",
+    "hidden": true
+  },
+  {
+    "id": "payment-9",
+    "name": "Failed payment can recover; unsupported notification is ignored",
+    "inputDescription": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"pending\"}],\"events\":[{\"id\":\"e0\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"unknown\",\"verified\":true},{\"id\":\"e1\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"failed\",\"verified\":true},{\"id\":\"e2\",\"paymentId\":\"p1\",\"orderId\":\"o\",\"amount\":100,\"currency\":\"USD\",\"type\":\"succeeded\",\"verified\":true}]}",
+    "expectedOutput": "{\"orders\":[{\"id\":\"o\",\"total\":100,\"currency\":\"USD\",\"status\":\"paid\"}],\"outcomes\":[\"ignored\",\"failed\",\"paid\"]}",
+    "hidden": true
+  }
+]

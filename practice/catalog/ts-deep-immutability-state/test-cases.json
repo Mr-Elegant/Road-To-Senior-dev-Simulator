@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-deep-1",
+    "name": "Retrieves nested property from deeply immutable state",
+    "inputDescription": "null",
+    "expectedOutput": "\"USD\"",
+    "explanation": "Deep property access succeeds safely."
+  }
+]

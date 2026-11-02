@@ -1,0 +1,26 @@
+{
+  "id": "t1-js-07",
+  "title": "How do map, filter, and find work on JavaScript arrays?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 7,
+  "expectedConcepts": [
+    "map transforms every element and returns a new array of same length",
+    "filter tests elements with a predicate and returns a subset array",
+    "find returns the first matching item or undefined",
+    "Immutability (none of these mutate the original array)"
+  ],
+  "hints": [
+    "Which method changes the shape or value of elements?",
+    "Which method reduces the list to only items meeting a condition?",
+    "Which method stops at the first match?"
+  ],
+  "codingExercise": {
+    "instruction": "Write a function getEvenNumbers(numbers) that uses the filter method to return only even numbers.",
+    "starterCode": "function getEvenNumbers(numbers) {\n  // Use numbers.filter() to return only even numbers\n}",
+    "language": "javascript",
+    "sampleInput": "getEvenNumbers([1, 2, 3, 4, 5, 6])",
+    "expectedOutput": "[2, 4, 6]"
+  }
+}

@@ -60,6 +60,14 @@ export const enterpriseLabs: EnterpriseLab[] = [
     workflow: ['Close the cross-tenant invoice access bug using explicit permissions.', 'Reconcile subscription snapshots and verify the access expiry boundary.', 'Produce safe audit records and explain how to store them durably.'],
     exercises: ['saas-tenant-authorization', 'saas-subscription-entitlements', 'saas-safe-audit-history'].map(scenarioExercise),
   },
+  {
+    id: 'real-time-collaboration', title: 'Real-Time Collaboration', domain: 'Communication & chat', format: 'challenges',
+    summary: 'Keep conversations correct through retries, reconnects, stale receipts, and meeting signaling races.',
+    businessContext: 'A team messaging product needs ordered conversations, reliable history, private channels, and predictable meeting lifecycles. Clients reconnect from multiple devices while events arrive late or repeat.',
+    skills: ['Message ordering', 'Reconnect recovery', 'Channel authorization', 'Meeting signaling'],
+    workflow: ['Repair message ordering and replay cursors first.', 'Reconcile read receipts and presence across devices.', 'Enforce channel permissions and notification preferences.', 'Fence stale meeting signals, then page chat history safely.'],
+    exercises: ['collab-message-ordering', 'collab-reconnect-cursor', 'collab-read-receipts', 'collab-presence-expiry', 'collab-channel-permissions', 'collab-notification-delivery', 'collab-meeting-signaling', 'collab-history-pagination'].map(scenarioExercise),
+  },
 ];
 
 export function getEnterpriseLab(id: string): EnterpriseLab | undefined {

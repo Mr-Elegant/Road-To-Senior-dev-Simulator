@@ -1,0 +1,43 @@
+{
+  "id": "integ-webhook-idempotency-replay",
+  "title": "Stripe Payment Webhook Replay & Duplicate Credit Crediting",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "Payment webhooks",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A digital media platform charges users $20 to buy 200 credits. Due to a temporary 4-second database latency spike, our webhook handler took 6 seconds to respond with 200 OK. Stripe considered the request timed out and retried the webhook 3 times over the next 10 minutes. Because the handler lacked idempotency checking, the user received 800 credits for a single $20 purchase.",
+  "problemStatement": "Webhooks use \"at-least-once\" delivery semantics; retries, duplicate deliveries, and out-of-order deliveries are normal. Refactor the webhook receiver to use an atomic Idempotency Key record in PostgreSQL or Redis, verify cryptographic webhook signatures, and return immediate 200 OK for previously processed event IDs.",
+  "constraints": [
+    "Must guarantee exactly-once business side effects (granting credits).",
+    "Must verify Stripe HMAC-SHA256 signature against webhook secret.",
+    "Must return 200 OK on duplicate deliveries without re-executing credit grants."
+  ],
+  "starterCode": "/**\n * Vulnerable Webhook Handler: No Idempotency or Signature Verification\n */\nasync function handleStripeWebhook(req, res, db) {\n  const event = req.body;\n\n  // BUG 1: No Stripe-Signature cryptographic header check! Anyone can spoof events.\n  // BUG 2: No idempotency check on event.id! Retried webhooks double-credit the customer.\n  if (event.type === 'payment_intent.succeeded') {\n    const paymentIntent = event.data.object;\n    const customerId = paymentIntent.customer;\n    const creditsToGrant = paymentIntent.amount / 10;\n\n    await db.query(\n      'UPDATE users SET credit_balance = credit_balance + $1 WHERE stripe_customer_id = $2',\n      [creditsToGrant, customerId]\n    );\n  }\n\n  res.status(200).json({ received: true });\n}\n\nfunction solution(input) {\n  return \"idempotent_webhook_with_signature\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Verify the `stripe-signature` header using `stripe.webhooks.constructEvent(rawBody, sig, secret)`.",
+    "Implement an `idempotency_keys` table or transactional `INSERT ... ON CONFLICT DO NOTHING` on `event.id`.",
+    "Ensure duplicate retries immediately return `200 OK` without throwing or re-crediting balance."
+  ],
+  "hints": [
+    "Store `event.id` in a dedicated `processed_events` table with a UNIQUE constraint.",
+    "Wrap event insertion and credit update in a single database transaction. If the event ID already exists, commit/exit early with 200 OK."
+  ],
+  "testCases": [
+    {
+      "id": "tc-hook-1",
+      "name": "Prevents duplicate processing of identical event IDs",
+      "inputDescription": "null",
+      "expectedOutput": "\"idempotent_webhook_with_signature\"",
+      "explanation": "Enforces idempotency and cryptographic signature validation."
+    }
+  ],
+  "alternativeApproaches": [
+    "Ingesting raw webhooks into an SQS / Kafka queue immediately and returning 200 OK, delegating idempotency and processing to background workers."
+  ],
+  "commonMistakes": [
+    "Returning 500 when a duplicate webhook arrives: this causes Stripe to keep retrying the webhook indefinitely.",
+    "Checking if the event exists in Redis with GET then SET (non-atomic race condition under simultaneous retries)."
+  ]
+}

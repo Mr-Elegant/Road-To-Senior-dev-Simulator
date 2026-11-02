@@ -1,0 +1,44 @@
+{
+  "id": "nextjs-isr-cache-stampede",
+  "title": "Product Catalog High-Traffic ISR Cache Stampede / Dog-Piling",
+  "type": "debugging",
+  "topic": "Next.js",
+  "subtopic": "Caching and revalidation",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A leading apparel retailer uses Incremental Static Regeneration (ISR) with `revalidate: 60`. During a product drop with 200,000 visitors per minute, when the 60-second cache window expires, thousands of concurrent requests miss cache simultaneously and hit the PostgreSQL database, exhausting connection pools and causing a site-wide 504 Gateway Timeout.",
+  "problemStatement": "Under high concurrency, when a static page becomes stale, multiple incoming requests trigger parallel background revalidations because there is no single-flight deduplication / distributed lock. Diagnose the cache stampede (dog-piling) and implement a distributed stale-while-revalidate lock / mutex pattern.",
+  "constraints": [
+    "Must maintain high-throughput static caching (sub-20ms P99 for cached reads).",
+    "At most 1 revalidation query should hit the database per cache expiry cycle.",
+    "Stale content must be served to subsequent shoppers while revalidation is in flight."
+  ],
+  "starterCode": "/**\n * ISR Route Segment Config & Cache Fetcher\n */\n// export const revalidate = 60; // 60 seconds ISR\n\nexport async function fetchCatalogData(productId) {\n  // BUG: When cache expires under 10,000 rps, 10,000 workers all execute\n  // this heavy DB query in parallel because there is no single-flight lock!\n  console.log(\"CACHE MISS: Querying PostgreSQL for product:\", productId);\n  \n  // Heavy database query taking 450ms\n  return queryDatabase(productId);\n}\n\nasync function queryDatabase(id) {\n  return { id, title: \"Limited Edition Jacket\", stock: 45 };\n}\n\nfunction solution(input) {\n  return \"single_flight_deduplicated\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain the Cache Stampede (Dog-Piling / Thundering Herd) problem in Next.js ISR.",
+    "Implement single-flight promise memoization or Redis distributed lock with `SET NX PX`.",
+    "Explain the role of Next.js 15 `unstable_cache` / Cache Handler in multi-instance cluster deployments."
+  ],
+  "hints": [
+    "In a single process, a Map of in-flight promises can deduplicate parallel requests.",
+    "In a multi-pod Kubernetes cluster, use a distributed cache lock in Redis so only one pod regenerates the cache while others serve stale."
+  ],
+  "testCases": [
+    {
+      "id": "tc-isr-1",
+      "name": "Deduplicates concurrent revalidation calls into single flight",
+      "inputDescription": "null",
+      "expectedOutput": "\"single_flight_deduplicated\"",
+      "explanation": "Ensures only 1 database query executes during concurrent cache miss."
+    }
+  ],
+  "alternativeApproaches": [
+    "Probabilistic early expiration (XFetch algorithm) to revalidate before the cache hard-expires.",
+    "Active cron-based cache warmers instead of passive on-demand revalidation."
+  ],
+  "commonMistakes": [
+    "Simply increasing the cache TTL: that only delays the stampede when it finally expires.",
+    "Allowing multiple pods to run revalidation in parallel, wiping out the database connection pool."
+  ]
+}

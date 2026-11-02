@@ -1,0 +1,20 @@
+{
+  "id": "t1-node-05",
+  "title": "What are the most common HTTP status code ranges and their specific meanings?",
+  "category": "Node.js and API Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 5,
+  "expectedConcepts": [
+    "2xx Success: 200 OK, 201 Created",
+    "3xx Redirection: 301 Moved Permanently, 304 Not Modified",
+    "4xx Client Errors: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found",
+    "5xx Server Errors: 500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable",
+    "Difference between 401 (Authentication required) and 403 (Permission denied)"
+  ],
+  "hints": [
+    "What status code indicates a new item was successfully created?",
+    "Which status code means a page or resource is missing?",
+    "What status code indicates an unhandled server crash?"
+  ]
+}

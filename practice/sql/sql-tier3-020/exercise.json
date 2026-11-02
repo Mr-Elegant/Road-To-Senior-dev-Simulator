@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-020",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 20,
+  "title": "CTEs in PostgreSQL 12+: MATERIALIZED vs NOT MATERIALIZED",
+  "category": "Subqueries and CTEs",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "After upgrading a database from PostgreSQL 11 to PostgreSQL 14, an analytical query that used a Common Table Expression ran 50 times faster. However, another query containing a CTE suddenly experienced a severe plan regression.",
+  "questionStatement": "Explain the fundamental change PostgreSQL 12 introduced regarding Common Table Expression (CTE) optimization. What is CTE inlining? How do the `AS MATERIALIZED` and `AS NOT MATERIALIZED` clauses allow developers to explicitly control query planner behavior and optimization fences?",
+  "expectedConcepts": [
+    "Pre-PG12 optimization fence behavior and forced materialization",
+    "PG12+ automatic CTE inlining when referenced once without side-effects",
+    "Predicate pushdown benefits of inlining",
+    "WITH cte AS MATERIALIZED syntax to restore fence",
+    "AS NOT MATERIALIZED to force inlining across multiple references"
+  ],
+  "hints": [
+    "What is an optimization fence in database query planners?",
+    "What happens when an outer WHERE clause cannot be pushed inside a CTE?",
+    "Check the AS MATERIALIZED keyword introduced in PostgreSQL 12."
+  ]
+}

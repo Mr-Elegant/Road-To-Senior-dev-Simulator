@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-a11y-1",
+    "name": "Supports full ARIA combobox pattern and keyboard events",
+    "inputDescription": "null",
+    "expectedOutput": "\"wcag_compliant\"",
+    "explanation": "Implements accessible keyboard navigation and ARIA attributes."
+  }
+]

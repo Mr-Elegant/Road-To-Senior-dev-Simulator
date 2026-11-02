@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-017",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 17,
+  "title": "Correlated Columns and Multi-Column Extended Statistics (CREATE STATISTICS)",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A query filtering `WHERE make = 'Audi' AND model = 'R8'` estimates that 1 row will match, but in reality 85,000 rows match. Because of this massive misestimation, PostgreSQL chooses a disastrous Nested Loop instead of a Hash Join, taking 45 seconds.",
+  "questionStatement": "Explain how PostgreSQL computes selectivity for multi-column WHERE clauses by default. Why does the conditional independence assumption fail for correlated data? How does `CREATE STATISTICS` (dependencies, ndistinct, mcv) resolve multi-column cardinality estimation errors?",
+  "expectedConcepts": [
+    "Conditional independence assumption: P(A and B) = P(A) * P(B)",
+    "Severe underestimation on correlated attributes",
+    "Planner picking nested loop due to 1-row estimation",
+    "CREATE STATISTICS syntax with dependencies, mcv, and ndistinct",
+    "Mandatory ANALYZE step to populate the statistics object"
+  ],
+  "hints": [
+    "Why does multiplying two probabilities underestimate matching rows when columns are correlated?",
+    "What happens to join selection when the planner expects 1 row instead of 85,000?",
+    "Check CREATE STATISTICS in PostgreSQL 10+."
+  ]
+}

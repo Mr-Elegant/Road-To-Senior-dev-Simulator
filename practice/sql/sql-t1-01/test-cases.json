@@ -1,0 +1,33 @@
+[
+  {
+    "id": "tc-t1-01",
+    "description": "Verify first 5 products in alphabetical order",
+    "expectedRows": [
+      {
+        "name": "Database Internals in Practice",
+        "category": "Books",
+        "price": 52
+      },
+      {
+        "name": "Designing Data-Intensive Applications",
+        "category": "Books",
+        "price": 45
+      },
+      {
+        "name": "Discontinued USB Hub",
+        "category": "Electronics",
+        "price": 25
+      },
+      {
+        "name": "Ergonomic Standing Desk Mat",
+        "category": "Home & Kitchen",
+        "price": 49.95
+      },
+      {
+        "name": "Mechanical Wireless Keyboard",
+        "category": "Electronics",
+        "price": 129.5
+      }
+    ]
+  }
+]

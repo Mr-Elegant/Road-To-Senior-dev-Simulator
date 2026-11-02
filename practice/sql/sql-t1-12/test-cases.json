@@ -1,0 +1,7 @@
+[
+  {
+    "id": "tc-t1-12",
+    "description": "Verify customers with no orders (all 8 customers in test seed have orders, so returns 0 rows)",
+    "expectedRows": []
+  }
+]

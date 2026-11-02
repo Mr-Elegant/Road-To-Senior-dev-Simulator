@@ -1,0 +1,34 @@
+{
+  "id": "interview-lead-incident-postmortem",
+  "title": "Lead Engineer Interview: 45-Minute Outage Facilitation & Blameless Post-Mortem",
+  "type": "senior_interview",
+  "topic": "Engineering Operations",
+  "subtopic": "Production incident response",
+  "difficulty": "Staff/Principal",
+  "estimatedMinutes": 40,
+  "businessContext": "A junior developer merged a migration that dropped an active database index during peak business hours. The database locked up, web servers exhausted connection pools, and the platform suffered a total 45-minute outage costing $350,000 in lost revenue. Company leadership is furious and demanding someone be held accountable.",
+  "problemStatement": "As the Engineering Lead / Staff Architect, step into the leadership role. Facilitate the post-mortem, steer leadership away from punitive blame toward systemic root cause analysis, conduct the 5 Whys investigation, and design automated preventative guardrails (CI/CD linting, zero-downtime migration linters, read-only replica failover) so this class of failure is structurally impossible in the future.",
+  "constraints": [
+    "Maintain an uncompromisingly blameless culture focused on systemic safeguards.",
+    "Conduct a thorough 5 Whys root cause analysis.",
+    "Define actionable, prioritized Action Items (Prevent, Detect, Mitigate)."
+  ],
+  "candidateTasks": [
+    "Question 1: How do you respond to executive leadership demanding to know \"which developer made the mistake\"?",
+    "Question 2: Walk through the \"5 Whys\" methodology for this incident.",
+    "Question 3: Distinguish between the Proximate Cause vs Systemic Root Cause.",
+    "Question 4: Present the Action Item Matrix categorized into: Preventative Guardrails, Detection/Observability, and Mitigation.",
+    "Question 5: How do you foster psychological safety in an engineering organization after a major production failure?"
+  ],
+  "hints": [
+    "Blameless culture principle: You cannot \"fire\" your way to reliability. If a system allows a single developer to bring down production with a single command, the system is defective, not the human.",
+    "Action items should include tools like `strong_migrations` or `pg-eyeballs` in CI to reject locking migrations automatically."
+  ],
+  "alternativeApproaches": [
+    "Using blue/green database deployments with logical replication."
+  ],
+  "commonMistakes": [
+    "Creating manual approval committees or adding 5 more people to review PRs (creates bureaucratic drag without fixing systemic issues).",
+    "Failing to establish a hard lock_timeout in PostgreSQL."
+  ]
+}

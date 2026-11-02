@@ -1,0 +1,20 @@
+{
+  "id": "sql-t1-19",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 19,
+  "title": "Third Normal Form (3NF) and Transitive Dependencies",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "realWorldScenario": "An employee table contains (emp_id, emp_name, dept_id, dept_manager_name).",
+  "questionStatement": "Explain why storing dept_manager_name violates Third Normal Form (3NF). What is a transitive dependency?",
+  "expectedConcepts": [
+    "Must be in 2NF",
+    "No transitive dependencies",
+    "Non-key column depending on another non-key column",
+    "Normalization into departments table"
+  ],
+  "hints": [
+    "Who does the manager belong to: the employee directly, or the department?"
+  ]
+}

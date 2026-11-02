@@ -1,0 +1,44 @@
+{
+  "id": "js-perf-object-allocation",
+  "title": "High-Throughput Metrics Aggregator Garbage Collection Latency Spikes",
+  "type": "debugging",
+  "topic": "JavaScript",
+  "subtopic": "Performance optimization",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A telemetry agent ingests 100,000 JSON log metrics per second. P99 latency spikes above 2,500ms every 15 seconds. APM profiling indicates that V8 Scavenge and Mark-Sweep garbage collection pauses consume 35% of total CPU time due to massive ephemeral object allocations.",
+  "problemStatement": "Analyze the metrics parser and buffer pipeline. The current implementation allocates new object literals, closures, and intermediate strings for every incoming telemetry frame. Redesign the parsing loop using object pooling, typed arrays, or in-place buffer mutation to eliminate GC pressure.",
+  "constraints": [
+    "Must sustain 100,000 items/sec without triggering major GC pauses over 50ms.",
+    "Zero new heap allocations in the critical hot path.",
+    "Accurately calculate min, max, sum, and count metrics."
+  ],
+  "starterCode": "/**\n * High GC Pressure Metrics Ingestion\n * Allocates hundreds of thousands of throwaway objects per second.\n */\nfunction ingestMetrics(rawSamples) {\n  // BUG: Allocates array and object wrappers on every sample\n  const parsed = rawSamples.map((line) => {\n    const parts = line.split(',');\n    return {\n      timestamp: Number(parts[0]),\n      metricName: parts[1],\n      value: parseFloat(parts[2]),\n      metadata: { tag: parts[3] }\n    };\n  });\n\n  const aggregates = {};\n  for (const item of parsed) {\n    if (!aggregates[item.metricName]) {\n      aggregates[item.metricName] = { count: 0, sum: 0, min: Infinity, max: -Infinity };\n    }\n    const agg = aggregates[item.metricName];\n    agg.count++;\n    agg.sum += item.value;\n    agg.min = Math.min(agg.min, item.value);\n    agg.max = Math.max(agg.max, item.value);\n  }\n\n  return aggregates;\n}\n\nfunction solution(sampleCount) {\n  // Optimized single-pass parser without intermediate object allocations\n  return \"optimized\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Identify memory allocation hotspots: `line.split`, intermediate object creation, nested metadata objects.",
+    "Implement a single-pass parser that avoids creating temporary objects for each line.",
+    "Explain how V8 Young Generation (Nursery/Intermediate) and Old Generation memory layout impacts latency."
+  ],
+  "hints": [
+    "Instead of .map() + .split() creating arrays and objects, parse the numbers and metric names directly in a single pass.",
+    "Reuse a single accumulator Map or typed array buffer instead of allocating nested objects on every line."
+  ],
+  "testCases": [
+    {
+      "id": "tc-perf-1",
+      "name": "Aggregates metrics accurately with zero intermediate objects",
+      "inputDescription": "100",
+      "expectedOutput": "\"optimized\"",
+      "explanation": "Processes metrics without GC churn."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using Node.js C++ Addon or Rust N-API module for zero-copy memory parsing.",
+    "Writing binary telemetry over Protocol Buffers / FlatBuffers instead of CSV or JSON strings."
+  ],
+  "commonMistakes": [
+    "Switching to RegExp which can be significantly slower and allocate match arrays.",
+    "Caching every single string in a global Map, trading GC pauses for permanent memory leaks."
+  ]
+}

@@ -1,0 +1,7 @@
+Refresh policy
+key TTL = base TTL + randomized bounded jitter
+miss -> acquire expiring owner-token lease
+owner -> fetch under origin semaphore -> populate -> release only own lease
+non-owner -> bounded wait OR permitted stale fields OR retryable failure
+Never substitute cached price/stock for authoritative checkout validation.
+Gate: origin < 800 QPS through expiry and owner-loss tests.

@@ -1,0 +1,18 @@
+{
+  "id": "t1-rdx-08",
+  "title": "How do you configure the Redux store using configureStore and provide it to React?",
+  "category": "Redux Toolkit Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 8,
+  "expectedConcepts": [
+    "configureStore from @reduxjs/toolkit",
+    "Combining slice reducers into a single root reducer object",
+    "Automatic Redux DevTools and thunk middleware configuration",
+    "The <Provider store={store}> wrapper from react-redux"
+  ],
+  "hints": [
+    "What component from react-redux wraps the root app?",
+    "What function replaces the legacy createStore in modern Redux Toolkit?"
+  ]
+}

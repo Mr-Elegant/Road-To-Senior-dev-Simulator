@@ -1,0 +1,43 @@
+{
+  "id": "react-accessible-combobox",
+  "title": "Accessible ARIA 1.2 Enterprise Multi-Select Combobox",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Accessibility",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "An enterprise healthcare and governance system requires all interface components to comply with WCAG 2.1 AA and Section 508. The current custom assignee dropdown cannot be operated via keyboard navigation and screen readers read it as an unlabelled text box.",
+  "problemStatement": "Build a fully accessible, keyboard-operable Combobox component complying with WAI-ARIA 1.2 Combobox pattern. It must support ArrowDown/ArrowUp navigation, Enter to select, Escape to close, aria-expanded, aria-activedescendant, aria-controls, and live regions.",
+  "constraints": [
+    "Must support complete keyboard interaction without mouse.",
+    "Must properly maintain focus on input while using aria-activedescendant to track highlighted option.",
+    "Screen readers must announce option count and active selection changes."
+  ],
+  "starterCode": "import React, { useState, useRef } from 'react';\n\n/**\n * Accessible Combobox Component\n */\nexport function AccessibleCombobox({ options, onSelect }) {\n  const [isOpen, setIsOpen] = useState(false);\n  const [activeIndex, setActiveIndex] = useState(-1);\n  const [query, setQuery] = useState('');\n\n  // TODO: Add ARIA attributes and keyboard handlers:\n  // - onKeyDown: ArrowDown, ArrowUp, Enter, Escape\n  // - role=\"combobox\", aria-expanded, aria-haspopup=\"listbox\"\n  // - aria-activedescendant for virtual focus\n  return (\n    <div className=\"combobox-wrapper\">\n      <input\n        type=\"text\"\n        role=\"combobox\"\n        aria-expanded={isOpen}\n        aria-autocomplete=\"list\"\n        value={query}\n        onChange={(e) => setQuery(e.target.value)}\n      />\n      {isOpen && (\n        <ul role=\"listbox\">\n          {options.map((opt, i) => (\n            <li\n              key={opt.id}\n              id={`opt-${opt.id}`}\n              role=\"option\"\n              aria-selected={activeIndex === i}\n            >\n              {opt.label}\n            </li>\n          ))}\n        </ul>\n      )}\n    </div>\n  );\n}\n\nfunction solution(input) {\n  return \"wcag_compliant\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Implement `onKeyDown` to handle ArrowDown, ArrowUp, Enter, Escape, and Home/End.",
+    "Bind `aria-activedescendant` on the input pointing to the active option element ID.",
+    "Ensure listbox receives `role=\"listbox\"` and items receive `role=\"option\"`."
+  ],
+  "hints": [
+    "Virtual focus via `aria-activedescendant` allows the keyboard user to keep typing in the input while visually highlighting listbox items.",
+    "When the list closes, reset `activeIndex` to -1."
+  ],
+  "testCases": [
+    {
+      "id": "tc-a11y-1",
+      "name": "Supports full ARIA combobox pattern and keyboard events",
+      "inputDescription": "null",
+      "expectedOutput": "\"wcag_compliant\"",
+      "explanation": "Implements accessible keyboard navigation and ARIA attributes."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using Radix UI Primitives, Headless UI, or Downshift for battle-tested accessible combobox state machines."
+  ],
+  "commonMistakes": [
+    "Moving physical DOM focus (.focus()) to the list item on ArrowDown, preventing the user from typing more characters.",
+    "Missing aria-expanded=\"false\" when closed."
+  ]
+}

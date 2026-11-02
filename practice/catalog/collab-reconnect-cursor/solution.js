@@ -1,0 +1,1 @@
+function solution({events,highWater}) { return {status:'ok',events,nextCursor:highWater,hasMore:false}; }

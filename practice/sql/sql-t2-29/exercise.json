@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-29",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 29,
+  "title": "Soft Deletes vs. Hard Deletes: Architecture and Query Traps",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "realWorldScenario": "An engineering team implements soft deletes by adding `is_deleted BOOLEAN DEFAULT false` to every table.",
+  "questionStatement": "What are the advantages of soft deletes? What query traps, index bloat, and UNIQUE constraint complications do soft deletes introduce?",
+  "expectedConcepts": [
+    "Soft delete definition and audit advantages",
+    "Leaked deleted records in un-filtered queries",
+    "Unique constraint collisions upon re-registration",
+    "Partial unique index resolution"
+  ],
+  "hints": [
+    "What happens if a user soft-deletes their account and later tries to register again with the same email?"
+  ]
+}

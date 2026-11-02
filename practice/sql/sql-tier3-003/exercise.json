@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-003",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 3,
+  "title": "GIN vs GiST vs BRIN Indexes: Architecture and Selection",
+  "category": "Indexes and Query Planning",
+  "questionType": "conceptual",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "Your SaaS platform logs 50 million telemetry rows per day into `events` (timestamp, user_id, event_name, metadata JSONB). B-Tree indexes on `(timestamp, metadata)` are ballooning past 120GB and destroying write throughput.",
+  "questionStatement": "Compare GIN, GiST, and BRIN index architectures in PostgreSQL. For each index type, identify its internal structure, ideal query patterns, write overhead, and storage characteristics. Which index should you apply to `metadata JSONB` and which to `created_at` in this 50M rows/day table?",
+  "expectedConcepts": [
+    "GIN inverted index structure and posting lists/trees",
+    "GIN fastupdate pending list buffer",
+    "GiST bounding predicates and range/geometric search",
+    "BRIN block range min-max summaries and tiny footprint",
+    "Optimal pairing: BRIN for sequential timestamps, GIN for JSONB"
+  ],
+  "hints": [
+    "Append-only timestamps are naturally sorted on disk pages: what index stores only min/max per range of pages?",
+    "GIN is an inverted index, perfect for multi-value keys.",
+    "Compare GIN jsonb_path_ops vs jsonb_ops."
+  ]
+}

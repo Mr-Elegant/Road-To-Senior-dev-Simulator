@@ -1,0 +1,33 @@
+{
+  "id": "sql-tier3-027",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 27,
+  "title": "Array Data Types and High-Performance Containment Queries",
+  "category": "PostgreSQL Data Types",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A tagging system for products stores assigned tags in a `VARCHAR[]` array column (e.g. `{'electronics', 'sale', 'audio'}`). You need to find products that contain specific combinations of tags without maintaining a join table.",
+  "questionStatement": "Explain PostgreSQL array data types, array operators (`@>` contains, `<@` is contained by, `&&` overlaps), and how to index arrays using GIN. Write a query against `products` that finds all products having both `'wireless'` and `'audio'` in their tags array, and projects the total tag count using `cardinality()`.",
+  "starterCode": "-- Query products having both 'wireless' and 'audio' tags\nSELECT \n    id,\n    name,\n    tags,\n    cardinality(tags) AS total_tags\nFROM products\nWHERE tags @> ARRAY['wireless', 'audio']\nORDER BY id;",
+  "expectedConcepts": [
+    "Array containment (@>) vs overlap (&&) operators",
+    "cardinality() function for element count",
+    "GIN inverted index requirement for array elements",
+    "Difference between whole-array B-tree equality and GIN element search"
+  ],
+  "hints": [
+    "Which operator checks if an array contains all elements of another array?",
+    "Use cardinality(tags) to count the number of items.",
+    "Remember that GIN is the inverted index suitable for array containment."
+  ],
+  "testCases": [
+    {
+      "id": "tc-tier3-027-1",
+      "description": "Verify array containment and cardinality projection",
+      "setupSql": "CREATE TABLE products (id INT PRIMARY KEY, name VARCHAR(50), tags TEXT[]);\nINSERT INTO products VALUES (1, 'Headphones', ARRAY['wireless', 'audio', 'sale']), (2, 'Cable', ARRAY['audio']), (3, 'Earbuds', ARRAY['wireless', 'audio']);",
+      "expectedOutputSql": "SELECT id, name, tags, cardinality(tags) AS total_tags FROM products WHERE tags @> ARRAY['wireless', 'audio'] ORDER BY id;",
+      "orderMatters": true
+    }
+  ]
+}

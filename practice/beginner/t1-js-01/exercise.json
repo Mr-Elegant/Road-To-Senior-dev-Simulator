@@ -1,0 +1,23 @@
+{
+  "id": "t1-js-01",
+  "title": "What is the difference between var, let, and const in JavaScript?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 1,
+  "expectedConcepts": [
+    "Scope (function-scoped vs block-scoped)",
+    "Reassignment and mutability",
+    "Hoisting and Temporal Dead Zone (TDZ)"
+  ],
+  "hints": [
+    "Think about where each variable can be accessed (inside a function vs inside an if-block).",
+    "Consider whether you are allowed to change the value after creating it."
+  ],
+  "codingExercise": {
+    "instruction": "Declare a block-scoped variable named count initialized to 0 that can be updated, and a constant named MAX_LIMIT set to 10.",
+    "starterCode": "function initializeCounters() {\n  // Declare count and MAX_LIMIT here\n  return { count, MAX_LIMIT };\n}",
+    "language": "javascript",
+    "expectedOutput": "count: 0, MAX_LIMIT: 10"
+  }
+}

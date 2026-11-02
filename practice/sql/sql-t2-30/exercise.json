@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-30",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 30,
+  "title": "Materialized Views and Concurrent Refresh in PostgreSQL",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "realWorldScenario": "An executive dashboard takes 25 seconds to generate monthly financial summary charts across 40 million transactions.",
+  "questionStatement": "What is a Materialized View in PostgreSQL? How does `REFRESH MATERIALIZED VIEW CONCURRENTLY` work, and what unique index is required?",
+  "expectedConcepts": [
+    "Materialized View disk persistence",
+    "Sub-millisecond analytical reads",
+    "REFRESH MATERIALIZED VIEW CONCURRENTLY non-blocking operation",
+    "Mandatory unique index requirement for concurrent refresh"
+  ],
+  "hints": [
+    "Why does CONCURRENTLY need a unique index to know which rows changed?"
+  ]
+}

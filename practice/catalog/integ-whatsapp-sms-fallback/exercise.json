@@ -1,0 +1,43 @@
+{
+  "id": "integ-whatsapp-sms-fallback",
+  "title": "Resilient Multi-Provider WhatsApp & SMS Fallback Orchestrator",
+  "type": "coding",
+  "topic": "Integrations",
+  "subtopic": "WhatsApp and SMS delivery",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A global fintech sends high-security One-Time Passwords (OTPs) for 2FA login. During an outage of the primary SMS gateway (Twilio), users in Brazil and India were blocked from logging in for 45 minutes, leading to customer attrition.",
+  "problemStatement": "Build a resilient multi-provider notification orchestrator with Circuit Breaker and cascading fallback: Attempt WhatsApp via Meta Cloud API first (cheaper & faster); if delivery fails or times out (after 3s), fallback to Twilio SMS; if Twilio fails or its circuit breaker is OPEN, fallback to AWS SNS. Maintain delivery status telemetry.",
+  "constraints": [
+    "Total end-to-end delivery timeout must not exceed 6 seconds.",
+    "Circuit breaker must trip to OPEN if a provider experiences 5 consecutive failures.",
+    "Providers in OPEN state must be bypassed automatically until cooldown period expires."
+  ],
+  "starterCode": "/**\n * Multi-Provider Resilient Notification Engine\n */\nclass NotificationOrchestrator {\n  constructor(providers) {\n    this.providers = providers; // [WhatsAppProvider, TwilioProvider, AwsSnsProvider]\n  }\n\n  async sendOtp(phoneNumber, code) {\n    // TODO: Implement cascading fallback with circuit breaker\n    return { status: \"SENT\", provider: \"none\" };\n  }\n}\n\nfunction solution(input) {\n  return \"circuit_breaker_fallback_orchestrated\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Implement Circuit Breaker states (`CLOSED`, `OPEN`, `HALF-OPEN`) for each messaging provider.",
+    "Attempt providers in priority order (WhatsApp -> Twilio -> AWS SNS).",
+    "Implement per-provider timeouts using `AbortController` or `Promise.race()`."
+  ],
+  "hints": [
+    "If provider circuit breaker is OPEN, skip it immediately without wasting time on network calls.",
+    "Wrap each external API call in a 2500ms timeout so a hanging gateway does not block user login."
+  ],
+  "testCases": [
+    {
+      "id": "tc-otp-1",
+      "name": "Falls back gracefully when primary gateway fails",
+      "inputDescription": "null",
+      "expectedOutput": "\"circuit_breaker_fallback_orchestrated\"",
+      "explanation": "Maintains OTP delivery through alternate provider channels."
+    }
+  ],
+  "alternativeApproaches": [
+    "Sending via message broker (RabbitMQ / SQS) with dead-letter exchange retry policies."
+  ],
+  "commonMistakes": [
+    "Not putting a timeout on external provider calls: if Twilio takes 25 seconds to fail, user gives up and closes app.",
+    "Tripping the circuit breaker on invalid phone numbers (400 Client Error) instead of 5xx Server Errors / Network Timeouts."
+  ]
+}

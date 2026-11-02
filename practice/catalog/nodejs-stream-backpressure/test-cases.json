@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-stream-oom-1",
+    "name": "Streams gigabyte dataset with constant bounded memory",
+    "inputDescription": "null",
+    "expectedOutput": "\"stream_pipeline_backpressure_handled\"",
+    "explanation": "Enforces backpressure and cursor-based chunking."
+  }
+]

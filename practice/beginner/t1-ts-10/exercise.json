@@ -1,0 +1,24 @@
+{
+  "id": "t1-ts-10",
+  "title": "What are basic Generics in TypeScript and why are they useful?",
+  "category": "TypeScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 10,
+  "expectedConcepts": [
+    "Generics as type variables (<T>) that preserve type relationships",
+    "Reusable components and functions that work across multiple types without using any",
+    "Generic interfaces (interface ApiResponse<T> { data: T })",
+    "Common built-in generics (Array<T>, Promise<T>)"
+  ],
+  "hints": [
+    "Think of generics as passing arguments to types, just like functions receive arguments.",
+    "Why is <T>(arg: T): T better than (arg: any): any?"
+  ],
+  "codingExercise": {
+    "instruction": "Create a generic function wrapInArray<T>(item: T): T[] that takes any single item and returns an array containing it.",
+    "starterCode": "function wrapInArray(item) {\n  return [item];\n}",
+    "language": "typescript",
+    "expectedOutput": "function wrapInArray<T>(item: T): T[]"
+  }
+}

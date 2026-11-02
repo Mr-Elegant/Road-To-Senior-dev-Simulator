@@ -1,0 +1,24 @@
+{
+  "id": "t1-react-09",
+  "title": "What is a controlled component in React and how does it handle form inputs?",
+  "category": "React Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 9,
+  "expectedConcepts": [
+    "Input value is driven by React state (value={text})",
+    "Input updates via onChange handler (onChange={e => setText(e.target.value)})",
+    "Single source of truth in React state rather than the DOM",
+    "Comparison with uncontrolled components (using refs)"
+  ],
+  "hints": [
+    "What two props make an input controlled: one for the value, one for changes?",
+    "Where does the source of truth live in a controlled component?"
+  ],
+  "codingExercise": {
+    "instruction": "Create a controlled text input that stores the user name in state and displays \"Hello, [name]\" below.",
+    "starterCode": "function GreetingForm() {\n  const [name, setName] = React.useState('');\n  return (\n    <div>\n      {/* Create a controlled input for name */}\n      <p>Hello, {name || 'stranger'}!</p>\n    </div>\n  );\n}",
+    "language": "javascript",
+    "expectedOutput": "<input value={name} onChange={...} />"
+  }
+}

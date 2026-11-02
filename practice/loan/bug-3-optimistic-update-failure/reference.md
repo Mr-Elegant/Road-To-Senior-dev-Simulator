@@ -1,0 +1,14 @@
+# Reference: Roll back the correct optimistic approval
+
+Read after attempting the exercise. This is authored guidance, not certification.
+
+```json
+{
+  "solution": {
+    "code": "function reduceApproval(state, action) {\n  const item = state.items.find(item => item.id === action.id);\n  if (!item) return state;\n  const pending = state.pending[action.id];\n  if (action.type === 'start') {\n    if (pending) return state;\n    return { ...state,\n      items: state.items.map(row => row.id === action.id ? { ...row, status: action.status } : row),\n      pending: { ...state.pending, [action.id]: { requestId: action.requestId, before: item.status } }\n    };\n  }\n  if (!pending || pending.requestId !== action.requestId || !['success', 'failure'].includes(action.type)) return state;\n  const nextPending = { ...state.pending };\n  delete nextPending[action.id];\n  const status = action.type === 'failure' ? pending.before : (action.status ?? item.status);\n  return { ...state, pending: nextPending, items: state.items.map(row => row.id === action.id ? { ...row, status } : row) };\n}",
+    "rootCause": "Optimistic state mutation was applied on action dispatch, but no error rollback handler was implemented in `extraReducers.rejected` to restore the previous snapshot.",
+    "explanation": "1. When dispatching an optimistic update, capture a clone of the original application record in an `optimisticBackups: Record<string, LoanApplication>` map.\n2. If the thunk resolves with `rejected`, look up the backup snapshot and restore the record into `state.items` atomically, dispatching a high-visibility error toast notification.",
+    "dashboardFix": "// ✅ SENIOR FIX: Backup snapshot + atomic rollback on rejection\nbuilder\n  .addCase(updateApplicationStatus.pending, (state, action) => {\n    const { id, newStatus } = action.meta.arg;\n    const item = state.items.find(i => i.id === id);\n    if (item) {\n      // 1. Preserve original state in rollback cache\n      state.optimisticBackups[id] = { ...item };\n      // 2. Mark updating to prevent concurrent duplicate clicks\n      state.updatingIds[id] = true;\n      // 3. Apply optimistic mutation\n      item.status = newStatus;\n    }\n  })\n  .addCase(updateApplicationStatus.fulfilled, (state, action) => {\n    const { id } = action.meta.arg;\n    delete state.optimisticBackups[id];\n    delete state.updatingIds[id];\n  })\n  .addCase(updateApplicationStatus.rejected, (state, action) => {\n    const { id } = action.meta.arg;\n    // 4. Safely restore backup snapshot on failure\n    if (state.optimisticBackups[id]) {\n      const index = state.items.findIndex(i => i.id === id);\n      if (index !== -1) {\n        state.items[index] = state.optimisticBackups[id];\n      }\n      delete state.optimisticBackups[id];\n    }\n    delete state.updatingIds[id];\n  });"
+  }
+}
+```

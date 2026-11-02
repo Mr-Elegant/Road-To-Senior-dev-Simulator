@@ -1,0 +1,56 @@
+{
+  "id": "sql-t1-02",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 2,
+  "title": "Filtering Active Catalog Products with WHERE",
+  "category": "SQL Fundamentals",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Merchandising wants an active products list excluding discontinued or archived inventory.",
+  "questionStatement": "Write a query to retrieve the `sku`, `name`, and `price` of all products from `products` where `is_active` is true and `price` is greater than 100.00, sorted by `price` descending.",
+  "starterCode": "-- Find active products with price > 100\nSELECT\n  sku,\n  name,\n  price\nFROM products\nWHERE is_active = true AND price > 100\nORDER BY price DESC;",
+  "expectedConcepts": [
+    "WHERE clause",
+    "Logical AND",
+    "Comparison operators",
+    "ORDER BY DESC"
+  ],
+  "hints": [
+    "Use the AND operator to satisfy both conditions simultaneously.",
+    "Sort using ORDER BY price DESC."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-02",
+      "description": "Verify active products priced above $100",
+      "expectedRows": [
+        {
+          "sku": "TECH-003",
+          "name": "Ultra-Wide 4K Gaming Monitor",
+          "price": 549
+        },
+        {
+          "sku": "HOME-001",
+          "name": "Smart Induction Espresso Machine",
+          "price": 249.99
+        },
+        {
+          "sku": "TECH-001",
+          "name": "Noise-Cancelling Headphones",
+          "price": 199.99
+        },
+        {
+          "sku": "FASH-002",
+          "name": "Waterproof Trail Running Shoes",
+          "price": 135
+        },
+        {
+          "sku": "TECH-002",
+          "name": "Mechanical Wireless Keyboard",
+          "price": 129.5
+        }
+      ]
+    }
+  ]
+}

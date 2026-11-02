@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-12",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 12,
+  "title": "UUIDv4 vs. BIGINT / ULID for Primary Keys",
+  "category": "PostgreSQL Data Types",
+  "questionType": "conceptual",
+  "realWorldScenario": "A microservices application generates customer IDs on the client side before writing to PostgreSQL, but database writes slow down significantly after reaching 50 million rows.",
+  "questionStatement": "Why does random UUIDv4 cause severe B-Tree index fragmentation and write degradation at scale? How do sequential identifiers (BIGINT, UUIDv7, ULID) solve this?",
+  "expectedConcepts": [
+    "UUIDv4 random distribution",
+    "B-Tree page splits and cache thrashing",
+    "Monotonic time-ordered keys (UUIDv7/ULID/BIGINT)",
+    "Index memory footprint"
+  ],
+  "hints": [
+    "Think about what happens to a sorted B-Tree when inserts arrive in totally random order."
+  ]
+}

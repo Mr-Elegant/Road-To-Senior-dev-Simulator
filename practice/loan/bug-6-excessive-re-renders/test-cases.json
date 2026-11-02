@@ -1,0 +1,278 @@
+[
+  {
+    "id": "unrelated",
+    "name": "Opening a drawer preserves the selector result reference",
+    "input": {
+      "items": [
+        {
+          "id": "a",
+          "applicantName": "Aarav",
+          "loanAmount": 500,
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "applicantName": "Sophia",
+          "loanAmount": 100,
+          "status": "APPROVED"
+        },
+        {
+          "id": "c",
+          "applicantName": "Mina",
+          "loanAmount": 500,
+          "status": "PENDING"
+        }
+      ],
+      "filters": {
+        "status": "ALL",
+        "search": ""
+      },
+      "steps": [
+        {
+          "ui": {
+            "drawerOpen": true
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "ids": [
+          "a",
+          "b",
+          "c"
+        ],
+        "sameAsPrevious": null
+      },
+      {
+        "ids": [
+          "a",
+          "b",
+          "c"
+        ],
+        "sameAsPrevious": true
+      }
+    ],
+    "explanation": "useSelector observes result identity, so a fresh but identical array causes a render.",
+    "sample": true
+  },
+  {
+    "id": "filter-change",
+    "name": "A changed status recomputes the result",
+    "input": {
+      "items": [
+        {
+          "id": "a",
+          "applicantName": "Aarav",
+          "loanAmount": 500,
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "applicantName": "Sophia",
+          "loanAmount": 100,
+          "status": "APPROVED"
+        },
+        {
+          "id": "c",
+          "applicantName": "Mina",
+          "loanAmount": 500,
+          "status": "PENDING"
+        }
+      ],
+      "filters": {
+        "status": "ALL",
+        "search": ""
+      },
+      "steps": [
+        {
+          "filters": {
+            "status": "PENDING"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "ids": [
+          "a",
+          "b",
+          "c"
+        ],
+        "sameAsPrevious": null
+      },
+      {
+        "ids": [
+          "a",
+          "c"
+        ],
+        "sameAsPrevious": false
+      }
+    ],
+    "explanation": "Memoization must not hide real filter changes.",
+    "sample": true
+  },
+  {
+    "id": "normalized",
+    "name": "Equivalent search and fresh filter objects reuse the cache",
+    "input": {
+      "items": [
+        {
+          "id": "a",
+          "applicantName": "Aarav",
+          "loanAmount": 500,
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "applicantName": "Sophia",
+          "loanAmount": 100,
+          "status": "APPROVED"
+        },
+        {
+          "id": "c",
+          "applicantName": "Mina",
+          "loanAmount": 500,
+          "status": "PENDING"
+        }
+      ],
+      "filters": {
+        "status": "ALL",
+        "search": " sophia "
+      },
+      "steps": [
+        {
+          "filters": {
+            "status": "ALL",
+            "search": "SOPHIA"
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "ids": [
+          "b"
+        ],
+        "sameAsPrevious": null
+      },
+      {
+        "ids": [
+          "b"
+        ],
+        "sameAsPrevious": true
+      }
+    ],
+    "explanation": "Normalize the search before comparing cache keys.",
+    "sample": false
+  },
+  {
+    "id": "items-change",
+    "name": "A replacement items reference invalidates the cache",
+    "input": {
+      "items": [
+        {
+          "id": "a",
+          "applicantName": "Aarav",
+          "loanAmount": 500,
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "applicantName": "Sophia",
+          "loanAmount": 100,
+          "status": "APPROVED"
+        },
+        {
+          "id": "c",
+          "applicantName": "Mina",
+          "loanAmount": 500,
+          "status": "PENDING"
+        }
+      ],
+      "filters": {
+        "status": "ALL",
+        "search": ""
+      },
+      "steps": [
+        {
+          "items": [
+            {
+              "id": "b",
+              "applicantName": "Sophia",
+              "loanAmount": 100,
+              "status": "APPROVED"
+            }
+          ]
+        }
+      ]
+    },
+    "expected": [
+      {
+        "ids": [
+          "a",
+          "b",
+          "c"
+        ],
+        "sameAsPrevious": null
+      },
+      {
+        "ids": [
+          "b"
+        ],
+        "sameAsPrevious": false
+      }
+    ],
+    "explanation": "Store changes must be reflected in the derived list.",
+    "sample": false
+  },
+  {
+    "id": "empty-filter",
+    "name": "Cache empty results just like populated arrays",
+    "input": {
+      "items": [
+        {
+          "id": "a",
+          "applicantName": "Aarav",
+          "loanAmount": 500,
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "applicantName": "Sophia",
+          "loanAmount": 100,
+          "status": "APPROVED"
+        },
+        {
+          "id": "c",
+          "applicantName": "Mina",
+          "loanAmount": 500,
+          "status": "PENDING"
+        }
+      ],
+      "filters": {
+        "status": "ALL",
+        "search": "missing"
+      },
+      "steps": [
+        {
+          "ui": {
+            "drawerOpen": true
+          }
+        }
+      ]
+    },
+    "expected": [
+      {
+        "ids": [],
+        "sameAsPrevious": null
+      },
+      {
+        "ids": [],
+        "sameAsPrevious": true
+      }
+    ],
+    "explanation": "A missing match is still a valid memoized result.",
+    "sample": false
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-014",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 14,
+  "title": "Query Plan Regressions: Parameter Sniffing & Generic vs Custom Plans",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A prepared statement `SELECT * FROM orders WHERE status = $1` runs in 0.8ms for the first 4 executions. On the 5th execution, latency explodes to 1,400ms and remains permanently slow for all subsequent queries.",
+  "questionStatement": "Explain PostgreSQL prepared statement execution planning. What is the difference between a Custom Plan and a Generic Plan? How does the 5-execution threshold trigger plan caching, why does parameter sniffing cause plan regressions on skewed data, and how do you fix it?",
+  "expectedConcepts": [
+    "Custom Plan (parameter substitution) vs Generic Plan ($1 placeholder)",
+    "5-execution comparison threshold in PostgreSQL driver protocol",
+    "Data distribution skew (e.g. 98% vs 0.1%) breaking generic plans",
+    "plan_cache_mode = force_custom_plan setting",
+    "Disabling prepared statement caching for skewed filter columns"
+  ],
+  "hints": [
+    "Why does PostgreSQL test the query 5 times before making a permanent plan decision?",
+    "What happens when 98% of rows have status \"DELIVERED\" and 0.1% have \"PENDING\"?",
+    "Check plan_cache_mode setting."
+  ]
+}

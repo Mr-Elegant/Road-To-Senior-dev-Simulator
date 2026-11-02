@@ -1,0 +1,32 @@
+[
+  {
+    "id": "tc-t1-13",
+    "description": "Verify items purchased across Aarav Patel orders",
+    "expectedRows": [
+      {
+        "order_id": 101,
+        "product_name": "Mechanical Wireless Keyboard",
+        "quantity": 1,
+        "unit_price": 129.5
+      },
+      {
+        "order_id": 101,
+        "product_name": "Noise-Cancelling Headphones",
+        "quantity": 1,
+        "unit_price": 199.99
+      },
+      {
+        "order_id": 103,
+        "product_name": "Merino Wool Pullover",
+        "quantity": 1,
+        "unit_price": 89
+      },
+      {
+        "order_id": 110,
+        "product_name": "Mechanical Wireless Keyboard",
+        "quantity": 1,
+        "unit_price": 129.5
+      }
+    ]
+  }
+]

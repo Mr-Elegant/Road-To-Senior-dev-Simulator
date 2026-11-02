@@ -1,0 +1,19 @@
+{
+  "id": "t1-hc-09",
+  "title": "How do the different CSS position values work (static, relative, absolute, fixed, sticky)?",
+  "category": "HTML and CSS",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 9,
+  "expectedConcepts": [
+    "static: Default normal document flow",
+    "relative: Positioned relative to normal position, creates reference frame for children",
+    "absolute: Removed from flow, positioned relative to nearest positioned ancestor",
+    "fixed: Positioned relative to browser viewport, stays on screen during scroll",
+    "sticky: Toggles between relative and fixed depending on scroll threshold"
+  ],
+  "hints": [
+    "Which position value pulls an element completely out of the document flow?",
+    "What position must a parent have so its absolute child stays inside it?"
+  ]
+}

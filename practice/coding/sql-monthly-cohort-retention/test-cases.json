@@ -1,0 +1,16 @@
+[
+  {
+    "id": "tc-sql-1",
+    "name": "Calculates cohort retention counts for January and February cohorts",
+    "inputDescription": "",
+    "expectedOutput": "[{\"cohort_month\":\"2026-01\",\"active_month\":\"2026-01\",\"retained_users\":2},{\"cohort_month\":\"2026-01\",\"active_month\":\"2026-02\",\"retained_users\":1},{\"cohort_month\":\"2026-02\",\"active_month\":\"2026-02\",\"retained_users\":1}]",
+    "explanation": "Cohort 2026-01 has 2 active users in Jan, 1 in Feb. Cohort 2026-02 has 1 active user in Feb."
+  },
+  {
+    "id": "tc-sql-2",
+    "name": "Calculates cohort retention including additional active cohort user",
+    "inputDescription": "INSERT INTO activity (id, user_id, activity_date) VALUES (8, 2, '2026-02-20');",
+    "expectedOutput": "[{\"cohort_month\":\"2026-01\",\"active_month\":\"2026-01\",\"retained_users\":2},{\"cohort_month\":\"2026-01\",\"active_month\":\"2026-02\",\"retained_users\":2},{\"cohort_month\":\"2026-02\",\"active_month\":\"2026-02\",\"retained_users\":1}]",
+    "explanation": "User 2 from the January cohort logs activity in February, incrementing January cohort retention to 2."
+  }
+]

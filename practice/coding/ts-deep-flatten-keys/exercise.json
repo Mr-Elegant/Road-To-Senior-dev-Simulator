@@ -1,0 +1,37 @@
+{
+  "id": "ts-deep-flatten-keys",
+  "title": "Deep Nested Object Path Keys Union Type",
+  "language": "typescript",
+  "difficulty": "Senior",
+  "category": "Type System",
+  "estimatedMinutes": 25,
+  "description": "Create a recursive TypeScript utility type `PathKeys<T>` that generates a union of all dot-separated object path strings for a deeply nested object interface.\n\nExample:\n```typescript\ninterface Config {\n  server: { host: string; port: number };\n  db: { primary: { url: string } };\n}\ntype Keys = PathKeys<Config>;\n// Result: \"server\" | \"server.host\" | \"server.port\" | \"db\" | \"db.primary\" | \"db.primary.url\"\n```",
+  "constraints": [
+    "Must recursively traverse nested object properties.",
+    "Must handle primitive leaves without appending trailing dots.",
+    "Must work for interfaces with 3+ levels of nesting."
+  ],
+  "sampleInput": "Nested configuration interface",
+  "sampleOutput": "Union of all nested dot paths: \"db.primary.url\"",
+  "starterCode": "/**\n * Recursive PathKeys Utility Type\n */\ntype PathKeys<T> = T extends object\n  ? {\n      [K in keyof T & string]: K | `${K}.${PathKeys<T[K]>}`;\n    }[keyof T & string]\n  : never;\n\n// Verification runtime helper\nfunction getNestedValue(obj: any, path: string): any {\n  return path.split('.').reduce((acc, part) => acc && acc[part], obj);\n}\n\nfunction solution(path: string = 'auth.jwt.issuer') {\n  const config = {\n    auth: {\n      jwt: {\n        issuer: 'auth.enterprise.io',\n        expiry: '1h'\n      }\n    },\n    database: {\n      pool: {\n        max: 20\n      }\n    }\n  };\n\n  const val = getNestedValue(config, path || 'auth.jwt.issuer');\n  return typeof val === 'object' ? JSON.stringify(val) : String(val);\n}",
+  "testCases": [
+    {
+      "id": "tc-path-1",
+      "name": "Resolves deeply nested auth.jwt.issuer path key",
+      "inputDescription": "\"auth.jwt.issuer\"",
+      "expectedOutput": "auth.enterprise.io",
+      "explanation": "Deep property access succeeds safely."
+    },
+    {
+      "id": "tc-path-2",
+      "name": "Resolves nested database.pool.max numeric key",
+      "inputDescription": "\"database.pool.max\"",
+      "expectedOutput": "20",
+      "explanation": "Deep property access returns numeric primitive stringified."
+    }
+  ],
+  "hints": [
+    "Use mapped types over `keyof T & string`.",
+    "For each key `K`, construct the template literal union: `K | `${K}.${PathKeys<T[K]>}` `."
+  ]
+}

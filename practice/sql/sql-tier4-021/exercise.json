@@ -1,0 +1,45 @@
+{
+  "id": "sql-tier4-021",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 21,
+  "title": "Production Incident: Statement Timeout vs Lock Timeout Cascading Outage",
+  "category": "Locks and Deadlocks",
+  "questionType": "incident",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "To prevent slow queries from hanging the database, an engineer set `statement_timeout = '5s'` globally. Later, a background migration ran `ALTER TABLE orders ADD COLUMN flags INT;`. The DDL failed after 5 seconds, but during those 5 seconds, the entire payment API experienced an outage.",
+  "questionStatement": "Explain how PostgreSQL lock queues work and why a waiting DDL statement holding an `ACCESS EXCLUSIVE` lock request blocks all subsequent read and write queries. Why did `statement_timeout` fail to prevent the outage, and how does `lock_timeout` eliminate cascading lock pileups?",
+  "incidentDetails": {
+    "symptoms": [
+      "5-second complete payment API freeze",
+      "Hundreds of client HTTP requests timed out",
+      "DDL command aborted with statement timeout",
+      "Normal fast 2ms SELECT queries queued up and failed"
+    ],
+    "systemTelemetry": {
+      "activeConnections": 350,
+      "lockWaitsCount": 280,
+      "cpuUtilizationPercent": 35,
+      "bufferCacheHitRatio": 99.5,
+      "logSnippet": "2026-11-01 16:00:05 UTC [8902]: [1-1] ERROR:  canceling statement due to statement timeout\n2026-11-01 16:00:05 UTC [8902]: [2-1] STATEMENT:  ALTER TABLE orders ADD COLUMN flags INT;\n2026-11-01 16:00:05 UTC [8915]: [1-1] LOG:  process 8915 still waiting for AccessShareLock on relation \"orders\" after 4890 ms"
+    },
+    "candidateTasks": [
+      "Explain why lock requests form a FIFO queue where exclusive locks block subsequent reads",
+      "Contrast statement_timeout with lock_timeout",
+      "Demonstrate the safe DDL execution pattern using lock_timeout and retry loops",
+      "Configure idle_in_transaction_session_timeout"
+    ]
+  },
+  "expectedConcepts": [
+    "FIFO lock queue mechanics and exclusive lock blocking subsequent reads",
+    "Difference between statement_timeout (execution + lock) and lock_timeout (lock wait only)",
+    "Why waiting DDL starves all incoming traffic",
+    "Safe DDL pattern setting lock_timeout = 500ms with retry loops",
+    "Preventing API connection exhaustion during schema maintenance"
+  ],
+  "hints": [
+    "Why do new SELECT queries wait behind a waiting ALTER TABLE in PostgreSQL?",
+    "statement_timeout includes time spent waiting for locks.",
+    "What happens if lock_timeout is set to 200 milliseconds?"
+  ]
+}

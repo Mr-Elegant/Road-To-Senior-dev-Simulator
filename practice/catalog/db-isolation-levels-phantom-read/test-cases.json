@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-iso-1",
+    "name": "Prevents negative balance under concurrent race conditions",
+    "inputDescription": "null",
+    "expectedOutput": "\"pessimistic_lock_or_serializable_retry\"",
+    "explanation": "Enforces strict transactional guarantees against overdrafts."
+  }
+]

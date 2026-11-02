@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-023",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 23,
+  "title": "Heap-Only Tuple (HOT) Optimization Failures and Write Amplification",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "An application updates a `last_seen_at` timestamp on `users` on every API request. Although the table only has 1 million rows, disk write I/O is 80 MB/sec and index size is growing by 5 GB per day. Telemetry shows HOT update ratio is 0%.",
+  "questionStatement": "Explain PostgreSQL Heap-Only Tuple (HOT) optimization. What are the two mandatory conditions required for an UPDATE to qualify as a HOT update? Why does indexing `last_seen_at` completely disable HOT updates, causing massive write amplification and index bloat?",
+  "expectedConcepts": [
+    "Heap-Only Tuple (HOT) intra-page tuple forwarding",
+    "Condition 1: Free space in same 8KB page (fillfactor)",
+    "Condition 2: No modified column belongs to any index",
+    "Write amplification across all table indexes when HOT fails",
+    "pg_stat_user_tables hot_update_pct metric"
+  ],
+  "hints": [
+    "What must be true about the columns being updated for HOT to work?",
+    "Where must the new row version fit for HOT optimization?",
+    "Check pg_stat_user_tables n_tup_hot_upd."
+  ]
+}

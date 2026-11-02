@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-007",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 7,
+  "title": "PostgreSQL JSONB: Operators, jsonb_path_query, and GIN Indexing",
+  "category": "JSONB and PostgreSQL-specific features",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Your e-commerce product catalog stores dynamic technical specifications in a `specifications JSONB` column. Queries searching for products with `\"ram_gb\" >= 16` and `\"color\" IN (\"space_gray\", \"silver\")` are performing full table scans.",
+  "questionStatement": "Compare JSON vs JSONB in PostgreSQL. Explain the core operators (`->`, `->>`, `@>`, `?`, `@@`). Write a query using PostgreSQL SQL/JSON path syntax (`jsonb_path_query` or `jsonb_path_match`) and specify the exact GIN index required to index deep key-value lookups efficiently.",
+  "expectedConcepts": [
+    "JSON (text) vs JSONB (decomposed binary) storage format",
+    "Difference between -> (jsonb) and ->> (text)",
+    "Containment operator @> and existence operator ?",
+    "SQL/JSON path expression syntax (@@)",
+    "Expression B-tree index vs GIN jsonb_path_ops index"
+  ],
+  "hints": [
+    "Which operator returns text versus JSONB?",
+    "Can a GIN index accelerate numeric range comparisons like ram_gb >= 16 out of the box?",
+    "Consider an expression B-Tree index for scalar casts."
+  ]
+}

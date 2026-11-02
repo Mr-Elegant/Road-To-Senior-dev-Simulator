@@ -1,0 +1,29 @@
+{
+  "id": "sql-t1-12",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 12,
+  "title": "Finding Inactive Records with LEFT JOIN and IS NULL",
+  "category": "Joins and Relationships",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Growth marketing wants to run a re-engagement campaign targeting registered customers who have never placed an order.",
+  "questionStatement": "Write a query using a `LEFT JOIN` between `customers` and `orders` to find all customers who have zero recorded orders. Return `customers.id`, `customers.name`, and `customers.email`, sorted by `customers.id` ascending.",
+  "starterCode": "-- Find customers with zero orders\nSELECT\n  c.id,\n  c.name,\n  c.email\nFROM customers c\nLEFT JOIN orders o ON c.id = o.customer_id\nWHERE o.id IS NULL\nORDER BY c.id ASC;",
+  "expectedConcepts": [
+    "LEFT OUTER JOIN",
+    "Anti-Join pattern",
+    "NULL checking on foreign table"
+  ],
+  "hints": [
+    "Join customers on the left with orders on the right.",
+    "Filter where the order ID is NULL."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-12",
+      "description": "Verify customers with no orders (all 8 customers in test seed have orders, so returns 0 rows)",
+      "expectedRows": []
+    }
+  ]
+}

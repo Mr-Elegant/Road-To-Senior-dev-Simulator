@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-opt-1",
+    "name": "Updates immediately and recovers on server rejection",
+    "inputDescription": "null",
+    "expectedOutput": "\"optimistic_with_rollback\"",
+    "explanation": "Provides instant feedback and reliable error recovery."
+  }
+]

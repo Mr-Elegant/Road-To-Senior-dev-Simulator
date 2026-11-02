@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-019",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 19,
+  "title": "PostgreSQL Full-Text Search: tsvector, tsquery, and GIN Indexing",
+  "category": "PostgreSQL Data Types",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Customers complain that searching for \"wireless headphone\" in your e-commerce store fails to return products titled \"Wireless Bluetooth Headphones\" when using `LIKE '%wireless headphone%'`. Furthermore, the `LIKE` query takes 900ms.",
+  "questionStatement": "Explain PostgreSQL native Full-Text Search. Compare `tsvector` and `tsquery`. Explain text normalization (tokenization, stop words, stemming with Snowball dictionary). Provide the SQL to create a generated `tsvector` column, a GIN index, and a ranked search query using `ts_rank()`.",
+  "expectedConcepts": [
+    "tsvector lexemes and positional weights (A, B, C, D)",
+    "tsquery boolean logic and phrase distance (<->)",
+    "Snowball stemmer reducing words to root forms",
+    "Stored generated column + GIN index pattern",
+    "ts_rank / ts_rank_cd and websearch_to_tsquery"
+  ],
+  "hints": [
+    "Why does LIKE '%wireless headphone%' fail to match plural \"headphones\"?",
+    "What dictionary stems words in PostgreSQL?",
+    "Use websearch_to_tsquery for natural user search inputs."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "ops-secrets-rotation-vault",
+  "title": "Zero-Downtime Database Secret Rotation with HashiCorp Vault",
+  "type": "debugging",
+  "topic": "Engineering Operations",
+  "subtopic": "Environment configuration",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "SOC 2 compliance mandates that production PostgreSQL database passwords must rotate automatically every 30 days. Currently, when passwords are changed, all running application pods fail database health checks and crash, requiring a coordinated maintenance window.",
+  "problemStatement": "Architect a zero-downtime database credential rotation pipeline using HashiCorp Vault Dynamic Database Secrets. Explain how Vault generates short-lived, unique user credentials per pod/service with dual-user rotation (User A and User B alternating), so that existing database connections remain active while new connections authenticate with rotated credentials.",
+  "constraints": [
+    "Zero connection drops during credential rotation.",
+    "No hardcoded static database passwords in Kubernetes secrets or env vars.",
+    "Vault leases must automatically revoke credentials when TTL expires."
+  ],
+  "starterCode": "/**\n * Dynamic Credential Connection Pool Manager\n */\nclass DynamicDbPool {\n  constructor(vaultClient) {\n    this.vault = vaultClient;\n    this.activePool = null;\n  }\n\n  async initialize() {\n    // TODO: Acquire dynamic credentials from Vault with lease TTL\n    // Renew lease in background before expiry\n    return \"initialized\";\n  }\n}\n\nfunction solution(input) {\n  return \"dynamic_vault_dual_user_rotation\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain the dual-user rotation pattern: alternating active database roles without terminating in-flight queries.",
+    "Implement lease renewal ticker before TTL expires.",
+    "Gracefully drain and migrate connection pool when new credentials are issued."
+  ],
+  "hints": [
+    "Vault creates unique dynamic database users: `v-token-app-172938...` with a configurable lease (e.g. 1 hour).",
+    "The application renews the lease periodically (`vault.renewLease()`). Before maximum TTL, it fetches new credentials and establishes a new pool, then drains the old pool."
+  ],
+  "testCases": [
+    {
+      "id": "tc-vault-1",
+      "name": "Rotates credentials dynamically with zero connection drops",
+      "inputDescription": "null",
+      "expectedOutput": "\"dynamic_vault_dual_user_rotation\"",
+      "explanation": "Enforces seamless zero-downtime rotation."
+    }
+  ],
+  "alternativeApproaches": [
+    "AWS Secrets Manager automated rotation using Lambda and two-user rotation template (`user_master` alternates between `userA` and `userB`)."
+  ],
+  "commonMistakes": [
+    "Rotating the password immediately and dropping all active connections simultaneously.",
+    "Hardcoding a single database user across all microservices instead of role-based least privilege."
+  ]
+}

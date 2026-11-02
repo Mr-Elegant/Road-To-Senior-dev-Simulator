@@ -1,0 +1,43 @@
+{
+  "id": "ts-generics-api-client",
+  "title": "Type-Safe RPC/REST Client with Path Parameter Inference",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "Generics",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "A microservices ecosystem requires an internal SDK. Frontend engineers frequently write typos in URL routes like `/users/:userId/orders/:orderId` or pass wrong query parameters, resulting in 404s and missing request bodies that only surface in production.",
+  "problemStatement": "Design a generic TypeScript utility type `ExtractRouteParams<TPath>` that extracts route param names from a template string like `\"/orgs/:orgId/repos/:repoId\"` into a strongly typed object `{ orgId: string; repoId: string }`. Build a typed client interface ensuring paths and parameters match at compile time.",
+  "constraints": [
+    "Must recursively infer all `:param` tokens from any route string.",
+    "Routes without params must yield an empty object or void.",
+    "Path and param arguments must be validated at compile time with zero runtime overhead."
+  ],
+  "starterCode": "/**\n * Path Parameter Inference Utility Type\n */\n\n// TODO: Define recursive template literal type ExtractRouteParams<T>\n// Example: ExtractRouteParams<\"/users/:id/posts/:slug\"> => { id: string; slug: string }\nexport type ExtractRouteParams<T extends string> = T extends `${string}:${infer Param}/${infer Rest}`\n  ? { [K in Param | keyof ExtractRouteParams<`/${Rest}`>]: string }\n  : T extends `${string}:${infer Param}`\n  ? { [K in Param]: string }\n  : Record<string, never>;\n\nexport class TypedApiClient {\n  async get<TPath extends string>(\n    path: TPath,\n    params: ExtractRouteParams<TPath>\n  ): Promise<string> {\n    let resolvedPath: string = path;\n    for (const [key, value] of Object.entries(params)) {\n      resolvedPath = resolvedPath.replace(`:${key}`, encodeURIComponent(String(value)));\n    }\n    return resolvedPath;\n  }\n}\n\nfunction solution(input) {\n  const client = new TypedApiClient();\n  return client.get('/tenants/:tenantId/invoices/:invoiceId', {\n    tenantId: 't-100',\n    invoiceId: 'inv-55'\n  });\n}",
+  "codeLanguage": "typescript",
+  "candidateTasks": [
+    "Implement `ExtractRouteParams<T>` using template literal types, conditional types, and recursion.",
+    "Handle trailing slashes and multi-param paths.",
+    "Ensure the `params` argument is required if parameters exist, and optional if the route has no parameters."
+  ],
+  "hints": [
+    "Use conditional types with template literals: `T extends `${infer Start}:${infer Param}/${infer Rest}``. Use recursion on `Rest`.",
+    "Make sure single-parameter routes at the end of the string are captured: `T extends `${infer Start}:${infer Param}``."
+  ],
+  "testCases": [
+    {
+      "id": "tc-gen-1",
+      "name": "Resolves path parameters into URL path",
+      "inputDescription": "null",
+      "expectedOutput": "\"/tenants/t-100/invoices/inv-55\"",
+      "explanation": "Path parameters are interpolated into resolved route."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using OpenAPI generator / tRPC / ts-rest for complete full-stack contract sharing."
+  ],
+  "commonMistakes": [
+    "Infinite recursion in type aliases leading to \"Type instantiation is excessively deep and possibly infinite\".",
+    "Not supporting optional params when routes have no parameters."
+  ]
+}

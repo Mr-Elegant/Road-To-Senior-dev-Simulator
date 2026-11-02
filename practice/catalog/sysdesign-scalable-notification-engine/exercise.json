@@ -1,0 +1,53 @@
+{
+  "id": "sysdesign-scalable-notification-engine",
+  "title": "Global Multi-Channel Notification Platform (50M Events/Day)",
+  "type": "system_design",
+  "topic": "System Design",
+  "subtopic": "Notification services",
+  "difficulty": "Staff/Principal",
+  "estimatedMinutes": 45,
+  "businessContext": "A global social and banking super-app needs to send 50,000,000 notifications per day across Email (SendGrid), Mobile Push (APNs / FCM), SMS (Twilio), and In-App WebSockets. Users currently complain about duplicate notifications, critical fraud alerts being delayed behind promotional marketing blasts, and lack of quiet-hour preferences.",
+  "problemStatement": "Design an end-to-end multi-channel notification engine that handles high-throughput ingestion, enforces user notification preferences and quiet hours, deduplicates rapid events, prioritizes critical transactional alerts over marketing campaigns, and handles downstream provider rate limits and failures.",
+  "constraints": [
+    "Throughput: 50M notifications/day (~600 sustained QPS, 5,000 peak QPS).",
+    "P99 Latency: < 2 seconds for High-Priority transactional alerts (OTP, fraud, payments).",
+    "At-least-once delivery with deduplication window (e.g. 15 minutes for repeated identical events).",
+    "Channel rate limiting per user (e.g. max 3 promotional notifications/day)."
+  ],
+  "systemDesignReqs": {
+    "scale": "50 Million notifications / day, 5k peak writes / sec, 100M active mobile devices.",
+    "functional": [
+      "Send notifications via Push (APNs/FCM), Email, SMS, In-App.",
+      "Support priority tiers: P0 (Emergency / OTP), P1 (Account updates), P2 (Social/Marketing).",
+      "User preference center (opt-in/opt-out per channel, quiet hours per timezone).",
+      "Deduplication and rate limiting per user/channel."
+    ],
+    "nonFunctional": [
+      "High availability (99.99%).",
+      "Fault-tolerant: provider outages must not lose messages.",
+      "Scalable queue workers with backpressure."
+    ],
+    "assumptions": [
+      "User devices and push tokens are registered in a Device Store.",
+      "Downstream vendors (SendGrid, Twilio, APNs) have varying rate limits and occasional latency spikes."
+    ]
+  },
+  "candidateTasks": [
+    "Architect the system components: API Gateway, Ingestion Service, Message Broker (Kafka / RabbitMQ), Notification Worker Pools, Cache/State Store (Redis), Database (Postgres / DynamoDB).",
+    "Define the API contract: `POST /v1/notifications/send` with payload schema.",
+    "Explain the Priority Queue design: why separate queues (High / Normal / Low) are needed instead of a single FIFO queue.",
+    "Detail the Deduplication strategy: using Redis key with TTL `dedup:{userId}:{hash(template,params)}`.",
+    "Address failure recovery, dead-letter queues (DLQ), and retry exponential backoff."
+  ],
+  "hints": [
+    "If marketing notifications and OTPs share the same Kafka topic/queue, a marketing blast of 10M emails will back up the queue, delaying 2FA OTP codes for hours.",
+    "Store user preferences and device tokens in a low-latency cache (Redis) with write-through / cache-aside to database."
+  ],
+  "alternativeApproaches": [
+    "Using Temporal.io / AWS Step Functions for complex multi-step delivery workflows (e.g. \"Send push; if unread after 10m, send SMS\")."
+  ],
+  "commonMistakes": [
+    "Sending external emails/SMS synchronously inside the web request handler, locking client threads.",
+    "Using a single queue: marketing blasts drown out password resets and payment confirmation emails."
+  ]
+}

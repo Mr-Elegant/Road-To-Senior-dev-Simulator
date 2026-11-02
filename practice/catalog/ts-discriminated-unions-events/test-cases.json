@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-ts-1",
+    "name": "Processes Stripe charge succeeded",
+    "inputDescription": "null",
+    "expectedOutput": "\"Processed Stripe charge: ch_123\"",
+    "explanation": "Correctly extracts type-safe payload fields."
+  }
+]

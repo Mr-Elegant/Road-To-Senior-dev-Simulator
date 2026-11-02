@@ -1,0 +1,1 @@
+function solution({messages, incoming}) { return {messages: messages.concat(incoming), outcomes: incoming.map(() => 'accepted')}; }

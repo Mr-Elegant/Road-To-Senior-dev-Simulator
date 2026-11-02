@@ -1,0 +1,19 @@
+{
+  "id": "t1-node-07",
+  "title": "How do you extract data from req.params, req.query, and req.body in Express?",
+  "category": "Node.js and API Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 7,
+  "expectedConcepts": [
+    "req.params: URL path parameters defined with colons (/api/users/:id)",
+    "req.query: URL query string parameters after the question mark (?page=2&search=cat)",
+    "req.body: The parsed payload sent in POST/PUT request bodies",
+    "Use cases for each data source"
+  ],
+  "hints": [
+    "Which one reads from the path like /users/:id?",
+    "Which one reads from after the ? in the URL?",
+    "Which one reads data sent in the body of a POST request?"
+  ]
+}

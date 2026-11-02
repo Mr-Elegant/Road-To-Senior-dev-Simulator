@@ -1,0 +1,19 @@
+{
+  "id": "sql-t2-10",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 10,
+  "title": "Self-Joins for Hierarchical and Comparative Analysis",
+  "category": "Joins and Relationships",
+  "questionType": "conceptual",
+  "realWorldScenario": "An organizational chart table `employees (id, name, manager_id)` stores both workers and their direct managers in the same table.",
+  "questionStatement": "What is a Self-Join? Write a query showing how to retrieve each employee's name along with their manager's name. Why must a LEFT JOIN be used if top executives have no manager?",
+  "expectedConcepts": [
+    "Self-join with table aliases",
+    "Hierarchical adjacency list pattern",
+    "LEFT JOIN necessity for root nodes (NULL manager_id)"
+  ],
+  "hints": [
+    "Alias the table twice: once as employee, once as manager."
+  ]
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-tier3-015-1",
+    "description": "Verify ROWS physical average and RANGE cumulative calculations",
+    "setupSql": "CREATE TABLE repayments (id INT, loan_id INT, payment_date VARCHAR(10), amount NUMERIC);\nINSERT INTO repayments VALUES (1, 101, '2026-01-01', 100), (2, 101, '2026-01-02', 200), (3, 101, '2026-01-03', 300);",
+    "expectedOutputSql": "SELECT id, loan_id, payment_date, amount, AVG(amount) OVER (PARTITION BY loan_id ORDER BY payment_date, id ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS physical_2row_avg, SUM(amount) OVER (PARTITION BY loan_id ORDER BY amount RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS range_accum_sum FROM repayments ORDER BY loan_id, payment_date;",
+    "orderMatters": true
+  }
+]

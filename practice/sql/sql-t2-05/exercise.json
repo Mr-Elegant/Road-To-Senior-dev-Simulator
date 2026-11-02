@@ -1,0 +1,73 @@
+{
+  "id": "sql-t2-05",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 5,
+  "title": "Calculating Running Totals with Cumulative Window Aggregation",
+  "category": "Window Functions",
+  "questionType": "executable",
+  "executionDialect": "postgresql",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Finance needs to track cumulative daily revenue progression for delivered orders throughout February and March 2024.",
+  "questionStatement": "Write a query on `orders` for status `'DELIVERED'` returning `id`, `order_date`, `total_amount`, and `running_total` (the cumulative sum of `total_amount` ordered by `order_date` ascending).",
+  "starterCode": "-- Calculate cumulative running revenue\nSELECT\n  id,\n  order_date,\n  total_amount,\n  SUM(total_amount) OVER (ORDER BY order_date ASC) AS running_total\nFROM orders\nWHERE status = 'DELIVERED'\nORDER BY order_date ASC;",
+  "expectedConcepts": [
+    "Cumulative window sum",
+    "Implicit frame default (RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)",
+    "Chronological financial running totals"
+  ],
+  "hints": [
+    "Use SUM(total_amount) OVER (ORDER BY order_date ASC).",
+    "Filter WHERE status = 'DELIVERED'."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t2-05",
+      "description": "Verify cumulative delivered revenue running total",
+      "expectedRows": [
+        {
+          "id": 101,
+          "order_date": "2024-02-10 14:00:00",
+          "total_amount": 329.49,
+          "running_total": 329.49
+        },
+        {
+          "id": 102,
+          "order_date": "2024-02-12 18:20:00",
+          "total_amount": 549,
+          "running_total": 878.49
+        },
+        {
+          "id": 103,
+          "order_date": "2024-02-18 09:40:00",
+          "total_amount": 89,
+          "running_total": 967.49
+        },
+        {
+          "id": 104,
+          "order_date": "2024-02-22 16:15:00",
+          "total_amount": 249.99,
+          "running_total": 1217.48
+        },
+        {
+          "id": 106,
+          "order_date": "2024-03-01 13:05:00",
+          "total_amount": 264.5,
+          "running_total": 1481.98
+        },
+        {
+          "id": 111,
+          "order_date": "2024-03-18 19:30:00",
+          "total_amount": 299.94,
+          "running_total": 1781.92
+        },
+        {
+          "id": 112,
+          "order_date": "2024-03-20 12:45:00",
+          "total_amount": 97,
+          "running_total": 1878.92
+        }
+      ]
+    }
+  ]
+}

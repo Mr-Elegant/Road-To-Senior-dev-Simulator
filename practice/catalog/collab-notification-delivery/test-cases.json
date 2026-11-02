@@ -1,0 +1,51 @@
+[
+  {
+    "id": "notify-1",
+    "name": "Deliver a normal message",
+    "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":false,\"events\":[{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[]}]}",
+    "expectedOutput": "{\"delivered\":[\"a\"],\"outcomes\":[\"delivered\"]}",
+    "hidden": false
+  },
+  {
+    "id": "notify-2",
+    "name": "Retry delivers only once",
+    "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":false,\"events\":[{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[]},{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[]}]}",
+    "expectedOutput": "{\"delivered\":[\"a\"],\"outcomes\":[\"delivered\",\"duplicate\"]}",
+    "hidden": false
+  },
+  {
+    "id": "notify-3",
+    "name": "Suppress own messages",
+    "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":false,\"events\":[{\"id\":\"a\",\"authorId\":\"u\",\"channelId\":\"c\",\"mentionIds\":[]}]}",
+    "expectedOutput": "{\"delivered\":[],\"outcomes\":[\"self\"]}",
+    "hidden": true
+  },
+  {
+    "id": "notify-4",
+    "name": "Mute takes precedence over mention",
+    "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[\"c\"],\"mentionsOnly\":true,\"events\":[{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[\"u\"]}]}",
+    "expectedOutput": "{\"delivered\":[],\"outcomes\":[\"muted\"]}",
+    "hidden": true
+  },
+  {
+    "id": "notify-5",
+    "name": "Mentions-only skips unrelated recipients",
+    "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":true,\"events\":[{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[]},{\"id\":\"b\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[\"u\"]}]}",
+    "expectedOutput": "{\"delivered\":[\"b\"],\"outcomes\":[\"skipped\",\"delivered\"]}",
+    "hidden": true
+  },
+  {
+    "id": "notify-6",
+    "name": "Suppressed ID remains consumed on changed replay",
+    "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":false,\"events\":[{\"id\":\"a\",\"authorId\":\"u\",\"channelId\":\"c\",\"mentionIds\":[]},{\"id\":\"a\",\"authorId\":\"other\",\"channelId\":\"c\",\"mentionIds\":[]}]}",
+    "expectedOutput": "{\"delivered\":[],\"outcomes\":[\"self\",\"duplicate\"]}",
+    "hidden": true
+  },
+  {
+    "id": "notify-7",
+    "name": "Empty event batch produces no notifications",
+    "inputDescription": "{\"recipientId\":\"u\",\"mutedChannels\":[],\"mentionsOnly\":false,\"events\":[]}",
+    "expectedOutput": "{\"delivered\":[],\"outcomes\":[]}",
+    "hidden": true
+  }
+]

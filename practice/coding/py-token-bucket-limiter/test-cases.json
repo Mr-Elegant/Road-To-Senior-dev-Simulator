@@ -1,0 +1,16 @@
+[
+  {
+    "id": "tc-py-1",
+    "name": "Consumes tokens within capacity bound",
+    "inputDescription": "consume(1)",
+    "expectedOutput": "True",
+    "explanation": "Tokens are debited when capacity is available."
+  },
+  {
+    "id": "tc-py-2",
+    "name": "Rejects consumption when capacity is exceeded",
+    "inputDescription": "consume(100)",
+    "expectedOutput": "False",
+    "explanation": "Exceeding bucket capacity returns False."
+  }
+]

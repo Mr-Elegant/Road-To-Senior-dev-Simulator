@@ -1,0 +1,43 @@
+{
+  "id": "ops-canary-rollback-metrics",
+  "title": "Canary Deployment 5xx Spike & Automated Rollback Analysis",
+  "type": "debugging",
+  "topic": "Engineering Operations",
+  "subtopic": "Rollbacks",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "A continuous deployment pipeline promotes a new version of the GraphQL Gateway to a 10% canary weight in production. Within 3 minutes of traffic shift, alerts trigger indicating that checkout mutations are failing.",
+  "problemStatement": "Analyze canary metrics (P95 latency, 5xx error rate, GraphQL mutation errors). Determine whether the error budget has been breached, make the automated rollback decision, and formulate the post-rollback triage workflow to pinpoint the failing mutation.",
+  "constraints": [
+    "Rollback decision must be made within 60 seconds of error budget violation.",
+    "Canary traffic must immediately be routed back to baseline (stable) pods.",
+    "Do not disrupt active user sessions on the stable baseline."
+  ],
+  "starterCode": "/**\n * Canary Health Evaluator\n */\nfunction evaluateCanaryHealth(baselineMetrics, canaryMetrics) {\n  // baselineMetrics = { errorRate: 0.001, p95LatencyMs: 45 }\n  // canaryMetrics = { errorRate: 0.048, p95LatencyMs: 120 }\n\n  // TODO: Implement automated rollback check based on:\n  // 1. Error rate delta > 1.5%\n  // 2. P95 latency increase > 50%\n  return { rollback: true, reason: \"Error rate exceeded threshold\" };\n}\n\nfunction solution(input) {\n  return \"canary_rolled_back_traffic_restored\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Define automated canary analysis thresholds (error rate, latency degradation, error budget burn rate).",
+    "Implement `evaluateCanaryHealth` decision engine.",
+    "Explain how service meshes (e.g. Istio, Argo Rollouts, AWS App Mesh) adjust traffic weights from 10% to 0%."
+  ],
+  "hints": [
+    "Canary analysis should compare the canary group against the baseline group running in the same environment under identical traffic conditions.",
+    "Argo Rollouts uses Prometheus queries to continuously evaluate metrics and aborts the rollout automatically if thresholds fail."
+  ],
+  "testCases": [
+    {
+      "id": "tc-canary-1",
+      "name": "Triggers automated rollback on error rate breach",
+      "inputDescription": "null",
+      "expectedOutput": "\"canary_rolled_back_traffic_restored\"",
+      "explanation": "Enforces rapid rollback to preserve user experience."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using Kayenta or Argo Rollouts AnalysisTemplate with Prometheus PromQL metrics."
+  ],
+  "commonMistakes": [
+    "Comparing canary metrics against an arbitrary static number instead of the concurrently running baseline version.",
+    "Promoting the canary to 100% too fast without sufficient sample volume."
+  ]
+}

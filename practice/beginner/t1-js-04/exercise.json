@@ -1,0 +1,17 @@
+{
+  "id": "t1-js-04",
+  "title": "How do if/else statements and switch statements differ in JavaScript?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 4,
+  "expectedConcepts": [
+    "Boolean expression branching vs discrete value matching",
+    "switch syntax (case, break, default)",
+    "Fall-through behavior when break is omitted"
+  ],
+  "hints": [
+    "Which structure is better for evaluating ranges like score > 80?",
+    "What keyword is required in switch to stop execution from bleeding into the next case?"
+  ]
+}

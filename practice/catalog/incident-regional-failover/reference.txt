@@ -1,0 +1,8 @@
+Promotion gate
+1. Incident commander identifies recovery authority.
+2. Old primary + workers fenced; independently verify.
+3. Record durable/replayed WAL positions and available archives.
+4. Calculate exposure; obtain explicit RPO exception if required.
+5. Promote once; update API, workers and connection pools.
+6. Verify single writer and reconcile exposed business IDs.
+7. Preserve divergent old data; rebuild replica before planned failback.

@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-020",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 20,
+  "title": "Database Security Hardening: SCRAM-SHA-256, Connection Quotas, and pgaudit",
+  "category": "Database Security and Permissions",
+  "questionType": "design",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "Your fintech application must pass a SOC2 Type II security audit and PCI-DSS compliance. The security auditor identifies legacy MD5 password hashing, unrestricted connection counts per user, and lack of fine-grained DDL audit logging.",
+  "questionStatement": "Design a production-grade database security hardening blueprint for PostgreSQL. Explain the migration from `md5` to `scram-sha-256`, connection limits per role (`CONNECTION LIMIT`), schema isolation, and the implementation of the `pgaudit` extension for compliance logging.",
+  "expectedConcepts": [
+    "SCRAM-SHA-256 PBKDF2 salting vs MD5 rainbow table vulnerability",
+    "password_encryption setting and pg_hba.conf enforcement",
+    "ALTER ROLE ... CONNECTION LIMIT for connection starvation defense",
+    "Least privilege schema permissions and ALTER DEFAULT PRIVILEGES",
+    "pgaudit extension configuration for DDL, ROLE, and parameter logging"
+  ],
+  "hints": [
+    "Why is MD5 vulnerable even if TLS is used on the wire?",
+    "How does ALTER DEFAULT PRIVILEGES protect future tables created in the schema?",
+    "Check pgaudit.log configuration options."
+  ]
+}

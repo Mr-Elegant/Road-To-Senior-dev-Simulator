@@ -1,0 +1,18 @@
+{
+  "id": "t1-react-01",
+  "title": "What is React and why do engineers choose it over vanilla JavaScript for building UIs?",
+  "category": "React Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 1,
+  "expectedConcepts": [
+    "Component-based architecture",
+    "Declarative UI (describe what it should look like, React handles the DOM updates)",
+    "Virtual DOM and reconciliation for efficient updates",
+    "Unidirectional data flow and rich ecosystem"
+  ],
+  "hints": [
+    "What is the difference between telling the browser \"how to change each node\" vs \"what the final state looks like\"?",
+    "What is the lightweight in-memory representation of the DOM that React uses?"
+  ]
+}

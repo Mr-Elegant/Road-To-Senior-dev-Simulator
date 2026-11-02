@@ -13,6 +13,7 @@ import { additionalCoreScenarios } from './scenarios/additionalCore';
 import { evolvingIncidents } from './incidents';
 import { commerceScenarios } from './scenarios/commerce';
 import { saasScenarios } from './scenarios/saas';
+import { collaborationScenarios } from './scenarios/collaboration';
 
 export const allScenarios: Scenario[] = [
   ...javascriptScenarios,
@@ -29,6 +30,7 @@ export const allScenarios: Scenario[] = [
   ...evolvingIncidents,
   ...commerceScenarios,
   ...saasScenarios,
+  ...collaborationScenarios,
 ];
 
 export const scenarioMap = new Map<string, Scenario>();

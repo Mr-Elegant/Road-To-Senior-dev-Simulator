@@ -1,0 +1,33 @@
+{
+  "id": "sql-tier3-010",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 10,
+  "title": "Hierarchical Queries with Recursive CTEs (WITH RECURSIVE)",
+  "category": "Subqueries and CTEs",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Your product catalog supports deep nested product categories (e.g., Electronics -> Audio -> Headphones -> Wireless Headphones). You need to generate the full breadcrumb path and depth level for every category.",
+  "questionStatement": "Write a query using a recursive Common Table Expression (`WITH RECURSIVE`) against a hierarchical table of categories (`id`, `parent_id`, `name`) that calculates the complete ancestor path (`breadcrumb`) and hierarchical depth level for each category, ordered by path.",
+  "starterCode": "WITH RECURSIVE category_tree AS (\n    -- Anchor member\n    SELECT \n        id, \n        parent_id, \n        name,\n        1 AS depth,\n        name::text AS breadcrumb\n    FROM categories\n    WHERE parent_id IS NULL\n    \n    UNION ALL\n    \n    -- Recursive member\n    SELECT \n        c.id, \n        c.parent_id, \n        c.name,\n        ct.depth + 1,\n        ct.breadcrumb || ' > ' || c.name\n    FROM categories c\n    JOIN category_tree ct ON c.parent_id = ct.id\n)\nSELECT id, name, depth, breadcrumb\nFROM category_tree\nORDER BY breadcrumb;",
+  "expectedConcepts": [
+    "Anchor query selecting base root records",
+    "Recursive query joining child records to working CTE table",
+    "Termination condition when recursive join returns 0 rows",
+    "Depth counting and string path accumulation"
+  ],
+  "hints": [
+    "Start with rows where parent_id IS NULL as the anchor.",
+    "In the recursive part, join categories to category_tree on c.parent_id = ct.id.",
+    "Increment depth by 1 and concatenate breadcrumb on each step."
+  ],
+  "testCases": [
+    {
+      "id": "tc-tier3-010-1",
+      "description": "Verify category tree breadcrumb and depth calculation",
+      "setupSql": "CREATE TABLE categories (id INT PRIMARY KEY, parent_id INT, name VARCHAR(50));\nINSERT INTO categories VALUES (1, NULL, 'Electronics'), (2, 1, 'Computers'), (3, 2, 'Laptops'), (4, 1, 'Audio'), (5, 4, 'Headphones');",
+      "expectedOutputSql": "WITH RECURSIVE category_tree AS (\n    SELECT id, parent_id, name, 1 AS depth, name::text AS breadcrumb\n    FROM categories WHERE parent_id IS NULL\n    UNION ALL\n    SELECT c.id, c.parent_id, c.name, ct.depth + 1, ct.breadcrumb || ' > ' || c.name\n    FROM categories c JOIN category_tree ct ON c.parent_id = ct.id\n)\nSELECT id, name, depth, breadcrumb FROM category_tree ORDER BY breadcrumb;",
+      "orderMatters": true
+    }
+  ]
+}

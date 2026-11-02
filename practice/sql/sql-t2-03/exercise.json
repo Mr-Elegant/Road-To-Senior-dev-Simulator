@@ -1,0 +1,42 @@
+{
+  "id": "sql-t2-03",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 3,
+  "title": "Common Table Expressions (CTEs) for Multi-Step Aggregations",
+  "category": "Subqueries and CTEs",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Executive leadership requires a customer spending tiers report: aggregate total spend per customer first, then filter for customers whose lifetime spend exceeds $300.",
+  "questionStatement": "Write a query using a `WITH` clause (CTE) named `customer_spending` that aggregates `customer_id` and `total_spent` (sum of `total_amount` for orders with status `'DELIVERED'`). In the main query, join with `customers` to return `customers.name`, `customer_spending.total_spent`, ordered by `total_spent` descending.",
+  "starterCode": "-- Multi-step aggregation using CTE\nWITH customer_spending AS (\n  SELECT\n    customer_id,\n    SUM(total_amount) AS total_spent\n  FROM orders\n  WHERE status = 'DELIVERED'\n  GROUP BY customer_id\n)\nSELECT\n  c.name,\n  cs.total_spent\nFROM customer_spending cs\nJOIN customers c ON cs.customer_id = c.id\nWHERE cs.total_spent > 300\nORDER BY cs.total_spent DESC;",
+  "expectedConcepts": [
+    "WITH clause (CTE)",
+    "Readability in multi-stage transformations",
+    "Aggregation before joining"
+  ],
+  "hints": [
+    "Define the CTE with WITH customer_spending AS (...)",
+    "Select from the CTE and join with customers on customer_id."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t2-03",
+      "description": "Verify high-spend customers via CTE",
+      "expectedRows": [
+        {
+          "name": "Sophia Miller",
+          "total_spent": 549
+        },
+        {
+          "name": "Aarav Patel",
+          "total_spent": 418.49
+        },
+        {
+          "name": "Carlos Rodriguez",
+          "total_spent": 346.99
+        }
+      ]
+    }
+  ]
+}

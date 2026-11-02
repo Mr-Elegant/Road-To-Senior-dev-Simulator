@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-hyd-1",
+    "name": "Renders without client-server mismatch error",
+    "inputDescription": "null",
+    "expectedOutput": "\"hydration_stabilized\"",
+    "explanation": "Ensures deterministic SSR and smooth client enhancement."
+  }
+]

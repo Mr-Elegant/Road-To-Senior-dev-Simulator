@@ -1,0 +1,17 @@
+{
+  "id": "t1-rdx-09",
+  "title": "When is Redux useful and when is it unnecessary / overkill?",
+  "category": "Redux Toolkit Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 9,
+  "expectedConcepts": [
+    "Good use cases: Large applications with many components sharing data, frequent updates across distinct routes, collaborative tools",
+    "Overkill: Simple apps, isolated forms, small projects where React Context or useState suffices",
+    "Trade-offs: Added abstraction and learning curve vs centralized predictability"
+  ],
+  "hints": [
+    "Would you use Redux for a 3-page personal portfolio?",
+    "Think about applications like e-commerce or streaming dashboards."
+  ]
+}

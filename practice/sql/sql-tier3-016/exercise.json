@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-016",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 16,
+  "title": "PostgreSQL Join Strategies: Nested Loop, Hash Join, and Merge Join",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "While reviewing query plans across your application, you observe that joining `customers` (50,000 rows) and `orders` (2,000,000 rows) sometimes uses a Nested Loop, sometimes a Hash Join, and occasionally a Merge Join.",
+  "questionStatement": "Analyze the three fundamental join algorithms in the PostgreSQL query engine: Nested Loop (with and without index), Hash Join, and Merge Join. Detail the memory prerequisites (`work_mem`), sort requirements, time complexity, and the specific cost trade-offs that drive the optimizer’s choice.",
+  "expectedConcepts": [
+    "Nested loop optimal for tiny outer set + indexed inner lookup",
+    "Hash join builds hash table in work_mem and probes with outer scan",
+    "Multi-batch hash join spilling to disk when exceeding work_mem",
+    "Merge join requires pre-sorted inputs (B-tree or explicit sort)",
+    "Time complexity comparison across all three"
+  ],
+  "hints": [
+    "Which join strategy builds an in-memory hash table on the smaller table?",
+    "Which join requires both inputs to be sorted on the join key first?",
+    "What happens when a Hash Join exceeds work_mem?"
+  ]
+}

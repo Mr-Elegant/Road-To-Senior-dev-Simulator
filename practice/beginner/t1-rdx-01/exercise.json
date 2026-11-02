@@ -1,0 +1,18 @@
+{
+  "id": "t1-rdx-01",
+  "title": "Why is state management useful in web applications and what problem does it solve?",
+  "category": "Redux Toolkit Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 1,
+  "expectedConcepts": [
+    "Prop drilling across deeply nested components",
+    "Shared state between distant sibling or cross-tree components",
+    "Predictable state transitions and centralized debugging",
+    "Single source of truth for application-wide data"
+  ],
+  "hints": [
+    "What happens when a component 5 layers deep needs data from the top root component?",
+    "What is the term for passing props through components that do not care about them?"
+  ]
+}

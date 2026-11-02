@@ -1,0 +1,51 @@
+{
+  "id": "sysdesign-idempotent-checkout-service",
+  "title": "High-Volume Idempotent Checkout & Order Processing System",
+  "type": "system_design",
+  "topic": "System Design",
+  "subtopic": "Checkout systems",
+  "difficulty": "Staff/Principal",
+  "estimatedMinutes": 45,
+  "businessContext": "A global e-commerce marketplace handles $100M/month in Gross Merchandise Value. During flash promotions, simultaneous checkouts cause race conditions in inventory reservation, duplicate credit card charges when users refresh payment screens, and inconsistent order states when payment gateways disconnect.",
+  "problemStatement": "Design a resilient checkout and payment orchestration platform. Ensure absolute idempotency across client retries, two-phase distributed inventory reservation, payment gateway integration with webhooks and reconciliation jobs, and eventual consistency using the Outbox Pattern.",
+  "constraints": [
+    "Zero double-charges under any network failure or user retry.",
+    "Zero overselling of limited inventory items.",
+    "Sustain 2,500 checkouts/second at peak with P99 latency < 1.5 seconds."
+  ],
+  "systemDesignReqs": {
+    "scale": "2,500 checkouts/sec peak, $100M GMV/month, 5M catalog items.",
+    "functional": [
+      "Idempotent checkout initiation and payment authorization.",
+      "Temporary inventory reservation (10-minute cart hold) with auto-release.",
+      "Payment gateway integration (Stripe, PayPal) with asynchronous webhook confirmation.",
+      "Order state machine: CREATED -> RESERVED -> CHARGING -> COMPLETED / CANCELLED."
+    ],
+    "nonFunctional": [
+      "Strict consistency for payments and inventory.",
+      "Fault-tolerant: Network partition must not result in phantom orders.",
+      "Auditable transactional ledger."
+    ],
+    "assumptions": [
+      "Payment gateways require an Idempotency-Key header.",
+      "Cart holds expire if user abandons payment."
+    ]
+  },
+  "candidateTasks": [
+    "Design the State Machine transitions and database schema for Orders, Payments, and Inventory Holds.",
+    "Explain the Transactional Outbox Pattern to guarantee orders and message queue events commit atomically.",
+    "Design the Idempotency Layer using Redis distributed locks and unique database constraints.",
+    "Explain the Reconciliation Cron Job to detect abandoned/in-flight payment discrepancies with Stripe."
+  ],
+  "hints": [
+    "Combine distributed locking in Redis (for fast fast-path rejection) with a relational database UNIQUE constraint on `idempotency_key` (for ACID guarantee).",
+    "Use the Transactional Outbox Pattern: write order state and message to an `outbox` table in the SAME database transaction, then rely on a CDC (Debezium) or polling worker to publish to Kafka."
+  ],
+  "alternativeApproaches": [
+    "Saga Pattern (Choreography or Orchestration using Temporal) for distributed compensation transactions across microservices."
+  ],
+  "commonMistakes": [
+    "Deducting permanent inventory before confirming payment: carts that abandon payment leave shelves empty.",
+    "Performing dual writes (DB update followed by message bus publish) without Outbox pattern, leading to data loss on network partition."
+  ]
+}

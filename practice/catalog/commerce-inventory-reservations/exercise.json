@@ -1,0 +1,83 @@
+{
+  "id": "commerce-inventory-reservations",
+  "title": "E-commerce: Stop Overselling the Last Item",
+  "type": "debugging",
+  "topic": "Databases",
+  "subtopic": "E-commerce / Inventory reservations",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "A wholesale checkout sells the last units twice during a promotion. A mobile retry reserves stock again, and a delayed cancellation returns the same units twice.",
+  "problemStatement": "Implement solution({ stock, commands }) as a deterministic reservation model. stock is a nonnegative safe integer. Commands have type reserve or release and a nonempty string id. A reserve also has quantity. Process commands in order, returning { available, reservations, outcomes }. Reservations remain in first-successful-reserve order as { id, quantity, status: \"held\" | \"released\" }. Each command produces one outcome. This models serialized decisions; it does not simulate concurrent database transactions.",
+  "constraints": [
+    "For reserve, invalid nonpositive/non-safe-integer quantity returns invalid before any other check. Existing ID with equal quantity returns duplicate, even after release; a changed quantity returns conflict. Then insufficient stock returns unavailable; otherwise return reserved.",
+    "Release returns not_found for an unknown ID, duplicate for an already released ID, otherwise released and restores stock exactly once. Unknown command types return invalid. Do not mutate the input."
+  ],
+  "candidateTasks": [
+    "Fix retry, quantity validation, and release behavior in the function.",
+    "Explain how to enforce the same invariant across multiple checkout workers and reservation expiry."
+  ],
+  "starterCode": "function solution({ stock, commands }) {\n  const reservations = [];\n  const outcomes = [];\n  for (const command of commands) {\n    if (command.type === \"reserve\") {\n      stock -= command.quantity;\n      reservations.push({ id: command.id, quantity: command.quantity, status: \"held\" });\n      outcomes.push(\"reserved\");\n    } else {\n      const reservation = reservations.find(r => r.id === command.id);\n      if (reservation) stock += reservation.quantity;\n      outcomes.push(\"released\");\n    }\n  }\n  return { available: stock, reservations, outcomes };\n}",
+  "testCases": [
+    {
+      "id": "stock-1",
+      "name": "Reserve available stock",
+      "inputDescription": "{\"stock\":3,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":2}]}",
+      "expectedOutput": "{\"available\":1,\"reservations\":[{\"id\":\"a\",\"quantity\":2,\"status\":\"held\"}],\"outcomes\":[\"reserved\"]}",
+      "hidden": false
+    },
+    {
+      "id": "stock-2",
+      "name": "Two checkouts compete for the final unit",
+      "inputDescription": "{\"stock\":1,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":1},{\"type\":\"reserve\",\"id\":\"b\",\"quantity\":1}]}",
+      "expectedOutput": "{\"available\":0,\"reservations\":[{\"id\":\"a\",\"quantity\":1,\"status\":\"held\"}],\"outcomes\":[\"reserved\",\"unavailable\"]}",
+      "hidden": false
+    },
+    {
+      "id": "stock-3",
+      "name": "Retry does not reserve twice",
+      "inputDescription": "{\"stock\":2,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":2},{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":2}]}",
+      "expectedOutput": "{\"available\":0,\"reservations\":[{\"id\":\"a\",\"quantity\":2,\"status\":\"held\"}],\"outcomes\":[\"reserved\",\"duplicate\"]}",
+      "hidden": true
+    },
+    {
+      "id": "stock-4",
+      "name": "An idempotency key cannot change quantity",
+      "inputDescription": "{\"stock\":4,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":1},{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":2}]}",
+      "expectedOutput": "{\"available\":3,\"reservations\":[{\"id\":\"a\",\"quantity\":1,\"status\":\"held\"}],\"outcomes\":[\"reserved\",\"conflict\"]}",
+      "hidden": true
+    },
+    {
+      "id": "stock-5",
+      "name": "Release and late retry restore stock only once",
+      "inputDescription": "{\"stock\":1,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":1},{\"type\":\"release\",\"id\":\"a\"},{\"type\":\"release\",\"id\":\"a\"},{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":1}]}",
+      "expectedOutput": "{\"available\":1,\"reservations\":[{\"id\":\"a\",\"quantity\":1,\"status\":\"released\"}],\"outcomes\":[\"reserved\",\"released\",\"duplicate\",\"duplicate\"]}",
+      "hidden": true
+    },
+    {
+      "id": "stock-6",
+      "name": "Reject invalid quantities without changing stock",
+      "inputDescription": "{\"stock\":2,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":-1},{\"type\":\"reserve\",\"id\":\"b\",\"quantity\":0},{\"type\":\"reserve\",\"id\":\"c\",\"quantity\":1.5},{\"type\":\"reserve\",\"id\":\"d\",\"quantity\":\"1\"},{\"type\":\"reserve\",\"id\":\"e\",\"quantity\":9007199254740992}]}",
+      "expectedOutput": "{\"available\":2,\"reservations\":[],\"outcomes\":[\"invalid\",\"invalid\",\"invalid\",\"invalid\",\"invalid\"]}",
+      "hidden": true
+    },
+    {
+      "id": "stock-7",
+      "name": "Unknown commands and missing releases are harmless",
+      "inputDescription": "{\"stock\":0,\"commands\":[{\"type\":\"release\",\"id\":\"missing\"},{\"type\":\"expire\",\"id\":\"missing\"}]}",
+      "expectedOutput": "{\"available\":0,\"reservations\":[],\"outcomes\":[\"not_found\",\"invalid\"]}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "Keep a reservation ledger keyed by ID, including released entries.",
+    "Validate quantity, check the key and its payload, then check available stock."
+  ],
+  "alternativeApproaches": [
+    "Serialize commands per SKU through a durable queue; retain durable reservation uniqueness and reconciliation because delivery can repeat."
+  ],
+  "commonMistakes": [
+    "Checking available stock in one query and decrementing it in another.",
+    "Deleting released keys, allowing a delayed retry to reserve again."
+  ],
+  "codeLanguage": "javascript"
+}

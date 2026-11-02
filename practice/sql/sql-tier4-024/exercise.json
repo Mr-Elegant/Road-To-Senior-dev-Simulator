@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-024",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 24,
+  "title": "PostgreSQL Memory Hierarchy: Shared Buffers, OS Page Cache, and Double Buffering",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A sysadmin allocates 60 GB of a 64 GB RAM server to PostgreSQL `shared_buffers`. Performance immediately degrades by 40%, and disk read latency spikes.",
+  "questionStatement": "Explain the relationship between PostgreSQL `shared_buffers` and the Linux OS Kernel Page Cache. What is the \"Double Buffering\" architecture? Why is setting `shared_buffers` to 25% of RAM (16 GB on 64 GB) recommended, and how does `effective_cache_size` guide the query planner?",
+  "expectedConcepts": [
+    "Buffered I/O via POSIX read/write and Linux Page Cache",
+    "Double buffering: page residing in both shared_buffers and kernel cache",
+    "Why 60GB shared_buffers starves OS page cache and causes swapping",
+    "25% rule for shared_buffers",
+    "effective_cache_size as an informational planner cost hint (not memory allocation)"
+  ],
+  "hints": [
+    "Does PostgreSQL use direct I/O (O_DIRECT) or buffered I/O by default?",
+    "Does setting effective_cache_size allocate physical RAM?",
+    "Why does PostgreSQL rely heavily on the Linux OS page cache?"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-019",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 19,
+  "title": "High-Performance Unlogged Tables vs Temp Tables for Ephemeral Staging",
+  "category": "PostgreSQL Data Types",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A nightly ETL pipeline loads 20 million raw records from S3, parses and transforms them, and aggregates summary statistics. Using standard tables takes 25 minutes due to massive WAL disk I/O. Using `CREATE TEMP TABLE` causes connection bloat.",
+  "questionStatement": "Compare PostgreSQL `UNLOGGED` tables with Temporary tables (`TEMP TABLE`) and Standard logged tables. How do unlogged tables bypass the Write-Ahead Log (WAL)? What happens to unlogged tables during a server crash or on a streaming read-replica?",
+  "expectedConcepts": [
+    "Bypassing Write-Ahead Logging for maximum write speed",
+    "Automatic truncation to empty table upon crash recovery restart",
+    "Initialization fork (_init) mechanism",
+    "Non-replication to streaming read standbys",
+    "Cluster-wide visibility vs session-scoped TEMP tables"
+  ],
+  "hints": [
+    "Why are unlogged tables 5x faster on bulk inserts?",
+    "What happens to data in an unlogged table if someone pulls the server power plug?",
+    "Do unlogged tables exist on read replicas?"
+  ]
+}

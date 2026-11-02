@@ -1,0 +1,13 @@
+[
+  {
+    "id": "tc-t1-08",
+    "description": "Verify aggregate metrics for delivered orders",
+    "expectedRows": [
+      {
+        "total_orders": 7,
+        "gross_revenue": 1878.92,
+        "avg_order_value": 268.42
+      }
+    ]
+  }
+]

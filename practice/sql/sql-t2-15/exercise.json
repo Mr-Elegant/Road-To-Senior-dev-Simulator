@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-15",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 15,
+  "title": "Database Normalization vs. Denormalization Trade-offs",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "realWorldScenario": "An e-commerce order checkout endpoint calculates total order price by joining orders, order_items, discounts, and tax tables on every single page load.",
+  "questionStatement": "Explain when denormalization (such as storing `total_amount` directly on the `orders` header) is justified. What risks does denormalization introduce, and how are they mitigated?",
+  "expectedConcepts": [
+    "Read performance vs write complexity trade-off",
+    "Historical price immutability argument",
+    "Risk of data divergence / update anomaly",
+    "Trigger-based or service-layer synchronization"
+  ],
+  "hints": [
+    "If a product price changes tomorrow, should yesterday's order total change?"
+  ]
+}

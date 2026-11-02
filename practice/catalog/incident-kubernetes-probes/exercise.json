@@ -1,0 +1,498 @@
+{
+  "id": "incident-kubernetes-probes",
+  "title": "Restart Cascade: A Database Blip Kills Every Pod",
+  "type": "incident",
+  "topic": "Engineering Operations",
+  "subtopic": "Evolving production incident",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 35,
+  "businessContext": "A Kubernetes API deployment uses the same /health endpoint for readiness and liveness. The endpoint queries PostgreSQL. A short database slowdown marks every pod unhealthy and starts synchronized restarts.",
+  "problemStatement": "The API fleet restarts repeatedly during a database slowdown, although process health and CPU were normal before the restarts. Work through three timed developments, justify your actions, and write an evidence-based incident response. The simulation starts paused; advancing time can expire unanswered decisions.",
+  "constraints": [
+    "Keep application deadlock detection; do not permanently disable all health checks.",
+    "Protect the database from reconnect storms.",
+    "Validate a canary before rolling out the new probe policy.",
+    "All telemetry is synthetic. Actions only affect this practice simulation."
+  ],
+  "candidateTasks": [
+    "Contain customer impact while preserving evidence and data integrity.",
+    "Respond to each new development and explain the selected action.",
+    "Cite telemetry supporting the root cause; distinguish observation from inference.",
+    "Define a permanent correction, regression coverage, recovery gates, and stakeholder update."
+  ],
+  "incidentTelemetry": {
+    "logs": [
+      {
+        "timestamp": "T+00:00",
+        "level": "WARN",
+        "service": "inventory-api",
+        "message": "The API fleet restarts repeatedly during a database slowdown, although process health and CPU were normal before the restarts."
+      }
+    ],
+    "metrics": [
+      {
+        "metricName": "affected_operations_percent",
+        "baseline": "0.1",
+        "incidentPeak": "35",
+        "unit": "%",
+        "status": "critical",
+        "trend": "Latest observation after the selected action; not a live production metric"
+      }
+    ],
+    "customerReports": [
+      {
+        "id": "incident-kubernetes-probes-report",
+        "reporter": "Incident commander",
+        "impact": "Active customer impact",
+        "quote": "The API fleet restarts repeatedly during a database slowdown, although process health and CPU were normal before the restarts."
+      }
+    ],
+    "recentDeployments": [
+      {
+        "commitHash": "probes-r1",
+        "author": "service-team",
+        "message": "Use database-dependent health for liveness and readiness",
+        "timeAgo": "12 minutes before the alert",
+        "diffSnippet": "livenessProbe.httpGet.path: /health\nreadinessProbe.httpGet.path: /health\n/health -> SELECT 1\nfailureThreshold: 1"
+      }
+    ]
+  },
+  "incidentSimulation": {
+    "version": 1,
+    "initialSeverity": "SEV1",
+    "stages": [
+      {
+        "id": "development-1",
+        "atSeconds": 0,
+        "title": "Dependency failure becomes process failure",
+        "briefing": "A 2-second database delay exceeds the 1-second probe timeout. All pods restart, then open new database pools at the same time.",
+        "branches": {
+          "effective": "The fleet stops treating dependency latency as proof that every process is dead.",
+          "partial": "Some impact remains. Synchronized restarts add connection load to the already struggling dependency.",
+          "harmful": "Synchronized restarts add connection load to the already struggling dependency.",
+          "timeout": "The previous deadline passed without a response. Synchronized restarts add connection load to the already struggling dependency."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+00:00",
+              "level": "WARN",
+              "service": "inventory-api",
+              "message": "restart_count +80 in 3m; liveness failed on SELECT 1 timeout; db connection_attempt_rate x12."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "1-partial",
+            "label": "Increase probe timeout without separating its purpose",
+            "outcome": "partial",
+            "consequence": "Restarts become less frequent, but a longer dependency outage can still kill the entire fleet.",
+            "customerImpact": "Recovery is fragile.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "inventory-api",
+                  "message": "Restarts become less frequent, but a longer dependency outage can still kill the entire fleet."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "20",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-harmful",
+            "label": "Delete every pod to force a clean reconnect",
+            "outcome": "harmful",
+            "consequence": "The entire fleet simultaneously reconnects and loses in-flight requests.",
+            "customerImpact": "Inventory reads and writes fail more widely.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "inventory-api",
+                  "message": "The entire fleet simultaneously reconnects and loses in-flight requests."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "74",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-effective",
+            "label": "Revert dependency-coupled liveness and bound reconnect attempts",
+            "outcome": "effective",
+            "consequence": "Healthy processes remain alive while database retries are capped and jittered.",
+            "customerImpact": "The service can recover as database latency improves.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "inventory-api",
+                  "message": "Healthy processes remain alive while database retries are capped and jittered."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "8",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Dependency failure becomes process failure\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+00:00",
+                "level": "WARN",
+                "service": "inventory-api",
+                "message": "Decision deadline missed: restart_count +80 in 3m; liveness failed on SELECT 1 timeout; db connection_attempt_rate x12."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "1-effective",
+          "reasoning": "Liveness should detect unrecoverable process failure, not turn a shared dependency slowdown into a fleet-wide restart. Restore a safe probe policy and limit reconnect pressure."
+        }
+      },
+      {
+        "id": "development-2",
+        "atSeconds": 120,
+        "title": "New pods need startup time",
+        "briefing": "The canary takes 45 seconds to initialize. Its liveness probe starts after 5 seconds, so it is killed before startup finishes.",
+        "branches": {
+          "effective": "The running fleet is stable; fix initialization checks without rushing replacement pods.",
+          "partial": "Some impact remains. Keep the old healthy replicas serving while removing the restart cascade.",
+          "harmful": "Keep the old healthy replicas serving while removing the restart cascade.",
+          "timeout": "The previous deadline passed without a response. Keep the old healthy replicas serving while removing the restart cascade."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+02:00",
+              "level": "WARN",
+              "service": "inventory-api",
+              "message": "startup_duration = 45s; liveness begins at 5s; canary never becomes ready."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "2-harmful",
+            "label": "Disable every probe permanently",
+            "outcome": "harmful",
+            "consequence": "Pods receive traffic even when initialization fails or the process becomes stuck.",
+            "customerImpact": "Future failures remain routed to broken instances.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "inventory-api",
+                  "message": "Pods receive traffic even when initialization fails or the process becomes stuck."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "46",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-effective",
+            "label": "Use a startup probe and separate process liveness from readiness",
+            "outcome": "effective",
+            "consequence": "The canary gets a bounded startup window; readiness controls traffic after initialization while liveness detects a stuck process.",
+            "customerImpact": "Healthy existing pods serve while the new version starts.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "inventory-api",
+                  "message": "The canary gets a bounded startup window; readiness controls traffic after initialization while liveness detects a stuck process."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "2",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-partial",
+            "label": "Make every pod ready immediately after launch",
+            "outcome": "partial",
+            "consequence": "Traffic reaches instances before initialization completes.",
+            "customerImpact": "Some requests fail during deployments.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "inventory-api",
+                  "message": "Traffic reaches instances before initialization completes."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "15",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"New pods need startup time\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+02:00",
+                "level": "WARN",
+                "service": "inventory-api",
+                "message": "Decision deadline missed: startup_duration = 45s; liveness begins at 5s; canary never becomes ready."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "2-effective",
+          "reasoning": "A startup probe gates liveness/readiness until initialization succeeds. Readiness is a deliberate traffic decision; its dependency policy must match whether the service can serve useful work."
+        }
+      },
+      {
+        "id": "development-3",
+        "atSeconds": 300,
+        "title": "Prove recovery through another slowdown",
+        "briefing": "Probe endpoints pass locally. The next rollout overlaps a planned database failover with a 10-second connection pause.",
+        "branches": {
+          "effective": "A controlled dependency fault can verify the new policy before fleet rollout.",
+          "partial": "Some impact remains. Restore a healthy baseline and spare capacity before injecting another failure.",
+          "harmful": "Restore a healthy baseline and spare capacity before injecting another failure.",
+          "timeout": "The previous deadline passed without a response. Restore a healthy baseline and spare capacity before injecting another failure."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+05:00",
+              "level": "WARN",
+              "service": "inventory-api",
+              "message": "Canary warm; dependency pause test scheduled; old replica count remains sufficient."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "3-effective",
+            "label": "Test startup, dependency loss and process hang before gradual rollout",
+            "outcome": "effective",
+            "consequence": "A dependency pause causes bounded errors without restart amplification; a real process hang still fails liveness.",
+            "customerImpact": "Inventory service recovers predictably through the dependency fault.",
+            "severity": "SEV3",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "inventory-api",
+                  "message": "A dependency pause causes bounded errors without restart amplification; a real process hang still fails liveness."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "0.1",
+                  "unit": "%",
+                  "status": "normal",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-partial",
+            "label": "Roll out after one HTTP 200 from /live",
+            "outcome": "partial",
+            "consequence": "The endpoint works once, but startup and dependency-failure behavior remain untested.",
+            "customerImpact": "The next rollout could repeat the outage.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "inventory-api",
+                  "message": "The endpoint works once, but startup and dependency-failure behavior remain untested."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "5",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-harmful",
+            "label": "Roll out to all pods with zero spare capacity",
+            "outcome": "harmful",
+            "consequence": "Any probe mistake removes all serving capacity during the dependency pause.",
+            "customerImpact": "A deployment creates another complete outage.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "inventory-api",
+                  "message": "Any probe mistake removes all serving capacity during the dependency pause."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "66",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Prove recovery through another slowdown\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+05:00",
+                "level": "WARN",
+                "service": "inventory-api",
+                "message": "Decision deadline missed: Canary warm; dependency pause test scheduled; old replica count remains sufficient."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "3-effective",
+          "reasoning": "Test distinct failure modes and retain serving capacity during rollout. A green endpoint alone does not prove the correct restart and routing behavior."
+        }
+      }
+    ],
+    "endSeconds": 480
+  },
+  "hints": [
+    "Liveness failures explicitly cite SELECT 1 timeout despite normal pre-failure CPU.",
+    "Roll back the probe change to the last verified policy; retain healthy replicas and bound reconnect retries.",
+    "Provide distinct startup, liveness and readiness semantics with thresholds based on measured behavior."
+  ],
+  "alternativeApproaches": [
+    "For a service that can serve useful cached reads, keep those paths available while explicitly degrading writes.",
+    "For a service unable to serve any safe request without the database, readiness may depend on it, with thresholds and recovery behavior tested."
+  ],
+  "commonMistakes": [
+    "Making liveness query every shared dependency.",
+    "Disabling readiness and routing traffic before startup.",
+    "Treating larger timeouts as a substitute for correct probe semantics."
+  ]
+}

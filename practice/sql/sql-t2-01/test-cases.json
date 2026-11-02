@@ -1,0 +1,26 @@
+[
+  {
+    "id": "tc-t2-01",
+    "description": "Verify products priced above average active price ($170.82)",
+    "expectedRows": [
+      {
+        "id": 3,
+        "name": "Ultra-Wide 4K Gaming Monitor",
+        "category": "Electronics",
+        "price": 549
+      },
+      {
+        "id": 6,
+        "name": "Smart Induction Espresso Machine",
+        "category": "Home & Kitchen",
+        "price": 249.99
+      },
+      {
+        "id": 1,
+        "name": "Noise-Cancelling Headphones",
+        "category": "Electronics",
+        "price": 199.99
+      }
+    ]
+  }
+]

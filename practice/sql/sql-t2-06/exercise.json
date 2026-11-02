@@ -1,0 +1,48 @@
+{
+  "id": "sql-t2-06",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 6,
+  "title": "Prior Period Comparison with LAG()",
+  "category": "Window Functions",
+  "questionType": "executable",
+  "executionDialect": "postgresql",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "Finance needs to calculate invoice-over-invoice growth and detect any billing discrepancies for organization 101.",
+  "questionStatement": "Write a query on `invoices` for `organization_id = 101` returning `id`, `billing_date`, `amount`, and `prev_amount` (the amount of the immediately prior invoice using `LAG()`). Order results by `billing_date` ascending.",
+  "starterCode": "-- Calculate prior invoice amount with LAG\nSELECT\n  id,\n  billing_date,\n  amount,\n  LAG(amount, 1) OVER (ORDER BY billing_date ASC) AS prev_amount\nFROM invoices\nWHERE organization_id = 101\nORDER BY billing_date ASC;",
+  "expectedConcepts": [
+    "LAG() window function",
+    "Offset navigation",
+    "First-row NULL handling"
+  ],
+  "hints": [
+    "LAG(column, offset) looks backward in the sorted window."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t2-06",
+      "description": "Verify prior invoice amounts for organization 101",
+      "expectedRows": [
+        {
+          "id": 1,
+          "billing_date": "2024-01-01",
+          "amount": 999,
+          "prev_amount": null
+        },
+        {
+          "id": 2,
+          "billing_date": "2024-02-01",
+          "amount": 999,
+          "prev_amount": 999
+        },
+        {
+          "id": 3,
+          "billing_date": "2024-03-01",
+          "amount": 999,
+          "prev_amount": 999
+        }
+      ]
+    }
+  ]
+}

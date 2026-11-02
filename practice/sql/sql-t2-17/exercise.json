@@ -1,0 +1,19 @@
+{
+  "id": "sql-t2-17",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 17,
+  "title": "Expression / Functional Indexes in PostgreSQL",
+  "category": "Indexes and Query Planning",
+  "questionType": "conceptual",
+  "realWorldScenario": "Users are searching for emails case-insensitively: `WHERE LOWER(email) = 'alex@example.com'`. Even though a B-Tree index exists on `email`, PostgreSQL executes a slow Sequential Scan.",
+  "questionStatement": "Why does wrapping a column in a function like `LOWER(email)` invalidate a standard B-Tree index? How does an Expression Index solve this problem?",
+  "expectedConcepts": [
+    "Function wrapping prevents standard B-Tree index usage",
+    "Expression index DDL syntax: CREATE INDEX ... ON table (FUNCTION(column))",
+    "Pre-computation of function outputs in the index"
+  ],
+  "hints": [
+    "The index stores raw values, but the query tests computed values."
+  ]
+}

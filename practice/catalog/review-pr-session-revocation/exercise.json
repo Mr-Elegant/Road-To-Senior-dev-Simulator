@@ -1,0 +1,39 @@
+{
+  "id": "review-pr-session-revocation",
+  "title": "Code Review PR #589: Distributed Redis Session Invalidation",
+  "type": "code_review",
+  "topic": "Security",
+  "subtopic": "Authentication and authorization",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "PR #589 replaces in-memory JWT blacklisting with a shared Redis cluster session store to allow immediate user logout and password-reset session revocation. However, subtle race conditions and missing key TTLs expose the cluster to memory exhaustion and security bypasses.",
+  "problemStatement": "Review PR #589. Detect vulnerabilities including missing TTL expiration (causing unbounded Redis RAM growth), token reuse race conditions, and improper pattern scanning with `KEYS *` (which blocks the single-threaded Redis engine in production).",
+  "constraints": [
+    "Identify performance impact of `KEYS session:*` on production Redis clusters.",
+    "Identify race condition where revoked tokens can be re-issued.",
+    "Verify session key TTL alignment with JWT expiry timestamp."
+  ],
+  "codeReviewFiles": [
+    {
+      "filename": "src/auth/sessionStore.js",
+      "language": "javascript",
+      "reviewPointsCount": 3,
+      "newCode": "const redis = require('../redis');\n\nclass SessionStore {\n  // PR #589: Store active session tokens in Redis\n  async createSession(userId, token, claims) {\n    // BUG 1 (Memory Leak): No TTL (EXPIRE) set on session keys!\n    // Every user login creates a permanent key that lives in RAM forever.\n    await redis.set(`session:${userId}:${token}`, JSON.stringify(claims));\n    return true;\n  }\n\n  async revokeAllUserSessions(userId) {\n    // BUG 2 (Production Outage): Using KEYS command in production!\n    // KEYS is O(N) where N is total keys in database. It runs synchronously,\n    // freezing the single-threaded Redis event loop for seconds on a 5M key DB!\n    const keys = await redis.keys(`session:${userId}:*`);\n    if (keys.length > 0) {\n      await redis.del(...keys);\n    }\n    return keys.length;\n  }\n\n  async isSessionValid(userId, token) {\n    const exists = await redis.get(`session:${userId}:${token}`);\n    return Boolean(exists);\n  }\n}\n\nmodule.exports = new SessionStore();"
+    }
+  ],
+  "candidateTasks": [
+    "Flag Line 8: Missing TTL on `redis.set`. Require `EX` parameter matching token expiration to prevent Redis OOM.",
+    "Flag Line 16: `redis.keys()` blocks the Redis single thread. Replace with Redis Set indexing (`SADD user:sessions:{userId} token`) or `SCAN`.",
+    "Explain how indexing user sessions in a Set makes revocation O(1) instead of an expensive pattern search."
+  ],
+  "hints": [
+    "Redis is single-threaded; commands like `KEYS *` scan the entire dictionary synchronously and lock out all other commands.",
+    "To revoke all sessions for a user efficiently, store all active session IDs in a Redis Set keyed by `user_sessions:{userId}`."
+  ],
+  "alternativeApproaches": [
+    "Using a monotonic `user_token_version` column in the database/Redis: when a user logs out or resets password, increment `version = version + 1`. All tokens with older versions are immediately invalid without deleting individual keys."
+  ],
+  "commonMistakes": [
+    "Suggesting `SCAN` without noting that `SCAN` is still a loop; Set-based indexing is O(1) and far superior for user-scoped lookup."
+  ]
+}

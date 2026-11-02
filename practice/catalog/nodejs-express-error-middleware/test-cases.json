@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-exp-1",
+    "name": "Catches async exceptions and routes to global error handler",
+    "inputDescription": "null",
+    "expectedOutput": "\"async_handler_wrapped\"",
+    "explanation": "Guarantees proper response termination on async exceptions."
+  }
+]

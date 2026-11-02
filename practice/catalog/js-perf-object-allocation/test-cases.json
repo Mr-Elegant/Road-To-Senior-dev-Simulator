@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-perf-1",
+    "name": "Aggregates metrics accurately with zero intermediate objects",
+    "inputDescription": "100",
+    "expectedOutput": "\"optimized\"",
+    "explanation": "Processes metrics without GC churn."
+  }
+]

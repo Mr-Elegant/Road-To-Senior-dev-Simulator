@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-022",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 22,
+  "title": "High-Availability Failover Architectures: Patroni, Raft Quorum, and Split-Brain Defense",
+  "category": "Backup, Recovery, and Replication",
+  "questionType": "design",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "During a network partition between AWS Availability Zones, an automated failover script promoted the read-replica to primary. However, the original primary was still alive and accepting writes from half the Kubernetes pods, resulting in catastrophic split-brain data corruption.",
+  "questionStatement": "Design a resilient High-Availability (HA) architecture for PostgreSQL using Patroni and a Distributed Consensus Store (DCS) such as etcd or Consul. Explain Raft consensus quorum, leader leases, fencing mechanisms (STONITH / Watchdog), and how synchronous replication with quorum commit prevents data divergence.",
+  "expectedConcepts": [
+    "Split-brain diverging transaction logs and data corruption",
+    "etcd/Consul Raft consensus majority quorum (N/2 + 1)",
+    "Patroni leader lease TTL and automated promotion",
+    "Linux Watchdog / STONITH fencing killing zombie primary",
+    "Synchronous replication (synchronous_commit, synchronous_standby_names)"
+  ],
+  "hints": [
+    "Why is merging two divergent PostgreSQL primaries impossible after split-brain?",
+    "What does a Linux watchdog do if Patroni fails to refresh its DCS lease?",
+    "How does Raft majority quorum prevent two nodes from both acquiring the leader lease?"
+  ]
+}

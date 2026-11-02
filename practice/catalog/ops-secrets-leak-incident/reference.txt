@@ -1,0 +1,27 @@
+/**
+ * Secure GitHub Actions OIDC Workflow (Zero Static Keys)
+ */
+/*
+name: Deploy Production
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write # Required for requesting JWT from GitHub OIDC provider
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Assumes AWS IAM role using short-lived cryptographically signed token
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/GitHubActionsDeploymentRole
+          aws-region: us-east-1
+          audience: sts.amazonaws.com
+*/

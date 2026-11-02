@@ -1,0 +1,1 @@
+SELECT o.id AS order_id, p.name AS product_name, oi.quantity, oi.unit_price FROM orders o JOIN customers c ON o.customer_id = c.id JOIN order_items oi ON o.id = oi.order_id JOIN products p ON oi.product_id = p.id WHERE c.name = 'Aarav Patel' ORDER BY o.id ASC, p.name ASC;

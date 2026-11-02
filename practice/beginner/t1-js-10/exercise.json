@@ -1,0 +1,18 @@
+{
+  "id": "t1-js-10",
+  "title": "What is hoisting in JavaScript?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 10,
+  "expectedConcepts": [
+    "Compilation phase moving declarations to top of scope",
+    "Function declarations being fully hoisted",
+    "var hoisted with undefined",
+    "let and const hoisted into the Temporal Dead Zone (TDZ)"
+  ],
+  "hints": [
+    "Why can you call a normal function before the line it is defined on?",
+    "What value does var have before its assignment line?"
+  ]
+}

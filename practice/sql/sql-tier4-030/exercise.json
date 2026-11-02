@@ -1,0 +1,44 @@
+{
+  "id": "sql-tier4-030",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 30,
+  "title": "PostgreSQL Disaster Post-Mortem: Dropped Table Recovery Without Backup Restore",
+  "category": "Backup, Recovery, and Replication",
+  "questionType": "incident",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "At 15:00 UTC, an engineer intending to drop a staging table accidentally executes `DROP TABLE payments;` on the production database. The database is 4 Terabytes. Restoring from yesterday's full backup would take 8 hours and lose 15 hours of business transactions.",
+  "questionStatement": "Architect an emergency disaster recovery plan to recover the dropped `payments` table with zero lost data and minimum downtime. Detail Point-In-Time Recovery (PITR) to a temporary clone instance, `pg_dump` extraction of the single table, and selective re-import into production.",
+  "incidentDetails": {
+    "symptoms": [
+      "Production table payments dropped accidentally",
+      "4 TB database; full restore would take 8+ hours",
+      "Ongoing writes occurring on remaining tables (orders, customers)",
+      "Immediate recovery needed without rolling back other tables"
+    ],
+    "systemTelemetry": {
+      "activeConnections": 120,
+      "cpuUtilizationPercent": 40,
+      "bufferCacheHitRatio": 99.2,
+      "logSnippet": "2026-11-01 15:00:02 UTC [4901]: [1-1] LOG:  statement: DROP TABLE payments;\n2026-11-01 15:00:03 UTC [4901]: [2-1] LOG:  duration: 120.452 ms"
+    },
+    "candidateTasks": [
+      "Do NOT restore full database over live production (would wipe 15 hours of other tables)",
+      "Spin up an isolated recovery instance from latest base backup and WAL archive",
+      "Set recovery_target_time to 14:59:59 UTC (1 second before DROP TABLE)",
+      "Extract single table using pg_dump -t payments and restore to live production"
+    ]
+  },
+  "expectedConcepts": [
+    "Never rolling back production cluster over live unrelated tables",
+    "Spinning up isolated temporary instance from base backup",
+    "Configuring recovery_target_time to exact second before DROP TABLE",
+    "pg_dump -t payments single-table extraction in custom format",
+    "pg_restore --disable-triggers into live production cluster"
+  ],
+  "hints": [
+    "Why would restoring the full database to 14:59 lose all other data generated since then?",
+    "How does setting recovery_target_time stop replay right before the DROP command in WAL?",
+    "Use pg_dump -t to extract only the single missing table."
+  ]
+}

@@ -1,0 +1,1 @@
+function solution({events}) { return {delivered:events.map(e=>e.id),outcomes:events.map(()=>'delivered')}; }

@@ -1,0 +1,12 @@
+Architecture Diagram:
+[Client API] ──► [Job Scheduler API] ──► Write DB & Redis ZSET (score: run_at)
+                                              ▲
+                                              │ (Atomic ZPOPMIN Poll)
+                                     [Distributed Schedulers]
+                                              │
+                                              ▼
+                                   [Worker Queue: SQS / RabbitMQ]
+                                              │
+                                              ▼
+                                    [Worker Fleet Pool]
+                                   (Executes task & Acks)

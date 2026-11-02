@@ -1,0 +1,4 @@
+.center-box {
+  display: grid;
+  place-items: center;
+}

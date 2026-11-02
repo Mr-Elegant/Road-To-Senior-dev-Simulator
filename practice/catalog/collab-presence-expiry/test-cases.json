@@ -1,0 +1,51 @@
+[
+  {
+    "id": "presence-1",
+    "name": "Track an active session",
+    "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"s\",\"userId\":\"u\",\"version\":1,\"expiresAt\":11,\"online\":true}]}",
+    "expectedOutput": "{\"onlineUsers\":[\"u\"],\"activeSessions\":1}",
+    "hidden": false
+  },
+  {
+    "id": "presence-2",
+    "name": "Expiry at now is offline",
+    "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"s\",\"userId\":\"u\",\"version\":1,\"expiresAt\":10,\"online\":true}]}",
+    "expectedOutput": "{\"onlineUsers\":[],\"activeSessions\":0}",
+    "hidden": false
+  },
+  {
+    "id": "presence-3",
+    "name": "Aggregate multiple tabs once per user",
+    "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"a\",\"userId\":\"u\",\"version\":1,\"expiresAt\":20,\"online\":true},{\"id\":\"b\",\"userId\":\"u\",\"version\":1,\"expiresAt\":20,\"online\":true}]}",
+    "expectedOutput": "{\"onlineUsers\":[\"u\"],\"activeSessions\":2}",
+    "hidden": true
+  },
+  {
+    "id": "presence-4",
+    "name": "One closed tab does not close another",
+    "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"a\",\"userId\":\"u\",\"version\":1,\"expiresAt\":20,\"online\":false},{\"id\":\"b\",\"userId\":\"u\",\"version\":1,\"expiresAt\":20,\"online\":true}]}",
+    "expectedOutput": "{\"onlineUsers\":[\"u\"],\"activeSessions\":1}",
+    "hidden": true
+  },
+  {
+    "id": "presence-5",
+    "name": "Stale heartbeat cannot resurrect disconnect",
+    "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"s\",\"userId\":\"u\",\"version\":2,\"expiresAt\":20,\"online\":false},{\"id\":\"s\",\"userId\":\"u\",\"version\":1,\"expiresAt\":30,\"online\":true}]}",
+    "expectedOutput": "{\"onlineUsers\":[],\"activeSessions\":0}",
+    "hidden": true
+  },
+  {
+    "id": "presence-6",
+    "name": "First equal version wins and output is sorted",
+    "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"b\",\"userId\":\"z\",\"version\":1,\"expiresAt\":20,\"online\":true},{\"id\":\"a\",\"userId\":\"a\",\"version\":1,\"expiresAt\":20,\"online\":true},{\"id\":\"b\",\"userId\":\"z\",\"version\":1,\"expiresAt\":0,\"online\":false}]}",
+    "expectedOutput": "{\"onlineUsers\":[\"a\",\"z\"],\"activeSessions\":2}",
+    "hidden": true
+  },
+  {
+    "id": "presence-7",
+    "name": "Empty snapshot is offline",
+    "inputDescription": "{\"now\":10,\"sessions\":[]}",
+    "expectedOutput": "{\"onlineUsers\":[],\"activeSessions\":0}",
+    "hidden": true
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "id": "sql-t1-09",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 9,
+  "title": "Grouping and Aggregating with GROUP BY",
+  "category": "Filtering, Sorting, and Aggregation",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Category managers need to analyze inventory depth by viewing product counts and average pricing per category.",
+  "questionStatement": "Write a query to group products by `category`, returning the `category`, `product_count` (number of products), and `avg_price` (average price rounded to 2 decimals), sorted by `product_count` descending.",
+  "starterCode": "-- Group products by category\nSELECT\n  category,\n  COUNT(*) AS product_count,\n  ROUND(AVG(price), 2) AS avg_price\nFROM products\nGROUP BY category\nORDER BY product_count DESC;",
+  "expectedConcepts": [
+    "GROUP BY clause",
+    "Aggregate per group",
+    "ORDER BY aggregate alias"
+  ],
+  "hints": [
+    "Every column in SELECT that is not an aggregate function must appear in the GROUP BY clause."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-09",
+      "description": "Verify product catalog breakdown by category",
+      "expectedRows": [
+        {
+          "category": "Electronics",
+          "product_count": 4,
+          "avg_price": 225.87
+        },
+        {
+          "category": "Apparel",
+          "product_count": 2,
+          "avg_price": 112
+        },
+        {
+          "category": "Home & Kitchen",
+          "product_count": 2,
+          "avg_price": 149.97
+        },
+        {
+          "category": "Books",
+          "product_count": 2,
+          "avg_price": 48.5
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-sec-boundary-1",
+    "name": "Prevents secret key serialization across RSC boundary",
+    "inputDescription": "null",
+    "expectedOutput": "\"isolated_server_boundary\"",
+    "explanation": "Enforces strict data transfer object projection."
+  }
+]

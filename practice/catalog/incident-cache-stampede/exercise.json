@@ -1,0 +1,498 @@
+{
+  "id": "incident-cache-stampede",
+  "title": "Cache Stampede: The Five-Minute Expiry Cliff",
+  "type": "incident",
+  "topic": "Engineering Operations",
+  "subtopic": "Evolving production incident",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "A product API serves 12000 requests per second. A deployment populated every popular Redis key with the same five-minute TTL. PostgreSQL can sustain only 800 uncached reads per second.",
+  "problemStatement": "Cache hit rate falls from 98% to 4% in one second; product requests time out across all regions. Work through three timed developments, justify your actions, and write an evidence-based incident response. The simulation starts paused; advancing time can expire unanswered decisions.",
+  "constraints": [
+    "Do not serve stale prices or inventory as authoritative checkout values.",
+    "Redis is shared with sessions; avoid destructive global operations.",
+    "Protect the database before repopulating the cache.",
+    "All telemetry is synthetic. Actions only affect this practice simulation."
+  ],
+  "candidateTasks": [
+    "Contain customer impact while preserving evidence and data integrity.",
+    "Respond to each new development and explain the selected action.",
+    "Cite telemetry supporting the root cause; distinguish observation from inference.",
+    "Define a permanent correction, regression coverage, recovery gates, and stakeholder update."
+  ],
+  "incidentTelemetry": {
+    "logs": [
+      {
+        "timestamp": "T+00:00",
+        "level": "WARN",
+        "service": "catalog-api",
+        "message": "Cache hit rate falls from 98% to 4% in one second; product requests time out across all regions."
+      }
+    ],
+    "metrics": [
+      {
+        "metricName": "affected_operations_percent",
+        "baseline": "0.1",
+        "incidentPeak": "35",
+        "unit": "%",
+        "status": "critical",
+        "trend": "Latest observation after the selected action; not a live production metric"
+      }
+    ],
+    "customerReports": [
+      {
+        "id": "incident-cache-stampede-report",
+        "reporter": "Incident commander",
+        "impact": "Active customer impact",
+        "quote": "Cache hit rate falls from 98% to 4% in one second; product requests time out across all regions."
+      }
+    ],
+    "recentDeployments": [
+      {
+        "commitHash": "ampede-r1",
+        "author": "service-team",
+        "message": "Bulk warm popular products with identical expiration",
+        "timeAgo": "12 minutes before the alert",
+        "diffSnippet": "for (const sku of popularSkus) {\n  await redis.set(sku, await loadProduct(sku), { EX: 300 });\n}"
+      }
+    ]
+  },
+  "incidentSimulation": {
+    "version": 1,
+    "initialSeverity": "SEV1",
+    "stages": [
+      {
+        "id": "development-1",
+        "atSeconds": 0,
+        "title": "Synchronized expiration",
+        "briefing": "All popular keys expired together. Database read arrival is 15x its sustainable rate; Redis memory usage is normal.",
+        "branches": {
+          "effective": "Database load is bounded; only safe catalog fields may use a stale fallback.",
+          "partial": "Some impact remains. Miss traffic still fans out to the database; increasing cache memory does not address synchronized misses.",
+          "harmful": "Miss traffic still fans out to the database; increasing cache memory does not address synchronized misses.",
+          "timeout": "The previous deadline passed without a response. Miss traffic still fans out to the database; increasing cache memory does not address synchronized misses."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+00:00",
+              "level": "WARN",
+              "service": "catalog-api",
+              "message": "cache_hit_ratio = 0.04; database_read_qps = 12000; cache_expiry_batch = 18000 keys."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "1-partial",
+            "label": "Add Redis memory without controlling misses",
+            "outcome": "partial",
+            "consequence": "Redis has more headroom but the expired values are still missing.",
+            "customerImpact": "Product loads remain slow.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "catalog-api",
+                  "message": "Redis has more headroom but the expired values are still missing."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "29",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-harmful",
+            "label": "Flush all Redis keys to start clean",
+            "outcome": "harmful",
+            "consequence": "The remaining cached products and shared sessions disappear, expanding the miss storm.",
+            "customerImpact": "Catalog failures combine with forced sign-ins.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "catalog-api",
+                  "message": "The remaining cached products and shared sessions disappear, expanding the miss storm."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "75",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-effective",
+            "label": "Coalesce reads and shed excess load; serve safe stale catalog data",
+            "outcome": "effective",
+            "consequence": "Single-flight regeneration and a concurrency cap reduce duplicate reads per hot key.",
+            "customerImpact": "Descriptions remain available; checkout revalidates price and stock.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "catalog-api",
+                  "message": "Single-flight regeneration and a concurrency cap reduce duplicate reads per hot key."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "6",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Synchronized expiration\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+00:00",
+                "level": "WARN",
+                "service": "catalog-api",
+                "message": "Decision deadline missed: cache_hit_ratio = 0.04; database_read_qps = 12000; cache_expiry_batch = 18000 keys."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "1-effective",
+          "reasoning": "Protect the origin and coalesce duplicate work. Stale serving must be field-specific; cache availability cannot justify stale monetary or stock decisions."
+        }
+      },
+      {
+        "id": "development-2",
+        "atSeconds": 120,
+        "title": "A hot key defeats local coalescing",
+        "briefing": "One celebrity product receives 6000 requests per second across 40 pods. Per-process single-flight still starts up to 40 simultaneous refreshes.",
+        "branches": {
+          "effective": "Local coalescing helps, but coordination across pods is still needed for this hot key.",
+          "partial": "Some impact remains. Restore origin admission control before attempting distributed refresh coordination.",
+          "harmful": "Restore origin admission control before attempting distributed refresh coordination.",
+          "timeout": "The previous deadline passed without a response. Restore origin admission control before attempting distributed refresh coordination."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+02:00",
+              "level": "WARN",
+              "service": "catalog-api",
+              "message": "sku=hot-441; concurrent_refreshes = 40; refresh_query_p99 = 4.2s."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "2-harmful",
+            "label": "Warm every key with unlimited parallel database reads",
+            "outcome": "harmful",
+            "consequence": "The warmer competes with live traffic and saturates the database again.",
+            "customerImpact": "Checkout and browsing both degrade.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "catalog-api",
+                  "message": "The warmer competes with live traffic and saturates the database again."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "62",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-effective",
+            "label": "Use bounded cross-pod refresh leases with jittered expiry",
+            "outcome": "effective",
+            "consequence": "One refresh owner runs; other pods wait briefly or use permitted stale fields. The lease expires if its owner fails.",
+            "customerImpact": "Catalog responses stabilize without unbounded waiters.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "catalog-api",
+                  "message": "One refresh owner runs; other pods wait briefly or use permitted stale fields. The lease expires if its owner fails."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "2",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-partial",
+            "label": "Increase every TTL to exactly one hour",
+            "outcome": "partial",
+            "consequence": "Misses are delayed but the next synchronized cliff is preserved.",
+            "customerImpact": "Current browsing improves temporarily.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "catalog-api",
+                  "message": "Misses are delayed but the next synchronized cliff is preserved."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "14",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"A hot key defeats local coalescing\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+02:00",
+                "level": "WARN",
+                "service": "catalog-api",
+                "message": "Decision deadline missed: sku=hot-441; concurrent_refreshes = 40; refresh_query_p99 = 4.2s."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "2-effective",
+          "reasoning": "A refresh lease needs expiration, bounded wait, and owner-safe release. Jitter expirations and cap warmup concurrency; a distributed lock without failure handling becomes a new outage."
+        }
+      },
+      {
+        "id": "development-3",
+        "atSeconds": 300,
+        "title": "Recovery under real traffic",
+        "briefing": "A warmup job reports success, but the next expiry window is approaching. Decide what must be checked before removing load shedding.",
+        "branches": {
+          "effective": "Origin headroom allows a controlled ramp while observing another expiry window.",
+          "partial": "Some impact remains. A full cache can mask the unresolved stampede; prove bounded regeneration before lifting admission limits.",
+          "harmful": "A full cache can mask the unresolved stampede; prove bounded regeneration before lifting admission limits.",
+          "timeout": "The previous deadline passed without a response. A full cache can mask the unresolved stampede; prove bounded regeneration before lifting admission limits."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+05:00",
+              "level": "WARN",
+              "service": "catalog-api",
+              "message": "Refresh ownership test passed; origin_qps = 420; next_expiry_distribution spans 120 seconds."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "3-effective",
+            "label": "Ramp after a full expiry window and verify checkout revalidation",
+            "outcome": "effective",
+            "consequence": "A second expiry cycle stays within origin capacity; price and inventory are validated at checkout.",
+            "customerImpact": "Browsing and checkout return to their defined service levels.",
+            "severity": "SEV3",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "catalog-api",
+                  "message": "A second expiry cycle stays within origin capacity; price and inventory are validated at checkout."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "0.1",
+                  "unit": "%",
+                  "status": "normal",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-partial",
+            "label": "Close after cache hit rate rises above 95%",
+            "outcome": "partial",
+            "consequence": "A high hit rate hides whether the next synchronized miss can be handled.",
+            "customerImpact": "Another expiry cliff remains possible.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "catalog-api",
+                  "message": "A high hit rate hides whether the next synchronized miss can be handled."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "3",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-harmful",
+            "label": "Remove origin limits before testing refresh-owner failure",
+            "outcome": "harmful",
+            "consequence": "A lease owner failure triggers unbounded fallback reads under peak traffic.",
+            "customerImpact": "The catalog outage recurs.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "catalog-api",
+                  "message": "A lease owner failure triggers unbounded fallback reads under peak traffic."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "45",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Recovery under real traffic\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+05:00",
+                "level": "WARN",
+                "service": "catalog-api",
+                "message": "Decision deadline missed: Refresh ownership test passed; origin_qps = 420; next_expiry_distribution spans 120 seconds."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "3-effective",
+          "reasoning": "Observe an entire expiration cycle and owner failure, not only warm-cache throughput. Keep correctness checks for price and stock independent of cache freshness."
+        }
+      }
+    ],
+    "endSeconds": 480
+  },
+  "hints": [
+    "Redis memory is normal while 18000 keys expire together.",
+    "Cap origin concurrency, coalesce identical reads and shed excess requests with bounded retry hints.",
+    "Apply TTL jitter, refresh-ahead for hot keys, and leases with owner tokens, TTL and safe release."
+  ],
+  "alternativeApproaches": [
+    "Use a dedicated refresh queue with deduplication and bounded workers.",
+    "Precompute hot catalog views and invalidate them from product-change events while retaining expiry as a safety bound."
+  ],
+  "commonMistakes": [
+    "Flushing shared Redis or warming with unlimited concurrency.",
+    "Serving stale financial values without an explicit correctness policy.",
+    "Using a refresh lock without expiration or owner-safe release."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "sysdesign-distributed-search-engine",
+  "title": "E-Commerce Real-Time Full-Text Search & Faceted Filtering",
+  "type": "system_design",
+  "topic": "System Design",
+  "subtopic": "Search",
+  "difficulty": "Staff/Principal",
+  "estimatedMinutes": 45,
+  "businessContext": "An e-commerce retailer with 25,000,000 product SKUs needs sub-50ms search with autocomplete, typo tolerance, synonyms, faceted aggregations (brand, category, price ranges, rating), and real-time inventory filtering.",
+  "problemStatement": "Architect an enterprise search engine cluster (Elasticsearch / OpenSearch). Describe the document indexing pipeline from PostgreSQL via CDC, the inverted index and BKD tree structure, shard distribution, query DSL construction for boolean query scoring with BM25, and zero-downtime index re-indexing via index aliases.",
+  "constraints": [
+    "Search query P99 latency: < 50ms across 25M products.",
+    "Freshness: New products or price changes searchable within 3 seconds of DB commit.",
+    "Support typo tolerance (Levenshtein edit distance 1-2) without killing performance."
+  ],
+  "systemDesignReqs": {
+    "scale": "25M products, 5k search queries/second peak, 100 updates/second.",
+    "functional": [
+      "Full-text query search with BM25 relevance scoring.",
+      "Faceted navigation (aggregations on price, color, brand).",
+      "Autocomplete / Suggest-as-you-type.",
+      "Typo tolerance and synonym expansion."
+    ],
+    "nonFunctional": [
+      "Sub-50ms search response.",
+      "Zero-downtime schema migrations via Aliases.",
+      "Read replica scaling."
+    ],
+    "assumptions": [
+      "PostgreSQL is source of truth.",
+      "Elasticsearch / OpenSearch used as search secondary index."
+    ]
+  },
+  "candidateTasks": [
+    "Design the inverted index document mapping with analyzers (stemming, lowercase, edge_ngram for autocomplete).",
+    "Explain BM25 relevance scoring algorithm (term frequency, inverse document frequency, document length normalization).",
+    "Design the zero-downtime re-indexing strategy using Index Aliases (`products_v1` -> `products_v2` with `_aliases` switch).",
+    "Design faceted aggregations using doc_values for low memory footprint."
+  ],
+  "hints": [
+    "Inverted indexes map terms to document IDs for text search; BKD trees index numeric values (prices, ratings) for range filters.",
+    "Never point application directly to an index name (`products`); point to an alias (`products_active`) so you can swap versions atomically."
+  ],
+  "alternativeApproaches": [
+    "PostgreSQL `pgvector` + `pg_trgm` if catalog is smaller than 200k items.",
+    "Algolia / Meilisearch for managed developer-friendly search."
+  ],
+  "commonMistakes": [
+    "Running wildcards `*term*` in production: leading wildcards bypass inverted indexes and force a full cluster scan.",
+    "Putting filters in the `must` clause instead of `filter` clause, calculating unnecessary relevance scores for boolean attributes and preventing cache utilization."
+  ]
+}

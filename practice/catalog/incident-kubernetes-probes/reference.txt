@@ -1,0 +1,14 @@
+startupProbe:
+  httpGet: { path: /startup, port: 3000 }
+  periodSeconds: 5
+  failureThreshold: 18
+livenessProbe:
+  httpGet: { path: /live, port: 3000 }
+  periodSeconds: 10
+  failureThreshold: 3
+readinessProbe:
+  httpGet: { path: /ready, port: 3000 }
+  periodSeconds: 5
+  failureThreshold: 3
+# Illustrative budgets: measure and validate for this service.
+# /live checks process progress; /ready checks ability to serve safely.

@@ -1,0 +1,18 @@
+{
+  "id": "t1-node-02",
+  "title": "What is meant by the \"non-blocking, event-driven I/O\" model in Node.js?",
+  "category": "Node.js and API Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 2,
+  "expectedConcepts": [
+    "Single-threaded execution for JavaScript code",
+    "Non-blocking I/O (Input/Output like disk reading or network requests do not pause the server)",
+    "Callbacks and Promises when background operations finish",
+    "Efficiency in handling many concurrent connections with low memory footprint"
+  ],
+  "hints": [
+    "Does Node.js wait idle while a database query is running?",
+    "How does non-blocking I/O allow one server thread to handle thousands of simultaneous user connections?"
+  ]
+}

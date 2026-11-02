@@ -1,0 +1,45 @@
+{
+  "id": "sql-tier4-026",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 26,
+  "title": "Production Incident: Replica WAL Replay Lag Induced by Long Standby Queries",
+  "category": "Backup, Recovery, and Replication",
+  "questionType": "incident",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A data science team connects to the production read-replica and runs a heavy analytics query that scans historical data for 45 minutes. Minutes later, the replica lag increases by 35 GB, and other operational read queries on the replica return stale data.",
+  "questionStatement": "Explain how queries on a physical streaming read-replica can pause WAL replay. Analyze the interaction between `hot_standby_feedback`, `max_standby_streaming_delay`, and `max_standby_archive_delay`. How do you protect replicas from analytical query disruption?",
+  "incidentDetails": {
+    "symptoms": [
+      "Streaming replication replay lag grows to 35 GB",
+      "Replica serves increasingly stale data to customer-facing queries",
+      "Data science query running on standby for 45 minutes",
+      "Primary database forced to hold back WAL deletions"
+    ],
+    "systemTelemetry": {
+      "activeConnections": 55,
+      "replicationLagBytes": 37580963840,
+      "cpuUtilizationPercent": 78,
+      "bufferCacheHitRatio": 98.6,
+      "logSnippet": "2026-11-01 17:15:00 UTC [108]: [1-1] LOG:  recovery process is waiting for ExclusiveLock on relation 16402\n2026-11-01 17:15:00 UTC [108]: [2-1] DETAIL:  Process 4891 is running query: SELECT date_trunc('month', created_at), sum(total_amount) FROM orders GROUP BY 1 ..."
+    },
+    "candidateTasks": [
+      "Explain why WAL replay requires ExclusiveLock to clean dead tuples",
+      "Analyze max_standby_streaming_delay behavior",
+      "Evaluate hot_standby_feedback pros and cons",
+      "Recommend architectural isolation: dedicated analytical replica or logical replication ETL"
+    ]
+  },
+  "expectedConcepts": [
+    "Recovery conflict caused by WAL replay needing to remove tuples read by standby queries",
+    "max_standby_streaming_delay timeout behavior",
+    "hot_standby_feedback propagating snapshot to primary to delay vacuum",
+    "Risk of primary table bloat when hot_standby_feedback is enabled",
+    "Architectural segregation: separate OLTP and OLAP read replicas"
+  ],
+  "hints": [
+    "What happens when WAL replay wants to delete a page version that an analytics query is reading?",
+    "If max_standby_streaming_delay expires, what happens to the analytics query?",
+    "Why can hot_standby_feedback cause bloat on the primary database?"
+  ]
+}

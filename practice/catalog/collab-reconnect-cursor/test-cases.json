@@ -1,0 +1,51 @@
+[
+  {
+    "id": "resume-1",
+    "name": "Resume strictly after acknowledged cursor",
+    "inputDescription": "{\"cursor\":1,\"highWater\":3,\"retainedFrom\":1,\"limit\":5,\"events\":[{\"seq\":1},{\"seq\":2},{\"seq\":3}]}",
+    "expectedOutput": "{\"status\":\"ok\",\"events\":[{\"seq\":2},{\"seq\":3}],\"nextCursor\":3,\"hasMore\":false}",
+    "hidden": false
+  },
+  {
+    "id": "resume-2",
+    "name": "Bound a replay page",
+    "inputDescription": "{\"cursor\":0,\"highWater\":3,\"retainedFrom\":1,\"limit\":2,\"events\":[{\"seq\":1},{\"seq\":2},{\"seq\":3}]}",
+    "expectedOutput": "{\"status\":\"ok\",\"events\":[{\"seq\":1},{\"seq\":2}],\"nextCursor\":2,\"hasMore\":true}",
+    "hidden": false
+  },
+  {
+    "id": "resume-3",
+    "name": "Retention boundary remains resumable",
+    "inputDescription": "{\"cursor\":2,\"highWater\":4,\"retainedFrom\":3,\"limit\":1,\"events\":[{\"seq\":3},{\"seq\":4}]}",
+    "expectedOutput": "{\"status\":\"ok\",\"events\":[{\"seq\":3}],\"nextCursor\":3,\"hasMore\":true}",
+    "hidden": true
+  },
+  {
+    "id": "resume-4",
+    "name": "Expired cursor requires snapshot reset",
+    "inputDescription": "{\"cursor\":1,\"highWater\":4,\"retainedFrom\":3,\"limit\":2,\"events\":[{\"seq\":3},{\"seq\":4}]}",
+    "expectedOutput": "{\"status\":\"reset\",\"events\":[],\"nextCursor\":4,\"hasMore\":false}",
+    "hidden": true
+  },
+  {
+    "id": "resume-5",
+    "name": "Reject a future cursor",
+    "inputDescription": "{\"cursor\":5,\"highWater\":4,\"retainedFrom\":3,\"limit\":2,\"events\":[{\"seq\":3},{\"seq\":4}]}",
+    "expectedOutput": "{\"status\":\"invalid_cursor\",\"events\":[],\"nextCursor\":5,\"hasMore\":false}",
+    "hidden": true
+  },
+  {
+    "id": "resume-6",
+    "name": "Already caught up does not replay last message",
+    "inputDescription": "{\"cursor\":2,\"highWater\":2,\"retainedFrom\":1,\"limit\":2,\"events\":[{\"seq\":1},{\"seq\":2}]}",
+    "expectedOutput": "{\"status\":\"ok\",\"events\":[],\"nextCursor\":2,\"hasMore\":false}",
+    "hidden": true
+  },
+  {
+    "id": "resume-7",
+    "name": "Empty log has a stable zero cursor",
+    "inputDescription": "{\"cursor\":0,\"highWater\":0,\"retainedFrom\":1,\"limit\":2,\"events\":[]}",
+    "expectedOutput": "{\"status\":\"ok\",\"events\":[],\"nextCursor\":0,\"hasMore\":false}",
+    "hidden": true
+  }
+]

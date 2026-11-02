@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-vault-1",
+    "name": "Rotates credentials dynamically with zero connection drops",
+    "inputDescription": "null",
+    "expectedOutput": "\"dynamic_vault_dual_user_rotation\"",
+    "explanation": "Enforces seamless zero-downtime rotation."
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "id": "t1-js-11",
+  "title": "What are Promises and how does async/await make handling them easier?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 11,
+  "expectedConcepts": [
+    "Promise states: Pending, Fulfilled, Rejected",
+    "Handling with .then() and .catch()",
+    "async/await syntax for writing asynchronous code that reads synchronously",
+    "Error handling with try/catch"
+  ],
+  "hints": [
+    "What are the 3 states of a Promise?",
+    "What keyword must be placed before a function to allow using the await keyword inside it?"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "sql-tier4-011",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 11,
+  "title": "Production Incident: Cascading Lock Pileup Caused by Missing Foreign Key Index",
+  "category": "Locks and Deadlocks",
+  "questionType": "incident",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "During a customer account deletion workflow, a batch script deletes 1,000 inactive accounts from `customers`. Within 10 seconds, the entire payment API freezes. Investigation shows that deleting a row from `customers` triggers a table-wide `ShareLock` or sequential scan on `orders`.",
+  "questionStatement": "Explain how PostgreSQL enforces foreign key constraints during DELETE/UPDATE of parent rows. Why does a foreign key column without an index on the child table cause table-level lock contention and cascading API outages? Write the query to detect all unindexed foreign keys across the database.",
+  "incidentDetails": {
+    "symptoms": [
+      "API freeze during customer account deletions",
+      "Hundreds of INSERT/UPDATE transactions queued on orders table",
+      "pg_stat_activity shows DELETE FROM customers waiting on locks",
+      "High disk I/O on orders heap table"
+    ],
+    "systemTelemetry": {
+      "activeConnections": 198,
+      "lockWaitsCount": 165,
+      "cpuUtilizationPercent": 92,
+      "bufferCacheHitRatio": 97.4,
+      "logSnippet": "2026-11-01 14:05:01 UTC [2910]: [1-1] LOG:  process 2910 still waiting for RowShareLock on relation \"orders\" after 1000.412 ms\n2026-11-01 14:05:01 UTC [2910]: [2-1] STATEMENT:  DELETE FROM customers WHERE id = 48102;\n2026-11-01 14:05:05 UTC [3104]: [1-1] LOG:  process 3104 still waiting for ExclusiveLock on relation \"orders\""
+    },
+    "candidateTasks": [
+      "Explain why PostgreSQL must scan child table on parent DELETE",
+      "Demonstrate that PostgreSQL does NOT automatically index foreign keys",
+      "Provide the system catalog query to identify all unindexed foreign keys",
+      "Generate DDL to create missing indexes CONCURRENTLY"
+    ]
+  },
+  "expectedConcepts": [
+    "Child table scan on parent row deletion",
+    "PostgreSQL does NOT automatically index foreign keys",
+    "Full sequential scan of child table under lock for every deleted parent row",
+    "System catalog query comparing pg_constraint with pg_index",
+    "CREATE INDEX CONCURRENTLY on foreign key column"
+  ],
+  "hints": [
+    "Does PostgreSQL create an index on child table foreign key columns automatically?",
+    "What must the database do when you delete a customer with 10 million orders in the database?",
+    "Look at pg_constraint where contype = 'f'."
+  ]
+}

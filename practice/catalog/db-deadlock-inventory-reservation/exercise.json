@@ -1,0 +1,44 @@
+{
+  "id": "db-deadlock-inventory-reservation",
+  "title": "Flash Sale Cart Reservation PostgreSQL Transaction Deadlock",
+  "type": "debugging",
+  "topic": "Databases",
+  "subtopic": "Deadlocks",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "During a flash sale, shoppers simultaneously checkout carts containing multiple shared items (e.g. Shoes + Socks). Under peak concurrency, PostgreSQL logs show surging `ERROR: deadlock detected (SQLSTATE 40P01)`, causing 15% of checkout transactions to fail and abort.",
+  "problemStatement": "When two concurrent checkout transactions attempt to lock the same inventory rows in different orders (Transaction A locks Product #101 then Product #205; Transaction B locks Product #205 then Product #101), neither transaction can proceed, causing a cyclical deadlock. Refactor the reservation logic to guarantee deterministic lock ordering.",
+  "constraints": [
+    "Must eliminate deadlocks completely.",
+    "Must maintain strict inventory consistency (no overselling beyond available stock).",
+    "Use deterministic sorting by Primary Key before locking (`SELECT ... FOR UPDATE`)."
+  ],
+  "starterCode": "/**\n * Deadlock-Prone Multi-Item Inventory Reservation\n */\nasync function reserveInventoryItems(client, itemsToReserve) {\n  // itemsToReserve = [{ productId: 205, qty: 1 }, { productId: 101, qty: 2 }]\n  \n  await client.query('BEGIN');\n  \n  // BUG: Locks items in arbitrary array order provided by client payload!\n  // If User 1 reserves [101, 205] while User 2 reserves [205, 101],\n  // PostgreSQL detects a cyclical dependency and terminates one with SQLSTATE 40P01.\n  for (const item of itemsToReserve) {\n    const res = await client.query(\n      'SELECT stock FROM inventory WHERE product_id = $1 FOR UPDATE',\n      [item.productId]\n    );\n    if (res.rows[0].stock < item.qty) {\n      throw new Error(`Insufficient stock for product ${item.productId}`);\n    }\n    await client.query(\n      'UPDATE inventory SET stock = stock - $1 WHERE product_id = $2',\n      [item.qty, item.productId]\n    );\n  }\n\n  await client.query('COMMIT');\n}\n\nfunction solution(input) {\n  return \"deterministic_lock_ordering_applied\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Analyze PostgreSQL deadlock error logs and explain the Coffman conditions required for deadlocks.",
+    "Enforce deterministic lock acquisition ordering by sorting item IDs before executing `SELECT ... FOR UPDATE`.",
+    "Discuss alternative lock acquisition methods like `SELECT ... FOR UPDATE NOWAIT` or `SKIP LOCKED`."
+  ],
+  "hints": [
+    "If all concurrent transactions always acquire locks in the exact same global order (e.g. sorted ascending by `product_id`), a circular dependency cannot form.",
+    "You can sort `itemsToReserve.sort((a, b) => a.productId - b.productId)` before the loop or execute a single query: `SELECT ... WHERE product_id IN (...) ORDER BY product_id FOR UPDATE`."
+  ],
+  "testCases": [
+    {
+      "id": "tc-deadlock-1",
+      "name": "Enforces deterministic primary key lock ordering",
+      "inputDescription": "null",
+      "expectedOutput": "\"deterministic_lock_ordering_applied\"",
+      "explanation": "Guarantees deadlocks cannot occur across concurrent reservations."
+    }
+  ],
+  "alternativeApproaches": [
+    "Single SQL statement batch update: UPDATE inventory SET stock = stock - updates.qty FROM ...",
+    "Using Redis distributed locks with Redlock algorithm ordered by key."
+  ],
+  "commonMistakes": [
+    "Relying solely on retry logic: retries without ordering can cause repeated lock thrashing under high concurrency.",
+    "Using `SELECT ... FOR SHARE` which permits read sharing but escalates to exclusive write locks, actually increasing deadlocks."
+  ]
+}

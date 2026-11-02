@@ -1,0 +1,51 @@
+[
+  {
+    "id": "msg-1",
+    "name": "Accept first message",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[],\"incoming\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}]}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"outcomes\":[\"accepted\"]}",
+    "hidden": false
+  },
+  {
+    "id": "msg-2",
+    "name": "Sort delayed deliveries",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"}],\"incoming\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}]}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"}],\"outcomes\":[\"accepted\"]}",
+    "hidden": false
+  },
+  {
+    "id": "msg-3",
+    "name": "Deduplicate a retry in the same batch",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[],\"incoming\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}]}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"outcomes\":[\"accepted\",\"duplicate\"]}",
+    "hidden": true
+  },
+  {
+    "id": "msg-4",
+    "name": "Reject changed payload under same ID",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"incoming\":[{\"id\":\"a\",\"seq\":1,\"body\":\"changed\",\"channelId\":\"c\"}]}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"outcomes\":[\"conflict\"]}",
+    "hidden": true
+  },
+  {
+    "id": "msg-5",
+    "name": "Reject sequence collision",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"incoming\":[{\"id\":\"b\",\"seq\":1,\"body\":\"b\",\"channelId\":\"c\"}]}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"outcomes\":[\"conflict\"]}",
+    "hidden": true
+  },
+  {
+    "id": "msg-6",
+    "name": "Reject cross-channel deliveries before deduplication",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"incoming\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"other\"}]}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"outcomes\":[\"forbidden\"]}",
+    "hidden": true
+  },
+  {
+    "id": "msg-7",
+    "name": "Validate malformed and unsafe sequence fields",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[],\"incoming\":[{\"id\":\"a\",\"seq\":0,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":1.5,\"body\":\"b\",\"channelId\":\"c\"},{\"id\":\"c\",\"seq\":9007199254740992,\"body\":\"c\",\"channelId\":\"c\"},{\"id\":\"x\"},{\"id\":\"\",\"seq\":1,\"body\":\"\",\"channelId\":\"c\"}]}",
+    "expectedOutput": "{\"messages\":[],\"outcomes\":[\"invalid\",\"invalid\",\"invalid\",\"invalid\",\"invalid\"]}",
+    "hidden": true
+  }
+]

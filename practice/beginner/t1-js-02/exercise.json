@@ -1,0 +1,17 @@
+{
+  "id": "t1-js-02",
+  "title": "What are JavaScript data types and how does primitive vs reference comparison work?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 2,
+  "expectedConcepts": [
+    "Primitives (string, number, boolean, null, undefined, symbol, bigint)",
+    "Reference types (Object, Array, Function)",
+    "Comparison by value vs comparison by memory reference"
+  ],
+  "hints": [
+    "Distinguish between values stored directly on the stack versus objects stored by pointer.",
+    "Think about comparing two separate objects that look identical."
+  ]
+}

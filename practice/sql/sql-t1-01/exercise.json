@@ -1,0 +1,57 @@
+{
+  "id": "sql-t1-01",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 1,
+  "title": "Basic Column Projection and Row Limiting",
+  "category": "SQL Fundamentals",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "The inventory operations team needs a quick glance at available catalog items to verify stock naming and retail pricing.",
+  "questionStatement": "Write a query to retrieve the `name`, `category`, and `price` of all products from the `products` table, ordered alphabetically by `name`, limited to the first 5 records.",
+  "starterCode": "-- Select name, category, and price for the first 5 products\nSELECT\n  name,\n  category,\n  price\nFROM products\nORDER BY name ASC\nLIMIT 5;",
+  "expectedConcepts": [
+    "SELECT clause",
+    "FROM clause",
+    "ORDER BY ASC",
+    "LIMIT clause"
+  ],
+  "hints": [
+    "List the requested column names separated by commas.",
+    "Use ORDER BY name ASC to sort alphabetically.",
+    "Append LIMIT 5 at the end of the query."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-01",
+      "description": "Verify first 5 products in alphabetical order",
+      "expectedRows": [
+        {
+          "name": "Database Internals in Practice",
+          "category": "Books",
+          "price": 52
+        },
+        {
+          "name": "Designing Data-Intensive Applications",
+          "category": "Books",
+          "price": 45
+        },
+        {
+          "name": "Discontinued USB Hub",
+          "category": "Electronics",
+          "price": 25
+        },
+        {
+          "name": "Ergonomic Standing Desk Mat",
+          "category": "Home & Kitchen",
+          "price": 49.95
+        },
+        {
+          "name": "Mechanical Wireless Keyboard",
+          "category": "Electronics",
+          "price": 129.5
+        }
+      ]
+    }
+  ]
+}

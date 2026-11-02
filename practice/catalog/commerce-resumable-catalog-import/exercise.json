@@ -1,0 +1,83 @@
+{
+  "id": "commerce-resumable-catalog-import",
+  "title": "E-commerce: Resume a Catalog Import Without Corrupting Prices",
+  "type": "coding",
+  "topic": "Node.js",
+  "subtopic": "E-commerce / SaaS catalog import recovery",
+  "difficulty": "Senior",
+  "estimatedMinutes": 40,
+  "businessContext": "A supplier uploads a large catalog. After a worker restart, repeated rows overwrite newer values and SKU lookups update products belonging to another merchant.",
+  "problemStatement": "Implement solution({ tenantId, importId, products, receipts, rows }) returning { products, receipts, outcomes }. tenantId is trusted server context. Products have tenantId, sku, priceCents and are unique per tenant/SKU. Receipts are successful rows { tenantId, importId, rowNumber, sku, priceCents }. A row has rowNumber, sku, priceCents. Process rows in order. Normalize SKU by trimming whitespace; SKU comparison is case-sensitive. Keep existing array order and append new products/receipts in processing order.",
+  "constraints": [
+    "Validate first: positive safe-integer rowNumber, nonempty string SKU after trim, and nonnegative safe-integer priceCents. Invalid rows return invalid and create no receipt.",
+    "Find receipts by tenantId, importId, rowNumber. Matching normalized SKU/price returns duplicate; a changed payload returns conflict. Otherwise upsert only the current tenant/SKU, append a receipt, and return applied. Later rows may update the same SKU. Do not mutate inputs; initial receipts and products are valid."
+  ],
+  "candidateTasks": [
+    "Implement partial success, receipt-based recovery, and tenant-scoped upserts.",
+    "Explain transaction boundaries, parallel worker claims, and why one global last-row cursor is unsafe."
+  ],
+  "starterCode": "function solution({ tenantId, products, receipts, rows }) {\n  const copy = products.map(product => ({ ...product }));\n  const outcomes = rows.map(row => {\n    const product = copy.find(product => product.sku === row.sku);\n    if (product) product.priceCents = row.priceCents;\n    else copy.push({ tenantId, sku: row.sku, priceCents: row.priceCents });\n    return \"applied\";\n  });\n  return { products: copy, receipts: receipts.slice(), outcomes };\n}",
+  "testCases": [
+    {
+      "id": "import-1",
+      "name": "New row creates product and durable receipt",
+      "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[],\"receipts\":[],\"rows\":[{\"rowNumber\":1,\"sku\":\" X \",\"priceCents\":100}]}",
+      "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":100}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"outcomes\":[\"applied\"]}",
+      "hidden": false
+    },
+    {
+      "id": "import-2",
+      "name": "Existing receipt makes retry a no-op",
+      "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":200}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}]}",
+      "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":200}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"outcomes\":[\"duplicate\"]}",
+      "hidden": false
+    },
+    {
+      "id": "import-3",
+      "name": "Changed replay is rejected",
+      "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":100}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":999}]}",
+      "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":100}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"outcomes\":[\"conflict\"]}",
+      "hidden": true
+    },
+    {
+      "id": "import-4",
+      "name": "Same SKU in another tenant stays unchanged",
+      "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[{\"tenantId\":\"b\",\"sku\":\"X\",\"priceCents\":500}],\"receipts\":[],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}]}",
+      "expectedOutput": "{\"products\":[{\"tenantId\":\"b\",\"sku\":\"X\",\"priceCents\":500},{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":100}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"outcomes\":[\"applied\"]}",
+      "hidden": true
+    },
+    {
+      "id": "import-5",
+      "name": "Invalid rows do not block valid rows or claim receipts",
+      "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[],\"receipts\":[],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":-1},{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":0},{\"rowNumber\":2,\"sku\":\" \",\"priceCents\":100},{\"rowNumber\":3,\"sku\":\"Y\",\"priceCents\":1.5}]}",
+      "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":0}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":0}],\"outcomes\":[\"invalid\",\"applied\",\"invalid\",\"invalid\"]}",
+      "hidden": true
+    },
+    {
+      "id": "import-6",
+      "name": "Receipt identity includes the import job",
+      "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"new\",\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":100}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"old\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":200}]}",
+      "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":200}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"old\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100},{\"tenantId\":\"a\",\"importId\":\"new\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":200}],\"outcomes\":[\"applied\"]}",
+      "hidden": true
+    },
+    {
+      "id": "import-7",
+      "name": "Later rows update a SKU without making earlier retries destructive",
+      "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[],\"receipts\":[],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100},{\"rowNumber\":2,\"sku\":\"X\",\"priceCents\":200},{\"rowNumber\":1,\"sku\":\" X \",\"priceCents\":100}]}",
+      "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":200}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100},{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":2,\"sku\":\"X\",\"priceCents\":200}],\"outcomes\":[\"applied\",\"applied\",\"duplicate\"]}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "A product key and an import-row key represent different identities.",
+    "A receipt proves that a row was applied, even if a later row has since changed the product."
+  ],
+  "alternativeApproaches": [
+    "Validate into staging tables, then publish a versioned catalog atomically when all rows satisfy the chosen import policy."
+  ],
+  "commonMistakes": [
+    "Skipping every row before a global cursor when processing was parallel or partial.",
+    "Recording a receipt before a product update without a shared transaction."
+  ],
+  "codeLanguage": "javascript"
+}

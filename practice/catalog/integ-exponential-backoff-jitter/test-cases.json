@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-jitter-1",
+    "name": "Scatters retries evenly using exponential backoff with full jitter",
+    "inputDescription": "null",
+    "expectedOutput": "\"exponential_backoff_full_jitter_applied\"",
+    "explanation": "Smoothes retry traffic and eliminates synchronized traffic spikes."
+  }
+]

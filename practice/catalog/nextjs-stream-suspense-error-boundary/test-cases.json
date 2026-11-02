@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-stream-1",
+    "name": "Isolates streaming failure from core page view",
+    "inputDescription": "null",
+    "expectedOutput": "\"isolated_suspense_boundary\"",
+    "explanation": "Enables independent progressive loading and failure containment."
+  }
+]

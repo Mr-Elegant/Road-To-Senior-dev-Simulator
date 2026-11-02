@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-zod-1",
+    "name": "Enforces strict Zod schema validation and problem details formatting",
+    "inputDescription": "null",
+    "expectedOutput": "\"zod_schema_validated_and_sanitized\"",
+    "explanation": "Guarantees untrusted boundaries are safely sanitized."
+  }
+]

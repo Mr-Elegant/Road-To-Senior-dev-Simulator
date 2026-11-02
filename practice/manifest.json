@@ -1,0 +1,2393 @@
+[
+  {
+    "key": "catalog/js-event-loop-microtasks",
+    "group": "catalog",
+    "id": "js-event-loop-microtasks",
+    "title": "Flash-Sale Batch Processor Microtask Queue Starvation",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/js-closures-memory-leak",
+    "group": "catalog",
+    "id": "js-closures-memory-leak",
+    "title": "SSE Connection Manager Request Context Closure Leak",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/js-promise-race-condition",
+    "group": "catalog",
+    "id": "js-promise-race-condition",
+    "title": "Multi-Tab Wallet Checkout Balance Debit Race Condition",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/js-async-error-propagation",
+    "group": "catalog",
+    "id": "js-async-error-propagation",
+    "title": "Background Reconciliation Pipeline Unhandled Rejection Crash",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/js-perf-object-allocation",
+    "group": "catalog",
+    "id": "js-perf-object-allocation",
+    "title": "High-Throughput Metrics Aggregator Garbage Collection Latency Spikes",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/ts-discriminated-unions-events",
+    "group": "catalog",
+    "id": "ts-discriminated-unions-events",
+    "title": "Multi-Gateway Webhook Event Normalization & Exhaustive Narrowing",
+    "language": "typescript",
+    "mode": "guided",
+    "filename": "solution.ts"
+  },
+  {
+    "key": "catalog/ts-generics-api-client",
+    "group": "catalog",
+    "id": "ts-generics-api-client",
+    "title": "Type-Safe RPC/REST Client with Path Parameter Inference",
+    "language": "typescript",
+    "mode": "guided",
+    "filename": "solution.ts"
+  },
+  {
+    "key": "catalog/ts-type-narrowing-rbac",
+    "group": "catalog",
+    "id": "ts-type-narrowing-rbac",
+    "title": "Enterprise Multi-Tenant RBAC Authorization Type Narrowing",
+    "language": "typescript",
+    "mode": "guided",
+    "filename": "solution.ts"
+  },
+  {
+    "key": "catalog/ts-deep-immutability-state",
+    "group": "catalog",
+    "id": "ts-deep-immutability-state",
+    "title": "Deep Readonly State Container with Lens-Based Immutability",
+    "language": "typescript",
+    "mode": "guided",
+    "filename": "solution.ts"
+  },
+  {
+    "key": "catalog/react-stale-closure-interval",
+    "group": "catalog",
+    "id": "react-stale-closure-interval",
+    "title": "Order-Book Live Ticker Stale Closure Hook Bug",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/react-rerender-cascade-table",
+    "group": "catalog",
+    "id": "react-rerender-cascade-table",
+    "title": "10,000-Row Logistics Inventory Table Cascading Re-Render Freeze",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/react-race-condition-autocomplete",
+    "group": "catalog",
+    "id": "react-race-condition-autocomplete",
+    "title": "Customer Support CRM Search Out-of-Order Response Overwrite",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/react-accessible-combobox",
+    "group": "catalog",
+    "id": "react-accessible-combobox",
+    "title": "Accessible ARIA 1.2 Enterprise Multi-Select Combobox",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/react-custom-hook-optimistic-mutation",
+    "group": "catalog",
+    "id": "react-custom-hook-optimistic-mutation",
+    "title": "E-Commerce Cart Optimistic Mutation Hook with Rollback",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/enterprise-loan-management",
+    "group": "catalog",
+    "id": "enterprise-loan-management",
+    "title": "Enterprise Loan Management Dashboard (React & Redux Toolkit)",
+    "language": "typescript",
+    "mode": "guided",
+    "filename": "solution.ts"
+  },
+  {
+    "key": "catalog/nextjs-server-client-boundary",
+    "group": "catalog",
+    "id": "nextjs-server-client-boundary",
+    "title": "Secret Key Leakage Across Next.js Server-Client Boundary",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/nextjs-hydration-mismatch-clock",
+    "group": "catalog",
+    "id": "nextjs-hydration-mismatch-clock",
+    "title": "Multi-Timezone Scheduling Hydration Mismatch & Layout Shift",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/nextjs-isr-cache-stampede",
+    "group": "catalog",
+    "id": "nextjs-isr-cache-stampede",
+    "title": "Product Catalog High-Traffic ISR Cache Stampede / Dog-Piling",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/nextjs-auth-middleware-session",
+    "group": "catalog",
+    "id": "nextjs-auth-middleware-session",
+    "title": "Edge Middleware JWT Validation Infinite Redirect Loop",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/nextjs-stream-suspense-error-boundary",
+    "group": "catalog",
+    "id": "nextjs-stream-suspense-error-boundary",
+    "title": "AI Streaming Assistant Suspense & Localized Error Boundary Fallback",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/nodejs-event-loop-blocking-crypto",
+    "group": "catalog",
+    "id": "nodejs-event-loop-blocking-crypto",
+    "title": "Auth Gateway Event-Loop Freezing on CPU-Intensive Hashing",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/nodejs-express-error-middleware",
+    "group": "catalog",
+    "id": "nodejs-express-error-middleware",
+    "title": "Express Asynchronous Error Swallowing & Hanging Socket Leak",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/nodejs-rate-limiting-redis",
+    "group": "catalog",
+    "id": "nodejs-rate-limiting-redis",
+    "title": "Distributed Sliding Window Rate Limiter with Redis Race Conditions",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/nodejs-stream-backpressure",
+    "group": "catalog",
+    "id": "nodejs-stream-backpressure",
+    "title": "Multi-Gigabyte Financial Audit CSV Export Out-of-Memory (OOM) Crash",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/nodejs-graceful-shutdown-worker",
+    "group": "catalog",
+    "id": "nodejs-graceful-shutdown-worker",
+    "title": "Kubernetes Rolling Deployment Background Transaction Data Loss",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/db-deadlock-inventory-reservation",
+    "group": "catalog",
+    "id": "db-deadlock-inventory-reservation",
+    "title": "Flash Sale Cart Reservation PostgreSQL Transaction Deadlock",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/db-n-plus-one-query-plan",
+    "group": "catalog",
+    "id": "db-n-plus-one-query-plan",
+    "title": "E-Commerce Order History Endpoint N+1 Query & Composite Index Optimization",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/db-isolation-levels-phantom-read",
+    "group": "catalog",
+    "id": "db-isolation-levels-phantom-read",
+    "title": "Financial Ledger Wallet Balance Anomaly & Isolation Levels",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/db-keyset-pagination-performance",
+    "group": "catalog",
+    "id": "db-keyset-pagination-performance",
+    "title": "CRM Million-Row Activity Log OFFSET Pagination Degradation",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/db-zero-downtime-migration",
+    "group": "catalog",
+    "id": "db-zero-downtime-migration",
+    "title": "50M-Row User Schema Column Rename Zero-Downtime Migration",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/integ-webhook-idempotency-replay",
+    "group": "catalog",
+    "id": "integ-webhook-idempotency-replay",
+    "title": "Stripe Payment Webhook Replay & Duplicate Credit Crediting",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/integ-whatsapp-sms-fallback",
+    "group": "catalog",
+    "id": "integ-whatsapp-sms-fallback",
+    "title": "Resilient Multi-Provider WhatsApp & SMS Fallback Orchestrator",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/integ-crm-sync-out-of-order",
+    "group": "catalog",
+    "id": "integ-crm-sync-out-of-order",
+    "title": "Bi-Directional CRM Sync Out-of-Order Customer Data Rollback",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/integ-exponential-backoff-jitter",
+    "group": "catalog",
+    "id": "integ-exponential-backoff-jitter",
+    "title": "Third-Party Shipping API Retry Storm & Thundering Herd Incident",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/ops-production-memory-leak-debug",
+    "group": "catalog",
+    "id": "ops-production-memory-leak-debug",
+    "title": "Production Incident: Node.js Container OOMKilled Memory Leak",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/ops-secrets-leak-incident",
+    "group": "catalog",
+    "id": "ops-secrets-leak-incident",
+    "title": "Production Incident: Cloud Provider IAM & Stripe Key Leak in CI Logs",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/ops-canary-rollback-metrics",
+    "group": "catalog",
+    "id": "ops-canary-rollback-metrics",
+    "title": "Canary Deployment 5xx Spike & Automated Rollback Analysis",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/ops-distributed-tracing-bottleneck",
+    "group": "catalog",
+    "id": "ops-distributed-tracing-bottleneck",
+    "title": "OpenTelemetry Trace Bottleneck Analysis in Microservice Mesh",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/sysdesign-scalable-notification-engine",
+    "group": "catalog",
+    "id": "sysdesign-scalable-notification-engine",
+    "title": "Global Multi-Channel Notification Platform (50M Events/Day)",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/sysdesign-idempotent-checkout-service",
+    "group": "catalog",
+    "id": "sysdesign-idempotent-checkout-service",
+    "title": "High-Volume Idempotent Checkout & Order Processing System",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/sysdesign-multi-tenant-crm-analytics",
+    "group": "catalog",
+    "id": "sysdesign-multi-tenant-crm-analytics",
+    "title": "Real-Time Multi-Tenant CRM Analytics & Aggregation Engine",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/sysdesign-distributed-job-scheduler",
+    "group": "catalog",
+    "id": "sysdesign-distributed-job-scheduler",
+    "title": "Distributed Cron & Delayed Job Scheduler (At-Least-Once Delivery)",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/review-pr-payment-split",
+    "group": "catalog",
+    "id": "review-pr-payment-split",
+    "title": "Code Review PR #412: Marketplace Payout Split & Transfer Engine",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/review-pr-session-revocation",
+    "group": "catalog",
+    "id": "review-pr-session-revocation",
+    "title": "Code Review PR #589: Distributed Redis Session Invalidation",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/interview-staff-architect-modernization",
+    "group": "catalog",
+    "id": "interview-staff-architect-modernization",
+    "title": "Staff Architect Interview: Legacy Monolith Modernization to Event-Driven Architecture",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/interview-lead-incident-postmortem",
+    "group": "catalog",
+    "id": "interview-lead-incident-postmortem",
+    "title": "Lead Engineer Interview: 45-Minute Outage Facilitation & Blameless Post-Mortem",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/sec-ssrf-webhook-metadata",
+    "group": "catalog",
+    "id": "sec-ssrf-webhook-metadata",
+    "title": "Custom Webhook Dispatcher AWS Metadata SSRF Vulnerability",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/sysdesign-distributed-search-engine",
+    "group": "catalog",
+    "id": "sysdesign-distributed-search-engine",
+    "title": "E-Commerce Real-Time Full-Text Search & Faceted Filtering",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/integ-payment-reconciliation-ledger",
+    "group": "catalog",
+    "id": "integ-payment-reconciliation-ledger",
+    "title": "Automated Nightly Payment Gateway Reconciliation & Variance Ledger",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/ops-secrets-rotation-vault",
+    "group": "catalog",
+    "id": "ops-secrets-rotation-vault",
+    "title": "Zero-Downtime Database Secret Rotation with HashiCorp Vault",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/node-rest-api-validation-zod",
+    "group": "catalog",
+    "id": "node-rest-api-validation-zod",
+    "title": "High-Throughput REST Ingestion & Zod Schema Validation Guard",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/incident-db-connection-storm",
+    "group": "catalog",
+    "id": "incident-db-connection-storm",
+    "title": "Connection Storm: Autoscaling Makes Checkout Worse",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/incident-cache-stampede",
+    "group": "catalog",
+    "id": "incident-cache-stampede",
+    "title": "Cache Stampede: The Five-Minute Expiry Cliff",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/incident-migration-lock",
+    "group": "catalog",
+    "id": "incident-migration-lock",
+    "title": "Migration Lock: A Small DDL Change Stops Orders",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/incident-regional-failover",
+    "group": "catalog",
+    "id": "incident-regional-failover",
+    "title": "Regional Failover: The Replica Is Ninety Seconds Behind",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/incident-payment-ambiguity",
+    "group": "catalog",
+    "id": "incident-payment-ambiguity",
+    "title": "Payment Timeout: Did the Customer Already Pay?",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/incident-kafka-poison-message",
+    "group": "catalog",
+    "id": "incident-kafka-poison-message",
+    "title": "Consumer Backlog: One Poison Event Blocks Fulfillment",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/incident-kubernetes-probes",
+    "group": "catalog",
+    "id": "incident-kubernetes-probes",
+    "title": "Restart Cascade: A Database Blip Kills Every Pod",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/incident-tenant-cache-leak",
+    "group": "catalog",
+    "id": "incident-tenant-cache-leak",
+    "title": "Tenant Isolation: A CDN Serves Another Customer’s Invoice",
+    "language": "",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "catalog/commerce-inventory-reservations",
+    "group": "catalog",
+    "id": "commerce-inventory-reservations",
+    "title": "E-commerce: Stop Overselling the Last Item",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/commerce-payment-reconciliation",
+    "group": "catalog",
+    "id": "commerce-payment-reconciliation",
+    "title": "E-commerce: Reconcile Duplicate Payment Notifications",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/commerce-resumable-catalog-import",
+    "group": "catalog",
+    "id": "commerce-resumable-catalog-import",
+    "title": "E-commerce: Resume a Catalog Import Without Corrupting Prices",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/saas-tenant-authorization",
+    "group": "catalog",
+    "id": "saas-tenant-authorization",
+    "title": "SaaS: Close a Cross-Tenant Invoice Access Bug",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/saas-subscription-entitlements",
+    "group": "catalog",
+    "id": "saas-subscription-entitlements",
+    "title": "SaaS: Repair Subscription Access After Delayed Updates",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/saas-safe-audit-history",
+    "group": "catalog",
+    "id": "saas-safe-audit-history",
+    "title": "SaaS: Record Useful Audit History Without Leaking Secrets",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/collab-message-ordering",
+    "group": "catalog",
+    "id": "collab-message-ordering",
+    "title": "Collaboration: Deduplicate and Order Retried Messages",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/collab-reconnect-cursor",
+    "group": "catalog",
+    "id": "collab-reconnect-cursor",
+    "title": "Collaboration: Resume a Conversation After Disconnection",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/collab-read-receipts",
+    "group": "catalog",
+    "id": "collab-read-receipts",
+    "title": "Collaboration: Keep Read Receipts Monotonic Across Devices",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/collab-presence-expiry",
+    "group": "catalog",
+    "id": "collab-presence-expiry",
+    "title": "Collaboration: Expire Presence Without Disconnecting Other Tabs",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/collab-channel-permissions",
+    "group": "catalog",
+    "id": "collab-channel-permissions",
+    "title": "Collaboration: Authorize Channel Reads and Sends",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/collab-notification-delivery",
+    "group": "catalog",
+    "id": "collab-notification-delivery",
+    "title": "Collaboration: Deduplicate Notifications and Respect Preferences",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/collab-meeting-signaling",
+    "group": "catalog",
+    "id": "collab-meeting-signaling",
+    "title": "Collaboration: Reject Stale Meeting Signaling After Reconnect",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/collab-history-pagination",
+    "group": "catalog",
+    "id": "collab-history-pagination",
+    "title": "Collaboration: Page Chat History Without Gaps or Repeats",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "loan/bug-1-race-condition",
+    "group": "loan",
+    "id": "bug-1-race-condition",
+    "title": "Keep the newest search result",
+    "language": "javascript",
+    "mode": "loan",
+    "filename": "solution.js"
+  },
+  {
+    "key": "loan/bug-2-duplicate-api-calls",
+    "group": "loan",
+    "id": "bug-2-duplicate-api-calls",
+    "title": "Admit distinct queries, suppress duplicate in-flight work",
+    "language": "javascript",
+    "mode": "loan",
+    "filename": "solution.js"
+  },
+  {
+    "key": "loan/bug-3-optimistic-update-failure",
+    "group": "loan",
+    "id": "bug-3-optimistic-update-failure",
+    "title": "Roll back the correct optimistic approval",
+    "language": "javascript",
+    "mode": "loan",
+    "filename": "solution.js"
+  },
+  {
+    "key": "loan/bug-4-incorrect-pagination",
+    "group": "loan",
+    "id": "bug-4-incorrect-pagination",
+    "title": "Reset pagination when the query changes",
+    "language": "javascript",
+    "mode": "loan",
+    "filename": "solution.js"
+  },
+  {
+    "key": "loan/bug-5-redux-state-mutation",
+    "group": "loan",
+    "id": "bug-5-redux-state-mutation",
+    "title": "Sort loans without mutating Redux state",
+    "language": "javascript",
+    "mode": "loan",
+    "filename": "solution.js"
+  },
+  {
+    "key": "loan/bug-6-excessive-re-renders",
+    "group": "loan",
+    "id": "bug-6-excessive-re-renders",
+    "title": "Keep selector results stable for unrelated updates",
+    "language": "javascript",
+    "mode": "loan",
+    "filename": "solution.js"
+  },
+  {
+    "key": "loan/bug-7-stale-closure",
+    "group": "loan",
+    "id": "bug-7-stale-closure",
+    "title": "Read current filters when a refresh actually runs",
+    "language": "javascript",
+    "mode": "loan",
+    "filename": "solution.js"
+  },
+  {
+    "key": "loan/bug-8-failed-request-recovery",
+    "group": "loan",
+    "id": "bug-8-failed-request-recovery",
+    "title": "Leave loading and support retry after a failure",
+    "language": "javascript",
+    "mode": "loan",
+    "filename": "solution.js"
+  },
+  {
+    "key": "sql/sql-t1-01",
+    "group": "sql",
+    "id": "sql-t1-01",
+    "title": "Basic Column Projection and Row Limiting",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-02",
+    "group": "sql",
+    "id": "sql-t1-02",
+    "title": "Filtering Active Catalog Products with WHERE",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-03",
+    "group": "sql",
+    "id": "sql-t1-03",
+    "title": "Eliminating Duplicates with DISTINCT",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-04",
+    "group": "sql",
+    "id": "sql-t1-04",
+    "title": "Pattern Matching with LIKE and Wildcards",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-05",
+    "group": "sql",
+    "id": "sql-t1-05",
+    "title": "Range Filtering with BETWEEN and Date Comparison",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-06",
+    "group": "sql",
+    "id": "sql-t1-06",
+    "title": "Membership Filtering with the IN Operator",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-07",
+    "group": "sql",
+    "id": "sql-t1-07",
+    "title": "Handling Missing Data with IS NULL and IS NOT NULL",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-08",
+    "group": "sql",
+    "id": "sql-t1-08",
+    "title": "Aggregating Totals with COUNT, SUM, and AVG",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-09",
+    "group": "sql",
+    "id": "sql-t1-09",
+    "title": "Grouping and Aggregating with GROUP BY",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-10",
+    "group": "sql",
+    "id": "sql-t1-10",
+    "title": "Filtering Grouped Aggregates with HAVING",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-11",
+    "group": "sql",
+    "id": "sql-t1-11",
+    "title": "Basic INNER JOIN Across Two Relational Tables",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-12",
+    "group": "sql",
+    "id": "sql-t1-12",
+    "title": "Finding Inactive Records with LEFT JOIN and IS NULL",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-13",
+    "group": "sql",
+    "id": "sql-t1-13",
+    "title": "Multi-Table Join: Order Items with Products and Customers",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-14",
+    "group": "sql",
+    "id": "sql-t1-14",
+    "title": "Loan Approval Rates and Risk Categorization",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-15",
+    "group": "sql",
+    "id": "sql-t1-15",
+    "title": "Conditional Aggregation with CASE WHEN",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t1-16",
+    "group": "sql",
+    "id": "sql-t1-16",
+    "title": "Relational Database Keys: Primary Keys vs. Foreign Keys",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-17",
+    "group": "sql",
+    "id": "sql-t1-17",
+    "title": "First Normal Form (1NF) Fundamentals",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-18",
+    "group": "sql",
+    "id": "sql-t1-18",
+    "title": "Second Normal Form (2NF) and Composite Keys",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-19",
+    "group": "sql",
+    "id": "sql-t1-19",
+    "title": "Third Normal Form (3NF) and Transitive Dependencies",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-20",
+    "group": "sql",
+    "id": "sql-t1-20",
+    "title": "SQL Data Types: VARCHAR, CHAR, and TEXT in PostgreSQL",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-21",
+    "group": "sql",
+    "id": "sql-t1-21",
+    "title": "Date and Time Types: TIMESTAMP vs. TIMESTAMPTZ",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-22",
+    "group": "sql",
+    "id": "sql-t1-22",
+    "title": "ACID Properties in Relational Databases",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-23",
+    "group": "sql",
+    "id": "sql-t1-23",
+    "title": "Transactions with BEGIN, COMMIT, and ROLLBACK",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-24",
+    "group": "sql",
+    "id": "sql-t1-24",
+    "title": "B-Tree Indexing Fundamentals",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-25",
+    "group": "sql",
+    "id": "sql-t1-25",
+    "title": "Database Constraints: NOT NULL, UNIQUE, and CHECK",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-26",
+    "group": "sql",
+    "id": "sql-t1-26",
+    "title": "SQL Injection Prevention: Parameterized Queries vs String Concatenation",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-27",
+    "group": "sql",
+    "id": "sql-t1-27",
+    "title": "Understanding Database Views",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-28",
+    "group": "sql",
+    "id": "sql-t1-28",
+    "title": "PostgreSQL Boolean Logic: COALESCE and NULLIF",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-29",
+    "group": "sql",
+    "id": "sql-t1-29",
+    "title": "Row Insertion and Returning Generated IDs with RETURNING",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t1-30",
+    "group": "sql",
+    "id": "sql-t1-30",
+    "title": "Composite and Foreign Key Indexing Basics",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-01",
+    "group": "sql",
+    "id": "sql-t2-01",
+    "title": "Filtering Above-Average Values with Scalar Subqueries",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t2-02",
+    "group": "sql",
+    "id": "sql-t2-02",
+    "title": "Correlated Subquery with EXISTS",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t2-03",
+    "group": "sql",
+    "id": "sql-t2-03",
+    "title": "Common Table Expressions (CTEs) for Multi-Step Aggregations",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t2-04",
+    "group": "sql",
+    "id": "sql-t2-04",
+    "title": "Ranking Products Within Categories Using DENSE_RANK()",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t2-05",
+    "group": "sql",
+    "id": "sql-t2-05",
+    "title": "Calculating Running Totals with Cumulative Window Aggregation",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t2-06",
+    "group": "sql",
+    "id": "sql-t2-06",
+    "title": "Prior Period Comparison with LAG()",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t2-07",
+    "group": "sql",
+    "id": "sql-t2-07",
+    "title": "Top N Records Per Group Pattern",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t2-08",
+    "group": "sql",
+    "id": "sql-t2-08",
+    "title": "FULL OUTER JOIN for Data Reconciliation",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t2-09",
+    "group": "sql",
+    "id": "sql-t2-09",
+    "title": "Combining Result Sets with UNION and UNION ALL",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-t2-10",
+    "group": "sql",
+    "id": "sql-t2-10",
+    "title": "Self-Joins for Hierarchical and Comparative Analysis",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-11",
+    "group": "sql",
+    "id": "sql-t2-11",
+    "title": "Surrogate Keys vs. Natural Keys",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-12",
+    "group": "sql",
+    "id": "sql-t2-12",
+    "title": "UUIDv4 vs. BIGINT / ULID for Primary Keys",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-13",
+    "group": "sql",
+    "id": "sql-t2-13",
+    "title": "Foreign Key Cascade Behaviors: CASCADE, SET NULL, and RESTRICT",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-14",
+    "group": "sql",
+    "id": "sql-t2-14",
+    "title": "The Transactional Outbox Pattern in Relational Databases",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-15",
+    "group": "sql",
+    "id": "sql-t2-15",
+    "title": "Database Normalization vs. Denormalization Trade-offs",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-16",
+    "group": "sql",
+    "id": "sql-t2-16",
+    "title": "Partial Indexes in PostgreSQL",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-17",
+    "group": "sql",
+    "id": "sql-t2-17",
+    "title": "Expression / Functional Indexes in PostgreSQL",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-18",
+    "group": "sql",
+    "id": "sql-t2-18",
+    "title": "PostgreSQL JSONB vs JSON Storage and Operators",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-19",
+    "group": "sql",
+    "id": "sql-t2-19",
+    "title": "PostgreSQL GIN (Generalized Inverted) Indexes on JSONB",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-20",
+    "group": "sql",
+    "id": "sql-t2-20",
+    "title": "PostgreSQL Read Committed vs. Repeatable Read Isolation Levels",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-21",
+    "group": "sql",
+    "id": "sql-t2-21",
+    "title": "Row-Level Locking with SELECT FOR UPDATE",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-22",
+    "group": "sql",
+    "id": "sql-t2-22",
+    "title": "Optimistic Locking with Version Columns",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-23",
+    "group": "sql",
+    "id": "sql-t2-23",
+    "title": "Understanding PostgreSQL MVCC: Tuple Headers and xmin / xmax",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-24",
+    "group": "sql",
+    "id": "sql-t2-24",
+    "title": "PostgreSQL Autovacuum and Table Bloat",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-25",
+    "group": "sql",
+    "id": "sql-t2-25",
+    "title": "Keyset Pagination vs. OFFSET Pagination",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-26",
+    "group": "sql",
+    "id": "sql-t2-26",
+    "title": "Database Deadlocks: Causes and Prevention",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-27",
+    "group": "sql",
+    "id": "sql-t2-27",
+    "title": "PostgreSQL Read Replicas and Replication Lag",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-28",
+    "group": "sql",
+    "id": "sql-t2-28",
+    "title": "SQL Upsert Patterns: INSERT ... ON CONFLICT DO UPDATE",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-29",
+    "group": "sql",
+    "id": "sql-t2-29",
+    "title": "Soft Deletes vs. Hard Deletes: Architecture and Query Traps",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-t2-30",
+    "group": "sql",
+    "id": "sql-t2-30",
+    "title": "Materialized Views and Concurrent Refresh in PostgreSQL",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-001",
+    "group": "sql",
+    "id": "sql-tier3-001",
+    "title": "B-Tree Index Internals: Leaf Pages, Splits, and Fillfactor",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-002",
+    "group": "sql",
+    "id": "sql-tier3-002",
+    "title": "EXPLAIN (ANALYZE, BUFFERS): Plan Reading & Scan Types",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-003",
+    "group": "sql",
+    "id": "sql-tier3-003",
+    "title": "GIN vs GiST vs BRIN Indexes: Architecture and Selection",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-004",
+    "group": "sql",
+    "id": "sql-tier3-004",
+    "title": "PostgreSQL MVCC Internals: Heap Tuples, xmin, xmax, and Hints",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-005",
+    "group": "sql",
+    "id": "sql-tier3-005",
+    "title": "Autovacuum Tuning, Table Bloat, and Freeze Wraparound",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-006",
+    "group": "sql",
+    "id": "sql-tier3-006",
+    "title": "Declarative Partitioning: Range, List, and Hash Strategies",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-007",
+    "group": "sql",
+    "id": "sql-tier3-007",
+    "title": "PostgreSQL JSONB: Operators, jsonb_path_query, and GIN Indexing",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-008",
+    "group": "sql",
+    "id": "sql-tier3-008",
+    "title": "PostgreSQL Transaction Isolation: Write Skew and Serializable Snapshot Isolation (SSI)",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-009",
+    "group": "sql",
+    "id": "sql-tier3-009",
+    "title": "Advisory Locks: Application-Level Distributed Locking in Postgres",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-010",
+    "group": "sql",
+    "id": "sql-tier3-010",
+    "title": "Hierarchical Queries with Recursive CTEs (WITH RECURSIVE)",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-tier3-011",
+    "group": "sql",
+    "id": "sql-tier3-011",
+    "title": "Row-Level Security (RLS) for Multi-Tenant Database Architecture",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-012",
+    "group": "sql",
+    "id": "sql-tier3-012",
+    "title": "PgBouncer Connection Pooling: Session vs Transaction vs Statement Modes",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-013",
+    "group": "sql",
+    "id": "sql-tier3-013",
+    "title": "PostgreSQL LISTEN and NOTIFY: Pub/Sub Architecture and Queue Hazards",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-014",
+    "group": "sql",
+    "id": "sql-tier3-014",
+    "title": "Materialized Views with REFRESH CONCURRENTLY",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-015",
+    "group": "sql",
+    "id": "sql-tier3-015",
+    "title": "Window Frame Specifications: ROWS vs RANGE vs GROUPS",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-tier3-016",
+    "group": "sql",
+    "id": "sql-tier3-016",
+    "title": "PostgreSQL Join Strategies: Nested Loop, Hash Join, and Merge Join",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-017",
+    "group": "sql",
+    "id": "sql-tier3-017",
+    "title": "Zero-Downtime Schema Migrations: Safe Index Creation & Column Additions",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-018",
+    "group": "sql",
+    "id": "sql-tier3-018",
+    "title": "Advisory Locks vs FOR UPDATE SKIP LOCKED for Message Queues",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-tier3-019",
+    "group": "sql",
+    "id": "sql-tier3-019",
+    "title": "PostgreSQL Full-Text Search: tsvector, tsquery, and GIN Indexing",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-020",
+    "group": "sql",
+    "id": "sql-tier3-020",
+    "title": "CTEs in PostgreSQL 12+: MATERIALIZED vs NOT MATERIALIZED",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-021",
+    "group": "sql",
+    "id": "sql-tier3-021",
+    "title": "PostgreSQL Foreign Data Wrappers (postgres_fdw) and Pushdown",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-022",
+    "group": "sql",
+    "id": "sql-tier3-022",
+    "title": "Audit Logging with Trigger Functions and pg_trigger_depth",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-023",
+    "group": "sql",
+    "id": "sql-tier3-023",
+    "title": "PostgreSQL Extensions: pg_stat_statements and Performance Profiling",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-024",
+    "group": "sql",
+    "id": "sql-tier3-024",
+    "title": "Custom PostgreSQL Types: DOMAIN vs ENUM vs Composite Types",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-025",
+    "group": "sql",
+    "id": "sql-tier3-025",
+    "title": "Partial Indexes and Expression Indexes: Advanced Query Optimization",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-tier3-026",
+    "group": "sql",
+    "id": "sql-tier3-026",
+    "title": "PostgreSQL JIT Compilation: Overhead, Thresholds, and OLTP Regressions",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-027",
+    "group": "sql",
+    "id": "sql-tier3-027",
+    "title": "Array Data Types and High-Performance Containment Queries",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-tier3-028",
+    "group": "sql",
+    "id": "sql-tier3-028",
+    "title": "PostgreSQL NULLS FIRST / NULLS LAST Index Semantics",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-029",
+    "group": "sql",
+    "id": "sql-tier3-029",
+    "title": "Database Security: Role Inheritance, Schema search_path Poisoning, and SECURITY DEFINER",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier3-030",
+    "group": "sql",
+    "id": "sql-tier3-030",
+    "title": "Advisory Locks for Distributed Idempotency and Rate Limiting",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-001",
+    "group": "sql",
+    "id": "sql-tier4-001",
+    "title": "Production Incident: Multi-Transaction Deadlock Graph & Lock Queue Analysis",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-002",
+    "group": "sql",
+    "id": "sql-tier4-002",
+    "title": "Zero-Downtime Column Rename and Type Migration in 24/7 Production",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-003",
+    "group": "sql",
+    "id": "sql-tier4-003",
+    "title": "Production Incident: Replication Lag Spike & Disk Exhaustion on Primary",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-004",
+    "group": "sql",
+    "id": "sql-tier4-004",
+    "title": "Zero-Downtime Table Bloat Remediation: pg_repack vs VACUUM FULL",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-005",
+    "group": "sql",
+    "id": "sql-tier4-005",
+    "title": "Checkpoint Tuning & WAL Generation Spikes: Eliminating I/O Spikes",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-006",
+    "group": "sql",
+    "id": "sql-tier4-006",
+    "title": "Point-In-Time Recovery (PITR) Disaster Recovery Architecture",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-007",
+    "group": "sql",
+    "id": "sql-tier4-007",
+    "title": "Production Incident: Stalled Autovacuum & Impending 2-Billion XID Wraparound",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-008",
+    "group": "sql",
+    "id": "sql-tier4-008",
+    "title": "Corrupt Index Remediation and REINDEX CONCURRENTLY Failures",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-009",
+    "group": "sql",
+    "id": "sql-tier4-009",
+    "title": "Atomic Distributed Rate Limiting & Token Bucket in Pure PostgreSQL",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-tier4-010",
+    "group": "sql",
+    "id": "sql-tier4-010",
+    "title": "Multi-Tenant Database Architectures: Trade-Off Analysis at Scale",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-011",
+    "group": "sql",
+    "id": "sql-tier4-011",
+    "title": "Production Incident: Cascading Lock Pileup Caused by Missing Foreign Key Index",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-012",
+    "group": "sql",
+    "id": "sql-tier4-012",
+    "title": "Two-Phase Commit (2PC) and Orphaned Prepared Transaction Disasters",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-013",
+    "group": "sql",
+    "id": "sql-tier4-013",
+    "title": "Linux OOM Killer Tuning, overcommit_memory, and PostgreSQL Work_mem",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-014",
+    "group": "sql",
+    "id": "sql-tier4-014",
+    "title": "Query Plan Regressions: Parameter Sniffing & Generic vs Custom Plans",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-015",
+    "group": "sql",
+    "id": "sql-tier4-015",
+    "title": "High-Throughput TimescaleDB / Hypertable Architecture vs Native Partitioning",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-016",
+    "group": "sql",
+    "id": "sql-tier4-016",
+    "title": "Zero-Downtime Deduplication of 50 Million Records Under Live Write Load",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-tier4-017",
+    "group": "sql",
+    "id": "sql-tier4-017",
+    "title": "Correlated Columns and Multi-Column Extended Statistics (CREATE STATISTICS)",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-018",
+    "group": "sql",
+    "id": "sql-tier4-018",
+    "title": "PostgreSQL Logical Decoding and Change Data Capture (CDC) Architecture",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-019",
+    "group": "sql",
+    "id": "sql-tier4-019",
+    "title": "High-Performance Unlogged Tables vs Temp Tables for Ephemeral Staging",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-020",
+    "group": "sql",
+    "id": "sql-tier4-020",
+    "title": "Database Security Hardening: SCRAM-SHA-256, Connection Quotas, and pgaudit",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-021",
+    "group": "sql",
+    "id": "sql-tier4-021",
+    "title": "Production Incident: Statement Timeout vs Lock Timeout Cascading Outage",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-022",
+    "group": "sql",
+    "id": "sql-tier4-022",
+    "title": "High-Availability Failover Architectures: Patroni, Raft Quorum, and Split-Brain Defense",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-023",
+    "group": "sql",
+    "id": "sql-tier4-023",
+    "title": "Heap-Only Tuple (HOT) Optimization Failures and Write Amplification",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-024",
+    "group": "sql",
+    "id": "sql-tier4-024",
+    "title": "PostgreSQL Memory Hierarchy: Shared Buffers, OS Page Cache, and Double Buffering",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-025",
+    "group": "sql",
+    "id": "sql-tier4-025",
+    "title": "PostgreSQL Advisory Locks for Queue Worker Deadlock Prevention",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-tier4-026",
+    "group": "sql",
+    "id": "sql-tier4-026",
+    "title": "Production Incident: Replica WAL Replay Lag Induced by Long Standby Queries",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-027",
+    "group": "sql",
+    "id": "sql-tier4-027",
+    "title": "Keyset Pagination vs Deep OFFSET: Eliminating O(N) Query Degradation",
+    "language": "sql",
+    "mode": "sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "sql/sql-tier4-028",
+    "group": "sql",
+    "id": "sql-tier4-028",
+    "title": "PostgreSQL Foreign Keys with ON DELETE CASCADE: Lock Cascade Hazards",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-029",
+    "group": "sql",
+    "id": "sql-tier4-029",
+    "title": "Zero-Downtime NOT NULL Constraint Addition on 100-Million Row Tables",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "sql/sql-tier4-030",
+    "group": "sql",
+    "id": "sql-tier4-030",
+    "title": "PostgreSQL Disaster Post-Mortem: Dropped Table Recovery Without Backup Restore",
+    "language": "sql",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-js-01",
+    "group": "beginner",
+    "id": "t1-js-01",
+    "title": "What is the difference between var, let, and const in JavaScript?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-js-02",
+    "group": "beginner",
+    "id": "t1-js-02",
+    "title": "What are JavaScript data types and how does primitive vs reference comparison work?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-js-03",
+    "group": "beginner",
+    "id": "t1-js-03",
+    "title": "What is the difference between loose equality (==) and strict equality (===)?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-js-04",
+    "group": "beginner",
+    "id": "t1-js-04",
+    "title": "How do if/else statements and switch statements differ in JavaScript?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-js-05",
+    "group": "beginner",
+    "id": "t1-js-05",
+    "title": "What are the differences between for, while, and for...of loops?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-js-06",
+    "group": "beginner",
+    "id": "t1-js-06",
+    "title": "What is the difference between a regular function and an arrow function?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-js-07",
+    "group": "beginner",
+    "id": "t1-js-07",
+    "title": "How do map, filter, and find work on JavaScript arrays?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-js-08",
+    "group": "beginner",
+    "id": "t1-js-08",
+    "title": "How do you access, update, and destructure JavaScript object properties?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-js-09",
+    "group": "beginner",
+    "id": "t1-js-09",
+    "title": "What is variable scope and what is a closure in simple terms?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-js-10",
+    "group": "beginner",
+    "id": "t1-js-10",
+    "title": "What is hoisting in JavaScript?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-js-11",
+    "group": "beginner",
+    "id": "t1-js-11",
+    "title": "What are Promises and how does async/await make handling them easier?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-js-12",
+    "group": "beginner",
+    "id": "t1-js-12",
+    "title": "How does the JavaScript event loop work in simple terms?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-hc-01",
+    "group": "beginner",
+    "id": "t1-hc-01",
+    "title": "What is semantic HTML and why is it important?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-hc-02",
+    "group": "beginner",
+    "id": "t1-hc-02",
+    "title": "How do HTML forms work, and why should inputs always have associated labels?",
+    "language": "html",
+    "mode": "guided",
+    "filename": "solution.html"
+  },
+  {
+    "key": "beginner/t1-hc-03",
+    "group": "beginner",
+    "id": "t1-hc-03",
+    "title": "How does CSS specificity work and what are the main selector types?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-hc-04",
+    "group": "beginner",
+    "id": "t1-hc-04",
+    "title": "What is the CSS Box Model and what does box-sizing: border-box do?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-hc-05",
+    "group": "beginner",
+    "id": "t1-hc-05",
+    "title": "What is Flexbox and what are its core container and item properties?",
+    "language": "css",
+    "mode": "guided",
+    "filename": "solution.css"
+  },
+  {
+    "key": "beginner/t1-hc-06",
+    "group": "beginner",
+    "id": "t1-hc-06",
+    "title": "What is CSS Grid and when would you choose it over Flexbox?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-hc-07",
+    "group": "beginner",
+    "id": "t1-hc-07",
+    "title": "How do you create a responsive web design using media queries?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-hc-08",
+    "group": "beginner",
+    "id": "t1-hc-08",
+    "title": "What is the difference between px, rem, em, and % units in CSS?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-hc-09",
+    "group": "beginner",
+    "id": "t1-hc-09",
+    "title": "How do the different CSS position values work (static, relative, absolute, fixed, sticky)?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-hc-10",
+    "group": "beginner",
+    "id": "t1-hc-10",
+    "title": "What are the most reliable modern ways to center an element in CSS?",
+    "language": "css",
+    "mode": "guided",
+    "filename": "solution.css"
+  },
+  {
+    "key": "beginner/t1-react-01",
+    "group": "beginner",
+    "id": "t1-react-01",
+    "title": "What is React and why do engineers choose it over vanilla JavaScript for building UIs?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-react-02",
+    "group": "beginner",
+    "id": "t1-react-02",
+    "title": "What is JSX and what are its key syntax rules in React?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-react-03",
+    "group": "beginner",
+    "id": "t1-react-03",
+    "title": "What is the difference between props and state in React?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-react-04",
+    "group": "beginner",
+    "id": "t1-react-04",
+    "title": "How does event handling work in React, and why should you pass a function reference instead of invoking it?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-react-05",
+    "group": "beginner",
+    "id": "t1-react-05",
+    "title": "How do you conditionally render elements in React?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-react-06",
+    "group": "beginner",
+    "id": "t1-react-06",
+    "title": "How do you render lists in React, and why is the key prop strictly necessary?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-react-07",
+    "group": "beginner",
+    "id": "t1-react-07",
+    "title": "How does the useState hook work, and when should you use a functional state update?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-react-08",
+    "group": "beginner",
+    "id": "t1-react-08",
+    "title": "What is the useEffect hook, and how does its dependency array control execution?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-react-09",
+    "group": "beginner",
+    "id": "t1-react-09",
+    "title": "What is a controlled component in React and how does it handle form inputs?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-react-10",
+    "group": "beginner",
+    "id": "t1-react-10",
+    "title": "How does parent-to-child and child-to-parent communication work in React?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-react-11",
+    "group": "beginner",
+    "id": "t1-react-11",
+    "title": "What are the main component lifecycle concepts in modern functional React?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-rdx-01",
+    "group": "beginner",
+    "id": "t1-rdx-01",
+    "title": "Why is state management useful in web applications and what problem does it solve?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-rdx-02",
+    "group": "beginner",
+    "id": "t1-rdx-02",
+    "title": "What is the difference between local component state and global state?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-rdx-03",
+    "group": "beginner",
+    "id": "t1-rdx-03",
+    "title": "What are the three core principles and concepts of Redux: Store, Actions, and Reducers?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-rdx-04",
+    "group": "beginner",
+    "id": "t1-rdx-04",
+    "title": "What is createSlice in Redux Toolkit and how does it simplify Redux code?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-rdx-05",
+    "group": "beginner",
+    "id": "t1-rdx-05",
+    "title": "How does Immer work inside Redux Toolkit reducers to allow \"direct state mutation\"?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-rdx-06",
+    "group": "beginner",
+    "id": "t1-rdx-06",
+    "title": "How do useSelector and useDispatch connect React components to the Redux store?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-rdx-07",
+    "group": "beginner",
+    "id": "t1-rdx-07",
+    "title": "How do you handle asynchronous operations like API calls using createAsyncThunk?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-rdx-08",
+    "group": "beginner",
+    "id": "t1-rdx-08",
+    "title": "How do you configure the Redux store using configureStore and provide it to React?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-rdx-09",
+    "group": "beginner",
+    "id": "t1-rdx-09",
+    "title": "When is Redux useful and when is it unnecessary / overkill?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-rdx-10",
+    "group": "beginner",
+    "id": "t1-rdx-10",
+    "title": "How do action payloads work in Redux Toolkit and how do you pass parameters to actions?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-ts-01",
+    "group": "beginner",
+    "id": "t1-ts-01",
+    "title": "What is TypeScript and what primary advantages does it offer over vanilla JavaScript?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-ts-02",
+    "group": "beginner",
+    "id": "t1-ts-02",
+    "title": "What are the basic primitive types in TypeScript and how do type annotations work?",
+    "language": "typescript",
+    "mode": "guided",
+    "filename": "solution.ts"
+  },
+  {
+    "key": "beginner/t1-ts-03",
+    "group": "beginner",
+    "id": "t1-ts-03",
+    "title": "What is the difference between an interface and a type alias in TypeScript?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-ts-04",
+    "group": "beginner",
+    "id": "t1-ts-04",
+    "title": "How do you type arrays and objects in TypeScript?",
+    "language": "typescript",
+    "mode": "guided",
+    "filename": "solution.ts"
+  },
+  {
+    "key": "beginner/t1-ts-05",
+    "group": "beginner",
+    "id": "t1-ts-05",
+    "title": "How do you type function parameters, return values, and functions that return nothing (void)?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-ts-06",
+    "group": "beginner",
+    "id": "t1-ts-06",
+    "title": "How do optional properties (?) and optional chaining (?.) work in TypeScript?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-ts-07",
+    "group": "beginner",
+    "id": "t1-ts-07",
+    "title": "What are union types and how do you narrow them using typeof guards?",
+    "language": "typescript",
+    "mode": "guided",
+    "filename": "solution.ts"
+  },
+  {
+    "key": "beginner/t1-ts-08",
+    "group": "beginner",
+    "id": "t1-ts-08",
+    "title": "What is the difference between any and unknown in TypeScript and why is unknown safer?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-ts-09",
+    "group": "beginner",
+    "id": "t1-ts-09",
+    "title": "What are literal types and how are they used to model exact state values?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-ts-10",
+    "group": "beginner",
+    "id": "t1-ts-10",
+    "title": "What are basic Generics in TypeScript and why are they useful?",
+    "language": "typescript",
+    "mode": "guided",
+    "filename": "solution.ts"
+  },
+  {
+    "key": "beginner/t1-node-01",
+    "group": "beginner",
+    "id": "t1-node-01",
+    "title": "What is Node.js and how does running JavaScript in Node differ from running it in a web browser?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-node-02",
+    "group": "beginner",
+    "id": "t1-node-02",
+    "title": "What is meant by the \"non-blocking, event-driven I/O\" model in Node.js?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-node-03",
+    "group": "beginner",
+    "id": "t1-node-03",
+    "title": "What is a REST API and what are its core architectural principles?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-node-04",
+    "group": "beginner",
+    "id": "t1-node-04",
+    "title": "What are the main HTTP methods and how do their purposes differ?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-node-05",
+    "group": "beginner",
+    "id": "t1-node-05",
+    "title": "What are the most common HTTP status code ranges and their specific meanings?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-node-06",
+    "group": "beginner",
+    "id": "t1-node-06",
+    "title": "How do you build a basic web server and define routes using Express.js?",
+    "language": "javascript",
+    "mode": "guided",
+    "filename": "solution.js"
+  },
+  {
+    "key": "beginner/t1-node-07",
+    "group": "beginner",
+    "id": "t1-node-07",
+    "title": "How do you extract data from req.params, req.query, and req.body in Express?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-node-08",
+    "group": "beginner",
+    "id": "t1-node-08",
+    "title": "What is Express middleware and what is the role of the next() function?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-node-09",
+    "group": "beginner",
+    "id": "t1-node-09",
+    "title": "What are environment variables, process.env, and why must secret keys never be committed to Git?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "beginner/t1-node-10",
+    "group": "beginner",
+    "id": "t1-node-10",
+    "title": "What are the basic differences between Relational (SQL) and Document (NoSQL) databases for beginners?",
+    "mode": "guided",
+    "filename": "answer.md"
+  },
+  {
+    "key": "coding/js-debounce-options",
+    "group": "coding",
+    "id": "js-debounce-options",
+    "title": "Advanced Debounce with Leading & Trailing Options",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "coding/js-promise-concurrency-pool",
+    "group": "coding",
+    "id": "js-promise-concurrency-pool",
+    "title": "Async Promise Concurrency Pool (Worker Throttler)",
+    "language": "javascript",
+    "mode": "javascript",
+    "filename": "solution.js"
+  },
+  {
+    "key": "coding/ts-deep-flatten-keys",
+    "group": "coding",
+    "id": "ts-deep-flatten-keys",
+    "title": "Deep Nested Object Path Keys Union Type",
+    "language": "typescript",
+    "mode": "javascript",
+    "filename": "solution.ts"
+  },
+  {
+    "key": "coding/sql-monthly-cohort-retention",
+    "group": "coding",
+    "id": "sql-monthly-cohort-retention",
+    "title": "Monthly User Cohort Retention & Churn Analysis",
+    "language": "sql",
+    "mode": "practice-sql",
+    "dialect": "generic-sql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "coding/sql-top-n-per-category",
+    "group": "coding",
+    "id": "sql-top-n-per-category",
+    "title": "Top 2 Revenue Products Per Category (Window Functions)",
+    "language": "sql",
+    "mode": "practice-sql",
+    "dialect": "postgresql",
+    "filename": "solution.sql"
+  },
+  {
+    "key": "coding/py-token-bucket-limiter",
+    "group": "coding",
+    "id": "py-token-bucket-limiter",
+    "title": "Python Token Bucket Distributed Rate Limiter",
+    "language": "python",
+    "mode": "python",
+    "filename": "solution.py"
+  }
+]

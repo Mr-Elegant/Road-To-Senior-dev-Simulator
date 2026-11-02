@@ -1,0 +1,21 @@
+# What are the main component lifecycle concepts in modern functional React?
+
+Collection: beginner · ID: `t1-react-11` · Mode: **guided**
+
+## Task
+
+What are the main component lifecycle concepts in modern functional React?
+
+## Follow-up questions
+
+- What happens if you do not clean up an event listener in the unmount phase?
+
+## Work locally
+
+Edit [answer.md](answer.md). Keep the original function names and input/output contracts.
+
+This is a guided exercise. Review your answer against the rubric and reference; no automated correctness score is claimed. If code is supplied, edit and run it with the appropriate local tooling and add your own tests.
+
+Full authored task data (including review files, telemetry, stages, requirements, hints, and examples where supplied) is in [exercise.json](exercise.json).
+
+After your attempt, open [reference.md](reference.md) for the authored answer, rubric, follow-ups, and solution.

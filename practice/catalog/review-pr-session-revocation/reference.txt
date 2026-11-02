@@ -1,0 +1,27 @@
+class RobustSessionStore {
+  async createSession(userId, token, claims, ttlSeconds = 604800) {
+    const pipeline = redis.pipeline();
+    pipeline.set(`session:${token}`, JSON.stringify(claims), 'EX', ttlSeconds);
+    pipeline.sadd(`user_sessions:${userId}`, token);
+    pipeline.expire(`user_sessions:${userId}`, ttlSeconds);
+    await pipeline.exec();
+    return true;
+  }
+
+  async revokeAllUserSessions(userId) {
+    const setKey = `user_sessions:${userId}`;
+    const tokens = await redis.smembers(setKey);
+    if (tokens.length === 0) return 0;
+
+    const pipeline = redis.pipeline();
+    tokens.forEach((token) => pipeline.del(`session:${token}`));
+    pipeline.del(setKey);
+    await pipeline.exec();
+
+    return tokens.length;
+  }
+
+  async isSessionValid(token) {
+    return Boolean(await redis.exists(`session:${token}`));
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-030",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 30,
+  "title": "Advisory Locks for Distributed Idempotency and Rate Limiting",
+  "category": "Locks and Deadlocks",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "An e-commerce API allows customers to redeem a single-use coupon code. High-concurrency automated scripts send 20 requests within 50 milliseconds using the same coupon code. Multiple requests succeed simultaneously before the `used` flag can be checked and written.",
+  "questionStatement": "Design a concurrency-safe single-use coupon redemption mechanism using PostgreSQL advisory locks. Contrast using `pg_advisory_xact_lock(hashtext(coupon_code))` against `SELECT ... FOR UPDATE`, explaining deadlocks, memory consumption, and transaction isolation interactions.",
+  "expectedConcepts": [
+    "pg_advisory_xact_lock with hashtext() hash key",
+    "Serialization of concurrent requests for identical resource",
+    "Automatic transaction-boundary lock release",
+    "Advantages over row-level locks when rows do not yet exist (insert race)",
+    "Zero disk I/O and zero tuple bloat in shared memory lock table"
+  ],
+  "hints": [
+    "What happens if the row does not exist yet? Can SELECT FOR UPDATE lock a non-existent row?",
+    "hashtext() converts a string to a 32-bit integer for the lock key.",
+    "Transaction-level advisory locks release automatically on COMMIT."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "nodejs-rate-limiting-redis",
+  "title": "Distributed Sliding Window Rate Limiter with Redis Race Conditions",
+  "type": "coding",
+  "topic": "Node.js",
+  "subtopic": "Rate limiting",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A public developer API allows 100 requests per minute per API key. Under distributed load test across 8 API server instances, clients are able to send 250 requests per minute because of a Read-Modify-Write race condition in the Redis rate limiting logic.",
+  "problemStatement": "The current implementation fetches the count from Redis with `GET`, checks if `count < 100` in Node.js, and then issues `INCR`. Concurrently arriving requests all read `count = 99` before any of them increments, permitting burst overages. Implement an atomic sliding-window rate limiter using Redis Lua scripting or atomic multi-exec pipelines.",
+  "constraints": [
+    "Must guarantee strict enforcement of 100 req/60s across distributed cluster.",
+    "Must be fully atomic: zero window race conditions.",
+    "Return remaining tokens and reset timestamp in standard headers: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`."
+  ],
+  "starterCode": "/**\n * Non-Atomic Distributed Rate Limiter\n */\nclass RedisRateLimiter {\n  constructor(redisClient) {\n    this.redis = redisClient;\n  }\n\n  async checkLimit(apiKey) {\n    const key = `rate:${apiKey}`;\n    \n    // BUG: Read-Modify-Write race condition!\n    // Multiple concurrent requests read the same count simultaneously.\n    const current = await this.redis.get(key);\n    const count = current ? parseInt(current, 10) : 0;\n\n    if (count >= 100) {\n      return { allowed: false, remaining: 0 };\n    }\n\n    await this.redis.incr(key);\n    if (count === 0) {\n      await this.redis.expire(key, 60);\n    }\n\n    return { allowed: true, remaining: 100 - (count + 1) };\n  }\n}\n\nfunction solution(input) {\n  return \"atomic_lua_sliding_window\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain the Read-Modify-Write race condition across distributed API servers.",
+    "Implement an atomic rate limiter using Redis Lua script or sorted sets (`ZADD`, `ZREMRANGEBYSCORE`, `ZCARD`).",
+    "Explain the difference between Fixed Window Counter, Sliding Log (Sorted Set), and Sliding Window Counter."
+  ],
+  "hints": [
+    "Redis executes Lua scripts atomically: no other command can run while the script executes.",
+    "Alternatively, for a fixed window, `INCR` followed by `EXPIRE` on first increment (or `SET key 1 NX EX 60`) provides atomicity."
+  ],
+  "testCases": [
+    {
+      "id": "tc-ratelimit-1",
+      "name": "Atomically evaluates rate limit with zero race conditions",
+      "inputDescription": "null",
+      "expectedOutput": "\"atomic_lua_sliding_window\"",
+      "explanation": "Enforces strict quota under high concurrency."
+    }
+  ],
+  "alternativeApproaches": [
+    "Generic Cell Rate Algorithm (GCRA) / Leaky Bucket using Redis `redis-cell` module.",
+    "Cloudflare / AWS WAF edge rate limiting."
+  ],
+  "commonMistakes": [
+    "Using Fixed Window which allows 2x limit bursts at window boundaries (e.g. 100 requests at 0:59 and 100 requests at 1:01).",
+    "Forgetting to set TTL/EXPIRE on the Redis key, leaking memory indefinitely."
+  ]
+}

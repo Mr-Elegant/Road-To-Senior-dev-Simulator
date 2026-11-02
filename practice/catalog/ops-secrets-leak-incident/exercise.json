@@ -1,0 +1,76 @@
+{
+  "id": "ops-secrets-leak-incident",
+  "title": "Production Incident: Cloud Provider IAM & Stripe Key Leak in CI Logs",
+  "type": "incident",
+  "topic": "Engineering Operations",
+  "subtopic": "Secrets management",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "A public GitHub Actions CI/CD workflow log for an open-source client SDK printed the entire environment configuration, exposing production AWS Access Keys (`AKIA...`) and live Stripe API Secret Keys (`sk_live_...`).",
+  "problemStatement": "Triage this active security emergency. Identify the immediate containment actions (revocation, key rotation, active session invalidation), audit access logs for unauthorized access/exfiltration, fix the pipeline to prevent secret echo, and author a blameless post-mortem with preventative guardrails (git-secrets, AWS KMS, IAM least privilege).",
+  "constraints": [
+    "Treat the leaked credentials as compromised immediately.",
+    "Must rotate keys without causing prolonged production downtime.",
+    "Audit CloudTrail and Stripe Dashboard audit logs for unauthorized anomalous activity."
+  ],
+  "incidentTelemetry": {
+    "logs": [
+      {
+        "timestamp": "03:12:00.000",
+        "level": "INFO",
+        "service": "github-actions",
+        "message": "Workflow run #842 started on branch main (public repo)"
+      },
+      {
+        "timestamp": "03:12:44.210",
+        "level": "INFO",
+        "service": "github-actions",
+        "message": "Executing step: env-debug-print"
+      },
+      {
+        "timestamp": "03:12:44.225",
+        "level": "ERROR",
+        "service": "github-actions",
+        "message": "ENV DUMP: AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY STRIPE_SECRET_KEY=sk_live_51Abc...xyz"
+      }
+    ],
+    "metrics": [
+      {
+        "metricName": "aws_cloudtrail_api_calls",
+        "baseline": "120/hr",
+        "incidentPeak": "8,400/hr (Spike from unknown IP in Russia)",
+        "unit": "calls",
+        "status": "critical",
+        "trend": "Sudden anomalous spike in ec2:RunInstances"
+      }
+    ],
+    "customerReports": [],
+    "recentDeployments": [
+      {
+        "commitHash": "7a19ff2",
+        "author": "dev-intern",
+        "message": "ci: print env variables to debug build failure",
+        "timeAgo": "1 hour ago",
+        "diffSnippet": "+ - name: Debug env\n+   run: printenv"
+      }
+    ]
+  },
+  "candidateTasks": [
+    "Step 1: Immediate Revocation - List exact steps to revoke leaked IAM credentials and Stripe secret key.",
+    "Step 2: Threat Assessment - Identify what AWS CloudTrail APIs were called (e.g. ec2:RunInstances for cryptomining) and terminate unauthorized resources.",
+    "Step 3: Invalidate Active Sessions - Force-revoke temporary STS tokens and rotate Stripe webhook signing secret.",
+    "Step 4: Pipeline Remediation - Remove `printenv`, enable secret masking, and switch to OIDC (OpenID Connect) for short-lived credentials instead of static IAM keys.",
+    "Step 5: Write Root Cause Analysis & Prevention Plan."
+  ],
+  "hints": [
+    "Never wait to see if keys are abused: assume automated bot scraping finds leaked keys within 30 seconds of commit.",
+    "Replace static long-lived AWS IAM access keys with GitHub Actions OIDC role assumption."
+  ],
+  "alternativeApproaches": [
+    "Using AWS Secrets Manager / HashiCorp Vault with dynamic secret engines for automated credential rotation."
+  ],
+  "commonMistakes": [
+    "Deleting the GitHub log or making the repo private without rotating the keys (scrapers index keys within seconds).",
+    "Creating a new key without deactivating the old compromised key."
+  ]
+}

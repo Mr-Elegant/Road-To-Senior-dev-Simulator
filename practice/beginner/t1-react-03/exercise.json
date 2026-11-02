@@ -1,0 +1,18 @@
+{
+  "id": "t1-react-03",
+  "title": "What is the difference between props and state in React?",
+  "category": "React Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 3,
+  "expectedConcepts": [
+    "Props are external inputs passed into a component (like function arguments)",
+    "Props are immutable (read-only) for the receiving component",
+    "State is internal data managed within the component that changes over time",
+    "Updating state triggers a component re-render"
+  ],
+  "hints": [
+    "Which one is passed into a component like function arguments?",
+    "Which one is owned and modified internally by the component itself?"
+  ]
+}

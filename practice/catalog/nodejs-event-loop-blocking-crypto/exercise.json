@@ -1,0 +1,45 @@
+{
+  "id": "nodejs-event-loop-blocking-crypto",
+  "title": "Auth Gateway Event-Loop Freezing on CPU-Intensive Hashing",
+  "type": "debugging",
+  "topic": "Node.js",
+  "subtopic": "Event-loop blocking",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "During morning peak login hours (9:00 AM), an enterprise SSO authentication gateway suffers massive latency spikes. Simple GET `/health` probes jump from 2ms to 8,000ms, and ALB load balancers take instances out of service, causing cascading outages.",
+  "problemStatement": "The password verification endpoint used synchronous `bcrypt.compareSync(password, hash)` with 14 salt rounds. Because Node.js is single-threaded on its JavaScript main thread, each synchronous hash blocks the entire event loop for 350ms. With 20 concurrent logins, all other incoming HTTP connections and TCP keep-alives are queued and frozen for over 7 seconds.",
+  "constraints": [
+    "Must eliminate main event-loop blocking.",
+    "Must maintain high password hashing security parameters (e.g. bcrypt work factor 12-14 or Argon2id).",
+    "Event loop lag during concurrent logins must stay under 25ms."
+  ],
+  "starterCode": "const bcrypt = require('bcrypt');\n\n/**\n * Buggy Auth Route: Blocks Node.js Main Event Loop\n */\nfunction verifyUserLogin(plainPassword, passwordHash) {\n  // BUG: Synchronous CPU-bound hashing freezes the entire V8 single thread!\n  const isMatch = bcrypt.compareSync(plainPassword, passwordHash);\n  return isMatch;\n}\n\nfunction solution(input) {\n  return \"non_blocking_async_libuv\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain how `bcrypt.compareSync` blocks the V8 thread vs how `bcrypt.compare` utilizes the libuv worker pool.",
+    "Refactor to asynchronous `await bcrypt.compare(plainPassword, passwordHash)`.",
+    "Explain the default size of `UV_THREADPOOL_SIZE` (4) and how to tune it for crypto-heavy Node applications."
+  ],
+  "hints": [
+    "Synchronous crypto functions block the Node.js main thread completely.",
+    "Asynchronous crypto operations in Node.js are offloaded to libuv background thread pool (default 4 threads).",
+    "Set `process.env.UV_THREADPOOL_SIZE = 16` before starting the process if handling high concurrent crypto loads."
+  ],
+  "testCases": [
+    {
+      "id": "tc-crypto-1",
+      "name": "Uses libuv asynchronous thread pool without blocking event loop",
+      "inputDescription": "null",
+      "expectedOutput": "\"non_blocking_async_libuv\"",
+      "explanation": "Offloads CPU-intensive hashing to background worker threads."
+    }
+  ],
+  "alternativeApproaches": [
+    "Offloading hashing to a dedicated microservice or Node.js Worker Threads (`worker_threads`).",
+    "Using Argon2id with WebAssembly / C bindings tuned for low iteration count and higher memory cost."
+  ],
+  "commonMistakes": [
+    "Setting process.env.UV_THREADPOOL_SIZE after modules have already made async calls (libuv initializes the pool once and ignores later changes).",
+    "Thinking Promise.resolve().then(() => bcrypt.compareSync(...)) makes it non-blocking (it still runs synchronously on the main thread)."
+  ]
+}

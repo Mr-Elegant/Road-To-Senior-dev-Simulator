@@ -1,0 +1,19 @@
+{
+  "id": "sql-t1-20",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 20,
+  "title": "SQL Data Types: VARCHAR, CHAR, and TEXT in PostgreSQL",
+  "category": "PostgreSQL Data Types",
+  "questionType": "conceptual",
+  "realWorldScenario": "A developer is designing a table and is unsure whether to use CHAR(50), VARCHAR(50), or TEXT for storing user bios.",
+  "questionStatement": "Compare CHAR(n), VARCHAR(n), and TEXT in PostgreSQL. Are there performance differences between VARCHAR and TEXT in PostgreSQL?",
+  "expectedConcepts": [
+    "Fixed-length vs variable-length",
+    "Space-padding in CHAR",
+    "PostgreSQL varlena storage equality between VARCHAR and TEXT"
+  ],
+  "hints": [
+    "In PostgreSQL, does VARCHAR without a length limit differ from TEXT?"
+  ]
+}

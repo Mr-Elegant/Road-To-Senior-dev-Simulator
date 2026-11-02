@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-22",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 22,
+  "title": "Optimistic Locking with Version Columns",
+  "category": "Transactions and ACID",
+  "questionType": "conceptual",
+  "realWorldScenario": "An enterprise CRM system has users editing customer profile pages in browser tabs for minutes at a time. Holding a database lock for minutes with SELECT FOR UPDATE would exhaust connections and freeze the database.",
+  "questionStatement": "What is Optimistic Concurrency Control (OCC)? How does a version number or updated_at column implement optimistic locking in application SQL?",
+  "expectedConcepts": [
+    "Optimistic vs Pessimistic locking",
+    "Zero database lock holding during user think time",
+    "Version column comparison in WHERE clause",
+    "Affected rows verification (0 = conflict)"
+  ],
+  "hints": [
+    "Check the version in the WHERE clause and increment it in SET."
+  ]
+}

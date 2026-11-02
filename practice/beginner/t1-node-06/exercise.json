@@ -1,0 +1,24 @@
+{
+  "id": "t1-node-06",
+  "title": "How do you build a basic web server and define routes using Express.js?",
+  "category": "Node.js and API Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 6,
+  "expectedConcepts": [
+    "Importing express and instantiating app = express()",
+    "express.json() middleware for parsing JSON request bodies",
+    "Defining route handlers (app.get, app.post)",
+    "Starting the server with app.listen(port, callback)"
+  ],
+  "hints": [
+    "What function starts the server on a port?",
+    "What middleware is required so Express can understand JSON request bodies?"
+  ],
+  "codingExercise": {
+    "instruction": "Write an Express route app.get(\"/api/ping\") that returns a JSON response { message: \"pong\" } with status 200.",
+    "starterCode": "const express = require('express');\nconst app = express();\n\n// Define app.get(\"/api/ping\") here\n",
+    "language": "javascript",
+    "expectedOutput": "app.get(\"/api/ping\", (req, res) => res.status(200).json({ message: \"pong\" }))"
+  }
+}

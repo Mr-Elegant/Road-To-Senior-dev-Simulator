@@ -1,0 +1,1 @@
+function solution({sessions}) { return {onlineUsers:sessions.filter(s=>s.online).map(s=>s.userId),activeSessions:sessions.length}; }

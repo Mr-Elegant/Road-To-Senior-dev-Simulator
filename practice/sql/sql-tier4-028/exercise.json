@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-028",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 28,
+  "title": "PostgreSQL Foreign Keys with ON DELETE CASCADE: Lock Cascade Hazards",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A social commerce app uses `ON DELETE CASCADE` across 6 levels of relational hierarchy (`users` -> `posts` -> `comments` -> `reactions` -> `audit_events`). A user deletes their account, and the resulting cascading delete locks 250,000 rows across 8 tables, causing a database-wide deadlock storm.",
+  "questionStatement": "Analyze the locking behavior and transaction risks of deep `ON DELETE CASCADE` chains in PostgreSQL. Why do cascading deletes cause long-running lock retention and deadlocks? What architectural alternatives (soft deletes, asynchronous background deletion workers) eliminate cascade locking hazards?",
+  "expectedConcepts": [
+    "Single-transaction lock accumulation across entire relation hierarchy",
+    "All row locks held until COMMIT",
+    "Deadlocks with concurrent writes to descendant tables",
+    "Lack of throttling/batching in native database cascades",
+    "Soft delete + asynchronous chunked background deletion worker"
+  ],
+  "hints": [
+    "How long are locks held during an ON DELETE CASCADE transaction?",
+    "Can you pause or batch an ON DELETE CASCADE halfway through?",
+    "How do soft deletes decouple user experience from data cleanup?"
+  ]
+}

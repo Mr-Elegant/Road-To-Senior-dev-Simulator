@@ -1,0 +1,44 @@
+{
+  "id": "react-race-condition-autocomplete",
+  "title": "Customer Support CRM Search Out-of-Order Response Overwrite",
+  "type": "debugging",
+  "topic": "React",
+  "subtopic": "Hooks and dependency arrays",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "In a high-volume customer support ticketing portal, agents type customer email addresses into a live autocomplete bar. Often, typing \"alexander\" shows search results for \"alex\" because the earlier network request for \"alex\" took 600ms while the later request for \"alexander\" took 150ms.",
+  "problemStatement": "Because network latency varies unpredictably, asynchronous responses return out-of-order. The component currently sets state whenever any promise resolves. Implement request cancellation using `AbortController` and ignore stale in-flight results.",
+  "constraints": [
+    "When user types, earlier in-flight requests must be aborted or their results discarded.",
+    "Debounce input to prevent API flood (e.g. 250ms).",
+    "Properly handle AbortError without triggering uncaught exception logs."
+  ],
+  "starterCode": "import React, { useState, useEffect } from 'react';\n\n/**\n * Buggy Autocomplete: Prone to out-of-order response race conditions\n */\nexport function useCustomerSearch(query) {\n  const [results, setResults] = useState([]);\n  const [isLoading, setIsLoading] = useState(false);\n\n  useEffect(() => {\n    if (!query) {\n      setResults([]);\n      return;\n    }\n\n    setIsLoading(true);\n    \n    // BUG: No AbortController or active flag.\n    // An earlier slow request will overwrite a newer faster request!\n    fetch(`/api/customers?q=${encodeURIComponent(query)}`)\n      .then(res => res.json())\n      .then(data => {\n        setResults(data);\n        setIsLoading(false);\n      });\n\n  }, [query]);\n\n  return { results, isLoading };\n}\n\nfunction solution(input) {\n  return \"aborted_stale_requests\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Identify how variable network latency produces stale state overwrites.",
+    "Implement `AbortController` in the `useEffect` cleanup function.",
+    "Catch `err.name === \"AbortError\"` gracefully so aborted requests do not set error state."
+  ],
+  "hints": [
+    "Return a cleanup function from `useEffect`: `return () => controller.abort()`.",
+    "Pass `signal: controller.signal` into `fetch()`."
+  ],
+  "testCases": [
+    {
+      "id": "tc-race-auto-1",
+      "name": "Discards stale in-flight responses and aborts signal",
+      "inputDescription": "null",
+      "expectedOutput": "\"aborted_stale_requests\"",
+      "explanation": "Cleanly cancels superseded fetch requests on dependency change."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using TanStack Query (React Query) or SWR with automatic request deduplication and query cancellation.",
+    "Using a request sequence ID ref (e.g. currentSeqRef.current === seq) to ignore outdated responses."
+  ],
+  "commonMistakes": [
+    "Only using a boolean flag \"let active = true; ... return () => active = false\": this ignores state update but does not abort the network request, consuming client bandwidth and battery.",
+    "Failing to catch AbortError, resulting in noisy unhandled promise rejection warnings in the browser console."
+  ]
+}

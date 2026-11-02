@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-005",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 5,
+  "title": "Autovacuum Tuning, Table Bloat, and Freeze Wraparound",
+  "category": "Production Debugging",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A production PostgreSQL database with high write volume triggers a critical monitoring alert: `database age is 1,850,000,000 transactions; danger of shutdown in 150 million transactions`. Autovacuum appears unable to keep up.",
+  "questionStatement": "Explain the PostgreSQL Transaction ID (XID) wraparound hazard and the purpose of `VACUUM FREEZE`. What causes autovacuum worker starvation, and how do you tune autovacuum cost limits, scale factors, and workers to prevent database emergency shutdown?",
+  "expectedConcepts": [
+    "32-bit XID space and modulo 2^31 visibility horizon",
+    "FrozenTransactionId / HEAP_XMIN_FROZEN hint bit",
+    "Anti-wraparound autovacuum and emergency database shutdown",
+    "autovacuum_vacuum_cost_limit and cost_delay throttling",
+    "Per-table scale_factor and threshold tuning"
+  ],
+  "hints": [
+    "Why does 32-bit integer arithmetic wrap around at 2^31 in circular comparisons?",
+    "What happens to a tuple when its xmin is replaced with FrozenTransactionId?",
+    "Check autovacuum cost delay: workers sleep when accumulated I/O points reach cost limit."
+  ]
+}

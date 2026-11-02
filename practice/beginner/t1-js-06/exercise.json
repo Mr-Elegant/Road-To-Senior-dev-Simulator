@@ -1,0 +1,25 @@
+{
+  "id": "t1-js-06",
+  "title": "What is the difference between a regular function and an arrow function?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 6,
+  "expectedConcepts": [
+    "Syntax brevity and implicit return",
+    "Lexical this binding vs dynamic this",
+    "arguments object availability",
+    "Constructor usage (arrow functions cannot be used with new)"
+  ],
+  "hints": [
+    "Think about what happens to \"this\" inside a callback.",
+    "Notice the difference between explicit return { return x; } and implicit return (x => x * 2)."
+  ],
+  "codingExercise": {
+    "instruction": "Convert the regular function function double(n) { return n * 2; } into a concise one-line arrow function named double.",
+    "starterCode": "// Convert this to a one-line arrow function:\n// function double(n) { return n * 2; }\nconst double = null;",
+    "language": "javascript",
+    "sampleInput": "double(7)",
+    "expectedOutput": "14"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "t1-hc-02",
+  "title": "How do HTML forms work, and why should inputs always have associated labels?",
+  "category": "HTML and CSS",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 2,
+  "expectedConcepts": [
+    "The <form> element (action, method attributes)",
+    "Input types (text, email, password, checkbox, radio, submit)",
+    "Label pairing with id and htmlFor/for",
+    "Usability and touch target increase"
+  ],
+  "hints": [
+    "How does clicking on the label text help mobile users?",
+    "Which attribute connects a label to an input’s id?"
+  ],
+  "codingExercise": {
+    "instruction": "Write the HTML markup for an accessible text input for \"Username\" with an associated label.",
+    "starterCode": "<!-- Write a <label> and <input> correctly connected -->\n",
+    "language": "html",
+    "expectedOutput": "Connected label with for=\"username\" and input with id=\"username\""
+  }
+}

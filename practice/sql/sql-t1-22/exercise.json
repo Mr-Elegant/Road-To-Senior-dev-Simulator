@@ -1,0 +1,20 @@
+{
+  "id": "sql-t1-22",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 22,
+  "title": "ACID Properties in Relational Databases",
+  "category": "Transactions and ACID",
+  "questionType": "conceptual",
+  "realWorldScenario": "A user is transferring $100 from Account A to Account B. A power outage occurs after Account A is debited but before Account B is credited.",
+  "questionStatement": "Explain the ACID properties (Atomicity, Consistency, Isolation, Durability) in relational databases. How does ACID protect the bank transfer scenario?",
+  "expectedConcepts": [
+    "Atomicity (All or nothing)",
+    "Consistency (Constraints preserved)",
+    "Isolation (Concurrency control)",
+    "Durability (Persistence via WAL)"
+  ],
+  "hints": [
+    "Map each letter of ACID to how the money transfer is handled."
+  ]
+}

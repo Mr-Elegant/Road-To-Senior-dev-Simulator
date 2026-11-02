@@ -1,0 +1,44 @@
+{
+  "id": "node-rest-api-validation-zod",
+  "title": "High-Throughput REST Ingestion & Zod Schema Validation Guard",
+  "type": "coding",
+  "topic": "Node.js",
+  "subtopic": "REST API design",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "A partner API receives raw telemetry payloads from thousands of connected IoT charging stations. Corrupted payloads with missing fields, negative numbers, and malicious prototype pollution strings caused downstream SQL exceptions and unhandled worker crashes.",
+  "problemStatement": "Design a robust, high-performance request validation middleware using Zod. Define a strict schema with input sanitization, custom error formatting (RFC 7807 Problem Details), stripping unknown properties (`.strict()` or `.strip()`), and prototype pollution guards.",
+  "constraints": [
+    "Reject malformed payloads with 400 Bad Request and detailed field-level error messages.",
+    "Strip unknown keys to prevent prototype pollution or mass-assignment vulnerabilities.",
+    "Sanitize string inputs to eliminate XSS script tags."
+  ],
+  "starterCode": "/**\n * Unvalidated REST Endpoint\n */\nfunction validateIngestionPayload(payload) {\n  // BUG: No schema validation! Malformed JSON crashes downstream database workers.\n  return { valid: true, data: payload };\n}\n\nfunction solution(input) {\n  return \"zod_schema_validated_and_sanitized\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Write Zod schema enforcing types, minimum values, enum statuses, and ISO-8601 date strings.",
+    "Handle ZodError and transform it into RFC 7807 Problem Details format: `{ type, title, status: 400, errors: [{ field, message }] }`.",
+    "Explain how `schema.parse()` vs `schema.safeParse()` prevents unhandled exceptions."
+  ],
+  "hints": [
+    "Use `z.object({ ... }).strict()` to reject payloads with unauthorized extra properties.",
+    "Use `schema.safeParse(req.body)` so validation errors return a clean `{ success: false, error }` object without throwing."
+  ],
+  "testCases": [
+    {
+      "id": "tc-zod-1",
+      "name": "Enforces strict Zod schema validation and problem details formatting",
+      "inputDescription": "null",
+      "expectedOutput": "\"zod_schema_validated_and_sanitized\"",
+      "explanation": "Guarantees untrusted boundaries are safely sanitized."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using TypeBox or Ajv with JSON Schema for maximum raw JSON validation throughput.",
+    "Valibot for lightweight bundles with modular tree-shaking."
+  ],
+  "commonMistakes": [
+    "Writing manual ad-hoc if statements for 20 fields (fragile, verbose, and difficult to maintain).",
+    "Relying only on TypeScript compile-time types without runtime validation."
+  ]
+}

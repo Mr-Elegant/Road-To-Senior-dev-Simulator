@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-018",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 18,
+  "title": "PostgreSQL Logical Decoding and Change Data Capture (CDC) Architecture",
+  "category": "Backup, Recovery, and Replication",
+  "questionType": "design",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Your architecture team must stream all real-time changes from `orders`, `payments`, and `customers` to Elasticsearch and Apache Kafka with sub-second latency. A developer proposes using polling queries (`WHERE updated_at > last_poll`).",
+  "questionStatement": "Critique the polling query anti-pattern for Change Data Capture (CDC). Detail how PostgreSQL Logical Decoding works using Write-Ahead Logs, logical replication slots, and `pgoutput` / Debezium. Explain `REPLICA IDENTITY` (DEFAULT vs FULL) and how hard DELETE events are captured.",
+  "expectedConcepts": [
+    "Shortcomings of polling queries (missed deletes, transaction race conditions, I/O load)",
+    "WAL-based logical decoding streaming committed transactions",
+    "Logical replication slots and LSN offset tracking",
+    "Debezium + Kafka event streaming integration",
+    "REPLICA IDENTITY DEFAULT (PK only) vs FULL (complete old row)"
+  ],
+  "hints": [
+    "Can a polling query detect hard DELETE statements without soft-delete flags?",
+    "Where does PostgreSQL write all committed transactions before modifying disk pages?",
+    "What does REPLICA IDENTITY FULL record in WAL during an UPDATE?"
+  ]
+}

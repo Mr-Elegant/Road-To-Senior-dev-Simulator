@@ -1,0 +1,45 @@
+{
+  "id": "sql-tier4-003",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 3,
+  "title": "Production Incident: Replication Lag Spike & Disk Exhaustion on Primary",
+  "category": "Backup, Recovery, and Replication",
+  "questionType": "incident",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "At 02:00 AM, the primary database disk usage surges from 40% to 98% in two hours. Monitoring shows physical streaming replication lag to the read-replica increased from 0 bytes to 250 GB. The team suspects an unconsumed replication slot or long-running replica query.",
+  "questionStatement": "Investigate the root cause of WAL retention accumulation on PostgreSQL primaries. Analyze how physical replication slots (`pg_replication_slots`), `wal_keep_size`, and long-running queries on standby (`hot_standby_feedback`) cause disk exhaustion on the primary. Provide immediate mitigation and permanent architectural safeguards.",
+  "incidentDetails": {
+    "symptoms": [
+      "Primary PostgreSQL disk usage alert: 98% full",
+      "Streaming replication lag: 245 GB behind",
+      "Standby replica reporting delayed data",
+      "Risk of primary entering read-only panic if disk reaches 100%"
+    ],
+    "systemTelemetry": {
+      "activeConnections": 64,
+      "replicationLagBytes": 263188283392,
+      "cpuUtilizationPercent": 42,
+      "bufferCacheHitRatio": 99.1,
+      "logSnippet": "2026-11-01 02:45:10 UTC [104]: [1-1] LOG:  checkpoints are occurring too frequently (9 seconds apart)\n2026-11-01 02:45:10 UTC [104]: [2-1] HINT:  Consider increasing the configuration parameter \"max_wal_size\".\n2026-11-01 02:50:00 UTC [890]: [1-1] WARNING:  canceling statement due to conflict with recovery\n2026-11-01 02:50:00 UTC [890]: [2-1] DETAIL:  User query might have needed to see row versions that must be removed."
+    },
+    "candidateTasks": [
+      "Identify which replication slot is retaining WAL via pg_replication_slots",
+      "Explain how max_slot_wal_keep_size prevents disk exhaustion",
+      "Analyze hot_standby_feedback vs max_standby_streaming_delay trade-offs",
+      "Execute emergency procedure to drop or invalidate stalled slot safely"
+    ]
+  },
+  "expectedConcepts": [
+    "Replication slot WAL retention guarantee on primary",
+    "pg_replication_slots restart_lsn and retained bytes calculation",
+    "max_slot_wal_keep_size safety ceiling in PG 13+",
+    "hot_standby_feedback vs recovery conflict trade-offs",
+    "Emergency slot drop and CHECKPOINT to free disk space"
+  ],
+  "hints": [
+    "Why does a primary refuse to delete WAL segments when a replication slot exists?",
+    "What PostgreSQL 13 parameter sets a maximum limit on WAL retained by a slot?",
+    "Check pg_wal_lsn_diff to calculate lag bytes."
+  ]
+}

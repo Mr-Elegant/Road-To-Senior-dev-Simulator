@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-11",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 11,
+  "title": "Surrogate Keys vs. Natural Keys",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "realWorldScenario": "A team is debating whether to use Social Security Number (SSN) / PAN as the primary key for customer records, or an auto-incrementing integer / UUID.",
+  "questionStatement": "Compare Natural Keys with Surrogate Keys. What are the operational and security risks of using real-world identifiers as primary keys?",
+  "expectedConcepts": [
+    "Natural key vs Surrogate key definition",
+    "Cascading update vulnerability of natural keys",
+    "PII exposure risks in foreign key relationships",
+    "Index storage bloat of string keys"
+  ],
+  "hints": [
+    "What happens if a user legally changes their email address or government ID?"
+  ]
+}

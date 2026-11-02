@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-26",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 26,
+  "title": "Database Deadlocks: Causes and Prevention",
+  "category": "Locks and Deadlocks",
+  "questionType": "conceptual",
+  "realWorldScenario": "In a peer-to-peer payment app, User A transfers $50 to User B at the exact same millisecond that User B transfers $30 to User A. The application server logs: `ERROR: deadlock detected`.",
+  "questionStatement": "What causes a database Deadlock? How does PostgreSQL detect and break deadlocks? What is the golden rule for preventing them in application code?",
+  "expectedConcepts": [
+    "Circular lock dependency",
+    "deadlock_timeout and dependency cycle detection",
+    "Automatic transaction abort and rollback",
+    "Consistent resource locking order (canonical ordering)"
+  ],
+  "hints": [
+    "If both transactions always lock account IDs in numerical order, can a cycle form?"
+  ]
+}

@@ -1,12 +1,13 @@
 # Enterprise Labs
 
-Open `/enterprise-labs` from the main navigation to practice within a business project. The hub provides three project cards and overview pages:
+Open `/enterprise-labs` from the main navigation to practice within a business project. The hub provides four project cards and overview pages:
 
 | Project | Overview | Available experience |
 | --- | --- | --- |
 | Loan Operations | `/enterprise-labs/loan-operations` | Interactive loan dashboard and eight editable bug exercises; sign-in required to launch these workspaces |
 | Commerce Operations | `/enterprise-labs/commerce-operations` | Three coding challenges covering reservations, payments, and catalog imports |
 | Multi-Tenant SaaS | `/enterprise-labs/multi-tenant-saas` | Three coding challenges covering authorization, subscriptions, and audit history |
+| Real-Time Collaboration | `/enterprise-labs/real-time-collaboration` | Eight coding challenges covering messaging correctness, reconnects, permissions, and meeting signaling; no live chat/video service |
 
 Each overview explains the business context, skills, recommended sequence, and current capabilities. The hub replaces the standalone Loan Dashboard navigation entry; the original dashboard URL and all direct exercise links remain supported. Challenge Library browsing continues to work independently.
 

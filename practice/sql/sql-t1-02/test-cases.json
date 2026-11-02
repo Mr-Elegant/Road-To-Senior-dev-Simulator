@@ -1,0 +1,33 @@
+[
+  {
+    "id": "tc-t1-02",
+    "description": "Verify active products priced above $100",
+    "expectedRows": [
+      {
+        "sku": "TECH-003",
+        "name": "Ultra-Wide 4K Gaming Monitor",
+        "price": 549
+      },
+      {
+        "sku": "HOME-001",
+        "name": "Smart Induction Espresso Machine",
+        "price": 249.99
+      },
+      {
+        "sku": "TECH-001",
+        "name": "Noise-Cancelling Headphones",
+        "price": 199.99
+      },
+      {
+        "sku": "FASH-002",
+        "name": "Waterproof Trail Running Shoes",
+        "price": 135
+      },
+      {
+        "sku": "TECH-002",
+        "name": "Mechanical Wireless Keyboard",
+        "price": 129.5
+      }
+    ]
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "id": "sql-tier4-027",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 27,
+  "title": "Keyset Pagination vs Deep OFFSET: Eliminating O(N) Query Degradation",
+  "category": "Query Optimization",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A public product listing API allows customers to paginate through 1,000,000 products. Page 1 (`OFFSET 0 LIMIT 20`) loads in 1ms. Page 20,000 (`OFFSET 400000 LIMIT 20`) takes 8.5 seconds and causes severe database disk reads.",
+  "questionStatement": "Explain why SQL `OFFSET` scales with $O(N)$ time complexity. Write an optimized keyset pagination query (seek method) using a composite cursor `(created_at, id)` that executes in $O(1)$ constant time regardless of page depth, and demonstrate the required composite B-tree index.",
+  "starterCode": "-- Optimized keyset pagination query (Page 2+ using composite cursor)\n-- Cursor from previous page: last_created_at = '2026-01-03', last_id = 3\nSELECT \n    id,\n    name,\n    price,\n    created_at\nFROM products\nWHERE (created_at, id) < ('2026-01-03', 3)\nORDER BY created_at DESC, id DESC\nLIMIT 20;",
+  "expectedConcepts": [
+    "OFFSET scanning and discarding N rows in memory/disk",
+    "Linear O(N) degradation of deep OFFSET queries",
+    "Composite row-value comparison: (created_at, id) < (:last_date, :last_id)",
+    "O(log N) B-tree seek followed by O(LIMIT) scan",
+    "Composite index matching sort order: (created_at DESC, id DESC)"
+  ],
+  "hints": [
+    "Why does OFFSET 400000 force Postgres to read 400,020 rows?",
+    "Tuple comparisons like (col1, col2) < (val1, val2) are directly supported by B-tree indexes.",
+    "Why include the primary key id in the tie-breaker?"
+  ],
+  "testCases": [
+    {
+      "id": "tc-tier4-027-1",
+      "description": "Verify keyset pagination returns next batch after cursor",
+      "setupSql": "CREATE TABLE products (id INT PRIMARY KEY, name VARCHAR(50), price NUMERIC, created_at VARCHAR(20));\nINSERT INTO products VALUES (1, 'Laptop', 1000, '2026-01-01'), (2, 'Phone', 800, '2026-01-02'), (3, 'Tablet', 500, '2026-01-03');",
+      "expectedOutputSql": "SELECT id, name, price, created_at FROM products WHERE (created_at, id) < ('2026-01-03', 3) ORDER BY created_at DESC, id DESC LIMIT 20;",
+      "orderMatters": true
+    }
+  ]
+}

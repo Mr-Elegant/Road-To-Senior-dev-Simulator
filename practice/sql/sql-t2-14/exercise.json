@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-14",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 14,
+  "title": "The Transactional Outbox Pattern in Relational Databases",
+  "category": "Transactions and ACID",
+  "questionType": "conceptual",
+  "realWorldScenario": "An order checkout service must save an order in PostgreSQL and publish an event to Apache Kafka. If Kafka is temporarily down, the database write succeeds but the message is lost.",
+  "questionStatement": "What is the Dual-Write Problem? How does the Transactional Outbox Pattern use relational database ACID transactions to guarantee reliable event delivery?",
+  "expectedConcepts": [
+    "Dual-Write problem and distributed failure",
+    "Outbox table in same local transaction",
+    "Atomicity guarantees message persistence",
+    "CDC (Change Data Capture) or Polling relay"
+  ],
+  "hints": [
+    "How can you use PostgreSQL's own transaction to record both the data and the message intent?"
+  ]
+}

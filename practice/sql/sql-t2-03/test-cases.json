@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tc-t2-03",
+    "description": "Verify high-spend customers via CTE",
+    "expectedRows": [
+      {
+        "name": "Sophia Miller",
+        "total_spent": 549
+      },
+      {
+        "name": "Aarav Patel",
+        "total_spent": 418.49
+      },
+      {
+        "name": "Carlos Rodriguez",
+        "total_spent": 346.99
+      }
+    ]
+  }
+]

@@ -1,0 +1,190 @@
+[
+  {
+    "id": "status",
+    "name": "Narrowing status resets page six to page one",
+    "input": {
+      "initial": {
+        "filters": {
+          "search": "",
+          "status": "ALL",
+          "loanType": "ALL",
+          "riskRating": "ALL"
+        },
+        "pagination": {
+          "page": 6,
+          "limit": 20
+        }
+      },
+      "actions": [
+        {
+          "status": "PENDING"
+        }
+      ]
+    },
+    "expected": {
+      "filters": {
+        "search": "",
+        "status": "PENDING",
+        "loanType": "ALL",
+        "riskRating": "ALL"
+      },
+      "pagination": {
+        "page": 1,
+        "limit": 20
+      }
+    },
+    "explanation": "A narrow result set may not have six pages.",
+    "sample": true
+  },
+  {
+    "id": "search",
+    "name": "A new search preserves other filters and resets page",
+    "input": {
+      "initial": {
+        "filters": {
+          "search": "",
+          "status": "ALL",
+          "loanType": "ALL",
+          "riskRating": "ALL"
+        },
+        "pagination": {
+          "page": 6,
+          "limit": 20
+        }
+      },
+      "actions": [
+        {
+          "search": "Mina"
+        }
+      ]
+    },
+    "expected": {
+      "filters": {
+        "search": "Mina",
+        "status": "ALL",
+        "loanType": "ALL",
+        "riskRating": "ALL"
+      },
+      "pagination": {
+        "page": 1,
+        "limit": 20
+      }
+    },
+    "explanation": "Reset pagination when search criteria change.",
+    "sample": true
+  },
+  {
+    "id": "limit",
+    "name": "Changing page size resets pagination",
+    "input": {
+      "initial": {
+        "filters": {
+          "search": "",
+          "status": "ALL",
+          "loanType": "ALL",
+          "riskRating": "ALL"
+        },
+        "pagination": {
+          "page": 6,
+          "limit": 20
+        }
+      },
+      "actions": [
+        {
+          "limit": 50
+        }
+      ]
+    },
+    "expected": {
+      "filters": {
+        "search": "",
+        "status": "ALL",
+        "loanType": "ALL",
+        "riskRating": "ALL"
+      },
+      "pagination": {
+        "page": 1,
+        "limit": 50
+      }
+    },
+    "explanation": "Page size changes the interpretation of a page index.",
+    "sample": false
+  },
+  {
+    "id": "noop",
+    "name": "Identical filters preserve the active page",
+    "input": {
+      "initial": {
+        "filters": {
+          "search": "",
+          "status": "ALL",
+          "loanType": "ALL",
+          "riskRating": "ALL"
+        },
+        "pagination": {
+          "page": 6,
+          "limit": 20
+        }
+      },
+      "actions": [
+        {
+          "status": "ALL",
+          "limit": 20
+        }
+      ]
+    },
+    "expected": {
+      "filters": {
+        "search": "",
+        "status": "ALL",
+        "loanType": "ALL",
+        "riskRating": "ALL"
+      },
+      "pagination": {
+        "page": 6,
+        "limit": 20
+      }
+    },
+    "explanation": "A repeated action with identical values must not move the user.",
+    "sample": false
+  },
+  {
+    "id": "combined",
+    "name": "Multiple changes preserve all updated values",
+    "input": {
+      "initial": {
+        "filters": {
+          "search": "",
+          "status": "ALL",
+          "loanType": "ALL",
+          "riskRating": "ALL"
+        },
+        "pagination": {
+          "page": 6,
+          "limit": 20
+        }
+      },
+      "actions": [
+        {
+          "loanType": "Business",
+          "riskRating": "HIGH",
+          "limit": 10
+        }
+      ]
+    },
+    "expected": {
+      "filters": {
+        "search": "",
+        "status": "ALL",
+        "loanType": "Business",
+        "riskRating": "HIGH"
+      },
+      "pagination": {
+        "page": 1,
+        "limit": 10
+      }
+    },
+    "explanation": "Merge the query changes rather than replacing unrelated filters.",
+    "sample": false
+  }
+]

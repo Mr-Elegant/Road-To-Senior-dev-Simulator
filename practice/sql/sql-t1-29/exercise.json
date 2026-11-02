@@ -1,0 +1,19 @@
+{
+  "id": "sql-t1-29",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 29,
+  "title": "Row Insertion and Returning Generated IDs with RETURNING",
+  "category": "PostgreSQL Data Types",
+  "questionType": "conceptual",
+  "realWorldScenario": "An Express.js API creates a new customer and immediately needs the newly generated auto-incrementing ID to create an initial order.",
+  "questionStatement": "How does the PostgreSQL-specific `RETURNING` clause work with `INSERT`, `UPDATE`, and `DELETE`? Why is it superior to executing a secondary `SELECT LASTVAL()` query?",
+  "expectedConcepts": [
+    "RETURNING clause syntax",
+    "Eliminates extra network round-trip",
+    "Concurrency safety over LASTVAL()"
+  ],
+  "hints": [
+    "Append RETURNING id at the end of an INSERT statement."
+  ]
+}

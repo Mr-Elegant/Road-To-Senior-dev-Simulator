@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-ratelimit-1",
+    "name": "Atomically evaluates rate limit with zero race conditions",
+    "inputDescription": "null",
+    "expectedOutput": "\"atomic_lua_sliding_window\"",
+    "explanation": "Enforces strict quota under high concurrency."
+  }
+]

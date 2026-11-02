@@ -1,0 +1,26 @@
+{
+  "id": "t1-react-02",
+  "title": "What is JSX and what are its key syntax rules in React?",
+  "category": "React Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 2,
+  "expectedConcepts": [
+    "JavaScript XML: Syntax extension for JavaScript",
+    "Transpilation to React.createElement() calls",
+    "Single root element requirement (or React.Fragment / <>)",
+    "className instead of class, htmlFor instead of for",
+    "Curly braces {} for embedding JS expressions",
+    "All tags must be explicitly closed (including <img /> and <input />)"
+  ],
+  "hints": [
+    "Why do we write className instead of class in React?",
+    "What must wrap sibling elements if you do not want an extra <div> in the DOM?"
+  ],
+  "codingExercise": {
+    "instruction": "Fix the JSX syntax errors in the provided component: ensure valid attribute naming and wrap with a Fragment.",
+    "starterCode": "// Fix the syntax in this component:\nfunction Badge({ label }) {\n  return (\n    <span class=\"badge\">\n      {label}\n    </span>\n    <img src=\"icon.png\">\n  );\n}",
+    "language": "javascript",
+    "expectedOutput": "Valid Fragment-wrapped JSX with className and self-closing img"
+  }
+}

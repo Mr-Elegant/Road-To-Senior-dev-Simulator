@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-27",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 27,
+  "title": "PostgreSQL Read Replicas and Replication Lag",
+  "category": "Backup, Recovery, and Replication",
+  "questionType": "conceptual",
+  "realWorldScenario": "A user updates their shipping address on an e-commerce site, clicks save, and is redirected to their profile page. The profile page still displays their old address. A refresh 2 seconds later shows the new address.",
+  "questionStatement": "What is Replication Lag in primary-replica database architectures? What read-after-write consistency problem did this user experience, and how is it resolved?",
+  "expectedConcepts": [
+    "Asynchronous replication delay",
+    "Read-after-write consistency failure",
+    "Read replica routing architecture",
+    "Session-level sticky primary routing"
+  ],
+  "hints": [
+    "The write went to the Primary, but which server did the next read come from?"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "sql-tier4-009",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 9,
+  "title": "Atomic Distributed Rate Limiting & Token Bucket in Pure PostgreSQL",
+  "category": "Query Optimization",
+  "questionType": "executable",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "To prevent external API abuse without introducing Redis infrastructure, your architect wants to implement a high-throughput Token Bucket rate limiter directly in PostgreSQL. Each tenant has a bucket with a max burst limit and a continuous refill rate.",
+  "questionStatement": "Design a concurrency-safe Token Bucket rate limiter in PostgreSQL using an atomic `INSERT ... ON CONFLICT DO UPDATE` statement. Given a request requiring 1 token, compute elapsed time refills dynamically, deduct the token if available, and return a boolean indicating whether the request was allowed.",
+  "starterCode": "-- Concurrency-safe rate limit token bucket deduction\n-- Table schema: (tenant_id INT PRIMARY KEY, tokens NUMERIC, max_tokens NUMERIC, refill_rate_per_sec NUMERIC, last_refilled_at TIMESTAMPTZ)\nWITH updated_bucket AS (\n    UPDATE rate_limit_buckets\n    SET \n        tokens = CASE \n            -- If refilled tokens >= 1, deduct 1 token\n            WHEN LEAST(max_tokens, tokens + (EXTRACT(EPOCH FROM (clock_timestamp() - last_refilled_at)) * refill_rate_per_sec)) >= 1.0\n            THEN LEAST(max_tokens, tokens + (EXTRACT(EPOCH FROM (clock_timestamp() - last_refilled_at)) * refill_rate_per_sec)) - 1.0\n            -- Otherwise leave current refilled tokens\n            ELSE LEAST(max_tokens, tokens + (EXTRACT(EPOCH FROM (clock_timestamp() - last_refilled_at)) * refill_rate_per_sec))\n        END,\n        last_refilled_at = clock_timestamp()\n    WHERE tenant_id = 101\n    RETURNING tenant_id, tokens, max_tokens\n)\nSELECT \n    tenant_id,\n    tokens,\n    CASE WHEN tokens >= 0.0 THEN true ELSE false END AS allowed\nFROM updated_bucket;",
+  "expectedConcepts": [
+    "Atomic token refill calculation based on elapsed time (clock_timestamp)",
+    "Single UPDATE statement row-level lock preventing race conditions",
+    "HOT (Heap-Only Tuple) update optimization with fillfactor = 70",
+    "Zero index maintenance on frequently mutated columns",
+    "Trade-offs of database-level rate limiting vs in-memory Redis"
+  ],
+  "hints": [
+    "Use clock_timestamp() rather than CURRENT_TIMESTAMP because clock_timestamp() advances during a statement.",
+    "LEAST(max_tokens, tokens + elapsed * rate) caps the tokens to bucket capacity.",
+    "Why is fillfactor essential for a row updated 100 times per second?"
+  ],
+  "testCases": [
+    {
+      "id": "tc-tier4-009-1",
+      "description": "Verify token bucket deduction and allowed status",
+      "setupSql": "CREATE TABLE rate_limit_buckets (tenant_id INT PRIMARY KEY, tokens NUMERIC, max_tokens NUMERIC, refill_rate_per_sec NUMERIC, last_refilled_at TIMESTAMP);\nINSERT INTO rate_limit_buckets VALUES (101, 10.0, 10.0, 1.0, '2026-01-01 00:00:00');",
+      "expectedOutputSql": "UPDATE rate_limit_buckets SET tokens = 9.0 WHERE tenant_id = 101; SELECT tenant_id, tokens, true AS allowed FROM rate_limit_buckets WHERE tenant_id = 101;",
+      "orderMatters": true
+    }
+  ]
+}

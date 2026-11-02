@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Landmark, ShoppingCart, Building2 } from 'lucide-react';
+import { ArrowRight, Landmark, ShoppingCart, Building2, MessagesSquare } from 'lucide-react';
 import { enterpriseLabs } from '@/data/enterpriseLabs';
 
 export const metadata: Metadata = { title: 'Enterprise Labs | Full Stack Engineering Interview Lab' };
 const icons: Record<string, typeof Landmark> = {
   'loan-operations': Landmark, 'commerce-operations': ShoppingCart, 'multi-tenant-saas': Building2,
+  'real-time-collaboration': MessagesSquare,
 };
 
 export default function EnterpriseLabsPage() {
@@ -16,7 +17,7 @@ export default function EnterpriseLabsPage() {
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Enterprise Labs</h1>
         <p className="text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
           Step into a project, understand the business, and fix the failures behind it.
-          Follow a learning sequence across finance, commerce, and SaaS.
+          Follow a learning sequence across finance, commerce, SaaS, and real-time collaboration.
         </p>
       </header>
 
@@ -26,7 +27,7 @@ export default function EnterpriseLabsPage() {
         <span>Progress shared with your existing workspaces</span>
       </div>
 
-      <section aria-label="Available enterprise projects" className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <section aria-label="Available enterprise projects" className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
         {enterpriseLabs.map(lab => {
           const Icon = icons[lab.id] ?? Building2;
           return (

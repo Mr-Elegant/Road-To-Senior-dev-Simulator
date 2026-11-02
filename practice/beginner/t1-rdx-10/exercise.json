@@ -1,0 +1,18 @@
+{
+  "id": "t1-rdx-10",
+  "title": "How do action payloads work in Redux Toolkit and how do you pass parameters to actions?",
+  "category": "Redux Toolkit Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 10,
+  "expectedConcepts": [
+    "action.payload convention",
+    "Passing arguments when calling the action creator dispatch(addItem(item))",
+    "Accessing action.payload inside the reducer",
+    "TypeScript typing with PayloadAction<T>"
+  ],
+  "hints": [
+    "What property on the action object holds data passed into the action creator?",
+    "If you dispatch updateAge(25), what does action.payload equal?"
+  ]
+}

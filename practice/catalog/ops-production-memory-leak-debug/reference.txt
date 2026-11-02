@@ -1,0 +1,27 @@
+/**
+ * Permanent Correction: Bounded Ring Buffer / LRU Cache
+ */
+class BoundedTelemetryBuffer {
+  constructor(maxSize = 500) {
+    this.maxSize = maxSize;
+    this.buffer = new Array(maxSize);
+    this.index = 0;
+    this.count = 0;
+  }
+
+  add(entry) {
+    // Overwrite oldest entry in ring buffer without reallocating arrays
+    this.buffer[this.index] = {
+      path: entry.path,
+      time: Date.now(),
+      status: entry.status,
+      // Strip large payloads (req.body) to keep footprint minimal
+    };
+    this.index = (this.index + 1) % this.maxSize;
+    if (this.count < this.maxSize) this.count++;
+  }
+
+  getRecent() {
+    return this.buffer.slice(0, this.count);
+  }
+}

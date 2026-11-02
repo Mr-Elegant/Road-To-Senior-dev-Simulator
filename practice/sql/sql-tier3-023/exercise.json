@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-023",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 23,
+  "title": "PostgreSQL Extensions: pg_stat_statements and Performance Profiling",
+  "category": "Production Debugging",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Your database CPU is pegged at 95%. Hundreds of different query patterns run concurrently from microservices. You need to identify which queries are consuming the most cumulative time and I/O across the entire server.",
+  "questionStatement": "Explain how `pg_stat_statements` tracks SQL execution metrics in PostgreSQL. How does it normalize SQL text? Write a query against `pg_stat_statements` to find the top 5 most resource-intensive queries by total execution time, buffer cache miss ratio, and average call latency.",
+  "expectedConcepts": [
+    "Query normalization via queryid parameterization",
+    "shared_preload_libraries requirement",
+    "total_exec_time vs mean_exec_time distinction",
+    "Buffer cache hit ratio formula (shared_blks_hit vs shared_blks_read)",
+    "Identifying high-frequency N+1 queries vs slow individual queries"
+  ],
+  "hints": [
+    "Why does pg_stat_statements need to be in shared_preload_libraries?",
+    "How does it group queries that only differ by WHERE id = 1 vs WHERE id = 2?",
+    "Buffer cache hit ratio = hits / (hits + reads)."
+  ]
+}

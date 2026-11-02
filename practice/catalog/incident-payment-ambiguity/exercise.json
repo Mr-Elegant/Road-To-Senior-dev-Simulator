@@ -1,0 +1,498 @@
+{
+  "id": "incident-payment-ambiguity",
+  "title": "Payment Timeout: Did the Customer Already Pay?",
+  "type": "incident",
+  "topic": "Integrations",
+  "subtopic": "Evolving production incident",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "A payment provider accepts a capture but the response times out at the gateway. The checkout service retries with a new idempotency key, and delayed webhooks arrive after customers have retried checkout.",
+  "problemStatement": "Customers report two card debits for one order while checkout displays \"payment failed\". Work through three timed developments, justify your actions, and write an evidence-based incident response. The simulation starts paused; advancing time can expire unanswered decisions.",
+  "constraints": [
+    "A network timeout is not proof that a payment failed.",
+    "Do not blindly refund or repeat all captures.",
+    "Retain provider operation IDs and an audit trail for reconciliation.",
+    "All telemetry is synthetic. Actions only affect this practice simulation."
+  ],
+  "candidateTasks": [
+    "Contain customer impact while preserving evidence and data integrity.",
+    "Respond to each new development and explain the selected action.",
+    "Cite telemetry supporting the root cause; distinguish observation from inference.",
+    "Define a permanent correction, regression coverage, recovery gates, and stakeholder update."
+  ],
+  "incidentTelemetry": {
+    "logs": [
+      {
+        "timestamp": "T+00:00",
+        "level": "WARN",
+        "service": "payment-orchestrator",
+        "message": "Customers report two card debits for one order while checkout displays \"payment failed\"."
+      }
+    ],
+    "metrics": [
+      {
+        "metricName": "affected_operations_percent",
+        "baseline": "0.1",
+        "incidentPeak": "35",
+        "unit": "%",
+        "status": "critical",
+        "trend": "Latest observation after the selected action; not a live production metric"
+      }
+    ],
+    "customerReports": [
+      {
+        "id": "incident-payment-ambiguity-report",
+        "reporter": "Incident commander",
+        "impact": "Active customer impact",
+        "quote": "Customers report two card debits for one order while checkout displays \"payment failed\"."
+      }
+    ],
+    "recentDeployments": [
+      {
+        "commitHash": "iguity-r1",
+        "author": "service-team",
+        "message": "Generate a fresh idempotency key on every retry",
+        "timeAgo": "12 minutes before the alert",
+        "diffSnippet": "capture({ orderId, idempotencyKey: randomUUID() })\ncatch (timeout) { return capture({ orderId, idempotencyKey: randomUUID() }); }"
+      }
+    ]
+  },
+  "incidentSimulation": {
+    "version": 1,
+    "initialSeverity": "SEV1",
+    "stages": [
+      {
+        "id": "development-1",
+        "atSeconds": 0,
+        "title": "Ambiguous capture outcomes",
+        "briefing": "Provider logs show a successful capture for order 771 before the gateway timeout. A second capture request uses a different key.",
+        "branches": {
+          "effective": "Uncertain payments are held for reconciliation rather than charged again.",
+          "partial": "Some impact remains. Uncertain outcomes remain unsafe to retry as new operations.",
+          "harmful": "Uncertain outcomes remain unsafe to retry as new operations.",
+          "timeout": "The previous deadline passed without a response. Uncertain outcomes remain unsafe to retry as new operations."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+00:00",
+              "level": "WARN",
+              "service": "payment-orchestrator",
+              "message": "order=771 provider_capture=cap_17 succeeded; gateway=timeout; retry_key differs from original."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "1-partial",
+            "label": "Increase the gateway timeout only",
+            "outcome": "partial",
+            "consequence": "Some responses arrive in time, but lost responses can still trigger a fresh capture.",
+            "customerImpact": "Duplicate debit risk remains.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "payment-orchestrator",
+                  "message": "Some responses arrive in time, but lost responses can still trigger a fresh capture."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "18",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-harmful",
+            "label": "Retry every timed-out capture with a fresh key",
+            "outcome": "harmful",
+            "consequence": "The provider treats each key as a new operation and accepts additional captures.",
+            "customerImpact": "More customers are charged twice.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "payment-orchestrator",
+                  "message": "The provider treats each key as a new operation and accepts additional captures."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "63",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-effective",
+            "label": "Stop blind capture retries and mark uncertain orders pending",
+            "outcome": "effective",
+            "consequence": "New capture attempts are paused for ambiguous orders; the original operation identity is preserved.",
+            "customerImpact": "Customers see processing status instead of a false failure.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "payment-orchestrator",
+                  "message": "New capture attempts are paused for ambiguous orders; the original operation identity is preserved."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "5",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Ambiguous capture outcomes\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+00:00",
+                "level": "WARN",
+                "service": "payment-orchestrator",
+                "message": "Decision deadline missed: order=771 provider_capture=cap_17 succeeded; gateway=timeout; retry_key differs from original."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "1-effective",
+          "reasoning": "A lost response leaves an unknown result. Preserve the logical payment operation and reconcile provider state; a new key removes the duplicate-protection boundary."
+        }
+      },
+      {
+        "id": "development-2",
+        "atSeconds": 120,
+        "title": "Webhooks are duplicated and reordered",
+        "briefing": "A capture-success event arrives twice, followed by an older processing event. The order database is still marked pending.",
+        "branches": {
+          "effective": "Pending state is accurate enough to reconcile against the provider.",
+          "partial": "Some impact remains. First stop new duplicate captures, then repair local state from authenticated provider evidence.",
+          "harmful": "First stop new duplicate captures, then repair local state from authenticated provider evidence.",
+          "timeout": "The previous deadline passed without a response. First stop new duplicate captures, then repair local state from authenticated provider evidence."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+02:00",
+              "level": "WARN",
+              "service": "payment-orchestrator",
+              "message": "event=evt_44 delivered twice; cap_17 status=succeeded; older event arrives after success."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "2-harmful",
+            "label": "Mark every timeout failed and ask customers to pay again",
+            "outcome": "harmful",
+            "consequence": "Confirmed provider captures are ignored and repeat payments create new charges.",
+            "customerImpact": "Customer financial impact expands.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "payment-orchestrator",
+                  "message": "Confirmed provider captures are ignored and repeat payments create new charges."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "70",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-effective",
+            "label": "Verify webhook authenticity, deduplicate, and reconcile monotonic state",
+            "outcome": "effective",
+            "consequence": "The duplicate event is recorded once; the confirmed success is not overwritten by older processing state.",
+            "customerImpact": "Order 771 becomes paid exactly once in the local ledger.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "payment-orchestrator",
+                  "message": "The duplicate event is recorded once; the confirmed success is not overwritten by older processing state."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "2",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-partial",
+            "label": "Trust arrival order and ignore duplicate event IDs",
+            "outcome": "partial",
+            "consequence": "An older event overwrites paid status and leaves another retry path open.",
+            "customerImpact": "Customers see inconsistent payment status.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "payment-orchestrator",
+                  "message": "An older event overwrites paid status and leaves another retry path open."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "16",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Webhooks are duplicated and reordered\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+02:00",
+                "level": "WARN",
+                "service": "payment-orchestrator",
+                "message": "Decision deadline missed: event=evt_44 delivered twice; cap_17 status=succeeded; older event arrives after success."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "2-effective",
+          "reasoning": "Verify signatures on the raw webhook body, deduplicate event IDs, use allowed state transitions and reconcile ambiguous state through provider IDs. Event delivery order is not business-state order."
+        }
+      },
+      {
+        "id": "development-3",
+        "atSeconds": 300,
+        "title": "Resolve duplicate charges safely",
+        "briefing": "Reconciliation finds 19 orders with two confirmed captures. A corrected capture path is ready for a canary.",
+        "branches": {
+          "effective": "A bounded set of confirmed duplicates can now enter an audited refund workflow.",
+          "partial": "Some impact remains. Stop repeat charging and establish authoritative capture status before applying refunds.",
+          "harmful": "Stop repeat charging and establish authoritative capture status before applying refunds.",
+          "timeout": "The previous deadline passed without a response. Stop repeat charging and establish authoritative capture status before applying refunds."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+05:00",
+              "level": "WARN",
+              "service": "payment-orchestrator",
+              "message": "19 duplicate capture pairs; 0 unresolved provider lookups; corrected key retained across retries."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "3-effective",
+            "label": "Refund confirmed excess captures idempotently and canary the fix",
+            "outcome": "effective",
+            "consequence": "Each approved excess capture gets one tracked refund; canary fault injection preserves a stable operation key.",
+            "customerImpact": "Affected customers receive a clear refund status and timeline.",
+            "severity": "SEV3",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "payment-orchestrator",
+                  "message": "Each approved excess capture gets one tracked refund; canary fault injection preserves a stable operation key."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "0.1",
+                  "unit": "%",
+                  "status": "normal",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-partial",
+            "label": "Deploy the retry fix without resolving existing duplicates",
+            "outcome": "partial",
+            "consequence": "New duplicate captures stop but existing excess charges remain unresolved.",
+            "customerImpact": "Previously affected customers still need financial correction.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "payment-orchestrator",
+                  "message": "New duplicate captures stop but existing excess charges remain unresolved."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "4",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-harmful",
+            "label": "Refund all timed-out requests without checking capture state",
+            "outcome": "harmful",
+            "consequence": "Some valid single payments are refunded and repeat refund attempts create reconciliation errors.",
+            "customerImpact": "Customers and accounting receive conflicting outcomes.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "payment-orchestrator",
+                  "message": "Some valid single payments are refunded and repeat refund attempts create reconciliation errors."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "42",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Resolve duplicate charges safely\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+05:00",
+                "level": "WARN",
+                "service": "payment-orchestrator",
+                "message": "Decision deadline missed: 19 duplicate capture pairs; 0 unresolved provider lookups; corrected key retained across retries."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "3-effective",
+          "reasoning": "Containment prevents new harm; recovery must also repair existing harm. Refund only confirmed excess captures through a deduplicated audited workflow and verify the corrected retry path under lost responses."
+        }
+      }
+    ],
+    "endSeconds": 480
+  },
+  "hints": [
+    "cap_17 succeeded before the gateway timeout for order 771.",
+    "Disable blind capture retries for uncertain operations; display pending status and keep original keys and provider IDs.",
+    "Persist one logical operation key before the first provider call and reuse it only with the same payload on retries."
+  ],
+  "alternativeApproaches": [
+    "Use a provider PaymentIntent-like lifecycle with one durable intent per logical checkout and authoritative state retrieval.",
+    "Serialize payment work through an outbox-backed worker, while retaining idempotent provider calls and reconciliation."
+  ],
+  "commonMistakes": [
+    "Assuming a timeout proves no side effect occurred.",
+    "Generating idempotency keys inside retry loops.",
+    "Treating webhook arrival order as authoritative or refunding unverified captures."
+  ]
+}

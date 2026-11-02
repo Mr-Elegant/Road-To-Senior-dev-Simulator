@@ -1,0 +1,44 @@
+{
+  "id": "db-isolation-levels-phantom-read",
+  "title": "Financial Ledger Wallet Balance Anomaly & Isolation Levels",
+  "type": "debugging",
+  "topic": "Databases",
+  "subtopic": "Isolation levels",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A digital banking ledger enforces that a customer's balance can never drop below zero. Under concurrent withdrawal and transfer requests, users are able to overdraw their accounts into negative balances even though the application code checks `balance >= withdrawalAmount` before debiting.",
+  "problemStatement": "Under the default PostgreSQL `READ COMMITTED` isolation level, checking account balance with `SELECT sum(amount)` in one statement does not prevent another concurrent transaction from inserting a debit transaction before the current transaction executes `INSERT INTO transactions ...`. Diagnose the anomaly (Write Skew / Phantom Read) and compare resolution via `SERIALIZABLE` transactions vs pessimistic row locking (`SELECT FOR UPDATE`).",
+  "constraints": [
+    "Account balance must NEVER drop below 0.",
+    "Must analyze trade-offs between `SELECT ... FOR UPDATE` vs `SET TRANSACTION ISOLATION LEVEL SERIALIZABLE`.",
+    "Explain how PostgreSQL detects serialization failures (SQLSTATE 40001) and how retry loops must be implemented."
+  ],
+  "starterCode": "/**\n * Anomaly-Prone Balance Withdrawal\n */\nasync function processWithdrawal(client, accountId, amount) {\n  // Default isolation level: READ COMMITTED\n  await client.query('BEGIN');\n\n  // Step 1: Calculate current balance from ledger entries\n  const res = await client.query(\n    'SELECT COALESCE(SUM(amount), 0) AS balance FROM ledger_entries WHERE account_id = $1',\n    [accountId]\n  );\n  const currentBalance = parseFloat(res.rows[0].balance);\n\n  // BUG: Under READ COMMITTED, another concurrent transaction can commit a withdrawal right now!\n  if (currentBalance < amount) {\n    await client.query('ROLLBACK');\n    throw new Error('Insufficient funds');\n  }\n\n  // Step 2: Insert debit\n  await client.query(\n    'INSERT INTO ledger_entries (account_id, amount, created_at) VALUES ($1, $2, NOW())',\n    [accountId, -amount]\n  );\n\n  await client.query('COMMIT');\n}\n\nfunction solution(input) {\n  return \"pessimistic_lock_or_serializable_retry\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain why `READ COMMITTED` permits write skew / phantom calculations across multiple statements.",
+    "Implement pessimistic locking using a parent `accounts` table row with `SELECT balance FROM accounts WHERE id = $1 FOR UPDATE`.",
+    "Explain how `SERIALIZABLE` isolation solves this with Serializable Snapshot Isolation (SSI) and requires application-level retries on error 40001."
+  ],
+  "hints": [
+    "You cannot lock rows that do not exist yet in `ledger_entries`, so locking an aggregate `SUM()` is impossible in SQL without table lock.",
+    "Lock the parent account row: `SELECT * FROM accounts WHERE id = $1 FOR UPDATE`."
+  ],
+  "testCases": [
+    {
+      "id": "tc-iso-1",
+      "name": "Prevents negative balance under concurrent race conditions",
+      "inputDescription": "null",
+      "expectedOutput": "\"pessimistic_lock_or_serializable_retry\"",
+      "explanation": "Enforces strict transactional guarantees against overdrafts."
+    }
+  ],
+  "alternativeApproaches": [
+    "Database CHECK constraint: `CONSTRAINT balance_non_negative CHECK (balance >= 0)`.",
+    "Optimistic concurrency with version column `UPDATE accounts SET balance = balance - $1, version = version + 1 WHERE id = $2 AND version = $3`."
+  ],
+  "commonMistakes": [
+    "Assuming REPEATABLE READ prevents write skew: in Postgres, Repeatable Read prevents non-repeatable reads and phantom reads on existing rows, but still allows write skew anomalies.",
+    "Not adding an application retry loop when choosing SERIALIZABLE."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-008",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 8,
+  "title": "PostgreSQL Transaction Isolation: Write Skew and Serializable Snapshot Isolation (SSI)",
+  "category": "Isolation Levels and MVCC",
+  "questionType": "conceptual",
+  "datasetId": "loan_management",
+  "realWorldScenario": "In a loan management system, two loan officers simultaneously approve disbursements for the same applicant under `REPEATABLE READ`. The business rule states: \"Total active disbursed debt for an applicant cannot exceed $100,000.\" Both officers see $60,000 active debt and both disburse $30,000. Total debt is now $120,000.",
+  "questionStatement": "Explain why `REPEATABLE READ` allows this Write Skew anomaly while preventing dirty reads and non-repeatable reads. Explain how PostgreSQL implements Serializable Snapshot Isolation (SSI) using SIREAD locks to detect rw-antidependencies and abort conflicting transactions with code `40001 serialization_failure`.",
+  "expectedConcepts": [
+    "Write Skew anomaly definition on overlapping disjoint rows",
+    "Why Repeatable Read only protects against single-row concurrent updates",
+    "SSI (Serializable Snapshot Isolation) and non-blocking SIREAD locks",
+    "rw-antidependency tracking and dependency cycle detection",
+    "SQLSTATE 40001 serialization_failure and retry logic"
+  ],
+  "hints": [
+    "Remember that two concurrent inserts create new primary keys, so they do not lock each other.",
+    "SIREAD locks are not traditional heavy locks; they do not block execution.",
+    "What must application code do when a 40001 error occurs?"
+  ]
+}

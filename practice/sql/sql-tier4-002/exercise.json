@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-002",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 2,
+  "title": "Zero-Downtime Column Rename and Type Migration in 24/7 Production",
+  "category": "Migrations and Schema Evolution",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A core table `orders` (100 million rows, 3,000 writes/sec) has a column `amount INT` storing dollars that must be converted to `amount_cents BIGINT` to support multi-currency fractional cents. A naive `ALTER TABLE orders ALTER COLUMN amount TYPE BIGINT;` will lock the table for 45 minutes.",
+  "questionStatement": "Design a comprehensive zero-downtime database migration pattern to migrate `amount` to `amount_cents BIGINT` without locking concurrent writes or disrupting older application versions. Detail the expand-and-contract (dual-write) pattern with views, triggers, batch backfills, and final cleanup.",
+  "expectedConcepts": [
+    "Expand-and-contract (parallel-run) migration methodology",
+    "Dual-write trigger to synchronize live writes during transition",
+    "Keyset batch backfill with pause to prevent lock and WAL saturation",
+    "NOT VALID check constraint followed by VALIDATE CONSTRAINT",
+    "Zero application downtime and rollback capability"
+  ],
+  "hints": [
+    "Why does ALTER TABLE ... ALTER COLUMN TYPE lock the entire table and rewrite all rows?",
+    "How does a dual-write trigger allow old and new code to run simultaneously?",
+    "How do you backfill 100 million rows without blowing up WAL or holding row locks?"
+  ]
+}

@@ -1,0 +1,498 @@
+{
+  "id": "incident-db-connection-storm",
+  "title": "Connection Storm: Autoscaling Makes Checkout Worse",
+  "type": "incident",
+  "topic": "Databases",
+  "subtopic": "Evolving production incident",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "A retail checkout API scales from 8 to 40 pods during a flash sale. PostgreSQL has 400 connection slots, 40 of which are reserved for administration and other services. Each new pod opens a 30-connection pool.",
+  "problemStatement": "Checkout p99 is 18 seconds; active client connections hit 400 and 35% of checkout requests fail. Work through three timed developments, justify your actions, and write an evidence-based incident response. The simulation starts paused; advancing time can expire unanswered decisions.",
+  "constraints": [
+    "Keep database access available to on-call operators.",
+    "Do not increase max_connections or restart PostgreSQL during the sale.",
+    "Payments must retain their idempotency keys across retries.",
+    "All telemetry is synthetic. Actions only affect this practice simulation."
+  ],
+  "candidateTasks": [
+    "Contain customer impact while preserving evidence and data integrity.",
+    "Respond to each new development and explain the selected action.",
+    "Cite telemetry supporting the root cause; distinguish observation from inference.",
+    "Define a permanent correction, regression coverage, recovery gates, and stakeholder update."
+  ],
+  "incidentTelemetry": {
+    "logs": [
+      {
+        "timestamp": "T+00:00",
+        "level": "WARN",
+        "service": "checkout-api",
+        "message": "Checkout p99 is 18 seconds; active client connections hit 400 and 35% of checkout requests fail."
+      }
+    ],
+    "metrics": [
+      {
+        "metricName": "affected_operations_percent",
+        "baseline": "0.1",
+        "incidentPeak": "35",
+        "unit": "%",
+        "status": "critical",
+        "trend": "Latest observation after the selected action; not a live production metric"
+      }
+    ],
+    "customerReports": [
+      {
+        "id": "incident-db-connection-storm-report",
+        "reporter": "Incident commander",
+        "impact": "Active customer impact",
+        "quote": "Checkout p99 is 18 seconds; active client connections hit 400 and 35% of checkout requests fail."
+      }
+    ],
+    "recentDeployments": [
+      {
+        "commitHash": "-storm-r1",
+        "author": "service-team",
+        "message": "Increase checkout autoscaling ceiling without revisiting pool budgets",
+        "timeAgo": "12 minutes before the alert",
+        "diffSnippet": "maxReplicas: 8 -> 40\nDB_POOL_MAX: 30\nretryAttempts: 1 -> 5"
+      }
+    ]
+  },
+  "incidentSimulation": {
+    "version": 1,
+    "initialSeverity": "SEV1",
+    "stages": [
+      {
+        "id": "development-1",
+        "atSeconds": 0,
+        "title": "Connection budget exhausted",
+        "briefing": "The autoscaler requests another 10 pods. Database CPU is only 45%, but new sessions receive \"remaining connection slots are reserved\".",
+        "branches": {
+          "effective": "Admission control has protected the database.",
+          "partial": "Some impact remains. New clients still compete for the same fixed connection budget.",
+          "harmful": "New clients still compete for the same fixed connection budget.",
+          "timeout": "The previous deadline passed without a response. New clients still compete for the same fixed connection budget."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+00:00",
+              "level": "WARN",
+              "service": "checkout-api",
+              "message": "40 pods x 30 pool slots = 1200 potential clients; usable database budget is 360."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "1-partial",
+            "label": "Temporarily shed analytics traffic only",
+            "outcome": "partial",
+            "consequence": "A few slots are freed, but checkout pool demand still exceeds the budget.",
+            "customerImpact": "Checkout failures remain uneven.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "checkout-api",
+                  "message": "A few slots are freed, but checkout pool demand still exceeds the budget."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "22",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-harmful",
+            "label": "Add more checkout pods immediately",
+            "outcome": "harmful",
+            "consequence": "New pools multiply connection attempts; administrative connections also queue.",
+            "customerImpact": "Checkout errors spread to account and inventory services.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "checkout-api",
+                  "message": "New pools multiply connection attempts; administrative connections also queue."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "55",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-effective",
+            "label": "Cap admission and replicas; lower per-pod connection budgets",
+            "outcome": "effective",
+            "consequence": "New checkout admission is bounded; operators can connect and waiting clients begin draining.",
+            "customerImpact": "Some checkouts are deferred with a retry hint.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "checkout-api",
+                  "message": "New checkout admission is bounded; operators can connect and waiting clients begin draining."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "8",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Connection budget exhausted\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+00:00",
+                "level": "WARN",
+                "service": "checkout-api",
+                "message": "Decision deadline missed: 40 pods x 30 pool slots = 1200 potential clients; usable database budget is 360."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "1-effective",
+          "reasoning": "This is a connection-budget failure rather than proof of a CPU shortage. Cap load, reserve operational access, and budget all pools together before scaling producers."
+        }
+      },
+      {
+        "id": "development-2",
+        "atSeconds": 120,
+        "title": "Retry amplification arrives",
+        "briefing": "Payment clients retry every 200 ms. Request attempts are now five times the original arrival rate, and pool waiters outnumber executing statements.",
+        "branches": {
+          "effective": "The capped fleet stays within budget, but retries can undo the containment.",
+          "partial": "Some impact remains. Pool saturation now combines with a retry storm; extra workers cannot create database capacity.",
+          "harmful": "Pool saturation now combines with a retry storm; extra workers cannot create database capacity.",
+          "timeout": "The previous deadline passed without a response. Pool saturation now combines with a retry storm; extra workers cannot create database capacity."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+02:00",
+              "level": "WARN",
+              "service": "checkout-api",
+              "message": "attempts/original_request = 5.1; pool_waiters = 840; oldest transaction age = 95s."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "2-harmful",
+            "label": "Retry immediately until every request succeeds",
+            "outcome": "harmful",
+            "consequence": "Offered load continues growing and idempotent requests still waste connection capacity.",
+            "customerImpact": "A larger fraction of users cannot check out.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "checkout-api",
+                  "message": "Offered load continues growing and idempotent requests still waste connection capacity."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "64",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-effective",
+            "label": "Bound retries with jitter and deadlines; inspect old transactions",
+            "outcome": "effective",
+            "consequence": "Retries drop to a bounded budget; identified abandoned transactions are reviewed before cancellation.",
+            "customerImpact": "Customers receive predictable failures instead of indefinite waits.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "checkout-api",
+                  "message": "Retries drop to a bounded budget; identified abandoned transactions are reviewed before cancellation."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "3",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-partial",
+            "label": "Increase client timeout to 60 seconds",
+            "outcome": "partial",
+            "consequence": "Fewer clients disconnect early, but waiting requests continue consuming resources.",
+            "customerImpact": "Checkout waits are longer.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "checkout-api",
+                  "message": "Fewer clients disconnect early, but waiting requests continue consuming resources."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "19",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Retry amplification arrives\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+02:00",
+                "level": "WARN",
+                "service": "checkout-api",
+                "message": "Decision deadline missed: attempts/original_request = 5.1; pool_waiters = 840; oldest transaction age = 95s."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "2-effective",
+          "reasoning": "Use a shared retry budget, backoff with jitter, and end-to-end deadlines. Cancel only verified blocking or abandoned work; do not terminate every transaction."
+        }
+      },
+      {
+        "id": "development-3",
+        "atSeconds": 300,
+        "title": "Choose a recovery gate",
+        "briefing": "A pool configuration fix is ready. The sale still has 20 minutes to run. You must choose how to restore throughput.",
+        "branches": {
+          "effective": "Capacity is stable enough to test a controlled traffic increase.",
+          "partial": "Some impact remains. Before increasing traffic, apply the budget and retry controls; the canary alone does not repair the overloaded fleet.",
+          "harmful": "Before increasing traffic, apply the budget and retry controls; the canary alone does not repair the overloaded fleet.",
+          "timeout": "The previous deadline passed without a response. Before increasing traffic, apply the budget and retry controls; the canary alone does not repair the overloaded fleet."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+05:00",
+              "level": "WARN",
+              "service": "checkout-api",
+              "message": "Canary: pool_wait_p95 = 12ms; total_connections = 240/400; payment reconciliation backlog = 72."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "3-effective",
+            "label": "Canary the pool budget, ramp traffic, and reconcile pending payments",
+            "outcome": "effective",
+            "consequence": "Traffic is restored in steps while pool wait, error rate and payment reconciliation remain within gates.",
+            "customerImpact": "Successful checkout resumes; uncertain payments are reconciled.",
+            "severity": "SEV3",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "checkout-api",
+                  "message": "Traffic is restored in steps while pool wait, error rate and payment reconciliation remain within gates."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "0.1",
+                  "unit": "%",
+                  "status": "normal",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-partial",
+            "label": "Declare recovery after one healthy canary request",
+            "outcome": "partial",
+            "consequence": "One request succeeds, but no sustained load or payment reconciliation gate is checked.",
+            "customerImpact": "Some customers still see unresolved payment status.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "checkout-api",
+                  "message": "One request succeeds, but no sustained load or payment reconciliation gate is checked."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "2",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-harmful",
+            "label": "Restore the original 40 x 30 pool configuration",
+            "outcome": "harmful",
+            "consequence": "Potential connection demand returns to 1200 and the original failure recurs.",
+            "customerImpact": "Checkout fails again during recovery.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "checkout-api",
+                  "message": "Potential connection demand returns to 1200 and the original failure recurs."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "48",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Choose a recovery gate\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+05:00",
+                "level": "WARN",
+                "service": "checkout-api",
+                "message": "Decision deadline missed: Canary: pool_wait_p95 = 12ms; total_connections = 240/400; payment reconciliation backlog = 72."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "3-effective",
+          "reasoning": "Treat recovery as a measured ramp. A correct global pool budget, bounded retries and reconciliation are all required; a single green request is insufficient."
+        }
+      }
+    ],
+    "endSeconds": 480
+  },
+  "hints": [
+    "The new ceiling permits 40 x 30 = 1200 clients against 360 usable slots.",
+    "Freeze replica growth and bound checkout admission; reserve administrative access and degrade nonessential workloads.",
+    "Introduce centrally budgeted pooling or a transaction pooler after checking session-state compatibility."
+  ],
+  "alternativeApproaches": [
+    "Use a validated transaction pooler to multiplex short transactions; session variables and prepared statements need compatibility testing.",
+    "Queue noninteractive checkout work with bounded depth and explicit expiration rather than keeping HTTP requests open."
+  ],
+  "commonMistakes": [
+    "Scaling client pods based solely on request latency.",
+    "Increasing max_connections without accounting for memory and downstream capacity.",
+    "Blindly terminating all database sessions or retrying payments with new operation keys."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "ts-type-narrowing-rbac",
+  "title": "Enterprise Multi-Tenant RBAC Authorization Type Narrowing",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "Type narrowing",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "An enterprise ERP platform provides access to financial records. Different user roles (SuperAdmin, OrgAdmin, BillingAuditor, Viewer) have strictly segregated access to tenant resources. A security audit discovered that downstream handler code assumed all users have an `organizationId`, causing cross-tenant data leaks when SuperAdmins (who operate globally without an organizationId) called organization-scoped endpoints.",
+  "problemStatement": "Design a custom type guard and discriminated context model for user sessions. Implement a type guard `isOrgScopedSession(session)` that narrows a general user session to an `OrgScopedUserSession` guaranteed to contain a non-nullable `tenantId` and valid organization permissions.",
+  "constraints": [
+    "Type guards must use `session is OrgScopedUserSession` predicate.",
+    "Must enforce tenant isolation at compile time.",
+    "Must reject sessions with undefined or null tenantId."
+  ],
+  "starterCode": "/**\n * Multi-Tenant RBAC Session Narrowing\n */\nexport interface BaseUser {\n  id: string;\n  email: string;\n}\n\nexport interface SuperAdminUser extends BaseUser {\n  role: 'SUPER_ADMIN';\n  tenantId: null;\n  globalCapabilities: string[];\n}\n\nexport interface OrgAdminUser extends BaseUser {\n  role: 'ORG_ADMIN';\n  tenantId: string;\n  permissions: ('MANAGE_USERS' | 'VIEW_BILLING' | 'EDIT_INVOICES')[];\n}\n\nexport interface OrgMemberUser extends BaseUser {\n  role: 'ORG_MEMBER';\n  tenantId: string;\n  permissions: ('VIEW_BILLING')[];\n}\n\nexport type UserSession = SuperAdminUser | OrgAdminUser | OrgMemberUser;\nexport type OrgScopedSession = OrgAdminUser | OrgMemberUser;\n\n// TODO: Implement custom type predicate\nexport function isOrgScopedSession(session: UserSession): session is OrgScopedSession {\n  return session.role !== 'SUPER_ADMIN' && typeof session.tenantId === 'string' && session.tenantId.length > 0;\n}\n\nfunction solution(input) {\n  const session: UserSession = {\n    id: 'u-1',\n    email: 'admin@acme.com',\n    role: 'ORG_ADMIN',\n    tenantId: 'tenant-99',\n    permissions: ['MANAGE_USERS']\n  };\n\n  if (isOrgScopedSession(session)) {\n    return `Access granted to tenant: ${session.tenantId}`;\n  }\n  return \"Denied\";\n}",
+  "codeLanguage": "typescript",
+  "candidateTasks": [
+    "Implement `isOrgScopedSession` type guard correctly checking runtime fields.",
+    "Ensure the return type predicate `session is OrgScopedSession` narrows TypeScript type in if/else blocks.",
+    "Discuss how custom type predicates can be dangerous if the runtime logic does not match the type predicate declaration."
+  ],
+  "hints": [
+    "A type guard must return a boolean and have return type `arg is TargetType`.",
+    "Check both role and that `tenantId !== null && typeof tenantId === \"string\"`."
+  ],
+  "testCases": [
+    {
+      "id": "tc-rbac-1",
+      "name": "Narrows org scoped session accurately",
+      "inputDescription": "null",
+      "expectedOutput": "\"Access granted to tenant: tenant-99\"",
+      "explanation": "Allows scoped access with safe tenantId."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using Discriminated Unions on a \"scope\" tag (scope: \"GLOBAL\" | \"ORG\").",
+    "Using branded types for TenantId to prevent accidental substitution of user IDs for tenant IDs."
+  ],
+  "commonMistakes": [
+    "Using type assertion \"as OrgScopedSession\" instead of a proper type guard.",
+    "Forgetting to check for empty strings or undefined in tenantId."
+  ]
+}

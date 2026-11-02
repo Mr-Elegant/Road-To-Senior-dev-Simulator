@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-tier3-018-1",
+    "description": "Verify CTE update with claimed status",
+    "setupSql": "CREATE TABLE outbox_events (id INT PRIMARY KEY, status VARCHAR(20), payload VARCHAR(50), processed_at VARCHAR(30));\nINSERT INTO outbox_events VALUES (1, 'PENDING', 'event_1', NULL), (2, 'PENDING', 'event_2', NULL), (3, 'DONE', 'event_3', '2026-01-01');",
+    "expectedOutputSql": "UPDATE outbox_events SET status = 'PROCESSING' WHERE status = 'PENDING'; SELECT id, status, payload FROM outbox_events WHERE status = 'PROCESSING' ORDER BY id;",
+    "orderMatters": true
+  }
+]

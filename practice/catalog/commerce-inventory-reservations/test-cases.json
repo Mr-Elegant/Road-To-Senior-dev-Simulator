@@ -1,0 +1,51 @@
+[
+  {
+    "id": "stock-1",
+    "name": "Reserve available stock",
+    "inputDescription": "{\"stock\":3,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":2}]}",
+    "expectedOutput": "{\"available\":1,\"reservations\":[{\"id\":\"a\",\"quantity\":2,\"status\":\"held\"}],\"outcomes\":[\"reserved\"]}",
+    "hidden": false
+  },
+  {
+    "id": "stock-2",
+    "name": "Two checkouts compete for the final unit",
+    "inputDescription": "{\"stock\":1,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":1},{\"type\":\"reserve\",\"id\":\"b\",\"quantity\":1}]}",
+    "expectedOutput": "{\"available\":0,\"reservations\":[{\"id\":\"a\",\"quantity\":1,\"status\":\"held\"}],\"outcomes\":[\"reserved\",\"unavailable\"]}",
+    "hidden": false
+  },
+  {
+    "id": "stock-3",
+    "name": "Retry does not reserve twice",
+    "inputDescription": "{\"stock\":2,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":2},{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":2}]}",
+    "expectedOutput": "{\"available\":0,\"reservations\":[{\"id\":\"a\",\"quantity\":2,\"status\":\"held\"}],\"outcomes\":[\"reserved\",\"duplicate\"]}",
+    "hidden": true
+  },
+  {
+    "id": "stock-4",
+    "name": "An idempotency key cannot change quantity",
+    "inputDescription": "{\"stock\":4,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":1},{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":2}]}",
+    "expectedOutput": "{\"available\":3,\"reservations\":[{\"id\":\"a\",\"quantity\":1,\"status\":\"held\"}],\"outcomes\":[\"reserved\",\"conflict\"]}",
+    "hidden": true
+  },
+  {
+    "id": "stock-5",
+    "name": "Release and late retry restore stock only once",
+    "inputDescription": "{\"stock\":1,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":1},{\"type\":\"release\",\"id\":\"a\"},{\"type\":\"release\",\"id\":\"a\"},{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":1}]}",
+    "expectedOutput": "{\"available\":1,\"reservations\":[{\"id\":\"a\",\"quantity\":1,\"status\":\"released\"}],\"outcomes\":[\"reserved\",\"released\",\"duplicate\",\"duplicate\"]}",
+    "hidden": true
+  },
+  {
+    "id": "stock-6",
+    "name": "Reject invalid quantities without changing stock",
+    "inputDescription": "{\"stock\":2,\"commands\":[{\"type\":\"reserve\",\"id\":\"a\",\"quantity\":-1},{\"type\":\"reserve\",\"id\":\"b\",\"quantity\":0},{\"type\":\"reserve\",\"id\":\"c\",\"quantity\":1.5},{\"type\":\"reserve\",\"id\":\"d\",\"quantity\":\"1\"},{\"type\":\"reserve\",\"id\":\"e\",\"quantity\":9007199254740992}]}",
+    "expectedOutput": "{\"available\":2,\"reservations\":[],\"outcomes\":[\"invalid\",\"invalid\",\"invalid\",\"invalid\",\"invalid\"]}",
+    "hidden": true
+  },
+  {
+    "id": "stock-7",
+    "name": "Unknown commands and missing releases are harmless",
+    "inputDescription": "{\"stock\":0,\"commands\":[{\"type\":\"release\",\"id\":\"missing\"},{\"type\":\"expire\",\"id\":\"missing\"}]}",
+    "expectedOutput": "{\"available\":0,\"reservations\":[],\"outcomes\":[\"not_found\",\"invalid\"]}",
+    "hidden": true
+  }
+]

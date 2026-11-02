@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-029",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 29,
+  "title": "Database Security: Role Inheritance, Schema search_path Poisoning, and SECURITY DEFINER",
+  "category": "Database Security and Permissions",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A database security review reveals a function `process_refund(order_id INT)` created with `SECURITY DEFINER` by a `postgres` superuser. A junior engineer added an unprivileged tenant user who was able to execute arbitrary code with superuser privileges.",
+  "questionStatement": "Explain the security risks of `SECURITY DEFINER` functions in PostgreSQL. What is `search_path` hijacking/poisoning, how do attackers exploit it, and what are the mandatory defensive measures (including `SET search_path = pg_catalog, pg_temp`) required when creating privileged functions?",
+  "expectedConcepts": [
+    "SECURITY DEFINER executing as function owner (setuid analogy)",
+    "search_path resolution order and object substitution attack",
+    "Exploitation via public schema or pg_temp shadow functions",
+    "Mandatory SET search_path = pg_catalog, pg_temp clause",
+    "Explicit schema qualification (public.table) and REVOKE EXECUTE FROM PUBLIC"
+  ],
+  "hints": [
+    "What happens if a caller has search_path = \"malicious_schema, public\"?",
+    "What does SET search_path = pg_catalog do inside the function definition?",
+    "Who can execute a newly created function by default in PostgreSQL?"
+  ]
+}

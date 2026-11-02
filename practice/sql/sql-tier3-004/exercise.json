@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-004",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 4,
+  "title": "PostgreSQL MVCC Internals: Heap Tuples, xmin, xmax, and Hints",
+  "category": "Isolation Levels and MVCC",
+  "questionType": "conceptual",
+  "datasetId": "loan_management",
+  "realWorldScenario": "During an audit of the `loans` table, a junior engineer notices that after running an `UPDATE loans SET status = 'ACTIVE'` on 10,000 rows, the table size on disk doubled from 50MB to 100MB even though the row count remained identical.",
+  "questionStatement": "Explain PostgreSQL Multi-Version Concurrency Control (MVCC) at the physical tuple level. What are `xmin`, `xmax`, `t_ctid`, and `infomask` hint bits in the heap tuple header? Describe step-by-step how an UPDATE statement is executed physically on disk.",
+  "expectedConcepts": [
+    "Tuple immutability in PostgreSQL",
+    "xmin (creator XID) and xmax (deleter/updater XID)",
+    "t_ctid pointer chaining between tuple versions",
+    "Hint bits (HEAP_XMIN_COMMITTED) preventing repeat pg_xact lookups",
+    "Why UPDATE is physically an INSERT + soft-delete"
+  ],
+  "hints": [
+    "Remember that PostgreSQL never modifies an existing tuple in place during an UPDATE.",
+    "What fields in the 23-byte tuple header record transaction visibility?",
+    "How does PostgreSQL know whether a transaction committed without reading the commit log every time?"
+  ]
+}

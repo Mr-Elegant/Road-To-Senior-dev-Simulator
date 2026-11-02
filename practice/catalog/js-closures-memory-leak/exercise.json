@@ -1,0 +1,45 @@
+{
+  "id": "js-closures-memory-leak",
+  "title": "SSE Connection Manager Request Context Closure Leak",
+  "type": "debugging",
+  "topic": "JavaScript",
+  "subtopic": "Closures and scope",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A subscription trading platform provides real-time Server-Sent Events (SSE) to push portfolio updates. Over 24 hours of operation, the service Node.js process RSS memory swells from 150MB to 3.8GB, triggering container out-of-memory crashes.",
+  "problemStatement": "Heap snapshot inspection reveals thousands of retained ClientSession closures holding large http.IncomingMessage and AuthToken contexts in memory even though the user has only subscribed to price alerts. Fix the retention pattern and prevent closure-based memory leaks.",
+  "constraints": [
+    "Must maintain real-time push to active SSE clients.",
+    "Must properly clean up listeners and references when client disconnects.",
+    "Cannot retain unneeded request payloads or auth credential strings in long-lived client descriptors."
+  ],
+  "starterCode": "/**\n * Real-Time SSE Connection Handler with Hidden Retention Leak\n */\nclass ConnectionHub {\n  constructor() {\n    this.clients = new Set();\n  }\n\n  registerConnection(req, res) {\n    // Large transient auth tokens & headers\n    const requestMetadata = {\n      headers: req.headers,\n      body: req.body,\n      receivedAt: Date.now()\n    };\n    \n    const clientId = req.headers['x-client-id'] || Math.random().toString();\n\n    // BUG: The broadcast handler forms a closure over 'requestMetadata' and 'req',\n    // preventing the V8 garbage collector from sweeping the entire request tree!\n    const client = {\n      id: clientId,\n      send: (data) => {\n        if (requestMetadata.headers) {\n          res.write(`data: ${JSON.stringify({ clientId, payload: data })}\\n\\n`);\n        }\n      }\n    };\n\n    this.clients.add(client);\n    \n    req.on('close', () => {\n      // Missing cleanup of client or closure references\n      res.end();\n    });\n  }\n}\n\nfunction solution(input) {\n  const hub = new ConnectionHub();\n  return \"repaired\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Identify how the lexical scope closure retains `requestMetadata` and `req` in V8 heap.",
+    "Refactor `registerConnection` to extract only the needed primitive identifiers (`clientId`, `res`) and nullify references.",
+    "Ensure the disconnect listener (`req.on(\"close\")`) removes the client from `this.clients`."
+  ],
+  "hints": [
+    "Any variable accessed by an inner function survives as long as that inner function is referenced by an active object (the Set).",
+    "The client object is added to `this.clients`, and its `send` method references `requestMetadata`, holding the entire request in heap forever.",
+    "Clean up the Set on disconnect: `this.clients.delete(client)`."
+  ],
+  "testCases": [
+    {
+      "id": "tc-leak-1",
+      "name": "Clean connection and disconnection lifecycle",
+      "inputDescription": "\"test-client\"",
+      "expectedOutput": "\"repaired\"",
+      "explanation": "Ensures disconnected clients are cleared and no transient request closures are retained."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using WeakSet / WeakRef if clients are tracked via an external object lifecycle.",
+    "Using an EventSource abstraction with AbortController for unified signal teardown."
+  ],
+  "commonMistakes": [
+    "Thinking deleting the local variable inside registerConnection deletes the closure.",
+    "Forgetting to handle socket error events in addition to close events."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-017",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 17,
+  "title": "Zero-Downtime Schema Migrations: Safe Index Creation & Column Additions",
+  "category": "Migrations and Schema Evolution",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A developer deploys a migration to add a non-null column with a default value and an index on a 40-million row `orders` table during peak traffic: `ALTER TABLE orders ADD COLUMN tracking_code VARCHAR(64) DEFAULT 'PENDING' NOT NULL; CREATE INDEX idx_orders_tracking ON orders(tracking_code);`. The entire API locks up and crashes.",
+  "questionStatement": "Identify the lock types acquired by standard DDL commands. Why did this migration cause API downtime? Write the safe, zero-downtime PostgreSQL procedure to add a column with a default value, enforce NOT NULL, and build the index on a live high-traffic table.",
+  "expectedConcepts": [
+    "SHARE lock of standard CREATE INDEX blocking all writes",
+    "Lock queue pileup: writes blocked by DDL, reads blocked by queued writes",
+    "CREATE INDEX CONCURRENTLY using 2-pass table scan",
+    "NOT VALID check constraint followed by VALIDATE CONSTRAINT",
+    "Batch backfilling to prevent transaction lock exhaustion"
+  ],
+  "hints": [
+    "What lock does CREATE INDEX require versus CREATE INDEX CONCURRENTLY?",
+    "How does CREATE INDEX CONCURRENTLY avoid blocking writes?",
+    "Why should you validate check constraints in a separate statement?"
+  ]
+}

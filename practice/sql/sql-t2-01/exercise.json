@@ -1,0 +1,48 @@
+{
+  "id": "sql-t2-01",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 1,
+  "title": "Filtering Above-Average Values with Scalar Subqueries",
+  "category": "Subqueries and CTEs",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Merchandising analysts want to identify high-value products priced above the overall average catalog price.",
+  "questionStatement": "Write a query on `products` to find all products whose `price` is strictly greater than the average price of all active products (`is_active = true`). Return `id`, `name`, `category`, and `price`, ordered by `price` descending.",
+  "starterCode": "-- Products priced above active average\nSELECT\n  id,\n  name,\n  category,\n  price\nFROM products\nWHERE price > (SELECT AVG(price) FROM products WHERE is_active = true)\nORDER BY price DESC;",
+  "expectedConcepts": [
+    "Scalar subquery",
+    "Nested aggregation",
+    "Dynamic threshold filtering"
+  ],
+  "hints": [
+    "Write a subquery in parentheses that computes AVG(price) for active products.",
+    "Compare price > (subquery) in the outer WHERE clause."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t2-01",
+      "description": "Verify products priced above average active price ($170.82)",
+      "expectedRows": [
+        {
+          "id": 3,
+          "name": "Ultra-Wide 4K Gaming Monitor",
+          "category": "Electronics",
+          "price": 549
+        },
+        {
+          "id": 6,
+          "name": "Smart Induction Espresso Machine",
+          "category": "Home & Kitchen",
+          "price": 249.99
+        },
+        {
+          "id": 1,
+          "name": "Noise-Cancelling Headphones",
+          "category": "Electronics",
+          "price": 199.99
+        }
+      ]
+    }
+  ]
+}

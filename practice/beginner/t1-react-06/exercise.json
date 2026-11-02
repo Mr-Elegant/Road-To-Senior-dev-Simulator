@@ -1,0 +1,24 @@
+{
+  "id": "t1-react-06",
+  "title": "How do you render lists in React, and why is the key prop strictly necessary?",
+  "category": "React Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 6,
+  "expectedConcepts": [
+    "Array.prototype.map() to transform data into JSX elements",
+    "Unique key prop requirement for reconciliation",
+    "How React uses keys to track item additions, removals, and reordering",
+    "Why using array index as key is an anti-pattern for dynamic lists"
+  ],
+  "hints": [
+    "What array method transforms each item into a <li> or <div>?",
+    "Why would React get confused if you delete item #1 and every other item shifts to a new index?"
+  ],
+  "codingExercise": {
+    "instruction": "Render an unordered list <ul> of product names from products = [{ id: \"p1\", name: \"Laptop\" }, { id: \"p2\", name: \"Mouse\" }] using the map function and key prop.",
+    "starterCode": "function ProductList({ products }) {\n  return (\n    <ul>\n      {/* Map through products and return <li> with key and name */}\n    </ul>\n  );\n}",
+    "language": "javascript",
+    "expectedOutput": "<ul> with <li> items with unique key={p.id}"
+  }
+}

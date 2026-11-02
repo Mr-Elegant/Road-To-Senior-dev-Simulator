@@ -1,0 +1,51 @@
+[
+  {
+    "id": "import-1",
+    "name": "New row creates product and durable receipt",
+    "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[],\"receipts\":[],\"rows\":[{\"rowNumber\":1,\"sku\":\" X \",\"priceCents\":100}]}",
+    "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":100}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"outcomes\":[\"applied\"]}",
+    "hidden": false
+  },
+  {
+    "id": "import-2",
+    "name": "Existing receipt makes retry a no-op",
+    "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":200}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}]}",
+    "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":200}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"outcomes\":[\"duplicate\"]}",
+    "hidden": false
+  },
+  {
+    "id": "import-3",
+    "name": "Changed replay is rejected",
+    "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":100}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":999}]}",
+    "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":100}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"outcomes\":[\"conflict\"]}",
+    "hidden": true
+  },
+  {
+    "id": "import-4",
+    "name": "Same SKU in another tenant stays unchanged",
+    "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[{\"tenantId\":\"b\",\"sku\":\"X\",\"priceCents\":500}],\"receipts\":[],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}]}",
+    "expectedOutput": "{\"products\":[{\"tenantId\":\"b\",\"sku\":\"X\",\"priceCents\":500},{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":100}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"outcomes\":[\"applied\"]}",
+    "hidden": true
+  },
+  {
+    "id": "import-5",
+    "name": "Invalid rows do not block valid rows or claim receipts",
+    "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[],\"receipts\":[],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":-1},{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":0},{\"rowNumber\":2,\"sku\":\" \",\"priceCents\":100},{\"rowNumber\":3,\"sku\":\"Y\",\"priceCents\":1.5}]}",
+    "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":0}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":0}],\"outcomes\":[\"invalid\",\"applied\",\"invalid\",\"invalid\"]}",
+    "hidden": true
+  },
+  {
+    "id": "import-6",
+    "name": "Receipt identity includes the import job",
+    "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"new\",\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":100}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"old\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100}],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":200}]}",
+    "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":200}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"old\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100},{\"tenantId\":\"a\",\"importId\":\"new\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":200}],\"outcomes\":[\"applied\"]}",
+    "hidden": true
+  },
+  {
+    "id": "import-7",
+    "name": "Later rows update a SKU without making earlier retries destructive",
+    "inputDescription": "{\"tenantId\":\"a\",\"importId\":\"job\",\"products\":[],\"receipts\":[],\"rows\":[{\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100},{\"rowNumber\":2,\"sku\":\"X\",\"priceCents\":200},{\"rowNumber\":1,\"sku\":\" X \",\"priceCents\":100}]}",
+    "expectedOutput": "{\"products\":[{\"tenantId\":\"a\",\"sku\":\"X\",\"priceCents\":200}],\"receipts\":[{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":1,\"sku\":\"X\",\"priceCents\":100},{\"tenantId\":\"a\",\"importId\":\"job\",\"rowNumber\":2,\"sku\":\"X\",\"priceCents\":200}],\"outcomes\":[\"applied\",\"applied\",\"duplicate\"]}",
+    "hidden": true
+  }
+]

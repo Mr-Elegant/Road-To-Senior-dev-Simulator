@@ -1,0 +1,19 @@
+{
+  "id": "t1-node-03",
+  "title": "What is a REST API and what are its core architectural principles?",
+  "category": "Node.js and API Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 3,
+  "expectedConcepts": [
+    "Representational State Transfer",
+    "Client-Server separation of concerns",
+    "Statelessness (each request contains all information needed, no server session reliance)",
+    "Resource-oriented URLs (/api/users, /api/orders/123)",
+    "Standard HTTP methods (GET, POST, PUT, DELETE) and JSON data format"
+  ],
+  "hints": [
+    "What does \"stateless\" mean in terms of server memory between requests?",
+    "Should URLs contain verbs like /create or nouns like /items?"
+  ]
+}

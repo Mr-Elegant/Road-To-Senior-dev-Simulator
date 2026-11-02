@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-otp-1",
+    "name": "Falls back gracefully when primary gateway fails",
+    "inputDescription": "null",
+    "expectedOutput": "\"circuit_breaker_fallback_orchestrated\"",
+    "explanation": "Maintains OTP delivery through alternate provider channels."
+  }
+]

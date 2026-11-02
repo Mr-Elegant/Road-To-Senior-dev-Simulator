@@ -1,0 +1,14 @@
+Checkout State Machine:
+[CART] 
+  │ (User clicks "Place Order")
+  ▼
+[RESERVING_INVENTORY] ──(Out of Stock)──► [FAILED_OUT_OF_STOCK]
+  │ (Stock Locked for 10m)
+  ▼
+[AUTHORIZING_PAYMENT] ──(Card Declined)─► [FAILED_PAYMENT] ──► Release Inventory
+  │ (Stripe Charge Succeeded)
+  ▼
+[ORDER_CONFIRMED] ──► Transactional Outbox ──► Kafka: order.created
+  │
+  ▼
+[FULFILLMENT_PROCESSING]

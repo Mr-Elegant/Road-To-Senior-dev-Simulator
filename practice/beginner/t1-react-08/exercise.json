@@ -1,0 +1,19 @@
+{
+  "id": "t1-react-08",
+  "title": "What is the useEffect hook, and how does its dependency array control execution?",
+  "category": "React Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 8,
+  "expectedConcepts": [
+    "Side effects in functional components (data fetching, subscriptions, timers, manual DOM changes)",
+    "No dependency array: Runs after every single render",
+    "Empty dependency array []: Runs only once on component mount",
+    "Array with dependencies [a, b]: Runs when a or b changes",
+    "Cleanup function (return () => { ... }) for unsubscribing / clearing timers on unmount"
+  ],
+  "hints": [
+    "What happens if you pass an empty array [] to useEffect?",
+    "Why is returning a cleanup function important for timers or event listeners?"
+  ]
+}

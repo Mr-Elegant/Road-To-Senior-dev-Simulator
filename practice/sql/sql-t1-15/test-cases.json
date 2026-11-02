@@ -1,0 +1,13 @@
+[
+  {
+    "id": "tc-t1-15",
+    "description": "Verify conditional EMI status breakdown",
+    "expectedRows": [
+      {
+        "total_emis": 17,
+        "paid_count": 12,
+        "overdue_count": 3
+      }
+    ]
+  }
+]

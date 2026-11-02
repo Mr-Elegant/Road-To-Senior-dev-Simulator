@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-014",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 14,
+  "title": "Materialized Views with REFRESH CONCURRENTLY",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "An executive analytics dashboard aggregates customer lifetime spend and average order values across 10 million orders. The query takes 14 seconds. Running a normal `REFRESH MATERIALIZED VIEW` locks out all dashboard reads for 45 seconds.",
+  "questionStatement": "Explain how `MATERIALIZED VIEW` works in PostgreSQL. What is the difference between standard `REFRESH` and `REFRESH MATERIALIZED VIEW CONCURRENTLY`? What prerequisite must be met to allow concurrent refresh, and what are the performance trade-offs?",
+  "expectedConcepts": [
+    "ACCESS EXCLUSIVE lock of standard refresh blocking concurrent reads",
+    "REFRESH CONCURRENTLY allowing concurrent SELECT queries",
+    "Mandatory UNIQUE index requirement without partial clauses",
+    "Diff calculation mechanics using temporary table and unique key",
+    "Performance and WAL trade-offs of concurrent refresh"
+  ],
+  "hints": [
+    "What lock level does standard REFRESH acquire on the table?",
+    "Why does Postgres need a unique index to refresh concurrently?",
+    "Think about how Postgres compares old rows with new rows."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "t1-hc-01",
+  "title": "What is semantic HTML and why is it important?",
+  "category": "HTML and CSS",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 1,
+  "expectedConcepts": [
+    "Meaning of tags (<header>, <nav>, <main>, <article>, <section>, <footer>)",
+    "Accessibility and screen readers",
+    "Search Engine Optimization (SEO)",
+    "Readability and maintainability over generic <div>"
+  ],
+  "hints": [
+    "Why would a blind user using a screen reader benefit from tags like <nav> or <button>?",
+    "Compare a generic <div> with an element that describes its purpose."
+  ]
+}

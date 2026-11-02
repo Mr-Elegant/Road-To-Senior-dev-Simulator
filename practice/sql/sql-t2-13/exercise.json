@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-13",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 13,
+  "title": "Foreign Key Cascade Behaviors: CASCADE, SET NULL, and RESTRICT",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "realWorldScenario": "An e-commerce system is designing rules for what happens when a customer account is deleted: what should happen to their past orders and invoices?",
+  "questionStatement": "Compare `ON DELETE CASCADE`, `ON DELETE SET NULL`, and `ON DELETE RESTRICT` (NO ACTION). What are the business and legal implications of each in e-commerce and financial ledgers?",
+  "expectedConcepts": [
+    "ON DELETE CASCADE consequences",
+    "ON DELETE SET NULL preservation",
+    "ON DELETE RESTRICT audit protection",
+    "Soft-delete patterns for compliance"
+  ],
+  "hints": [
+    "Can you legally delete past invoices if a user deletes their account?"
+  ]
+}

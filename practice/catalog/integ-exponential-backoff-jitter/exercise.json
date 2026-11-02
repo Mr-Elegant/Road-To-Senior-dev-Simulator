@@ -1,0 +1,43 @@
+{
+  "id": "integ-exponential-backoff-jitter",
+  "title": "Third-Party Shipping API Retry Storm & Thundering Herd Incident",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "Retries and exponential backoff",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "During warehouse shipping label generation, FedEx API experienced a 2-minute rate limit hiccup (HTTP 429). When FedEx recovered, 5,000 backend retry workers fired simultaneous requests at the exact same second, immediately knocking FedEx back down with another 429 rate limit error in a perpetual thundering herd retry loop.",
+  "problemStatement": "The retry utility used fixed linear backoff (`setTimeout(retry, 2000)`). Every failing worker woke up at the exact same 2,000ms mark, creating synchronized spikes of traffic (Thundering Herd / Retry Storm). Implement Exponential Backoff with Full Jitter (Decorrelated Jitter) to randomize retry distributions.",
+  "constraints": [
+    "Must implement Exponential Backoff formula: `min(maxWait, baseWait * 2^attempt)`.",
+    "Must inject Full Jitter (random uniform distribution between 0 and calculated backoff).",
+    "Must respect `Retry-After` HTTP header if provided by external API."
+  ],
+  "starterCode": "/**\n * Flawed Linear Retry: Causes Retry Storms\n */\nasync function fetchShippingLabelWithRetry(orderId, maxRetries = 5) {\n  let attempt = 0;\n\n  while (attempt < maxRetries) {\n    try {\n      return await shippingApi.createLabel(orderId);\n    } catch (err) {\n      attempt++;\n      if (attempt >= maxRetries) throw err;\n\n      // BUG: Fixed linear delay without jitter causes all 5,000 workers\n      // to hit the API at the exact same millisecond!\n      const delayMs = 2000;\n      await new Promise((r) => setTimeout(r, delayMs));\n    }\n  }\n}\n\nfunction solution(input) {\n  return \"exponential_backoff_full_jitter_applied\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain the mathematical cause of Thundering Herd in distributed retries.",
+    "Implement Exponential Backoff with Full Jitter: `delay = Math.random() * Math.min(maxWait, baseWait * Math.pow(2, attempt))`.",
+    "Read and prioritize the `Retry-After` header when HTTP 429 is encountered."
+  ],
+  "hints": [
+    "AWS Architecture blog proves \"Full Jitter\" provides the lowest request collision rate and fastest recovery time.",
+    "Formula: `const temp = Math.min(cap, base * 2 ** attempt); const sleep = Math.random() * temp;`."
+  ],
+  "testCases": [
+    {
+      "id": "tc-jitter-1",
+      "name": "Scatters retries evenly using exponential backoff with full jitter",
+      "inputDescription": "null",
+      "expectedOutput": "\"exponential_backoff_full_jitter_applied\"",
+      "explanation": "Smoothes retry traffic and eliminates synchronized traffic spikes."
+    }
+  ],
+  "alternativeApproaches": [
+    "Decorrelated Jitter: `sleep = Math.min(cap, Math.random() * (sleep * 3 - base) + base)`."
+  ],
+  "commonMistakes": [
+    "Equal Jitter: `delay = half + Math.random() * half` still maintains a synchronized lower bound.",
+    "Retrying non-retryable 4xx client errors (e.g. 401 Unauthorized, 404 Not Found), wasting requests."
+  ]
+}

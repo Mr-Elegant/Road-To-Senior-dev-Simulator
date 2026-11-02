@@ -1,0 +1,16 @@
+[
+  {
+    "id": "tc-pool-1",
+    "name": "Enforces concurrency bound of 2 across 6 parallel tasks",
+    "inputDescription": "2",
+    "expectedOutput": "2",
+    "explanation": "Active concurrent operations never exceed the configured limit of 2."
+  },
+  {
+    "id": "tc-pool-2",
+    "name": "Enforces concurrency bound of 3 across 6 parallel tasks",
+    "inputDescription": "3",
+    "expectedOutput": "3",
+    "explanation": "Active concurrent operations never exceed the configured limit of 3."
+  }
+]

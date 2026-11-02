@@ -1,0 +1,19 @@
+{
+  "id": "sql-t1-27",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 27,
+  "title": "Understanding Database Views",
+  "category": "SQL Fundamentals",
+  "questionType": "conceptual",
+  "realWorldScenario": "Reporting analysts frequently write a complex 5-table join to calculate customer order totals.",
+  "questionStatement": "What is a database VIEW in SQL? What advantages does it offer for abstraction and security, and does a standard VIEW consume storage?",
+  "expectedConcepts": [
+    "Virtual table definition",
+    "Zero storage overhead for standard views",
+    "Security boundary and simplification of complex joins"
+  ],
+  "hints": [
+    "Contrast a view with a physical table."
+  ]
+}

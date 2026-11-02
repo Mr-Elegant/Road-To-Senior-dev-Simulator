@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-001",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 1,
+  "title": "B-Tree Index Internals: Leaf Pages, Splits, and Fillfactor",
+  "category": "Indexes and Query Planning",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A high-frequency payment processing service experiences periodic latency spikes (from 4ms to 450ms) during bursts of INSERT statements into the `payments` table. Investigation shows high disk I/O on index files.",
+  "questionStatement": "Explain how PostgreSQL B-Tree indexes handle insertions. What is an index page split, why does it trigger 50/50 page allocations and random I/O, and how does the `fillfactor` storage parameter alleviate this for high-update/insert workloads?",
+  "expectedConcepts": [
+    "B-Tree 8KB leaf pages and (key, ctid) tuples",
+    "50/50 page split mechanics and write amplification",
+    "HOT (Heap-Only Tuple) updates and table fillfactor",
+    "Sequential vs random (UUID) index insertion patterns",
+    "Index bloat and fragmentation mitigation"
+  ],
+  "hints": [
+    "Think about what happens when an 8KB leaf page is 100% full and a new key falls between existing keys.",
+    "Contrast sequential integer IDs with random UUIDv4 keys.",
+    "Recall what HOT (Heap-Only Tuple) requires: the new row version must fit in the exact same 8KB table page."
+  ]
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-crm-1",
+    "name": "Rejects stale out-of-order updates",
+    "inputDescription": "null",
+    "expectedOutput": "\"monotonic_version_guard_applied\"",
+    "explanation": "Enforces strict monotonic state progression."
+  }
+]

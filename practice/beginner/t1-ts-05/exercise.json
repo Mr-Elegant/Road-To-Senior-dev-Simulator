@@ -1,0 +1,18 @@
+{
+  "id": "t1-ts-05",
+  "title": "How do you type function parameters, return values, and functions that return nothing (void)?",
+  "category": "TypeScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 5,
+  "expectedConcepts": [
+    "Parameter typing (a: string, b: number)",
+    "Return type annotation after parentheses: function foo(): string",
+    "The void return type for functions that do not return a value",
+    "Function type expressions: (id: string) => void"
+  ],
+  "hints": [
+    "What type represents \"returns nothing\"?",
+    "Where do you place the return type in a function declaration?"
+  ]
+}

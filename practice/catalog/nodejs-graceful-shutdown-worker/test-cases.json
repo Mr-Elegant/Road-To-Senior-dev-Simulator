@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-shutdown-1",
+    "name": "Coordinates graceful shutdown and finishes active jobs",
+    "inputDescription": "null",
+    "expectedOutput": "\"graceful_shutdown_coordinated\"",
+    "explanation": "Safely protects in-flight transactions during rolling restart."
+  }
+]

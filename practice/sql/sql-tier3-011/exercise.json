@@ -1,0 +1,25 @@
+{
+  "id": "sql-tier3-011",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 11,
+  "title": "Row-Level Security (RLS) for Multi-Tenant Database Architecture",
+  "category": "Database Security and Permissions",
+  "questionType": "conceptual",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "A multi-tenant SaaS application shares a single PostgreSQL database across 1,200 enterprise tenants. An engineer accidentally forgets `WHERE tenant_id = ?` in a new microservice endpoint, exposing Tenant A’s data to Tenant B.",
+  "questionStatement": "Design an end-to-end Row-Level Security (RLS) policy in PostgreSQL that guarantees tenant isolation at the database engine level. Explain `ENABLE ROW LEVEL SECURITY`, `FORCE ROW LEVEL SECURITY`, setting session context via `current_setting()`, and why `SUPERUSER` or `BYPASSRLS` roles can bypass tenant isolation.",
+  "expectedConcepts": [
+    "ALTER TABLE ENABLE ROW LEVEL SECURITY",
+    "FORCE ROW LEVEL SECURITY to restrict table owners",
+    "current_setting(key, true) runtime session context",
+    "USING (for read/delete) vs WITH CHECK (for insert/update)",
+    "SET LOCAL transaction scoping in pooled connections",
+    "BYPASSRLS and SUPERUSER privilege risks"
+  ],
+  "hints": [
+    "What happens if the table owner executes a query without FORCE ROW LEVEL SECURITY?",
+    "How does SET LOCAL ensure tenant ID does not leak to the next client using the pooled connection?",
+    "Difference between USING (filtering existing rows) and WITH CHECK (validating inserted/updated rows)."
+  ]
+}

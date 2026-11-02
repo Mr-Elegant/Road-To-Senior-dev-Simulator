@@ -1,0 +1,16 @@
+[
+  {
+    "id": "tc-deb-1",
+    "name": "Leading only invocation executes exactly once immediately",
+    "inputDescription": "\"leading_only\"",
+    "expectedOutput": "1",
+    "explanation": "Leading edge fires on first call; subsequent calls within wait window are suppressed."
+  },
+  {
+    "id": "tc-deb-2",
+    "name": "Cancels scheduled trailing execution before timer expiration",
+    "inputDescription": "\"cancel_pending\"",
+    "expectedOutput": "0",
+    "explanation": "cancel() clears pending timers so trailing callback never executes."
+  }
+]

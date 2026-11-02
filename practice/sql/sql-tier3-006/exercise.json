@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-006",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 6,
+  "title": "Declarative Partitioning: Range, List, and Hash Strategies",
+  "category": "Partitioning and Large Tables",
+  "questionType": "conceptual",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "The `events` table in SaaS analytics has reached 800 million rows (1.2 TB). Queries filtering by `created_at` are slow, and monthly data archiving requires deleting 70 million rows, which causes massive table bloat and lock contention.",
+  "questionStatement": "Design a declarative table partitioning architecture for the `events` table by month using PostgreSQL 13+ declarative range partitioning. Explain partition pruning (run-time vs compile-time), local vs global index constraints, and how dropping a partition provides instant zero-bloat data retention.",
+  "expectedConcepts": [
+    "PARTITION BY RANGE syntax and monthly child partitions",
+    "Partition key inclusion requirement in primary/unique keys",
+    "Compile-time vs run-time partition pruning",
+    "DROP TABLE / DETACH PARTITION CONCURRENTLY for instant archiving",
+    "Lack of global indexes in PostgreSQL"
+  ],
+  "hints": [
+    "In PostgreSQL, why must the partition key be included in every UNIQUE constraint on the partitioned table?",
+    "Compare deleting 70 million rows via DELETE vs DROP TABLE.",
+    "Check DETACH PARTITION CONCURRENTLY in PG 14+."
+  ]
+}

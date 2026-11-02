@@ -1,0 +1,85 @@
+{
+  "id": "collab-read-receipts",
+  "title": "Collaboration: Keep Read Receipts Monotonic Across Devices",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "Real-time collaboration / Messaging and meetings",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "An old mobile receipt arrives after a desktop receipt and increases the unread badge. Another user’s receipt is mistakenly applied locally.",
+  "problemStatement": "Implement solution({ userId, lastRead, highWater, updates }). lastRead/highWater are safe integers with 0 <= lastRead <= highWater. Each update is an object. A nonmatching userId => forbidden before validation. For this user, sequence must be a safe integer in [0,highWater], otherwise invalid. sequence <= current lastRead => stale; otherwise advance and return advanced. Return { lastRead, unread:highWater-lastRead, outcomes }. Empty updates leave the receipt unchanged.",
+  "constraints": [
+    "Implement the synchronous solution(input) contract exactly. Do not mutate input; all inputs are JSON data.",
+    "This is a deterministic state model. It does not open sockets, send notifications, authorize real users, or establish media connections."
+  ],
+  "candidateTasks": [
+    "Reproduce the starter failure, implement the invariant, and pass every authored case.",
+    "How would you atomically merge read positions across devices while excluding messages the recipient cannot see?"
+  ],
+  "starterCode": "function solution({lastRead,highWater,updates}) { for(const u of updates) lastRead=u.sequence; return {lastRead,unread:highWater-lastRead,outcomes:updates.map(()=>'advanced')}; }",
+  "testCases": [
+    {
+      "id": "read-1",
+      "name": "Advance a receipt",
+      "inputDescription": "{\"userId\":\"u\",\"lastRead\":1,\"highWater\":5,\"updates\":[{\"userId\":\"u\",\"sequence\":3}]}",
+      "expectedOutput": "{\"lastRead\":3,\"unread\":2,\"outcomes\":[\"advanced\"]}",
+      "hidden": false
+    },
+    {
+      "id": "read-2",
+      "name": "Ignore older device acknowledgement",
+      "inputDescription": "{\"userId\":\"u\",\"lastRead\":3,\"highWater\":5,\"updates\":[{\"userId\":\"u\",\"sequence\":2}]}",
+      "expectedOutput": "{\"lastRead\":3,\"unread\":2,\"outcomes\":[\"stale\"]}",
+      "hidden": false
+    },
+    {
+      "id": "read-3",
+      "name": "Repeated acknowledgement is stale",
+      "inputDescription": "{\"userId\":\"u\",\"lastRead\":3,\"highWater\":5,\"updates\":[{\"userId\":\"u\",\"sequence\":3}]}",
+      "expectedOutput": "{\"lastRead\":3,\"unread\":2,\"outcomes\":[\"stale\"]}",
+      "hidden": true
+    },
+    {
+      "id": "read-4",
+      "name": "Reject other user before sequence validation",
+      "inputDescription": "{\"userId\":\"u\",\"lastRead\":0,\"highWater\":5,\"updates\":[{\"userId\":\"other\",\"sequence\":99}]}",
+      "expectedOutput": "{\"lastRead\":0,\"unread\":5,\"outcomes\":[\"forbidden\"]}",
+      "hidden": true
+    },
+    {
+      "id": "read-5",
+      "name": "Reject future negative fractional and string sequences",
+      "inputDescription": "{\"userId\":\"u\",\"lastRead\":0,\"highWater\":5,\"updates\":[{\"userId\":\"u\",\"sequence\":6},{\"userId\":\"u\",\"sequence\":-1},{\"userId\":\"u\",\"sequence\":1.5},{\"userId\":\"u\",\"sequence\":\"2\"}]}",
+      "expectedOutput": "{\"lastRead\":0,\"unread\":5,\"outcomes\":[\"invalid\",\"invalid\",\"invalid\",\"invalid\"]}",
+      "hidden": true
+    },
+    {
+      "id": "read-6",
+      "name": "Out of order updates never regress",
+      "inputDescription": "{\"userId\":\"u\",\"lastRead\":0,\"highWater\":5,\"updates\":[{\"userId\":\"u\",\"sequence\":4},{\"userId\":\"u\",\"sequence\":2},{\"userId\":\"u\",\"sequence\":5}]}",
+      "expectedOutput": "{\"lastRead\":5,\"unread\":0,\"outcomes\":[\"advanced\",\"stale\",\"advanced\"]}",
+      "hidden": true
+    },
+    {
+      "id": "read-7",
+      "name": "Empty conversation stays unread-free",
+      "inputDescription": "{\"userId\":\"u\",\"lastRead\":0,\"highWater\":0,\"updates\":[]}",
+      "expectedOutput": "{\"lastRead\":0,\"unread\":0,\"outcomes\":[]}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "Write down validation and replay precedence before changing state.",
+    "Use stable IDs and monotonic sequence/version values; preserve input ownership."
+  ],
+  "alternativeApproaches": [
+    "Use an append-only event log with transactional projections.",
+    "Use a database snapshot plus a versioned resume cursor."
+  ],
+  "commonMistakes": [
+    "Trusting delivery order or treating retries as new operations.",
+    "Mutating caller-owned arrays or accepting cross-channel data.",
+    "Presenting a fixture result as a guarantee of real-time delivery or media connectivity."
+  ],
+  "codeLanguage": "javascript"
+}

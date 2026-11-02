@@ -1,0 +1,16 @@
+[
+  {
+    "id": "tc-1",
+    "name": "Processes small batch accurately",
+    "inputDescription": "10",
+    "expectedOutput": "\"completed\"",
+    "explanation": "Small batches should resolve successfully without unbounded delay."
+  },
+  {
+    "id": "tc-2",
+    "name": "Yields cooperatively on large batch",
+    "inputDescription": "500",
+    "expectedOutput": "\"completed\"",
+    "explanation": "Large orders must complete without starving macrotasks."
+  }
+]

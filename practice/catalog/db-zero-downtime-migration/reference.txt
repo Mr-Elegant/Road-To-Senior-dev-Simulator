@@ -1,0 +1,39 @@
+/**
+ * Safe Throttled Backfill Worker Script
+ */
+async function backfillUserData(db) {
+  const BATCH_SIZE = 1000;
+  let cursorId = 0;
+  let hasMore = true;
+
+  while (hasMore) {
+    const res = await db.query(
+      `SELECT id, full_name 
+       FROM users 
+       WHERE id > $1 AND first_name IS NULL 
+       ORDER BY id ASC 
+       LIMIT $2`,
+      [cursorId, BATCH_SIZE]
+    );
+
+    if (res.rows.length === 0) {
+      hasMore = false;
+      break;
+    }
+
+    for (const row of res.rows) {
+      const parts = (row.full_name || '').trim().split(' ');
+      const firstName = parts[0] || '';
+      const lastName = parts.slice(1).join(' ') || '';
+
+      await db.query(
+        'UPDATE users SET first_name = $1, last_name = $2 WHERE id = $3',
+        [firstName, lastName, row.id]
+      );
+      cursorId = row.id;
+    }
+
+    // Sleep 50ms to yield I/O and prevent replication lag
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+}

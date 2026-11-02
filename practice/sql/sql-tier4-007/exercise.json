@@ -1,0 +1,45 @@
+{
+  "id": "sql-tier4-007",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 7,
+  "title": "Production Incident: Stalled Autovacuum & Impending 2-Billion XID Wraparound",
+  "category": "Production Debugging",
+  "questionType": "incident",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "A multi-terabyte SaaS database generates a pager alert: `Transaction ID wraparound threshold reached: database age is 2,050,000,000. PostgreSQL will refuse new transactions in 90 million XIDs.` An anti-wraparound autovacuum process on `audit_logs` has been stuck for 18 hours.",
+  "questionStatement": "Diagnose why the anti-wraparound autovacuum is blocked from advancing the datfrozenxid horizon. Inspect the telemetry, identify blocking queries or idle sessions, and write the immediate commands to unblock vacuum and prevent emergency database shutdown.",
+  "incidentDetails": {
+    "symptoms": [
+      "Emergency alert: database age 2,050,000,000 XIDs",
+      "Database will enter read-only mode at 2,147,483,648 XIDs",
+      "Autovacuum worker running for 18 hours with 0% progress",
+      "VACUUM FREEZE blocked waiting for lock"
+    ],
+    "systemTelemetry": {
+      "activeConnections": 112,
+      "lockWaitsCount": 14,
+      "cpuUtilizationPercent": 28,
+      "bufferCacheHitRatio": 99.4,
+      "logSnippet": "2026-11-01 08:00:15 UTC [4012]: [1-1] WARNING:  database \"saas_analytics\" must be vacuumed within 97483648 transactions\n2026-11-01 08:00:15 UTC [4012]: [2-1] HINT:  To avoid a database shutdown, execute a database-wide VACUUM in that database.\n2026-11-01 08:00:20 UTC [5102]: [1-1] LOG:  process 5102 still waiting for ShareUpdateExclusiveLock on relation 24590 of database 16384 after 1000.123 ms\nDETAIL:  Process holding the lock: 3892. Wait queue: 5102."
+    },
+    "candidateTasks": [
+      "Determine the state and query of PID 3892 blocking the autovacuum worker",
+      "Identify oldest xmin holding back the frozen horizon across pg_stat_activity",
+      "Terminate blocking backend using pg_terminate_backend",
+      "Execute manual VACUUM FREEZE with vacuum_cost_limit tuning"
+    ]
+  },
+  "expectedConcepts": [
+    "ShareUpdateExclusiveLock conflict on table during autovacuum",
+    "idle in transaction holding backend_xmin horizon",
+    "pg_terminate_backend to kill offending blocker",
+    "Disabling vacuum_cost_delay (set to 0) to maximize freeze throughput",
+    "idle_in_transaction_session_timeout preventive safeguard"
+  ],
+  "hints": [
+    "What lock does autovacuum require, and what is process 3892 doing?",
+    "Why does an idle in transaction session prevent VACUUM from cleaning rows?",
+    "How do you make VACUUM run as fast as possible without throttling?"
+  ]
+}

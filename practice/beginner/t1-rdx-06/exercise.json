@@ -1,0 +1,24 @@
+{
+  "id": "t1-rdx-06",
+  "title": "How do useSelector and useDispatch connect React components to the Redux store?",
+  "category": "Redux Toolkit Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 6,
+  "expectedConcepts": [
+    "useSelector reads pieces of state from RootState",
+    "useSelector subscribes the component to store updates (re-renders only when selected value changes)",
+    "useDispatch provides the dispatch function to send actions to the store",
+    "Separation of reading data vs updating data"
+  ],
+  "hints": [
+    "Which hook reads data from the store?",
+    "Which hook sends an action to trigger a reducer?"
+  ],
+  "codingExercise": {
+    "instruction": "Complete the component to read user.name from state.auth and dispatch logout() when the button is clicked.",
+    "starterCode": "function UserBadge() {\n  // Use useSelector and useDispatch\n  return <button>Logout</button>;\n}",
+    "language": "javascript",
+    "expectedOutput": "useSelector to read name and useDispatch to dispatch logout()"
+  }
+}

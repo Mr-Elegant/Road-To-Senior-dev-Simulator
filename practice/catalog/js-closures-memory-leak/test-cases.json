@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-leak-1",
+    "name": "Clean connection and disconnection lifecycle",
+    "inputDescription": "\"test-client\"",
+    "expectedOutput": "\"repaired\"",
+    "explanation": "Ensures disconnected clients are cleared and no transient request closures are retained."
+  }
+]

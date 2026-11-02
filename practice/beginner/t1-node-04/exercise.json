@@ -1,0 +1,21 @@
+{
+  "id": "t1-node-04",
+  "title": "What are the main HTTP methods and how do their purposes differ?",
+  "category": "Node.js and API Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 4,
+  "expectedConcepts": [
+    "GET: Retrieve resource data (safe, read-only, idempotent)",
+    "POST: Create a new resource (non-idempotent)",
+    "PUT: Replace an entire resource",
+    "PATCH: Partially update specific fields of a resource",
+    "DELETE: Remove a resource",
+    "Idempotency concept in simple terms"
+  ],
+  "hints": [
+    "Which method is strictly for reading data without changing anything?",
+    "Which method creates a new resource?",
+    "What is the difference between replacing everything (PUT) vs updating one field (PATCH)?"
+  ]
+}

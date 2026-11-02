@@ -1,0 +1,210 @@
+{
+  "bugId": "bug-1-race-condition",
+  "title": "Keep the newest search result",
+  "entryPoint": "reduceSearch",
+  "kind": "reducer",
+  "contract": "Implement reduceSearch(state, action) as a pure reducer. State has items, status, activeRequestId and error. pending records action.requestId, sets loading and clears error. fulfilled/rejected may update only the active request. A matching fulfilled stores action.items; a matching rejected stores action.error. Terminal states clear activeRequestId. Unknown or stale actions preserve state. Inputs are frozen; return new objects for changes.",
+  "starterCode": "function reduceSearch(state, action) {\n  if (action.type === 'pending') return { ...state, status: 'loading', activeRequestId: action.requestId, error: null };\n  if (action.type === 'fulfilled') return { ...state, items: action.items, status: 'succeeded', activeRequestId: null, error: null };\n  if (action.type === 'rejected') return { ...state, status: 'failed', activeRequestId: null, error: action.error };\n  return state;\n}",
+  "hints": [
+    "Track which request was most recently started, not which response arrived last.",
+    "Apply the request-ID guard to both success and failure; clear it only when the active request finishes."
+  ],
+  "tests": [
+    {
+      "id": "latest-first",
+      "name": "A slow old response cannot replace a newer success",
+      "input": {
+        "initial": {
+          "items": [
+            "original"
+          ],
+          "status": "idle",
+          "activeRequestId": null,
+          "error": null
+        },
+        "actions": [
+          {
+            "type": "pending",
+            "requestId": "old"
+          },
+          {
+            "type": "pending",
+            "requestId": "new"
+          },
+          {
+            "type": "fulfilled",
+            "requestId": "new",
+            "items": [
+              "Sophia"
+            ]
+          },
+          {
+            "type": "fulfilled",
+            "requestId": "old",
+            "items": [
+              "Aarav"
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "items": [
+          "Sophia"
+        ],
+        "status": "succeeded",
+        "activeRequestId": null,
+        "error": null
+      },
+      "explanation": "The old response arrives last but does not own the active request.",
+      "sample": true
+    },
+    {
+      "id": "stale-error",
+      "name": "An old error cannot fail the current request",
+      "input": {
+        "initial": {
+          "items": [
+            "original"
+          ],
+          "status": "idle",
+          "activeRequestId": null,
+          "error": null
+        },
+        "actions": [
+          {
+            "type": "pending",
+            "requestId": "old"
+          },
+          {
+            "type": "pending",
+            "requestId": "new"
+          },
+          {
+            "type": "rejected",
+            "requestId": "old",
+            "error": "503"
+          }
+        ]
+      },
+      "expected": {
+        "items": [
+          "original"
+        ],
+        "status": "loading",
+        "activeRequestId": "new",
+        "error": null
+      },
+      "explanation": "Ignore stale failures as well as stale success responses.",
+      "sample": true
+    },
+    {
+      "id": "active-error",
+      "name": "A current failure preserves previous results and ends loading",
+      "input": {
+        "initial": {
+          "items": [
+            "original"
+          ],
+          "status": "idle",
+          "activeRequestId": null,
+          "error": null
+        },
+        "actions": [
+          {
+            "type": "pending",
+            "requestId": "x"
+          },
+          {
+            "type": "rejected",
+            "requestId": "x",
+            "error": "Offline"
+          }
+        ]
+      },
+      "expected": {
+        "items": [
+          "original"
+        ],
+        "status": "failed",
+        "activeRequestId": null,
+        "error": "Offline"
+      },
+      "explanation": "A genuine active error is surfaced without erasing prior data.",
+      "sample": false
+    },
+    {
+      "id": "stale-before",
+      "name": "An old success cannot finish a pending newer search",
+      "input": {
+        "initial": {
+          "items": [
+            "original"
+          ],
+          "status": "idle",
+          "activeRequestId": null,
+          "error": null
+        },
+        "actions": [
+          {
+            "type": "pending",
+            "requestId": "a"
+          },
+          {
+            "type": "pending",
+            "requestId": "b"
+          },
+          {
+            "type": "fulfilled",
+            "requestId": "a",
+            "items": [
+              "old"
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "items": [
+          "original"
+        ],
+        "status": "loading",
+        "activeRequestId": "b",
+        "error": null
+      },
+      "explanation": "The active request stays pending until its own outcome.",
+      "sample": false
+    },
+    {
+      "id": "unknown",
+      "name": "Unknown events leave the state intact",
+      "input": {
+        "initial": {
+          "items": [
+            "original"
+          ],
+          "status": "idle",
+          "activeRequestId": null,
+          "error": null
+        },
+        "actions": [
+          {
+            "type": "other",
+            "requestId": "x"
+          }
+        ]
+      },
+      "expected": {
+        "items": [
+          "original"
+        ],
+        "status": "idle",
+        "activeRequestId": null,
+        "error": null
+      },
+      "explanation": "Unrelated actions must not change this reducer.",
+      "sample": false
+    }
+  ],
+  "businessContext": "A user searches for \"Aarav\", then quickly deletes it and searches for \"Sophia\". The first slow API call finishes after the second fast call and overwrites the active table results with the stale query.",
+  "productionSymptom": "The search input displays \"Sophia\", but the table displays loan applications for \"Aarav\". Refreshing or typing an extra space is the only way users can unstick the table.",
+  "dashboardBuggyCode": "// ❌ BUGGY: Always commits incoming payload to state regardless of dispatch order\nexport const fetchApplications = createAsyncThunk(\n  'applications/fetch',\n  async (params: LoanFilters) => {\n    const res = await fetch(`/api/applications?search=${params.search}`);\n    return await res.json();\n  }\n);\n\nextraReducers: (builder) => {\n  builder.addCase(fetchApplications.fulfilled, (state, action) => {\n    // ⚠️ STALE OVERWRITE: Older slow request can overwrite newer fast request!\n    state.items = action.payload.items;\n  });\n}"
+}

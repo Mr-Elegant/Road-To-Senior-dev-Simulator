@@ -1,0 +1,14 @@
+[
+  {
+    "id": "tc-tier4-025-1",
+    "description": "Verify balance deduction under transaction lock simulation",
+    "setupSql": "CREATE TABLE customers (id INT PRIMARY KEY, balance NUMERIC);\nINSERT INTO customers VALUES (42, 500.00);",
+    "expectedRows": [
+      {
+        "id": 42,
+        "balance": 450
+      }
+    ],
+    "orderMatters": true
+  }
+]

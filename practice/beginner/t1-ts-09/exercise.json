@@ -1,0 +1,17 @@
+{
+  "id": "t1-ts-09",
+  "title": "What are literal types and how are they used to model exact state values?",
+  "category": "TypeScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 9,
+  "expectedConcepts": [
+    "String, number, and boolean literals (exact values as types)",
+    "Combining literals with unions to create finite sets of allowed values",
+    "Autocomplete and typo prevention over arbitrary string types"
+  ],
+  "hints": [
+    "Instead of allowing any string, how can you limit a variable to only \"paid\" or \"unpaid\"?",
+    "What happens if you type a misspelled string when literal types are used?"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "t1-ts-01",
+  "title": "What is TypeScript and what primary advantages does it offer over vanilla JavaScript?",
+  "category": "TypeScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 1,
+  "expectedConcepts": [
+    "Typed superset of JavaScript compiling to plain JavaScript",
+    "Compile-time error detection (catching bugs before running code)",
+    "Rich IDE auto-completion and intelligent refactoring",
+    "Self-documenting code with clear contracts and interfaces"
+  ],
+  "hints": [
+    "Does TypeScript run directly in browsers, or does it need to compile?",
+    "When are TypeScript type errors caught: at compile time or at runtime?"
+  ]
+}

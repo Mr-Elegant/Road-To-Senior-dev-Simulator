@@ -1,0 +1,85 @@
+{
+  "id": "collab-presence-expiry",
+  "title": "Collaboration: Expire Presence Without Disconnecting Other Tabs",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "Real-time collaboration / Messaging and meetings",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "Closing one browser tab marks a user offline despite another active tab. Delayed heartbeats also resurrect disconnected sessions.",
+  "problemStatement": "Implement solution({ now, sessions }). now is a nonnegative safe integer. Each valid snapshot has nonempty id/userId, nonnegative safe-integer version and expiresAt, and boolean online. Snapshots may arrive out of order. For each session id retain the highest version; equal-version first arrival wins. All versions of one session id belong to the same user. A retained session is active iff online and expiresAt > now. Return { onlineUsers, activeSessions }, where onlineUsers contains unique user IDs in ascending JavaScript string order. Empty sessions gives empty users and zero active sessions.",
+  "constraints": [
+    "Implement the synchronous solution(input) contract exactly. Do not mutate input; all inputs are JSON data.",
+    "This is a deterministic state model. It does not open sockets, send notifications, authorize real users, or establish media connections."
+  ],
+  "candidateTasks": [
+    "Reproduce the starter failure, implement the invariant, and pass every authored case.",
+    "How would you implement leases, typing-indicator expiry, and disconnect tombstone retention across presence servers?"
+  ],
+  "starterCode": "function solution({sessions}) { return {onlineUsers:sessions.filter(s=>s.online).map(s=>s.userId),activeSessions:sessions.length}; }",
+  "testCases": [
+    {
+      "id": "presence-1",
+      "name": "Track an active session",
+      "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"s\",\"userId\":\"u\",\"version\":1,\"expiresAt\":11,\"online\":true}]}",
+      "expectedOutput": "{\"onlineUsers\":[\"u\"],\"activeSessions\":1}",
+      "hidden": false
+    },
+    {
+      "id": "presence-2",
+      "name": "Expiry at now is offline",
+      "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"s\",\"userId\":\"u\",\"version\":1,\"expiresAt\":10,\"online\":true}]}",
+      "expectedOutput": "{\"onlineUsers\":[],\"activeSessions\":0}",
+      "hidden": false
+    },
+    {
+      "id": "presence-3",
+      "name": "Aggregate multiple tabs once per user",
+      "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"a\",\"userId\":\"u\",\"version\":1,\"expiresAt\":20,\"online\":true},{\"id\":\"b\",\"userId\":\"u\",\"version\":1,\"expiresAt\":20,\"online\":true}]}",
+      "expectedOutput": "{\"onlineUsers\":[\"u\"],\"activeSessions\":2}",
+      "hidden": true
+    },
+    {
+      "id": "presence-4",
+      "name": "One closed tab does not close another",
+      "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"a\",\"userId\":\"u\",\"version\":1,\"expiresAt\":20,\"online\":false},{\"id\":\"b\",\"userId\":\"u\",\"version\":1,\"expiresAt\":20,\"online\":true}]}",
+      "expectedOutput": "{\"onlineUsers\":[\"u\"],\"activeSessions\":1}",
+      "hidden": true
+    },
+    {
+      "id": "presence-5",
+      "name": "Stale heartbeat cannot resurrect disconnect",
+      "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"s\",\"userId\":\"u\",\"version\":2,\"expiresAt\":20,\"online\":false},{\"id\":\"s\",\"userId\":\"u\",\"version\":1,\"expiresAt\":30,\"online\":true}]}",
+      "expectedOutput": "{\"onlineUsers\":[],\"activeSessions\":0}",
+      "hidden": true
+    },
+    {
+      "id": "presence-6",
+      "name": "First equal version wins and output is sorted",
+      "inputDescription": "{\"now\":10,\"sessions\":[{\"id\":\"b\",\"userId\":\"z\",\"version\":1,\"expiresAt\":20,\"online\":true},{\"id\":\"a\",\"userId\":\"a\",\"version\":1,\"expiresAt\":20,\"online\":true},{\"id\":\"b\",\"userId\":\"z\",\"version\":1,\"expiresAt\":0,\"online\":false}]}",
+      "expectedOutput": "{\"onlineUsers\":[\"a\",\"z\"],\"activeSessions\":2}",
+      "hidden": true
+    },
+    {
+      "id": "presence-7",
+      "name": "Empty snapshot is offline",
+      "inputDescription": "{\"now\":10,\"sessions\":[]}",
+      "expectedOutput": "{\"onlineUsers\":[],\"activeSessions\":0}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "Write down validation and replay precedence before changing state.",
+    "Use stable IDs and monotonic sequence/version values; preserve input ownership."
+  ],
+  "alternativeApproaches": [
+    "Use an append-only event log with transactional projections.",
+    "Use a database snapshot plus a versioned resume cursor."
+  ],
+  "commonMistakes": [
+    "Trusting delivery order or treating retries as new operations.",
+    "Mutating caller-owned arrays or accepting cross-channel data.",
+    "Presenting a fixture result as a guarantee of real-time delivery or media connectivity."
+  ],
+  "codeLanguage": "javascript"
+}

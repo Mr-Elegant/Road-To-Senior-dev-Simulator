@@ -1,0 +1,293 @@
+{
+  "bugId": "bug-6-excessive-re-renders",
+  "title": "Keep selector results stable for unrelated updates",
+  "entryPoint": "createLoanSelector",
+  "kind": "selector",
+  "contract": "Implement createLoanSelector(), returning a one-entry memoized select(state) function. state has items and filters {status,search}; unrelated ui fields may change. Filter status unless ALL, and match applicantName case-insensitively using trimmed search. Reuse the exact previous result array when the items reference, status value and normalized search are unchanged, even if state/filters objects are fresh. Recompute when those inputs change. Keep cache private to each selector instance. Inputs are frozen.",
+  "starterCode": "function createLoanSelector() {\n  return state => state.items.filter(item =>\n    (state.filters.status === 'ALL' || item.status === state.filters.status) &&\n    item.applicantName.toLowerCase().includes(state.filters.search.trim().toLowerCase())\n  );\n}",
+  "hints": [
+    "Filtering into a new array on every call changes the reference even when contents match.",
+    "Cache only by actual inputs: items reference and primitive filters, not the entire state or filters object."
+  ],
+  "tests": [
+    {
+      "id": "unrelated",
+      "name": "Opening a drawer preserves the selector result reference",
+      "input": {
+        "items": [
+          {
+            "id": "a",
+            "applicantName": "Aarav",
+            "loanAmount": 500,
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "applicantName": "Sophia",
+            "loanAmount": 100,
+            "status": "APPROVED"
+          },
+          {
+            "id": "c",
+            "applicantName": "Mina",
+            "loanAmount": 500,
+            "status": "PENDING"
+          }
+        ],
+        "filters": {
+          "status": "ALL",
+          "search": ""
+        },
+        "steps": [
+          {
+            "ui": {
+              "drawerOpen": true
+            }
+          }
+        ]
+      },
+      "expected": [
+        {
+          "ids": [
+            "a",
+            "b",
+            "c"
+          ],
+          "sameAsPrevious": null
+        },
+        {
+          "ids": [
+            "a",
+            "b",
+            "c"
+          ],
+          "sameAsPrevious": true
+        }
+      ],
+      "explanation": "useSelector observes result identity, so a fresh but identical array causes a render.",
+      "sample": true
+    },
+    {
+      "id": "filter-change",
+      "name": "A changed status recomputes the result",
+      "input": {
+        "items": [
+          {
+            "id": "a",
+            "applicantName": "Aarav",
+            "loanAmount": 500,
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "applicantName": "Sophia",
+            "loanAmount": 100,
+            "status": "APPROVED"
+          },
+          {
+            "id": "c",
+            "applicantName": "Mina",
+            "loanAmount": 500,
+            "status": "PENDING"
+          }
+        ],
+        "filters": {
+          "status": "ALL",
+          "search": ""
+        },
+        "steps": [
+          {
+            "filters": {
+              "status": "PENDING"
+            }
+          }
+        ]
+      },
+      "expected": [
+        {
+          "ids": [
+            "a",
+            "b",
+            "c"
+          ],
+          "sameAsPrevious": null
+        },
+        {
+          "ids": [
+            "a",
+            "c"
+          ],
+          "sameAsPrevious": false
+        }
+      ],
+      "explanation": "Memoization must not hide real filter changes.",
+      "sample": true
+    },
+    {
+      "id": "normalized",
+      "name": "Equivalent search and fresh filter objects reuse the cache",
+      "input": {
+        "items": [
+          {
+            "id": "a",
+            "applicantName": "Aarav",
+            "loanAmount": 500,
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "applicantName": "Sophia",
+            "loanAmount": 100,
+            "status": "APPROVED"
+          },
+          {
+            "id": "c",
+            "applicantName": "Mina",
+            "loanAmount": 500,
+            "status": "PENDING"
+          }
+        ],
+        "filters": {
+          "status": "ALL",
+          "search": " sophia "
+        },
+        "steps": [
+          {
+            "filters": {
+              "status": "ALL",
+              "search": "SOPHIA"
+            }
+          }
+        ]
+      },
+      "expected": [
+        {
+          "ids": [
+            "b"
+          ],
+          "sameAsPrevious": null
+        },
+        {
+          "ids": [
+            "b"
+          ],
+          "sameAsPrevious": true
+        }
+      ],
+      "explanation": "Normalize the search before comparing cache keys.",
+      "sample": false
+    },
+    {
+      "id": "items-change",
+      "name": "A replacement items reference invalidates the cache",
+      "input": {
+        "items": [
+          {
+            "id": "a",
+            "applicantName": "Aarav",
+            "loanAmount": 500,
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "applicantName": "Sophia",
+            "loanAmount": 100,
+            "status": "APPROVED"
+          },
+          {
+            "id": "c",
+            "applicantName": "Mina",
+            "loanAmount": 500,
+            "status": "PENDING"
+          }
+        ],
+        "filters": {
+          "status": "ALL",
+          "search": ""
+        },
+        "steps": [
+          {
+            "items": [
+              {
+                "id": "b",
+                "applicantName": "Sophia",
+                "loanAmount": 100,
+                "status": "APPROVED"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        {
+          "ids": [
+            "a",
+            "b",
+            "c"
+          ],
+          "sameAsPrevious": null
+        },
+        {
+          "ids": [
+            "b"
+          ],
+          "sameAsPrevious": false
+        }
+      ],
+      "explanation": "Store changes must be reflected in the derived list.",
+      "sample": false
+    },
+    {
+      "id": "empty-filter",
+      "name": "Cache empty results just like populated arrays",
+      "input": {
+        "items": [
+          {
+            "id": "a",
+            "applicantName": "Aarav",
+            "loanAmount": 500,
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "applicantName": "Sophia",
+            "loanAmount": 100,
+            "status": "APPROVED"
+          },
+          {
+            "id": "c",
+            "applicantName": "Mina",
+            "loanAmount": 500,
+            "status": "PENDING"
+          }
+        ],
+        "filters": {
+          "status": "ALL",
+          "search": "missing"
+        },
+        "steps": [
+          {
+            "ui": {
+              "drawerOpen": true
+            }
+          }
+        ]
+      },
+      "expected": [
+        {
+          "ids": [],
+          "sameAsPrevious": null
+        },
+        {
+          "ids": [],
+          "sameAsPrevious": true
+        }
+      ],
+      "explanation": "A missing match is still a valid memoized result.",
+      "sample": false
+    }
+  ],
+  "businessContext": "Typing into the search input causes all 50 table rows, all 5 metric cards, and the drawer component to re-render on every single character, causing typing latency on low-power devices.",
+  "productionSymptom": "React DevTools Profiler shows 60+ component re-renders per keystroke with render durations exceeding 120ms, dropping frame rates below 20fps.",
+  "dashboardBuggyCode": "// ❌ BUGGY: Parent re-renders on every keystroke, forcing all children to re-render\nconst Dashboard = () => {\n  const [search, setSearch] = useState('');\n  // Re-creates functions every keystroke:\n  return (\n    <div>\n      <input value={search} onChange={e => { setSearch(e.target.value); dispatch(fetch(e.target.value)); }} />\n      {items.map(item => <Row key={item.id} item={item} onApprove={() => dispatch(approve(item.id))} />)}\n    </div>\n  );\n}; // Row component is not wrapped in React.memo"
+}

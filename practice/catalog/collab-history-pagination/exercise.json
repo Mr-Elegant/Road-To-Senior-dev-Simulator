@@ -1,0 +1,85 @@
+{
+  "id": "collab-history-pagination",
+  "title": "Collaboration: Page Chat History Without Gaps or Repeats",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "Real-time collaboration / Messaging and meetings",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "New messages arrive while a user loads older history. Offset pagination repeats rows and misses messages around page boundaries.",
+  "problemStatement": "Implement solution({ channelId, messages, before, limit }). messages are valid objects with id, channelId, positive unique-per-channel safe-integer seq, and body; input order is arbitrary. before is null for newest, otherwise a positive safe integer. limit is a positive safe integer. Filter to channelId and seq < before (exclusive); sort descending by seq; return at most limit rows as { messages, nextBefore, hasMore }. nextBefore is the last returned seq or the supplied before when empty. hasMore means additional eligible rows exist beyond this page. Return copies and leave input unchanged. Sequence gaps are allowed.",
+  "constraints": [
+    "Implement the synchronous solution(input) contract exactly. Do not mutate input; all inputs are JSON data.",
+    "This is a deterministic state model. It does not open sockets, send notifications, authorize real users, or establish media connections."
+  ],
+  "candidateTasks": [
+    "Reproduce the starter failure, implement the invariant, and pass every authored case.",
+    "Which composite index and authorization checks would you use for cursor paging under concurrent inserts and deletions?"
+  ],
+  "starterCode": "function solution({messages,limit}) { return {messages:messages.slice(0,limit),nextBefore:null,hasMore:false}; }",
+  "testCases": [
+    {
+      "id": "history-1",
+      "name": "Return newest messages first",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"c\",\"seq\":3,\"body\":\"c\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"}],\"before\":null,\"limit\":2}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"c\",\"seq\":3,\"body\":\"c\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"}],\"nextBefore\":2,\"hasMore\":true}",
+      "hidden": false
+    },
+    {
+      "id": "history-2",
+      "name": "Cursor is exclusive",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"},{\"id\":\"c\",\"seq\":3,\"body\":\"c\",\"channelId\":\"c\"}],\"before\":2,\"limit\":2}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"nextBefore\":1,\"hasMore\":false}",
+      "hidden": false
+    },
+    {
+      "id": "history-3",
+      "name": "New arrivals do not shift an older page",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"},{\"id\":\"new\",\"seq\":9,\"body\":\"new\",\"channelId\":\"c\"}],\"before\":3,\"limit\":1}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"}],\"nextBefore\":2,\"hasMore\":true}",
+      "hidden": true
+    },
+    {
+      "id": "history-4",
+      "name": "Foreign channels never leak into history",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"x\",\"seq\":8,\"body\":\"secret\",\"channelId\":\"other\"}],\"before\":null,\"limit\":2}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"nextBefore\":1,\"hasMore\":false}",
+      "hidden": true
+    },
+    {
+      "id": "history-5",
+      "name": "Sequence gaps do not imply missing page rows",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"z\",\"seq\":20,\"body\":\"z\",\"channelId\":\"c\"}],\"before\":20,\"limit\":3}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"nextBefore\":1,\"hasMore\":false}",
+      "hidden": true
+    },
+    {
+      "id": "history-6",
+      "name": "Empty older page preserves cursor",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"before\":1,\"limit\":2}",
+      "expectedOutput": "{\"messages\":[],\"nextBefore\":1,\"hasMore\":false}",
+      "hidden": true
+    },
+    {
+      "id": "history-7",
+      "name": "Empty conversation preserves null cursor",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[],\"before\":null,\"limit\":2}",
+      "expectedOutput": "{\"messages\":[],\"nextBefore\":null,\"hasMore\":false}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "Write down validation and replay precedence before changing state.",
+    "Use stable IDs and monotonic sequence/version values; preserve input ownership."
+  ],
+  "alternativeApproaches": [
+    "Use an append-only event log with transactional projections.",
+    "Use a database snapshot plus a versioned resume cursor."
+  ],
+  "commonMistakes": [
+    "Trusting delivery order or treating retries as new operations.",
+    "Mutating caller-owned arrays or accepting cross-channel data.",
+    "Presenting a fixture result as a guarantee of real-time delivery or media connectivity."
+  ],
+  "codeLanguage": "javascript"
+}

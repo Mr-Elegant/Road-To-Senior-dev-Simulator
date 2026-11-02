@@ -1,0 +1,21 @@
+{
+  "id": "sql-t1-16",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 16,
+  "title": "Relational Database Keys: Primary Keys vs. Foreign Keys",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "realWorldScenario": "During an engineering onboarding session, an associate engineer asks why foreign keys are defined in the schema instead of managing relations purely in application code.",
+  "questionStatement": "Explain the core differences between a Primary Key and a Foreign Key. What database guarantees do they enforce, and what is Referential Integrity?",
+  "expectedConcepts": [
+    "Primary Key uniqueness and NOT NULL constraint",
+    "Foreign Key child-to-parent reference",
+    "Referential Integrity",
+    "Prevention of orphaned records"
+  ],
+  "hints": [
+    "Contrast uniqueness within a table versus links across tables.",
+    "Explain what happens if someone tries to delete a parent record that has children."
+  ]
+}

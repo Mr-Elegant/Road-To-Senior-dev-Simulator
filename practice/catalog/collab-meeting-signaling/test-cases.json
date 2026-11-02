@@ -1,0 +1,65 @@
+[
+  {
+    "id": "signal-1",
+    "name": "Offer followed by matching answer",
+    "inputDescription": "{\"epoch\":1,\"phase\":\"idle\",\"offerId\":null,\"events\":[{\"id\":\"o\",\"type\":\"offer\",\"epoch\":1,\"offerId\":\"a\"},{\"id\":\"a\",\"type\":\"answer\",\"epoch\":1,\"offerId\":\"a\"}]}",
+    "expectedOutput": "{\"epoch\":1,\"phase\":\"connected\",\"offerId\":\"a\",\"outcomes\":[\"offered\",\"connected\"]}",
+    "hidden": false
+  },
+  {
+    "id": "signal-2",
+    "name": "Deduplicate repeated event ID",
+    "inputDescription": "{\"epoch\":1,\"phase\":\"idle\",\"offerId\":null,\"events\":[{\"id\":\"o\",\"type\":\"offer\",\"epoch\":1,\"offerId\":\"a\"},{\"id\":\"o\",\"type\":\"offer\",\"epoch\":1,\"offerId\":\"a\"}]}",
+    "expectedOutput": "{\"epoch\":1,\"phase\":\"offered\",\"offerId\":\"a\",\"outcomes\":[\"offered\",\"duplicate\"]}",
+    "hidden": false
+  },
+  {
+    "id": "signal-3",
+    "name": "Old disconnect cannot end a new call",
+    "inputDescription": "{\"epoch\":2,\"phase\":\"connected\",\"offerId\":\"b\",\"events\":[{\"id\":\"d\",\"type\":\"disconnect\",\"epoch\":1}]}",
+    "expectedOutput": "{\"epoch\":2,\"phase\":\"connected\",\"offerId\":\"b\",\"outcomes\":[\"stale\"]}",
+    "hidden": true
+  },
+  {
+    "id": "signal-4",
+    "name": "Conflicting same-epoch offer preserves active offer",
+    "inputDescription": "{\"epoch\":1,\"phase\":\"idle\",\"offerId\":null,\"events\":[{\"id\":\"o\",\"type\":\"offer\",\"epoch\":1,\"offerId\":\"a\"},{\"id\":\"o2\",\"type\":\"offer\",\"epoch\":1,\"offerId\":\"b\"}]}",
+    "expectedOutput": "{\"epoch\":1,\"phase\":\"offered\",\"offerId\":\"a\",\"outcomes\":[\"offered\",\"conflict\"]}",
+    "hidden": true
+  },
+  {
+    "id": "signal-5",
+    "name": "Early answer cannot create a connection",
+    "inputDescription": "{\"epoch\":1,\"phase\":\"idle\",\"offerId\":null,\"events\":[{\"id\":\"a\",\"type\":\"answer\",\"epoch\":2,\"offerId\":\"a\"}]}",
+    "expectedOutput": "{\"epoch\":1,\"phase\":\"idle\",\"offerId\":null,\"outcomes\":[\"unexpected\"]}",
+    "hidden": true
+  },
+  {
+    "id": "signal-6",
+    "name": "Closed epoch cannot be resurrected",
+    "inputDescription": "{\"epoch\":1,\"phase\":\"closed\",\"offerId\":\"a\",\"events\":[{\"id\":\"o\",\"type\":\"offer\",\"epoch\":1,\"offerId\":\"a\"}]}",
+    "expectedOutput": "{\"epoch\":1,\"phase\":\"closed\",\"offerId\":\"a\",\"outcomes\":[\"unexpected\"]}",
+    "hidden": true
+  },
+  {
+    "id": "signal-7",
+    "name": "New epoch starts clean after disconnect",
+    "inputDescription": "{\"epoch\":1,\"phase\":\"connected\",\"offerId\":\"a\",\"events\":[{\"id\":\"d\",\"type\":\"disconnect\",\"epoch\":1},{\"id\":\"new\",\"type\":\"offer\",\"epoch\":2,\"offerId\":\"b\"},{\"id\":\"late\",\"type\":\"answer\",\"epoch\":1,\"offerId\":\"a\"}]}",
+    "expectedOutput": "{\"epoch\":2,\"phase\":\"offered\",\"offerId\":\"b\",\"outcomes\":[\"closed\",\"offered\",\"stale\"]}",
+    "hidden": true
+  },
+  {
+    "id": "signal-8",
+    "name": "Wrong answer rejected and repeated matching answer is idempotent",
+    "inputDescription": "{\"epoch\":1,\"phase\":\"idle\",\"offerId\":null,\"events\":[{\"id\":\"o\",\"type\":\"offer\",\"epoch\":1,\"offerId\":\"a\"},{\"id\":\"bad\",\"type\":\"answer\",\"epoch\":1,\"offerId\":\"b\"},{\"id\":\"a1\",\"type\":\"answer\",\"epoch\":1,\"offerId\":\"a\"},{\"id\":\"a2\",\"type\":\"answer\",\"epoch\":1,\"offerId\":\"a\"}]}",
+    "expectedOutput": "{\"epoch\":1,\"phase\":\"connected\",\"offerId\":\"a\",\"outcomes\":[\"offered\",\"unexpected\",\"connected\",\"duplicate\"]}",
+    "hidden": true
+  },
+  {
+    "id": "signal-9",
+    "name": "Disconnect without an offer cannot create closed state",
+    "inputDescription": "{\"epoch\":1,\"phase\":\"idle\",\"offerId\":null,\"events\":[{\"id\":\"d\",\"type\":\"disconnect\",\"epoch\":1}]}",
+    "expectedOutput": "{\"epoch\":1,\"phase\":\"idle\",\"offerId\":null,\"outcomes\":[\"unexpected\"]}",
+    "hidden": true
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "id": "t1-node-09",
+  "title": "What are environment variables, process.env, and why must secret keys never be committed to Git?",
+  "category": "Node.js and API Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 9,
+  "expectedConcepts": [
+    "Operating system environment variables accessible via process.env",
+    "Separating code from configuration (Twelve-Factor App methodology)",
+    ".env files and the dotenv package",
+    "Security risks of committing API keys, tokens, or database passwords to public repositories",
+    ".gitignore file to exclude .env and credentials"
+  ],
+  "hints": [
+    "What Node.js global object holds environment variables?",
+    "Which file tells Git not to commit your secret .env file?"
+  ]
+}

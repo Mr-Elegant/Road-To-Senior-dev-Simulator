@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-deadlock-1",
+    "name": "Enforces deterministic primary key lock ordering",
+    "inputDescription": "null",
+    "expectedOutput": "\"deterministic_lock_ordering_applied\"",
+    "explanation": "Guarantees deadlocks cannot occur across concurrent reservations."
+  }
+]

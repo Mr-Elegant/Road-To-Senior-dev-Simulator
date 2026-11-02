@@ -1,0 +1,37 @@
+{
+  "id": "js-promise-concurrency-pool",
+  "title": "Async Promise Concurrency Pool (Worker Throttler)",
+  "language": "javascript",
+  "difficulty": "Senior",
+  "category": "Async & Concurrency",
+  "estimatedMinutes": 30,
+  "description": "Build a Promise concurrency limiter `pLimit(concurrency)`.\nIt returns a wrapper function `limit(asyncTask)` that guarantees at most `concurrency` asynchronous tasks run in parallel.\nSubsequent tasks are queued in FIFO order and executed as prior tasks resolve or reject.",
+  "constraints": [
+    "Strictly enforce maximum parallel executions (never exceed concurrency limit).",
+    "Tasks that reject must propagate the error to the caller without stalling the remaining queue.",
+    "Queue entries must be processed in strict FIFO sequence."
+  ],
+  "sampleInput": "Concurrency: 2, Tasks: 5 async tasks taking 20ms each",
+  "sampleOutput": "Tasks 1 & 2 execute first; task 3 starts only after 1 or 2 finishes",
+  "starterCode": "/**\n * Implement Promise concurrency limiter\n */\nfunction pLimit(concurrency) {\n  const queue = [];\n  let activeCount = 0;\n\n  const next = () => {\n    if (activeCount < concurrency && queue.length > 0) {\n      const task = queue.shift();\n      task();\n    }\n  };\n\n  return function run(fn) {\n    return new Promise((resolve, reject) => {\n      // TODO: Queue or execute task respecting concurrency bound\n      const execute = async () => {\n        activeCount++;\n        try {\n          resolve(await fn());\n        } catch (err) {\n          reject(err);\n        } finally {\n          activeCount--;\n          next();\n        }\n      };\n\n      if (activeCount < concurrency) {\n        execute();\n      } else {\n        queue.push(execute);\n      }\n    });\n  };\n}\n\n// Verification runner\nasync function solution(maxConcurrency) {\n  const limit = pLimit(maxConcurrency);\n  let peakActive = 0;\n  let currentlyActive = 0;\n\n  const tasks = Array.from({ length: 6 }, (_, i) => () => {\n    currentlyActive++;\n    if (currentlyActive > peakActive) peakActive = currentlyActive;\n    return new Promise((r) => setTimeout(() => {\n      currentlyActive--;\n      r(i);\n    }, 10));\n  });\n\n  await Promise.all(tasks.map((t) => limit(t)));\n  return peakActive;\n}",
+  "testCases": [
+    {
+      "id": "tc-pool-1",
+      "name": "Enforces concurrency bound of 2 across 6 parallel tasks",
+      "inputDescription": "2",
+      "expectedOutput": "2",
+      "explanation": "Active concurrent operations never exceed the configured limit of 2."
+    },
+    {
+      "id": "tc-pool-2",
+      "name": "Enforces concurrency bound of 3 across 6 parallel tasks",
+      "inputDescription": "3",
+      "expectedOutput": "3",
+      "explanation": "Active concurrent operations never exceed the configured limit of 3."
+    }
+  ],
+  "hints": [
+    "Maintain an internal `activeCount` integer and a FIFO array of deferred execution functions.",
+    "Always call `next()` in a `.finally()` block so errors don't halt the queue."
+  ]
+}

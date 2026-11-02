@@ -1,0 +1,43 @@
+{
+  "id": "nextjs-stream-suspense-error-boundary",
+  "title": "AI Streaming Assistant Suspense & Localized Error Boundary Fallback",
+  "type": "coding",
+  "topic": "Next.js",
+  "subtopic": "Data fetching and error boundaries",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A customer support portal embeds an AI conversational assistant in the sidebar. If the external LLM streaming endpoint times out or errors with a 503, the entire Next.js page currently crashes with an unhandled server error, locking out agents from viewing customer tickets.",
+  "problemStatement": "Restructure the page using Next.js App Router streaming architecture with React `<Suspense>` and nested localized `error.tsx` / `<ErrorBoundary>` components. The ticket details must render immediately, the AI assistant must stream in progressively, and an AI failure must show a retry card inside the sidebar without affecting the main ticket view.",
+  "constraints": [
+    "Main page ticket data must render with 0 delay (not blocked by AI stream).",
+    "AI assistant must stream chunk by chunk inside Suspense boundary.",
+    "LLM error must be caught locally inside the sidebar component boundary."
+  ],
+  "starterCode": "/**\n * Resilient Streaming Layout with Localized Error Boundaries\n */\n\n// Simulated streaming component\nasync function StreamingAiAssistant({ ticketId }) {\n  // Simulates slow AI response\n  return \"AI insights for ticket \" + ticketId;\n}\n\nfunction solution(input) {\n  return \"isolated_suspense_boundary\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain how React Suspense and HTTP Chunked Transfer Encoding enable Progressive Hydration in Next.js.",
+    "Wrap slow AI component in `<Suspense fallback={<AiSkeleton />}>`.",
+    "Implement localized Error Boundary around sidebar so AI timeouts never crash ticket view."
+  ],
+  "hints": [
+    "In Next.js App Router, `loading.tsx` and `<Suspense>` stream HTML over HTTP chunked transfer encoding.",
+    "Errors bubble up to the nearest `error.tsx` boundary. If placed at the root, the entire page is replaced."
+  ],
+  "testCases": [
+    {
+      "id": "tc-stream-1",
+      "name": "Isolates streaming failure from core page view",
+      "inputDescription": "null",
+      "expectedOutput": "\"isolated_suspense_boundary\"",
+      "explanation": "Enables independent progressive loading and failure containment."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using Vercel AI SDK `useChat` / `useCompletion` with client-side streaming over WebSockets or SSE."
+  ],
+  "commonMistakes": [
+    "Awaiting the AI call at the page root component level, blocking TTFB for the entire application.",
+    "Not providing a retry handler in the Error Boundary."
+  ]
+}

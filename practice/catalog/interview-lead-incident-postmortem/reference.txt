@@ -1,0 +1,12 @@
+Post-Mortem Executive Summary:
+Incident Date: 2026-10-31
+Duration: 45 minutes
+Impact: $350k estimated revenue delay, 12,000 active sessions dropped.
+
+Root Cause: 
+An unthrottled index drop acquired an AccessExclusiveLock on the users table. Incoming web queries queued behind the lock, quickly exhausting the 200-connection pool and rendering API gateways unable to service traffic.
+
+Preventative Fix:
+1. Implemented lock_timeout = 2000ms on all migration runners.
+2. Added automated CI linter blocking dangerous schema operations.
+3. Created automated kill-switch runbook to terminate blocking lock queries within 30 seconds.

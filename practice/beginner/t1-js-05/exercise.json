@@ -1,0 +1,25 @@
+{
+  "id": "t1-js-05",
+  "title": "What are the differences between for, while, and for...of loops?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 5,
+  "expectedConcepts": [
+    "Standard for loop with counter (init, condition, increment)",
+    "while loop executing as long as a condition holds",
+    "for...of loop iterating over values of an iterable (Arrays, Strings, Maps)",
+    "Difference between for...of (values) and for...in (keys/properties)"
+  ],
+  "hints": [
+    "Which loop provides direct access to array items without fruits[i]?",
+    "When would a while loop be preferred over a for loop?"
+  ],
+  "codingExercise": {
+    "instruction": "Write a function sumArray(numbers) that uses a for...of loop to compute and return the sum of an array of numbers.",
+    "starterCode": "function sumArray(numbers) {\n  let total = 0;\n  // Use for...of to iterate over numbers\n  return total;\n}",
+    "language": "javascript",
+    "sampleInput": "sumArray([1, 2, 3, 4, 5])",
+    "expectedOutput": "15"
+  }
+}

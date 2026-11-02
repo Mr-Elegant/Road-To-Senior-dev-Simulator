@@ -1,0 +1,19 @@
+{
+  "id": "sql-t1-30",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 30,
+  "title": "Composite and Foreign Key Indexing Basics",
+  "category": "Indexes and Query Planning",
+  "questionType": "conceptual",
+  "realWorldScenario": "A query filters on both tenant organization and event creation date: `WHERE organization_id = 101 AND created_at >= '2024-03-01'`.",
+  "questionStatement": "What is a Composite Index (Multi-Column Index)? In what order should columns be placed in a composite index for this query?",
+  "expectedConcepts": [
+    "Composite index concept",
+    "Column ordering rule (Equality first, range second)",
+    "Leftmost prefix matching"
+  ],
+  "hints": [
+    "Think about telephone directory sorted by Last Name, then First Name."
+  ]
+}

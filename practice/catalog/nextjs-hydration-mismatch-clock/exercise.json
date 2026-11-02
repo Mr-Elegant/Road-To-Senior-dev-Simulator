@@ -1,0 +1,44 @@
+{
+  "id": "nextjs-hydration-mismatch-clock",
+  "title": "Multi-Timezone Scheduling Hydration Mismatch & Layout Shift",
+  "type": "debugging",
+  "topic": "Next.js",
+  "subtopic": "Hydration mismatches",
+  "difficulty": "Senior",
+  "estimatedMinutes": 20,
+  "businessContext": "A telemedicine appointment booking application allows patients in London, New York, and Tokyo to schedule appointments. Users complain that slot times flicker upon page load, and the browser console is filled with \"Text content did not match. Server: ... Client: ...\" warnings, breaking client-side interactivity.",
+  "problemStatement": "The appointment slot component formats dates using `new Date().toLocaleTimeString()`. On the Node.js server (running in UTC timezone), it renders \"14:00 UTC\". On the client browser in New York (EST), it renders \"09:00 AM\". The mismatch triggers React hydration failure, causing React to discard server HTML and re-render the tree from scratch, causing layout shift.",
+  "constraints": [
+    "Must eliminate hydration mismatch errors completely.",
+    "Must display time accurately in the user's local timezone or explicit appointment timezone.",
+    "Do not disable SSR completely or turn entire page into client-rendered spinner."
+  ],
+  "starterCode": "import React from 'react';\n\n/**\n * Buggy Time Display: Causes SSR Hydration Mismatch\n */\nexport function AppointmentCard({ appointmentDateUtc }) {\n  // BUG: Executes on server in UTC, then executes on client in local user timezone!\n  const formattedTime = new Date(appointmentDateUtc).toLocaleTimeString();\n\n  return (\n    <div className=\"card\">\n      <h3>Doctor Consultation</h3>\n      <p>Time: {formattedTime}</p>\n    </div>\n  );\n}\n\nfunction solution(input) {\n  return \"hydration_stabilized\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain what causes React hydration mismatch error #418 / #425.",
+    "Refactor the component to avoid rendering client-dependent timestamps during SSR (e.g. two-pass rendering with `useEffect` or passing explicit timezone prop).",
+    "Explain when `suppressHydrationWarning` is appropriate versus anti-pattern."
+  ],
+  "hints": [
+    "Hydration requires the initial client render tree to match the server-generated HTML tree byte-for-byte.",
+    "You can render a stable fallback (e.g. UTC string or placeholder) on the server, and upgrade to local timezone inside `useEffect` after mount."
+  ],
+  "testCases": [
+    {
+      "id": "tc-hyd-1",
+      "name": "Renders without client-server mismatch error",
+      "inputDescription": "null",
+      "expectedOutput": "\"hydration_stabilized\"",
+      "explanation": "Ensures deterministic SSR and smooth client enhancement."
+    }
+  ],
+  "alternativeApproaches": [
+    "Reading timezone from request headers or cookie in middleware and formatting on server.",
+    "Using `suppressHydrationWarning` on `<time>` element if minor text mismatch is acceptable."
+  ],
+  "commonMistakes": [
+    "Slapping suppressHydrationWarning on the parent div: this hides the error but doesn't fix the underlying layout shift.",
+    "Using typeof window === \"undefined\" inside the render function: this causes the client to render one thing and server another, which IS the definition of a hydration mismatch."
+  ]
+}

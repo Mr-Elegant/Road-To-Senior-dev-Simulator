@@ -1,0 +1,19 @@
+{
+  "id": "sql-t1-25",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 25,
+  "title": "Database Constraints: NOT NULL, UNIQUE, and CHECK",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "realWorldScenario": "A loan management table needs to ensure that interest rates are always positive and PAN card numbers are never duplicated.",
+  "questionStatement": "Describe the role of NOT NULL, UNIQUE, and CHECK constraints in PostgreSQL. Provide an example table DDL showcasing all three.",
+  "expectedConcepts": [
+    "NOT NULL data integrity",
+    "UNIQUE constraint and implicit B-Tree",
+    "CHECK constraint boolean expression"
+  ],
+  "hints": [
+    "CHECK constraints validate conditions before writing the row."
+  ]
+}

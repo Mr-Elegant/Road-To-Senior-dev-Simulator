@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-isr-1",
+    "name": "Deduplicates concurrent revalidation calls into single flight",
+    "inputDescription": "null",
+    "expectedOutput": "\"single_flight_deduplicated\"",
+    "explanation": "Ensures only 1 database query executes during concurrent cache miss."
+  }
+]

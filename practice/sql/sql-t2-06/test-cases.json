@@ -1,0 +1,26 @@
+[
+  {
+    "id": "tc-t2-06",
+    "description": "Verify prior invoice amounts for organization 101",
+    "expectedRows": [
+      {
+        "id": 1,
+        "billing_date": "2024-01-01",
+        "amount": 999,
+        "prev_amount": null
+      },
+      {
+        "id": 2,
+        "billing_date": "2024-02-01",
+        "amount": 999,
+        "prev_amount": 999
+      },
+      {
+        "id": 3,
+        "billing_date": "2024-03-01",
+        "amount": 999,
+        "prev_amount": 999
+      }
+    ]
+  }
+]

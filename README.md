@@ -8,11 +8,15 @@ A full-stack learning platform for practicing the work behind senior engineering
 
 The project brings these experiences into one application with authenticated accounts, browser-based execution, persistent progress, and reproducible evaluation. Its engineering focus is **correctness under failure**: stale responses, failed optimistic updates, interrupted sessions, conflicting imports, and untrusted candidate code.
 
-**65 engineering scenarios · 3 enterprise projects · 120 SQL questions · 8 evolving incidents**
+**73 engineering scenarios · 4 enterprise projects · 120 SQL questions · 8 evolving incidents**
 
-[Product walkthrough](#a-five-minute-product-review) · [Features](#product-capabilities) · [HLD](#high-level-design-hld) · [LLD](#low-level-design-lld) · [Data model](#data-model) · [Tech stack](#technology-stack) · [Setup](#run-locally) · [Portfolio handoff](#portfolio-handoff)
+**Live demo:** [engineering-interview-lab.vercel.app](https://engineering-interview-lab.vercel.app/)
 
-The poster is a conceptual product visual, not a screenshot. Actual application screenshots appear below. This README is a self-contained product and engineering reference for reviewers and portfolio builders; implementation links provide deeper evidence.
+[Product walkthrough](#a-five-minute-product-review) · [Features](#product-capabilities) · [HLD](#high-level-design-hld) · [LLD](#low-level-design-lld) · [Data model](#data-model) · [Tech stack](#technology-stack) · [Setup](#run-locally) · [Local IDE practice](#practice-in-vs-code-or-another-local-ide) · [Portfolio handoff](#portfolio-handoff)
+
+The poster is a conceptual product visual from the earlier catalog, not a screenshot; current counts are listed above. Actual application screenshots appear below. This README is a self-contained product and engineering reference for reviewers and portfolio builders; implementation links provide deeper evidence.
+
+**Documentation reviewed against the repository: 3 November 2026.** Recorded test results below retain their original verification date; a documentation review does not rerun those checks or establish that the deployed build matches every local change.
 
 ## Project at a glance
 
@@ -21,15 +25,15 @@ The poster is a conceptual product visual, not a screenshot. Actual application 
 | Product | A full-stack engineering practice simulator with guided learning, editable exercises, incident response, and interview preparation. |
 | Audience | Developers building foundations and engineers preparing for senior/staff interviews. |
 | Architecture | Modular monolith: one Next.js application, PostgreSQL persistence, browser execution engines, and an optional external AI provider. |
-| Main catalog | 65 scenarios across 10 technical topics and six challenge formats. |
-| Enterprise Labs | Three project overviews grouping 14 exercises: eight loan exercises plus six commerce/SaaS challenges. |
+| Main catalog | 73 scenarios across 10 technical topics and six challenge formats. |
+| Enterprise Labs | Four project overviews grouping 22 exercises: eight loan, six commerce/SaaS, and eight collaboration exercises. |
 | SQL track | 120 authored questions across four tiers, with executable, conceptual, and incident formats. |
 | Evolving incidents | Eight simulations, 24 timed developments, and 72 response choices. |
-| Executable business exercises | 41 loan-lab cases and 53 commerce/SaaS cases. |
+| Executable business exercises | 41 loan-lab cases, 53 commerce/SaaS cases, and 61 collaboration cases. |
 | Persistence | Account-owned history in PostgreSQL; account-scoped device caches and local drafts. |
-| Current evidence | 203 unit tests across 17 suites; browser verification and qualifications recorded under [Verification](#verification). |
+| Current evidence | 273 unit tests across 18 suites; browser verification and qualifications recorded under [Verification](#verification). |
 
-These counts describe different collections and must not be summed into one challenge count. The eight evolving incidents and six commerce/SaaS challenges are included in the 65-scenario catalog. Enterprise Labs reuses those six challenges and the eight separate loan exercises.
+These counts describe different collections and must not be summed into one challenge count. The eight evolving incidents, six commerce/SaaS challenges, and eight collaboration challenges are included in the 73-scenario catalog. Enterprise Labs reuses those six commerce/SaaS challenges, eight collaboration scenarios, and the eight separate loan exercises.
 
 ## A five-minute product review
 
@@ -64,9 +68,10 @@ The loan lab is an editable exercise workspace. Each submission executes against
 
 | Area | Implemented behavior |
 |---|---|
-| **Scenario library** | 65 scenarios across JavaScript, TypeScript, React, Next.js, Node.js, databases, integrations, operations, system design, and security. Includes debugging, coding, incident response, code review, architecture, and interview exercises. |
+| **Scenario library** | 73 scenarios across JavaScript, TypeScript, React, Next.js, Node.js, databases, integrations, operations, system design, and security. Includes debugging, coding, incident response, code review, architecture, and interview exercises. |
 | **E-commerce & SaaS** | Six editable challenges with 53 behavioral cases: inventory reservations, payment reconciliation, tenant authorization, subscription entitlements, resumable catalog imports, and safe audit history. [Learning sequence and model boundaries](docs/BUSINESS_CHALLENGES.md). |
-| **Enterprise Labs** | Three business-project overviews grouping 14 exercises. Skills, learning sequences, direct workspace links, and best saved progress share the existing challenge and loan-lab history. [Project structure and progress rules](docs/ENTERPRISE_LABS.md). |
+| **Enterprise Labs** | Four business-project overviews grouping 22 exercises. Skills, learning sequences, direct workspace links, and best saved progress share the existing challenge and loan-lab history. [Project structure and progress rules](docs/ENTERPRISE_LABS.md). |
+| **Real-Time Collaboration** | Eight editable challenges with 61 behavioral cases: message deduplication, reconnect cursors, read receipts, presence expiry, channel permissions, notification preferences, meeting signaling, and history pagination. [Contracts and production boundaries](docs/REAL_TIME_COLLABORATION.md). |
 | **Evolving incidents** | Eight incidents with 24 timed developments and 72 response choices. Decisions change observations and subsequent briefings; missed deadlines record inaction. Solutions include containment, recovery gates, permanent corrections, regression tests, and rollback constraints. |
 | **Loan bug-fixing lab** | Eight JavaScript exercises covering stale responses, duplicate requests, optimistic rollback, pagination, state mutation, selector memoization, stale closures, and error recovery. Two sample cases per exercise and 41 cases across the full suites. |
 | **SQL practice** | Four preparation tiers, PostgreSQL execution through PGlite, generic execution through AlaSQL, conceptual questions, incident exercises, and mock interviews. |
@@ -78,8 +83,11 @@ The loan lab is an editable exercise workspace. Each submission executes against
 | **AI interviewer** | Server-side Gemini integration with contextual follow-ups, hints, and scorecards. A deterministic fallback supports practice when the provider is unavailable or unconfigured. |
 | **Accounts & progress** | Email/password authentication, revocable database sessions, account-scoped history and drafts, bookmarks, notes, JSON import/export, and explicit anonymous-history import. |
 | **Analytics & usability** | Readiness estimates, topic breakdowns, activity/streak history, recommendations, dark/light themes, and responsive navigation. Scores are practice indicators. |
+| **Local IDE practice** | A separate 270-exercise workspace covering every authored collection, with editable starters/answers, references, terminal tests, save-to-rerun mode, and a generated index. 61 exercises have automated runners; 209 use guided review. Website features and cloud progress remain separate. [Local practice guide](practice/README.md). |
 
 The eight evolving incidents cover connection storms, cache stampedes, migration locks, regional failover, ambiguous payments, poison-message backlogs, restart cascades, and tenant-data exposure.
+
+Coding scenarios at `/challenge/[id]` give Monaco the available workspace height. Test results stay hidden until **Run Tests**, and a close button restores the editor space while preserving the code and last result. The site footer is hidden on `/challenge/*` and `/challenges/*`; other pages retain it. Mobile layouts keep the specification and test controls accessible.
 
 ### Enterprise project experiences
 
@@ -88,6 +96,7 @@ The eight evolving incidents cover connection storms, cache stampedes, migration
 | **Loan Operations** | A working authenticated dashboard and a separate editable bug lab. Submitting a bug fix does not patch the live demonstration. | Stale search results, duplicate requests, optimistic rollback, pagination reset, immutable sorting, selector memoization, stale closures, and error recovery. |
 | **Commerce Operations** | A coding challenge collection with deterministic fixtures and detailed solutions. | Inventory reservations, duplicate payment reconciliation, and resumable catalog imports. |
 | **Multi-Tenant SaaS** | A coding challenge collection with deterministic fixtures and detailed solutions. | Tenant authorization, subscription entitlements, and safe audit history. |
+| **Real-Time Collaboration** | A coding challenge collection with deterministic fixtures and reference fixes. | Message ordering, reconnect recovery, receipts, presence, channel permissions, notification delivery decisions, meeting signaling, and history pagination. |
 
 Commerce and SaaS are practice domains inside this learning product. They are not standalone deployed stores, billing platforms, or organization-management products.
 
@@ -145,7 +154,7 @@ The implemented topology is a browser, one Next.js Node.js deployment, and a Pos
 
 Authored scenarios are version-controlled TypeScript data. Training SQL runs against seeded in-memory/WASM datasets, not the primary account database. Synthetic loan changes live in a per-account server-process store, while learning history lives durably in PostgreSQL.
 
-For deployment, configure a stable authentication secret, the public application origin, database connectivity/migrations, and a proxy that overwrites the trusted client-IP header. Process-local loan state and provider throttling do not coordinate across multiple application instances. This README records a deployable architecture, not evidence of an existing hosted production installation.
+The live demo is hosted on Vercel at the URL above. For deployment, configure a stable authentication secret, the public application origin, database connectivity/migrations, and a proxy that overwrites the trusted client-IP header. Set production `BETTER_AUTH_URL` to `https://engineering-interview-lab.vercel.app` for this deployment; keep the local development origin in local configuration. Process-local loan state and provider throttling do not coordinate across multiple application instances. A hosted demo does not establish production-scale performance or availability.
 
 ## Low-level design (LLD)
 
@@ -406,7 +415,9 @@ The incident engine separates time advancement, action selection, telemetry deri
 
 [Framework migration and recovery notes](docs/NEXTJS_UPGRADE.md) document the Next.js upgrade, bundler compatibility changes, and verified Webpack fallback.
 
-Versions above are the lockfile snapshot reviewed on 2 November 2026, not a claim that these are the newest available releases. There is no vector database, RAG pipeline, agent framework, message broker, or microservice architecture in the implemented stack.
+Versions above are the lockfile snapshot reviewed on 3 November 2026, not a claim that these are the newest available releases. There is no vector database, RAG pipeline, agent framework, message broker, or microservice architecture in the implemented stack.
+
+Styling already uses Tailwind utilities throughout the components. [The Tailwind configuration](tailwind.config.ts) defines class-based dark mode and shared theme tokens. [The global stylesheet](src/app/globals.css) supplies Tailwind directives, light/dark CSS variables, page backgrounds, glass surfaces, focus indicators, scrollbars, and a custom animation. A further conversion of those custom styles to utilities has not been implemented.
 
 ## Run locally
 
@@ -461,14 +472,39 @@ For an existing database, follow the [baseline and migration procedure](docs/AUT
 | `npm run build` / `npm start` | Build and serve production output. |
 | `npm run test:e2e` | Run Playwright; requires built output or a configured external server. |
 | `npm run dev:webpack` / `npm run build:webpack` | Use the retained Webpack configuration. |
+| `npm run practice:list -- <search>` | Find local exercises by collection, ID, or title. |
+| `npm run practice:test -- <collection/id>` | Run the selected local solution against authored cases. |
+| `npm run practice:watch -- <collection/id>` | Rerun one executable exercise when its solution is saved. |
+| `npm run practice:generate` | Refresh generated content while preserving existing solutions and answers. |
+| `npm run practice:verify` | Verify local tooling, source coverage, preservation, and executable references. |
+
+## Practice in VS Code or another local IDE
+
+Open [the practice index](practice/INDEX.md) to choose from all **270 authored exercises**: 73 catalog scenarios, eight loan labs, 120 SQL questions, 63 beginner questions, and six standalone coding problems. Enterprise project sequences link to the same exercises. The eight evolving incidents and six commerce/SaaS scenarios remain included in the catalog count.
+
+```sh
+npm ci
+npm run practice:list -- inventory
+npm run practice:test -- catalog/commerce-inventory-reservations
+npm run practice:watch -- catalog/commerce-inventory-reservations
+```
+
+Edit the exercise's `solution.*` file and record your reasoning in `answer.md`. Each folder includes instructions, full authored task data, cases, and separate reference material. Broken starters are expected to fail. The 61 executable exercises use JavaScript/TypeScript, loan harnesses, SQL engines, or the optional local Python interpreter. The other 209 exercises include review, UI snippets, architecture, incidents, interviews, and foundational questions; use their answer files and reference rubrics rather than treating them as automated passes.
+
+The local workflow needs no Next.js server, account database, authentication, or AI credentials. It does not update website progress or patch app exercises. Practice code is excluded from the application's TypeScript build, so unfinished solutions remain independent. [The practice guide](practice/README.md) explains dialect differences, manual review, process limits, and regeneration that preserves candidate work.
 
 ## Verification
 
-**Latest recorded verification: 2 November 2026.** These are local verification results, not a CI badge or a claim about production traffic.
+**Latest recorded verification: 3 November 2026.** These are local verification results, not a CI badge or a claim about production traffic. Earlier browser journeys retain the 2 November baseline; the collaboration row records the latest targeted browser run.
+
+**Earlier local IDE workspace baseline: 3 November 2026.** Its independent suite passed **60 checks**, covering the original 262 exported exercises, preservation on refresh, the original 53 executable reference solutions, expected failures in the 14 business/loan starters, TypeScript/async execution, exact comparisons, and timeout behavior. The app unit suite passed **203 tests across 17 suites** at that stage. A recursive-category SQL fixture/reference was corrected with an explicit breadcrumb text cast after PostgreSQL execution exposed its type mismatch.
+
+**Real-Time Collaboration update: 3 November 2026.** The full app suite passed **273 tests across 18 suites**, including all 61 new behavioral cases and eight failing-starter checks. The local suite passed **68 checks**, including all 61 executable reference exercises and coverage of all 270 exports. TypeScript, ESLint, and the Turbopack production build passed.
 
 | Check | Recorded result |
 |---|---|
-| Unit tests | **203 passed across 17 suites** |
+| Unit tests | **273 passed across 18 suites** |
+| Real-Time Collaboration update | **15 targeted Chromium journeys passed against the updated production build**, covering all eight collaboration starters/references, mobile discovery, four-project navigation, both themes at 320–1440 px, existing commerce/SaaS execution, and closable full-height editor results. |
 | Browser regression tests (previous full audit) | **34 Chromium journeys verified against the production build:** 33 passed in the full run; the remaining cloud-sync check passed in a focused rerun after correcting its save-completion wait. |
 | Challenge workspace layout update | **Eight targeted Chromium journeys passed against the updated production build**, including full-height editor, on-demand results, close/rerun, mobile layout, and related SQL/incident/workspace flows. |
 | Production build | Passed |
@@ -529,6 +565,9 @@ prisma/                 PostgreSQL schema and migration history
 tests/unit/             Domain, validation, execution, and regression tests
 tests/e2e/              Browser journeys and account-isolation checks
 docs/                   Feature guides, migration notes, and screenshots
+practice/               All authored exercises, editable local solutions, references, index
+scripts/practice/       Source-driven generator, CLI, and local execution adapters
+tests/practice/         Independent local-workspace and reference checks
 ```
 
 ## Scope and trade-offs
@@ -549,38 +588,41 @@ This section is ready to use as the factual basis of a portfolio project page. T
 
 **Category:** Full-stack developer tools / engineering education
 
+**Live demo:** [Engineering Interview Lab on Vercel](https://engineering-interview-lab.vercel.app/)
+
 **Headline:** Practice the engineering decisions behind production software.
 
 **Short description:** A Next.js and TypeScript practice platform combining enterprise project labs, editable bug exercises, evolving production incidents, browser SQL execution, and AI-assisted interviews, with authenticated progress and reproducible evaluation.
 
-**Case-study summary:** The platform brings code debugging, incident response, SQL investigation, code review, and system-design practice into one learning workflow. Three Enterprise Labs organize exercises around loan operations, commerce, and multi-tenant SaaS. Timed incidents respond to candidate decisions, while Monaco-based workspaces make fixes executable against authored cases.
+**Case-study summary:** The platform brings code debugging, incident response, SQL investigation, code review, and system-design practice into one learning workflow. Four Enterprise Labs organize exercises around loan operations, commerce, multi-tenant SaaS, and real-time collaboration. Timed incidents respond to candidate decisions, while Monaco-based workspaces make fixes executable against authored cases.
 
 Its engineering depth is in explicit failure boundaries: stale-response guards, optimistic rollback, deterministic incident replay, a dedicated iframe/Worker boundary for loan exercises, account-scoped cache hydration, and transactional progress merging. PostgreSQL stores identity and history; browser engines execute training SQL; a server-side Gemini adapter provides optional feedback with offline fallbacks. The project demonstrates these behaviors through local verification rather than claims about commercial usage or production scale.
 
 ### Engineering highlights for a case study
 
 - A modular Next.js App Router application with clear boundaries between content, state, evaluation, identity, and persistence.
-- Three enterprise project overviews reusing 14 exercises and their existing progress IDs, without duplicating history.
+- Four enterprise project overviews reusing 22 exercises and their existing progress IDs, without duplicating history.
 - Eight evolving incidents whose timing, decisions, consequences, and restored drafts are deterministic and testable.
 - A dedicated loan code-execution boundary using an opaque iframe, private channel, per-case Workers, timeout termination, and structured comparisons.
 - Authenticated ownership checks and per-user transactional imports, including idempotent replay and explicit conflict rules.
 - Separate SQL dialects and distinct evaluation modes, with transparent limits around rubrics, AI feedback, and generic execution.
 
-These describe the repository's implementation. Author name, individual contribution, team size, employer/client context, build duration, repository URL, live demo URL, and licensing information must be supplied by the owner before publishing. No user counts, revenue, production SLAs, benchmark scores, or performance improvements are established here.
+These describe the repository's implementation. Author name, individual contribution, team size, employer/client context, build duration, repository URL, and licensing information must be supplied by the owner before publishing. The live demo URL is provided above. No user counts, revenue, production SLAs, benchmark scores, or performance improvements are established here.
 
 ### Visual assets and presentation
 
 | Asset | Role | Accuracy / usage |
 |---|---|---|
 | [Project poster](docs/assets/project-poster.png) | Hero image or project-card cover | Generated conceptual illustration; not proof of runtime UI. |
-| [Enterprise Labs screenshot](docs/screenshots/16_enterprise_labs.png) | Product overview gallery | Actual desktop hub with the three available projects. |
+| [Enterprise Labs screenshot](docs/screenshots/16_enterprise_labs.png) | Product overview gallery | Earlier desktop hub showing the original three projects; the current app also includes Real-Time Collaboration. |
 | [Project overview screenshot](docs/screenshots/17_enterprise_project.png) | Workflow gallery | Actual SaaS project context, sequence, exercise links, and progress. |
+| [Collaboration overview screenshot](docs/screenshots/18_collaboration_project.png) | Communication & chat gallery | Actual project overview with eight exercises, learning sequence, and shared progress. |
 | [Loan bug lab screenshot](docs/screenshots/15_loan_bug_lab.png) | Hands-on execution gallery | Actual editable workspace with passing authored tests. |
 | [Poster generation prompt](docs/assets/project-poster.prompt.md) | Asset provenance | Exact prompt and generation method for future variants. |
 
 For a portfolio page, lead with the poster and short description; follow with product workflows, engineering highlights, grouped technologies, architecture, verification evidence, and actual screenshots. Preserve the difference between the implemented simulator and the business systems described by its exercises.
 
-Supply the image files alongside this README to a portfolio builder; relative image paths cannot transfer the binary assets by themselves. Mermaid diagrams carry the architecture in text and can be rendered directly or recreated faithfully by the portfolio site. Current application routes assume an app origin that the owner will provide; they are not hosted demo URLs.
+Supply the image files alongside this README to a portfolio builder; relative image paths cannot transfer the binary assets by themselves. Mermaid diagrams carry the architecture in text and can be rendered directly or recreated faithfully by the portfolio site. Use `https://engineering-interview-lab.vercel.app` as the origin for the application routes listed above when linking to the live demo.
 
 ### Future extensions, not implemented features
 
@@ -591,6 +633,7 @@ Possible next stages include interactive commerce/SaaS dashboards, durable loan 
 - [Authentication, ownership, and database migration](docs/AUTHENTICATION.md)
 - [Evolving incidents: behavior, scenarios, and verification](docs/EVOLVING_INCIDENTS.md)
 - [Loan bug lab: contracts, execution model, and verification](docs/LOAN_BUG_LAB.md)
+- [Real-Time Collaboration: contracts and scope](docs/REAL_TIME_COLLABORATION.md)
 - [Enterprise Labs: project registry, shared progress, and extension points](docs/ENTERPRISE_LABS.md)
 - [E-commerce and SaaS: exercise sequence and model boundaries](docs/BUSINESS_CHALLENGES.md)
 - [Next.js 16 and Turbopack migration](docs/NEXTJS_UPGRADE.md)

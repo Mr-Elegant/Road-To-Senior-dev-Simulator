@@ -1,0 +1,1 @@
+function solution({epoch,phase,offerId,events}) { for(const e of events){epoch=e.epoch;offerId=e.offerId||offerId;phase=e.type==='disconnect'?'closed':'connected';} return {epoch,phase,offerId,outcomes:events.map(()=>'connected')}; }

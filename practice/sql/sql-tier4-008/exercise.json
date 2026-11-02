@@ -1,0 +1,45 @@
+{
+  "id": "sql-tier4-008",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 8,
+  "title": "Corrupt Index Remediation and REINDEX CONCURRENTLY Failures",
+  "category": "Indexes and Query Planning",
+  "questionType": "incident",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A primary key lookup on `orders` where `id = 45910` returns 0 rows. However, `SELECT * FROM orders WHERE id = 45910` with `SET enable_indexscan = off;` returns the row! The B-tree index is corrupt. A developer ran `REINDEX INDEX CONCURRENTLY idx_orders_pkey;` which failed midway after a network timeout.",
+  "questionStatement": "Explain how B-tree index corruption manifests in PostgreSQL. What state is an index left in when `REINDEX CONCURRENTLY` is interrupted? Detail the safe recovery procedure to rebuild the corrupt primary key index online without locking checkout transactions.",
+  "incidentDetails": {
+    "symptoms": [
+      "Data inconsistency: Index Scan misses existing rows",
+      "Sequential scan finds the row",
+      "REINDEX CONCURRENTLY aborted midway",
+      "pg_class shows duplicate or invalid index entries"
+    ],
+    "systemTelemetry": {
+      "activeConnections": 80,
+      "lockWaitsCount": 0,
+      "cpuUtilizationPercent": 45,
+      "bufferCacheHitRatio": 98.8,
+      "logSnippet": "2026-11-01 11:20:00 UTC [7120]: [1-1] ERROR:  canceling statement due to statement timeout\n2026-11-01 11:20:00 UTC [7120]: [2-1] STATEMENT:  REINDEX INDEX CONCURRENTLY idx_orders_pkey;\n2026-11-01 11:20:05 UTC [7125]: [1-1] LOG:  index \"idx_orders_pkey_ccnew\" marked as invalid"
+    },
+    "candidateTasks": [
+      "Inspect pg_index to verify indisvalid and indisready flags",
+      "Explain why idx_orders_pkey_ccnew was left behind by interrupted reindex",
+      "Drop invalid temporary index concurrently",
+      "Execute safe REINDEX CONCURRENTLY with increased statement_timeout"
+    ]
+  },
+  "expectedConcepts": [
+    "Index corruption causing index scan to miss rows found by sequential scan",
+    "REINDEX CONCURRENTLY shadow index naming convention (_ccnew)",
+    "Invalid index state (indisvalid = false) causing write amplification",
+    "DROP INDEX CONCURRENTLY to clean up failed index builds",
+    "Setting statement_timeout = 0 for heavy maintenance operations"
+  ],
+  "hints": [
+    "Look for the _ccnew index left behind in the log snippet.",
+    "Check pg_index to see why the invalid index is still maintained on writes.",
+    "Always disable statement_timeout when running REINDEX on large tables."
+  ]
+}

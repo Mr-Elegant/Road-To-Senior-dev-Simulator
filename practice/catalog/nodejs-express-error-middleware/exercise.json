@@ -1,0 +1,44 @@
+{
+  "id": "nodejs-express-error-middleware",
+  "title": "Express Asynchronous Error Swallowing & Hanging Socket Leak",
+  "type": "debugging",
+  "topic": "Node.js",
+  "subtopic": "Express middleware",
+  "difficulty": "Senior",
+  "estimatedMinutes": 20,
+  "businessContext": "In an Express.js REST API handling merchant inventory updates, when an unexpected database constraint error occurs inside an async route handler, the client request hangs indefinitely until hitting a 60-second gateway timeout. Over time, open socket handles accumulate, exhausting file descriptors.",
+  "problemStatement": "Express 4 does not automatically catch rejected promises returned from `async (req, res, next)` route handlers. When an unhandled error throws inside an async function without an explicit `next(err)` or wrapper, Express never sends an HTTP response, leaving the client socket hanging open.",
+  "constraints": [
+    "Must guarantee every rejected promise in route handlers is caught and passed to global error middleware.",
+    "Must return consistent RFC 7807 Problem Details JSON format `{ status: 500, title, detail }`.",
+    "Prevent socket handle and file descriptor exhaustion."
+  ],
+  "starterCode": "const express = require('express');\nconst app = express();\n\n/**\n * Buggy Express Route Handler\n */\napp.post('/api/inventory/update', async (req, res, next) => {\n  // BUG: Express 4 does not catch errors thrown in unhandled async functions!\n  // If updateInventory throws, this promise rejects, next(err) is never called,\n  // and the HTTP connection hangs until client timeout.\n  const result = await db.updateInventory(req.body);\n  res.json({ success: true, result });\n});\n\n// Global Error Handler\napp.use((err, req, res, next) => {\n  res.status(500).json({ error: err.message });\n});\n\nfunction solution(input) {\n  return \"async_handler_wrapped\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain why Express 4 fails to catch rejected promises in async middleware.",
+    "Implement an `asyncHandler` higher-order function that wraps async routes with `.catch(next)`.",
+    "Discuss how Express 5 natively handles rejected promises."
+  ],
+  "hints": [
+    "Express 4 route handlers expect synchronous code or explicit `next(err)` invocations.",
+    "Create a wrapper: `const asyncHandler = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)`."
+  ],
+  "testCases": [
+    {
+      "id": "tc-exp-1",
+      "name": "Catches async exceptions and routes to global error handler",
+      "inputDescription": "null",
+      "expectedOutput": "\"async_handler_wrapped\"",
+      "explanation": "Guarantees proper response termination on async exceptions."
+    }
+  ],
+  "alternativeApproaches": [
+    "Upgrading to Express 5 or migrating to Fastify / Koa (which have native promise support).",
+    "Using `express-async-errors` package (monkey-patches Layer.prototype.handle_request)."
+  ],
+  "commonMistakes": [
+    "Writing manual try/catch in every single route handler (repetitive and prone to human omission).",
+    "Placing the 4-argument error middleware `(err, req, res, next)` BEFORE route definitions (it must be registered last)."
+  ]
+}

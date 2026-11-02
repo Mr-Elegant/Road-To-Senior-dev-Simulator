@@ -1,0 +1,51 @@
+{
+  "id": "sql-t2-07",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 7,
+  "title": "Top N Records Per Group Pattern",
+  "category": "Window Functions",
+  "questionType": "executable",
+  "executionDialect": "postgresql",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "The homepage needs to show the top 1 highest-priced product for every category.",
+  "questionStatement": "Write a query using a CTE and `ROW_NUMBER() OVER (PARTITION BY category ORDER BY price DESC)` to retrieve only the #1 most expensive product in each category. Return `category`, `name`, and `price`, ordered by `category` ascending.",
+  "starterCode": "-- Top 1 most expensive product per category\nWITH ranked_products AS (\n  SELECT\n    category,\n    name,\n    price,\n    ROW_NUMBER() OVER (PARTITION BY category ORDER BY price DESC) AS rn\n  FROM products\n)\nSELECT\n  category,\n  name,\n  price\nFROM ranked_products\nWHERE rn = 1\nORDER BY category ASC;",
+  "expectedConcepts": [
+    "Top-N per group pattern",
+    "ROW_NUMBER() window partitioning",
+    "CTE wrapping to filter window output"
+  ],
+  "hints": [
+    "You cannot put WHERE ROW_NUMBER() = 1 in the same query.",
+    "Wrap the query in a CTE or subquery, then filter WHERE rn = 1."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t2-07",
+      "description": "Verify single top-priced product per category",
+      "expectedRows": [
+        {
+          "category": "Apparel",
+          "name": "Waterproof Trail Running Shoes",
+          "price": 135
+        },
+        {
+          "category": "Books",
+          "name": "Database Internals in Practice",
+          "price": 52
+        },
+        {
+          "category": "Electronics",
+          "name": "Ultra-Wide 4K Gaming Monitor",
+          "price": 549
+        },
+        {
+          "category": "Home & Kitchen",
+          "name": "Smart Induction Espresso Machine",
+          "price": 249.99
+        }
+      ]
+    }
+  ]
+}

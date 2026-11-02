@@ -1,0 +1,24 @@
+{
+  "id": "t1-rdx-04",
+  "title": "What is createSlice in Redux Toolkit and how does it simplify Redux code?",
+  "category": "Redux Toolkit Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 4,
+  "expectedConcepts": [
+    "Combines actions and reducers in a single file/function",
+    "Requires name, initialState, and reducers object",
+    "Automatically generates action creators matching reducer keys",
+    "Eliminates boilerplate switch statements and manual action type constants"
+  ],
+  "hints": [
+    "Before RTK, you had to write action types, action creators, and reducers in separate files.",
+    "What object does counterSlice.actions give you?"
+  ],
+  "codingExercise": {
+    "instruction": "Define a simple slice named \"theme\" with initialState { mode: \"light\" } and a reducer toggleTheme that flips between \"light\" and \"dark\".",
+    "starterCode": "import { createSlice } from '@reduxjs/toolkit';\n\nexport const themeSlice = createSlice({\n  name: 'theme',\n  initialState: { mode: 'light' },\n  reducers: {\n    // Add toggleTheme reducer here\n  },\n});",
+    "language": "javascript",
+    "expectedOutput": "createSlice with toggleTheme reducer mutating mode"
+  }
+}

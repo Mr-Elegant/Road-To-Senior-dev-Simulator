@@ -1,0 +1,20 @@
+{
+  "id": "sql-t1-24",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 24,
+  "title": "B-Tree Indexing Fundamentals",
+  "category": "Indexes and Query Planning",
+  "questionType": "conceptual",
+  "realWorldScenario": "A query `SELECT * FROM users WHERE email = 'test@example.com';` is taking 800ms on a table with 2 million users.",
+  "questionStatement": "Explain what a sequential scan (table scan) is, how a B-Tree index accelerates search from O(N) to O(log N), and the write overhead of indexes.",
+  "expectedConcepts": [
+    "Sequential Scan O(N)",
+    "B-Tree hierarchical lookup O(log N)",
+    "Pointer to disk tuple (TID)",
+    "Write overhead on INSERT/UPDATE/DELETE"
+  ],
+  "hints": [
+    "Compare looking up a phone book sequentially vs binary search index."
+  ]
+}

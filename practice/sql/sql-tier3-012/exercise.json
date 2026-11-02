@@ -1,0 +1,23 @@
+{
+  "id": "sql-tier3-012",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 12,
+  "title": "PgBouncer Connection Pooling: Session vs Transaction vs Statement Modes",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "A Node.js backend running 50 Kubernetes pods establishes 20 connections per pod (1,000 total connections) directly to PostgreSQL. The database server’s memory is exhausted, context switching spikes, and query response time degrades by 800%.",
+  "questionStatement": "Analyze how PgBouncer connection pooling resolves PostgreSQL connection scalability limits. Compare the three pooling modes: Session, Transaction, and Statement. What PostgreSQL features break under Transaction Pooling, and how do you resolve them?",
+  "expectedConcepts": [
+    "PostgreSQL process-based architecture (fork) and memory overhead per connection",
+    "Session vs Transaction vs Statement pooling comparison",
+    "Features broken by transaction pooling: SET, PREPARE, temp tables, LISTEN/NOTIFY, session advisory locks",
+    "SET LOCAL and transaction-level alternatives"
+  ],
+  "hints": [
+    "Why does PostgreSQL use more memory per connection than MySQL or threaded databases?",
+    "What happens to prepared statements when a subsequent query in the session executes on a different backend connection?",
+    "Why does PgBouncer transaction mode break LISTEN / NOTIFY?"
+  ]
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-gen-1",
+    "name": "Resolves path parameters into URL path",
+    "inputDescription": "null",
+    "expectedOutput": "\"/tenants/t-100/invoices/inv-55\"",
+    "explanation": "Path parameters are interpolated into resolved route."
+  }
+]

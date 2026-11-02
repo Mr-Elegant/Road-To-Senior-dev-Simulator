@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-tier4-027-1",
+    "description": "Verify keyset pagination returns next batch after cursor",
+    "setupSql": "CREATE TABLE products (id INT PRIMARY KEY, name VARCHAR(50), price NUMERIC, created_at VARCHAR(20));\nINSERT INTO products VALUES (1, 'Laptop', 1000, '2026-01-01'), (2, 'Phone', 800, '2026-01-02'), (3, 'Tablet', 500, '2026-01-03');",
+    "expectedOutputSql": "SELECT id, name, price, created_at FROM products WHERE (created_at, id) < ('2026-01-03', 3) ORDER BY created_at DESC, id DESC LIMIT 20;",
+    "orderMatters": true
+  }
+]

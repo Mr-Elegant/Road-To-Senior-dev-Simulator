@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-015",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 15,
+  "title": "High-Throughput TimescaleDB / Hypertable Architecture vs Native Partitioning",
+  "category": "Partitioning and Large Tables",
+  "questionType": "design",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "Your analytics ingestion pipeline processes 250,000 metrics per second into PostgreSQL. Native declarative partitioning by day creates 365 tables per year, but query planning overhead degrades, and compression is non-existent. The team evaluates TimescaleDB hypertables.",
+  "questionStatement": "Compare PostgreSQL native declarative partitioning with TimescaleDB hypertables for high-throughput time-series data. Evaluate automatic chunk creation, native columnar compression (hybrid row/column storage), continuous aggregates, and data retention policies.",
+  "expectedConcepts": [
+    "Automatic chunk creation fitting working set in shared_buffers",
+    "TimescaleDB columnar compression algorithms (Gorilla, Delta-of-delta)",
+    "90%+ storage savings via chunk compression",
+    "Incremental Continuous Aggregates combining raw and rolled-up data",
+    "drop_chunks() zero-bloat automated retention policies"
+  ],
+  "hints": [
+    "What happens to native partition planning when you have 1,000 partitions?",
+    "How does columnar compression reduce disk space for time-series floats and timestamps?",
+    "Continuous aggregates do not require full refreshes."
+  ]
+}

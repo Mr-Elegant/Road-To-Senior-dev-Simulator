@@ -1,0 +1,18 @@
+{
+  "id": "t1-react-05",
+  "title": "How do you conditionally render elements in React?",
+  "category": "React Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 5,
+  "expectedConcepts": [
+    "Ternary operator condition ? <A /> : <B />",
+    "Logical AND (&&) for showing or hiding a single element",
+    "Early return / guard clauses for whole component views",
+    "Pitfall of 0 && <Element /> rendering 0 to the DOM"
+  ],
+  "hints": [
+    "When do you use a ternary operator versus logical &&?",
+    "Why should you write count > 0 && ... instead of count && ...?"
+  ]
+}

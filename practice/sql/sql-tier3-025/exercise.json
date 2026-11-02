@@ -1,0 +1,33 @@
+{
+  "id": "sql-tier3-025",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 25,
+  "title": "Partial Indexes and Expression Indexes: Advanced Query Optimization",
+  "category": "Indexes and Query Planning",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "In the `orders` table (5 million rows), 97% of orders are in `DELIVERED` status and are rarely queried by operational tools. The customer support dashboard frequently searches for orders with `status IN ('FAILED', 'PENDING')` by customer email in lower case.",
+  "questionStatement": "Explain the architecture and storage efficiency of Partial Indexes and Expression Indexes in PostgreSQL. Write the SQL to create a partial expression index that indexes `lower(customer_email)` ONLY for orders where status is `FAILED` or `PENDING`. Write the exact matching query that utilizes this index.",
+  "starterCode": "-- 1. Create partial expression index\nCREATE INDEX idx_orders_unresolved ON orders (lower(customer_email))\nWHERE status IN ('FAILED', 'PENDING');\n\n-- 2. Query that matches index condition and expression\nSELECT id, customer_email, total_amount, status\nFROM orders\nWHERE lower(customer_email) = 'alice@example.com'\n  AND status = 'PENDING';",
+  "expectedConcepts": [
+    "Partial index predicate filtering rows at index creation time",
+    "Expression index evaluating and storing function outputs",
+    "Index size reduction and write overhead elimination for excluded rows",
+    "Planner requirement that query WHERE clause subsume the index predicate"
+  ],
+  "hints": [
+    "What happens to index write overhead when an UPDATE modifies a row not covered by the partial index?",
+    "Why does WHERE lower(email) fail to use a regular index on email?",
+    "Make sure the query WHERE clause includes the partial condition."
+  ],
+  "testCases": [
+    {
+      "id": "tc-tier3-025-1",
+      "description": "Verify partial expression query execution",
+      "setupSql": "CREATE TABLE orders (id INT, customer_email VARCHAR(50), total_amount NUMERIC, status VARCHAR(20));\nINSERT INTO orders VALUES (1, 'ALICE@EXAMPLE.COM', 150, 'PENDING'), (2, 'BOB@EXAMPLE.COM', 200, 'DELIVERED'), (3, 'alice@example.com', 90, 'FAILED');",
+      "expectedOutputSql": "SELECT id, customer_email, total_amount, status FROM orders WHERE lower(customer_email) = 'alice@example.com' AND status = 'PENDING';",
+      "orderMatters": true
+    }
+  ]
+}

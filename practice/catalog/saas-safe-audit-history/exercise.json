@@ -1,0 +1,90 @@
+{
+  "id": "saas-safe-audit-history",
+  "title": "SaaS: Record Useful Audit History Without Leaking Secrets",
+  "type": "debugging",
+  "topic": "Security",
+  "subtopic": "SaaS / Audit history and data minimization",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "An administration SaaS logs entire organization objects after edits. The log now contains integration API keys, and a client-supplied tenant field can misattribute another organization's activity.",
+  "problemStatement": "Implement solution({ context, before, after }) returning { entry }. context is null or trusted server-side { tenantId, actorId }. before and after are null or resource snapshots with id, tenantId, name, status, plan and possibly additional secret fields. Only name, status, and plan are auditable. Both values for each auditable field must be strings. Return entry null for invalid context, missing resources, different IDs, tenant mismatch, invalid auditable fields, or no auditable changes. IDs and trusted context values must be nonempty strings. This function formats an already-authorized edit; it does not authorize the mutation.",
+  "constraints": [
+    "A valid entry is exactly { tenantId, actorId, resourceId, action: \"organization.updated\", changes }. changes contains only changed allowlisted fields in name, status, plan order as { field, before, after }.",
+    "Exclude every non-allowlisted field, including nested credentials and newly introduced secret names. Do not modify input snapshots or accept actor identity from resource data."
+  ],
+  "candidateTasks": [
+    "Replace full-object logging with an allowlisted change record and trusted context checks.",
+    "Describe transactional audit durability, restricted access, retention, and tests against accidental secret capture."
+  ],
+  "starterCode": "function solution({ context, before, after }) {\n  return { entry: { tenantId: after.tenantId, actorId: context ? context.actorId : \"unknown\", before, after } };\n}",
+  "testCases": [
+    {
+      "id": "audit-1",
+      "name": "Record a changed name without API keys",
+      "inputDescription": "{\"context\":{\"tenantId\":\"a\",\"actorId\":\"u\"},\"before\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":\"Old\",\"status\":\"active\",\"plan\":\"pro\",\"apiKey\":\"synthetic-old\"},\"after\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":\"New\",\"status\":\"active\",\"plan\":\"pro\",\"apiKey\":\"synthetic-new\"}}",
+      "expectedOutput": "{\"entry\":{\"tenantId\":\"a\",\"actorId\":\"u\",\"resourceId\":\"org\",\"action\":\"organization.updated\",\"changes\":[{\"field\":\"name\",\"before\":\"Old\",\"after\":\"New\"}]}}",
+      "hidden": false
+    },
+    {
+      "id": "audit-2",
+      "name": "Secret-only changes produce no business audit entry",
+      "inputDescription": "{\"context\":{\"tenantId\":\"a\",\"actorId\":\"u\"},\"before\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":\"Org\",\"status\":\"active\",\"plan\":\"pro\",\"credentials\":{\"token\":\"synthetic-old\"}},\"after\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":\"Org\",\"status\":\"active\",\"plan\":\"pro\",\"credentials\":{\"token\":\"synthetic-new\"}}}",
+      "expectedOutput": "{\"entry\":null}",
+      "hidden": false
+    },
+    {
+      "id": "audit-3",
+      "name": "Tenant mismatch cannot forge an audit entry",
+      "inputDescription": "{\"context\":{\"tenantId\":\"a\",\"actorId\":\"u\"},\"before\":{\"id\":\"org\",\"tenantId\":\"b\",\"name\":\"Old\",\"status\":\"active\",\"plan\":\"pro\"},\"after\":{\"id\":\"org\",\"tenantId\":\"b\",\"name\":\"New\",\"status\":\"active\",\"plan\":\"pro\"}}",
+      "expectedOutput": "{\"entry\":null}",
+      "hidden": true
+    },
+    {
+      "id": "audit-4",
+      "name": "Missing trusted context is rejected",
+      "inputDescription": "{\"context\":null,\"before\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":\"Old\",\"status\":\"active\",\"plan\":\"pro\"},\"after\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":\"New\",\"status\":\"active\",\"plan\":\"pro\"}}",
+      "expectedOutput": "{\"entry\":null}",
+      "hidden": true
+    },
+    {
+      "id": "audit-5",
+      "name": "Changes use fixed field ordering and trusted actor",
+      "inputDescription": "{\"context\":{\"tenantId\":\"a\",\"actorId\":\"u\"},\"before\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":\"Old\",\"status\":\"active\",\"plan\":\"starter\"},\"after\":{\"id\":\"org\",\"tenantId\":\"a\",\"plan\":\"pro\",\"status\":\"paused\",\"name\":\"New\",\"actorId\":\"forged\",\"futureSecret\":\"synthetic-only\"}}",
+      "expectedOutput": "{\"entry\":{\"tenantId\":\"a\",\"actorId\":\"u\",\"resourceId\":\"org\",\"action\":\"organization.updated\",\"changes\":[{\"field\":\"name\",\"before\":\"Old\",\"after\":\"New\"},{\"field\":\"status\",\"before\":\"active\",\"after\":\"paused\"},{\"field\":\"plan\",\"before\":\"starter\",\"after\":\"pro\"}]}}",
+      "hidden": true
+    },
+    {
+      "id": "audit-6",
+      "name": "Different resource IDs are rejected",
+      "inputDescription": "{\"context\":{\"tenantId\":\"a\",\"actorId\":\"u\"},\"before\":{\"id\":\"one\",\"tenantId\":\"a\",\"name\":\"Old\",\"status\":\"active\",\"plan\":\"pro\"},\"after\":{\"id\":\"two\",\"tenantId\":\"a\",\"name\":\"New\",\"status\":\"active\",\"plan\":\"pro\"}}",
+      "expectedOutput": "{\"entry\":null}",
+      "hidden": true
+    },
+    {
+      "id": "audit-7",
+      "name": "Objects in auditable fields cannot smuggle nested secrets",
+      "inputDescription": "{\"context\":{\"tenantId\":\"a\",\"actorId\":\"u\"},\"before\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":\"Old\",\"status\":\"active\",\"plan\":\"pro\"},\"after\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":{\"password\":\"synthetic-only\"},\"status\":\"active\",\"plan\":\"pro\"}}",
+      "expectedOutput": "{\"entry\":null}",
+      "hidden": true
+    },
+    {
+      "id": "audit-8",
+      "name": "An unchanged resource produces no entry",
+      "inputDescription": "{\"context\":{\"tenantId\":\"a\",\"actorId\":\"u\"},\"before\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":\"Org\",\"status\":\"active\",\"plan\":\"pro\"},\"after\":{\"id\":\"org\",\"tenantId\":\"a\",\"name\":\"Org\",\"status\":\"active\",\"plan\":\"pro\"}}",
+      "expectedOutput": "{\"entry\":null}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "An allowlist remains safe when a new secret field is added; a blacklist can silently miss it.",
+    "Build a new object from trusted identifiers and primitive field differences. Never spread whole snapshots into the entry."
+  ],
+  "alternativeApproaches": [
+    "Emit typed domain events with an explicit schema, using an outbox to feed a restricted audit store."
+  ],
+  "commonMistakes": [
+    "Redacting only known key names while logging arbitrary new fields.",
+    "Writing audit entries independently from the mutation, losing one side during a crash."
+  ],
+  "codeLanguage": "javascript"
+}

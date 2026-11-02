@@ -1,0 +1,36 @@
+/**
+ * Corrected Production-Ready Payout Service
+ */
+async function processVendorPayoutsRemediated(orderId, requestedByUser) {
+  // 1. Authorization Guard
+  const order = await db.getOrder(orderId);
+  if (!order) throw new NotFoundError('Order not found');
+
+  const isAuthorized = requestedByUser.roles.includes('ADMIN') || order.merchantId === requestedByUser.id;
+  if (!isAuthorized) throw new ForbiddenError('Unauthorized to trigger payouts for this order');
+
+  // 2. Integer Cent Math (Amount in cents: $100.00 = 10000)
+  const orderAmountCents = order.amountInCents; 
+  const platformFeeBps = 1500; // 15.00% in Basis Points (1 bps = 0.01%)
+  const platformFeeCents = Math.round((orderAmountCents * platformFeeBps) / 10000);
+  const vendorPayoutCents = orderAmountCents - platformFeeCents;
+
+  // 3. Serialized or Promise.all execution with error containment
+  const results = [];
+  for (const split of order.vendorSplits) {
+    const splitAmountCents = Math.round((vendorPayoutCents * split.bps) / 10000);
+    
+    // Idempotency key per vendor transfer
+    const transfer = await stripe.transfers.create({
+      amount: splitAmountCents,
+      currency: 'usd',
+      destination: split.vendorStripeAccountId,
+    }, {
+      idempotencyKey: `payout:${order.id}:${split.vendorId}`,
+    });
+
+    results.push(transfer);
+  }
+
+  return { success: true, orderId, transfers: results };
+}

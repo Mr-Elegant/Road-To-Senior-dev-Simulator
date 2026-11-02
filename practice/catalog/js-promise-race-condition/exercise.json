@@ -1,0 +1,45 @@
+{
+  "id": "js-promise-race-condition",
+  "title": "Multi-Tab Wallet Checkout Balance Debit Race Condition",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Race conditions",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A digital wallet and subscription checkout interface allows users to redeem promo gift balances. When a user opens multiple browser tabs or clicks \"Pay with Balance\" concurrently, two requests race against each other, allowing the user to spend a $50 balance twice.",
+  "problemStatement": "Design a client-side and API concurrency guard. On the client side, implement an asynchronous mutex / queue runner that prevents parallel in-flight checkout mutations for the same wallet ID, serializes requests, and handles cancellation / idempotency headers.",
+  "constraints": [
+    "Must guarantee only 1 mutation per key runs at any time.",
+    "Pending invocations should queue or reject cleanly with ConcurrentOperationError.",
+    "Must clean up queue state when promises resolve or reject to avoid memory leaks."
+  ],
+  "starterCode": "/**\n * Async Mutex / Keyed Serialization Lock\n * Prevents concurrent operations on the same entity.\n */\nclass AsyncKeyedMutex {\n  constructor() {\n    this.locks = new Map();\n  }\n\n  async runExclusive(key, task) {\n    // TODO: Implement queue serialization per key\n    // Ensure task() runs exclusively for 'key'\n    return task();\n  }\n}\n\n// Test harness verification\nfunction solution(inputs) {\n  const mutex = new AsyncKeyedMutex();\n  const logs = [];\n  \n  const p1 = mutex.runExclusive(\"user-1\", async () => {\n    logs.push(\"start-1\");\n    await new Promise((r) => setTimeout(r, 10));\n    logs.push(\"end-1\");\n    return 1;\n  });\n\n  const p2 = mutex.runExclusive(\"user-1\", async () => {\n    logs.push(\"start-2\");\n    logs.push(\"end-2\");\n    return 2;\n  });\n\n  return Promise.all([p1, p2]).then(() => JSON.stringify(logs));\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Implement `runExclusive(key, task)` using Promise chaining or a queue of resolvers.",
+    "Ensure if `task()` throws an exception, the next queued task still executes and the error is propagated to the caller.",
+    "Delete the lock from `this.locks` when the queue for that key becomes empty."
+  ],
+  "hints": [
+    "Track a current Promise for each key: `this.locks.get(key) || Promise.resolve()`.",
+    "Chain the next task onto that promise using `.finally()`.",
+    "Be careful to catch errors in the chain so a failure does not block subsequent tasks in the queue forever."
+  ],
+  "testCases": [
+    {
+      "id": "tc-race-1",
+      "name": "Serializes tasks sequentially for same key",
+      "inputDescription": "null",
+      "expectedOutput": "[\"start-1\",\"end-1\",\"start-2\",\"end-2\"]",
+      "explanation": "Task 2 must wait until Task 1 finishes completely before starting."
+    }
+  ],
+  "alternativeApproaches": [
+    "FIFO Array queue of defer resolvers with an active worker loop.",
+    "Distributed Redis Redlock / optimistic concurrency token on the server side (crucial for multi-server setups)."
+  ],
+  "commonMistakes": [
+    "Using a simple boolean flag: between the check and the async operation, another invocation enters.",
+    "Uncaught exceptions in task 1 causing task 2 to hang forever because release() is not in a finally block."
+  ]
+}

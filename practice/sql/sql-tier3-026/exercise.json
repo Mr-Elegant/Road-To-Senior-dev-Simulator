@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-026",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 26,
+  "title": "PostgreSQL JIT Compilation: Overhead, Thresholds, and OLTP Regressions",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "After upgrading to PostgreSQL 12+, an OLTP payment API experiences random latency spikes where individual queries that normally take 2ms take 120ms. Looking at `EXPLAIN ANALYZE`, you see `JIT: Functions: 14, Options: Inlining true, Optimization true, Emission true, Timing: Generation 1.2ms, Inlining 24.5ms, Optimization 62.1ms, Emission 31.8ms`.",
+  "questionStatement": "Explain PostgreSQL Just-In-Time (JIT) compilation (using LLVM). What does JIT accelerate (expression evaluation, tuple deforming), what causes JIT overhead in OLTP environments, and which configuration parameters control when JIT engages?",
+  "expectedConcepts": [
+    "LLVM native machine code compilation at runtime",
+    "Expression evaluation and tuple deforming acceleration",
+    "Compilation time overhead (50-200ms) dominating sub-second OLTP queries",
+    "jit_above_cost and jit_optimize_above_cost thresholds",
+    "OLTP best practice: disable JIT or raise cost threshold"
+  ],
+  "hints": [
+    "Look at the timing numbers in the scenario: JIT emission took over 110ms alone.",
+    "JIT is great for multi-minute OLAP queries, bad for 2ms OLTP queries.",
+    "What parameter turns off JIT or raises its cost threshold?"
+  ]
+}

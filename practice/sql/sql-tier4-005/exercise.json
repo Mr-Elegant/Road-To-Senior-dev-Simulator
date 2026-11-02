@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-005",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 5,
+  "title": "Checkpoint Tuning & WAL Generation Spikes: Eliminating I/O Spikes",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Every 5 minutes, database write latency spikes from 1.5ms to 850ms for 30 seconds. System telemetry shows 100% disk write bandwidth saturation coinciding with PostgreSQL log messages: `LOG: checkpoints are occurring too frequently (30 seconds apart)` and `checkpoint starting: time`.",
+  "questionStatement": "Explain the PostgreSQL Checkpoint mechanism. What triggers a checkpoint (`checkpoint_timeout` vs `max_wal_size`)? How does checkpoint spreading (`checkpoint_completion_target`) smooth out disk I/O, and what are full-page writes (`full_page_writes`) after a checkpoint?",
+  "expectedConcepts": [
+    "Dirty page flushing from shared_buffers to persistent storage",
+    "checkpoint_timeout vs max_wal_size triggers",
+    "checkpoint_completion_target I/O spreading over time",
+    "full_page_writes (FPW) preventing torn pages after crash",
+    "Write amplification caused by frequent checkpoints"
+  ],
+  "hints": [
+    "What happens when dirty pages are dumped all at once versus smoothed over the interval?",
+    "Why does PostgreSQL write an entire 8KB page image into WAL on its first modification after checkpoint?",
+    "What parameter should be increased when logs say checkpoints are occurring too frequently?"
+  ]
+}

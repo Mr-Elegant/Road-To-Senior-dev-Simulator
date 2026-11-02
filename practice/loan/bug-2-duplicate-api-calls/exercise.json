@@ -1,0 +1,153 @@
+{
+  "bugId": "bug-2-duplicate-api-calls",
+  "title": "Admit distinct queries, suppress duplicate in-flight work",
+  "entryPoint": "shouldFetch",
+  "kind": "fetch-gate",
+  "contract": "Implement shouldFetch(active, next). active is null or {status, query}; next is {search,status,page,limit}. Return false only if an identical query is already loading. Compare the four query values, not object identity or JSON property order. Return true for changed queries, completed/failed requests, or no active request. Do not suppress all requests merely because one is loading.",
+  "starterCode": "function shouldFetch(active, next) {\n  return !(active && active.status === 'loading');\n}",
+  "hints": [
+    "A loading request for one search must not block a different search.",
+    "Compare stable primitive query fields; two object instances can describe the same request."
+  ],
+  "tests": [
+    {
+      "id": "duplicate",
+      "name": "Suppress a duplicate described by a fresh object",
+      "input": {
+        "active": {
+          "status": "loading",
+          "query": {
+            "search": "",
+            "status": "ALL",
+            "page": 1,
+            "limit": 20
+          }
+        },
+        "next": {
+          "limit": 20,
+          "page": 1,
+          "status": "ALL",
+          "search": ""
+        }
+      },
+      "expected": false,
+      "explanation": "Equivalent values identify duplicate work even when property order differs.",
+      "sample": true
+    },
+    {
+      "id": "new-search",
+      "name": "Allow a newer search while the old query is loading",
+      "input": {
+        "active": {
+          "status": "loading",
+          "query": {
+            "search": "",
+            "status": "ALL",
+            "page": 1,
+            "limit": 20
+          }
+        },
+        "next": {
+          "search": "Sophia",
+          "status": "ALL",
+          "page": 1,
+          "limit": 20
+        }
+      },
+      "expected": true,
+      "explanation": "A blanket loading guard would lose the latest user query.",
+      "sample": true
+    },
+    {
+      "id": "new-page",
+      "name": "Pagination changes are distinct queries",
+      "input": {
+        "active": {
+          "status": "loading",
+          "query": {
+            "search": "",
+            "status": "ALL",
+            "page": 1,
+            "limit": 20
+          }
+        },
+        "next": {
+          "search": "",
+          "status": "ALL",
+          "page": 2,
+          "limit": 20
+        }
+      },
+      "expected": true,
+      "explanation": "Page is part of the request identity.",
+      "sample": false
+    },
+    {
+      "id": "retry",
+      "name": "Allow retrying the same failed request",
+      "input": {
+        "active": {
+          "status": "failed",
+          "query": {
+            "search": "",
+            "status": "ALL",
+            "page": 1,
+            "limit": 20
+          }
+        },
+        "next": {
+          "search": "",
+          "status": "ALL",
+          "page": 1,
+          "limit": 20
+        }
+      },
+      "expected": true,
+      "explanation": "A failed request is no longer in flight.",
+      "sample": false
+    },
+    {
+      "id": "empty",
+      "name": "Allow the first request",
+      "input": {
+        "active": null,
+        "next": {
+          "search": "",
+          "status": "ALL",
+          "page": 1,
+          "limit": 20
+        }
+      },
+      "expected": true,
+      "explanation": "No active work means nothing to deduplicate.",
+      "sample": false
+    },
+    {
+      "id": "new-status",
+      "name": "Status and page size also distinguish requests",
+      "input": {
+        "active": {
+          "status": "loading",
+          "query": {
+            "search": "",
+            "status": "ALL",
+            "page": 1,
+            "limit": 20
+          }
+        },
+        "next": {
+          "search": "",
+          "status": "PENDING",
+          "page": 1,
+          "limit": 50
+        }
+      },
+      "expected": true,
+      "explanation": "Every documented query field participates in identity.",
+      "sample": false
+    }
+  ],
+  "businessContext": "Every time a parent component re-renders or the user tabs between drawer views, duplicate identical GET requests hit the `/api/applications` and `/api/dashboard/stats` endpoints.",
+  "productionSymptom": "Backend servers experience 4x expected QPS. Database connection pools spike under moderate user load.",
+  "dashboardBuggyCode": "// ❌ BUGGY: Re-creates new object reference on every render, triggering infinite or duplicate fetches\nuseEffect(() => {\n  dispatch(fetchApplications({ search, status }));\n}, [{ search, status }]); // ⚠️ New object reference each render!\n\n// In component:\nconst onRefresh = () => dispatch(fetchApplications(currentFilters)); // No in-flight guard"
+}

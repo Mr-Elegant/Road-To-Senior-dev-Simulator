@@ -1,0 +1,24 @@
+{
+  "id": "t1-react-04",
+  "title": "How does event handling work in React, and why should you pass a function reference instead of invoking it?",
+  "category": "React Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 4,
+  "expectedConcepts": [
+    "SyntheticEvent system for cross-browser normalization",
+    "camelCase naming (onClick, onChange, onSubmit)",
+    "Passing function reference vs immediate invocation onClick={handleClick} vs onClick={handleClick()}",
+    "Passing arguments with arrow functions onClick={() => handleDelete(id)}"
+  ],
+  "hints": [
+    "What happens if you write parentheses () right after the function name in onClick?",
+    "How does an arrow function delay execution until the click actually happens?"
+  ],
+  "codingExercise": {
+    "instruction": "Attach a click handler to the button that alerts the passed title without executing on render.",
+    "starterCode": "function AlertButton({ title }) {\n  // Return a button with an onClick handler that calls alert(title)\n  return <button>Click Me</button>;\n}",
+    "language": "javascript",
+    "expectedOutput": "<button onClick={() => alert(title)}>Click Me</button>"
+  }
+}

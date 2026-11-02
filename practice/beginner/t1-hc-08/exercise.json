@@ -1,0 +1,19 @@
+{
+  "id": "t1-hc-08",
+  "title": "What is the difference between px, rem, em, and % units in CSS?",
+  "category": "HTML and CSS",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 8,
+  "expectedConcepts": [
+    "Absolute units (px: fixed pixels on screen)",
+    "rem (root em: relative to root <html> font-size, default 16px)",
+    "em (relative to parent element font-size)",
+    "Percentage (%: relative to parent dimension)",
+    "Accessibility benefits of rem for user browser zoom/text-resizing"
+  ],
+  "hints": [
+    "Which unit references the root <html> font size?",
+    "Which unit is absolute and ignores browser zoom preferences?"
+  ]
+}

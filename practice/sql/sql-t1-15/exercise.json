@@ -1,0 +1,34 @@
+{
+  "id": "sql-t1-15",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 15,
+  "title": "Conditional Aggregation with CASE WHEN",
+  "category": "Filtering, Sorting, and Aggregation",
+  "questionType": "executable",
+  "datasetId": "loan_management",
+  "realWorldScenario": "Credit risk officers need to count how many loans are in good standing versus overdue across EMI installments.",
+  "questionStatement": "Write a query on `emi_schedule` to calculate the total count of installments (`total_emis`), count of paid installments (`paid_count`), and count of overdue installments (`overdue_count`) using `CASE WHEN`.",
+  "starterCode": "-- Conditional aggregation on EMI installments\nSELECT\n  COUNT(*) AS total_emis,\n  SUM(CASE WHEN status = 'PAID' THEN 1 ELSE 0 END) AS paid_count,\n  SUM(CASE WHEN status = 'OVERDUE' THEN 1 ELSE 0 END) AS overdue_count\nFROM emi_schedule;",
+  "expectedConcepts": [
+    "CASE WHEN statement",
+    "Conditional aggregation",
+    "Pivot logic"
+  ],
+  "hints": [
+    "In a CASE statement, evaluate WHEN status = 'PAID' THEN 1 ELSE 0 END, and wrap with SUM."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-15",
+      "description": "Verify conditional EMI status breakdown",
+      "expectedRows": [
+        {
+          "total_emis": 17,
+          "paid_count": 12,
+          "overdue_count": 3
+        }
+      ]
+    }
+  ]
+}

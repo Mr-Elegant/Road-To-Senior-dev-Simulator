@@ -1,0 +1,195 @@
+[
+  {
+    "id": "latest-first",
+    "name": "A slow old response cannot replace a newer success",
+    "input": {
+      "initial": {
+        "items": [
+          "original"
+        ],
+        "status": "idle",
+        "activeRequestId": null,
+        "error": null
+      },
+      "actions": [
+        {
+          "type": "pending",
+          "requestId": "old"
+        },
+        {
+          "type": "pending",
+          "requestId": "new"
+        },
+        {
+          "type": "fulfilled",
+          "requestId": "new",
+          "items": [
+            "Sophia"
+          ]
+        },
+        {
+          "type": "fulfilled",
+          "requestId": "old",
+          "items": [
+            "Aarav"
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        "Sophia"
+      ],
+      "status": "succeeded",
+      "activeRequestId": null,
+      "error": null
+    },
+    "explanation": "The old response arrives last but does not own the active request.",
+    "sample": true
+  },
+  {
+    "id": "stale-error",
+    "name": "An old error cannot fail the current request",
+    "input": {
+      "initial": {
+        "items": [
+          "original"
+        ],
+        "status": "idle",
+        "activeRequestId": null,
+        "error": null
+      },
+      "actions": [
+        {
+          "type": "pending",
+          "requestId": "old"
+        },
+        {
+          "type": "pending",
+          "requestId": "new"
+        },
+        {
+          "type": "rejected",
+          "requestId": "old",
+          "error": "503"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        "original"
+      ],
+      "status": "loading",
+      "activeRequestId": "new",
+      "error": null
+    },
+    "explanation": "Ignore stale failures as well as stale success responses.",
+    "sample": true
+  },
+  {
+    "id": "active-error",
+    "name": "A current failure preserves previous results and ends loading",
+    "input": {
+      "initial": {
+        "items": [
+          "original"
+        ],
+        "status": "idle",
+        "activeRequestId": null,
+        "error": null
+      },
+      "actions": [
+        {
+          "type": "pending",
+          "requestId": "x"
+        },
+        {
+          "type": "rejected",
+          "requestId": "x",
+          "error": "Offline"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        "original"
+      ],
+      "status": "failed",
+      "activeRequestId": null,
+      "error": "Offline"
+    },
+    "explanation": "A genuine active error is surfaced without erasing prior data.",
+    "sample": false
+  },
+  {
+    "id": "stale-before",
+    "name": "An old success cannot finish a pending newer search",
+    "input": {
+      "initial": {
+        "items": [
+          "original"
+        ],
+        "status": "idle",
+        "activeRequestId": null,
+        "error": null
+      },
+      "actions": [
+        {
+          "type": "pending",
+          "requestId": "a"
+        },
+        {
+          "type": "pending",
+          "requestId": "b"
+        },
+        {
+          "type": "fulfilled",
+          "requestId": "a",
+          "items": [
+            "old"
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        "original"
+      ],
+      "status": "loading",
+      "activeRequestId": "b",
+      "error": null
+    },
+    "explanation": "The active request stays pending until its own outcome.",
+    "sample": false
+  },
+  {
+    "id": "unknown",
+    "name": "Unknown events leave the state intact",
+    "input": {
+      "initial": {
+        "items": [
+          "original"
+        ],
+        "status": "idle",
+        "activeRequestId": null,
+        "error": null
+      },
+      "actions": [
+        {
+          "type": "other",
+          "requestId": "x"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        "original"
+      ],
+      "status": "idle",
+      "activeRequestId": null,
+      "error": null
+    },
+    "explanation": "Unrelated actions must not change this reducer.",
+    "sample": false
+  }
+]

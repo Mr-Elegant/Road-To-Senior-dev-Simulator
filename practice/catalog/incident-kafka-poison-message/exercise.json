@@ -1,0 +1,498 @@
+{
+  "id": "incident-kafka-poison-message",
+  "title": "Consumer Backlog: One Poison Event Blocks Fulfillment",
+  "type": "incident",
+  "topic": "Integrations",
+  "subtopic": "Evolving production incident",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "Fulfillment consumes six Kafka partitions. A new producer emits schema v3 while one consumer still expects v2. Partition 2 repeatedly fails on offset 8841, delaying every later order on that partition.",
+  "problemStatement": "The oldest unfulfilled order is 24 minutes old; adding consumer replicas does not move partition 2. Work through three timed developments, justify your actions, and write an evidence-based incident response. The simulation starts paused; advancing time can expire unanswered decisions.",
+  "constraints": [
+    "Preserve an auditable disposition for every order event.",
+    "Do not reset offsets to latest or silently discard failed records.",
+    "Kafka offsets and external fulfillment side effects need separate integrity controls.",
+    "All telemetry is synthetic. Actions only affect this practice simulation."
+  ],
+  "candidateTasks": [
+    "Contain customer impact while preserving evidence and data integrity.",
+    "Respond to each new development and explain the selected action.",
+    "Cite telemetry supporting the root cause; distinguish observation from inference.",
+    "Define a permanent correction, regression coverage, recovery gates, and stakeholder update."
+  ],
+  "incidentTelemetry": {
+    "logs": [
+      {
+        "timestamp": "T+00:00",
+        "level": "WARN",
+        "service": "fulfillment-consumer",
+        "message": "The oldest unfulfilled order is 24 minutes old; adding consumer replicas does not move partition 2."
+      }
+    ],
+    "metrics": [
+      {
+        "metricName": "affected_operations_percent",
+        "baseline": "0.1",
+        "incidentPeak": "35",
+        "unit": "%",
+        "status": "critical",
+        "trend": "Latest observation after the selected action; not a live production metric"
+      }
+    ],
+    "customerReports": [
+      {
+        "id": "incident-kafka-poison-message-report",
+        "reporter": "Incident commander",
+        "impact": "Active customer impact",
+        "quote": "The oldest unfulfilled order is 24 minutes old; adding consumer replicas does not move partition 2."
+      }
+    ],
+    "recentDeployments": [
+      {
+        "commitHash": "essage-r1",
+        "author": "service-team",
+        "message": "Publish an incompatible required field without consumer rollout",
+        "timeAgo": "12 minutes before the alert",
+        "diffSnippet": "schemaVersion: 2 -> 3\naddress.postcode -> destination.postalCode\nconsumer expects address.postcode"
+      }
+    ]
+  },
+  "incidentSimulation": {
+    "version": 1,
+    "initialSeverity": "SEV1",
+    "stages": [
+      {
+        "id": "development-1",
+        "atSeconds": 0,
+        "title": "A stuck partition",
+        "briefing": "Every failure references partition 2 offset 8841. The other partitions continue consuming and only six consumers can own partitions concurrently.",
+        "branches": {
+          "effective": "The incompatible producer is contained and the failed record is preserved.",
+          "partial": "Some impact remains. More consumers cannot remove a deterministic parsing failure on the same record.",
+          "harmful": "More consumers cannot remove a deterministic parsing failure on the same record.",
+          "timeout": "The previous deadline passed without a response. More consumers cannot remove a deterministic parsing failure on the same record."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+00:00",
+              "level": "WARN",
+              "service": "fulfillment-consumer",
+              "message": "partition=2 offset=8841 schema=v3 validation_failed; group replicas=18 partitions=6."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "1-partial",
+            "label": "Add more consumers beyond the partition count",
+            "outcome": "partial",
+            "consequence": "Additional replicas stay idle or trigger rebalances without fixing offset 8841.",
+            "customerImpact": "The same customers remain blocked.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "fulfillment-consumer",
+                  "message": "Additional replicas stay idle or trigger rebalances without fixing offset 8841."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "28",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-harmful",
+            "label": "Reset the consumer group to latest",
+            "outcome": "harmful",
+            "consequence": "The group skips unprocessed order events without a durable recovery record.",
+            "customerImpact": "Orders disappear from normal fulfillment processing.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "fulfillment-consumer",
+                  "message": "The group skips unprocessed order events without a durable recovery record."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "76",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-effective",
+            "label": "Contain the producer rollout and inspect the failed schema",
+            "outcome": "effective",
+            "consequence": "Incompatible new events stop; the original record and offset are retained for controlled recovery.",
+            "customerImpact": "Backlog growth slows while existing orders remain recoverable.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "fulfillment-consumer",
+                  "message": "Incompatible new events stop; the original record and offset are retained for controlled recovery."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "8",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"A stuck partition\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+00:00",
+                "level": "WARN",
+                "service": "fulfillment-consumer",
+                "message": "Decision deadline missed: partition=2 offset=8841 schema=v3 validation_failed; group replicas=18 partitions=6."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "1-effective",
+          "reasoning": "Localize the failing partition and record, stop incompatible production, and preserve offsets. Scaling beyond partitions cannot fix deterministic poison data."
+        }
+      },
+      {
+        "id": "development-2",
+        "atSeconds": 120,
+        "title": "A quarantine write fails",
+        "briefing": "The proposed dead-letter store times out. A developer suggests committing the source offset anyway so the queue can move.",
+        "branches": {
+          "effective": "The source is contained, but safe disposition is still required before progress.",
+          "partial": "Some impact remains. Recover any skipped event range before relying on the apparent lag reduction.",
+          "harmful": "Recover any skipped event range before relying on the apparent lag reduction.",
+          "timeout": "The previous deadline passed without a response. Recover any skipped event range before relying on the apparent lag reduction."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+02:00",
+              "level": "WARN",
+              "service": "fulfillment-consumer",
+              "message": "quarantine_write=timeout; source_offset=8841 not committed; downstream side effect absent."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "2-harmful",
+            "label": "Commit first and write the dead-letter record later",
+            "outcome": "harmful",
+            "consequence": "A process crash can lose the only recoverable disposition for the source event.",
+            "customerImpact": "Some orders cannot be accounted for.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "fulfillment-consumer",
+                  "message": "A process crash can lose the only recoverable disposition for the source event."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "61",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-effective",
+            "label": "Commit only after confirmed durable quarantine or successful processing",
+            "outcome": "effective",
+            "consequence": "The partition pauses with bounded retries until the original payload, schema, offset and error are durably recorded.",
+            "customerImpact": "Orders are delayed explicitly rather than silently lost.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "fulfillment-consumer",
+                  "message": "The partition pauses with bounded retries until the original payload, schema, offset and error are durably recorded."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "4",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-partial",
+            "label": "Retry the failing quarantine call forever with no backoff",
+            "outcome": "partial",
+            "consequence": "The record is retained, but a tight retry loop adds pressure and leaves no escalation boundary.",
+            "customerImpact": "Order delays continue.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "fulfillment-consumer",
+                  "message": "The record is retained, but a tight retry loop adds pressure and leaves no escalation boundary."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "20",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"A quarantine write fails\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+02:00",
+                "level": "WARN",
+                "service": "fulfillment-consumer",
+                "message": "Decision deadline missed: quarantine_write=timeout; source_offset=8841 not committed; downstream side effect absent."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "2-effective",
+          "reasoning": "Do not acknowledge away the recovery source before durable disposition. Kafka transactions can coordinate Kafka topics and offsets, but an external store requires its own idempotent crash-safe protocol."
+        }
+      },
+      {
+        "id": "development-3",
+        "atSeconds": 300,
+        "title": "Replay meets a duplicate delivery",
+        "briefing": "A compatible consumer is deployed. One quarantined order was already fulfilled before a previous process crashed, so replay can repeat a real-world side effect.",
+        "branches": {
+          "effective": "The preserved event set enables a measured replay with deduplication.",
+          "partial": "Some impact remains. Reconstruct the missing event range and disposition ledger before treating the backlog as complete.",
+          "harmful": "Reconstruct the missing event range and disposition ledger before treating the backlog as complete.",
+          "timeout": "The previous deadline passed without a response. Reconstruct the missing event range and disposition ledger before treating the backlog as complete."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+05:00",
+              "level": "WARN",
+              "service": "fulfillment-consumer",
+              "message": "order=ord-998 has fulfillment ledger entry; replay includes same business event ID."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "3-effective",
+            "label": "Replay a bounded range through business-ID deduplication",
+            "outcome": "effective",
+            "consequence": "The existing fulfillment is recognized; remaining events process once at the business boundary while offset ranges are reconciled.",
+            "customerImpact": "Delayed orders recover without duplicate shipments.",
+            "severity": "SEV3",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "fulfillment-consumer",
+                  "message": "The existing fulfillment is recognized; remaining events process once at the business boundary while offset ranges are reconciled."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "0.1",
+                  "unit": "%",
+                  "status": "normal",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-partial",
+            "label": "Replay safely but remove lag alerts immediately",
+            "outcome": "partial",
+            "consequence": "Orders progress, but a recurring stuck partition has no early warning.",
+            "customerImpact": "Future fulfillment delays could go unnoticed.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "fulfillment-consumer",
+                  "message": "Orders progress, but a recurring stuck partition has no early warning."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "3",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-harmful",
+            "label": "Replay all events without checking prior fulfillment",
+            "outcome": "harmful",
+            "consequence": "Previously applied events trigger additional shipments.",
+            "customerImpact": "Backlog recovery creates duplicate customer deliveries.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "fulfillment-consumer",
+                  "message": "Previously applied events trigger additional shipments."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "47",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Replay meets a duplicate delivery\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+05:00",
+                "level": "WARN",
+                "service": "fulfillment-consumer",
+                "message": "Decision deadline missed: order=ord-998 has fulfillment ledger entry; replay includes same business event ID."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "3-effective",
+          "reasoning": "Exactly-once claims must stop at the actual transactional boundary. Protect external side effects with durable business IDs and reconcile ranges, quarantine counts and order outcomes."
+        }
+      }
+    ],
+    "endSeconds": 480
+  },
+  "hints": [
+    "All errors point to partition 2 offset 8841 with schema v3.",
+    "Stop or roll back incompatible production where safe and preserve the failed record plus its schema and coordinates.",
+    "Introduce schema compatibility checks and tolerant versioned consumers before producers switch."
+  ],
+  "alternativeApproaches": [
+    "Use Kafka transactions for Kafka-to-Kafka transformations with read_committed consumers; external side effects remain a separate boundary.",
+    "Keep strict partition ordering and stop the partition until manual repair when skipping a record would violate domain invariants."
+  ],
+  "commonMistakes": [
+    "Adding consumers beyond partition capacity.",
+    "Committing offsets before durable disposition.",
+    "Claiming Kafka exactly-once automatically prevents duplicate external shipments."
+  ]
+}

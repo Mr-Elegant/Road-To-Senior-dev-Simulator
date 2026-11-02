@@ -1,0 +1,24 @@
+{
+  "id": "t1-js-03",
+  "title": "What is the difference between loose equality (==) and strict equality (===)?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 3,
+  "expectedConcepts": [
+    "Type coercion (implicit conversion)",
+    "Strict equality checking both type and value",
+    "Best practice of using ==="
+  ],
+  "hints": [
+    "Think about what JavaScript does when comparing a number to a string.",
+    "Which operator checks the data type first before comparing?"
+  ],
+  "codingExercise": {
+    "instruction": "Write a function isStrictlyEqual(a, b) that returns true only if a and b have identical types and values.",
+    "starterCode": "function isStrictlyEqual(a, b) {\n  // Your code here\n}",
+    "language": "javascript",
+    "sampleInput": "isStrictlyEqual(42, \"42\")",
+    "expectedOutput": "false"
+  }
+}

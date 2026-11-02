@@ -1,0 +1,20 @@
+{
+  "id": "sql-t1-18",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 18,
+  "title": "Second Normal Form (2NF) and Composite Keys",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "realWorldScenario": "An order items table has a composite primary key (order_id, product_id). It also stores product_name and product_category in the same row.",
+  "questionStatement": "Why does storing product_name in this composite-key table violate Second Normal Form (2NF)? Explain 2NF and partial dependencies.",
+  "expectedConcepts": [
+    "Must be in 1NF",
+    "No partial dependencies",
+    "Non-key attributes must depend on the whole composite primary key",
+    "Update and deletion anomalies"
+  ],
+  "hints": [
+    "Ask yourself: Does product_name change when order_id changes?"
+  ]
+}

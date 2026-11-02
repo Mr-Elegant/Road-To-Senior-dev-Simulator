@@ -1,0 +1,23 @@
+{
+  "id": "sql-tier3-009",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 9,
+  "title": "Advisory Locks: Application-Level Distributed Locking in Postgres",
+  "category": "Locks and Deadlocks",
+  "questionType": "conceptual",
+  "datasetId": "loan_management",
+  "realWorldScenario": "Your microservices backend must execute a monthly interest accrual batch job. Three container instances run concurrently. If two containers run the job simultaneously for the same loan portfolio, interest is doubled.",
+  "questionStatement": "Compare PostgreSQL Advisory Locks with row-level locks (`SELECT FOR UPDATE`). Explain the differences between session-level and transaction-level advisory locks (`pg_advisory_lock` vs `pg_advisory_xact_lock`), and between blocking and non-blocking variants (`pg_try_advisory_lock`).",
+  "expectedConcepts": [
+    "In-memory lock table without table/row dependency",
+    "64-bit integer or (int4, int4) key space",
+    "Transaction-scoped (xact) vs session-scoped locks",
+    "pg_try_advisory_xact_lock non-blocking semantics for idempotent jobs",
+    "PgBouncer transaction-mode danger with session-level advisory locks"
+  ],
+  "hints": [
+    "What happens if a session-level lock is used with PgBouncer transaction pooling?",
+    "Which function returns a boolean immediately instead of blocking?"
+  ]
+}

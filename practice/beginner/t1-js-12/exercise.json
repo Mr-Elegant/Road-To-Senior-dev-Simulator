@@ -1,0 +1,18 @@
+{
+  "id": "t1-js-12",
+  "title": "How does the JavaScript event loop work in simple terms?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 12,
+  "expectedConcepts": [
+    "Single-threaded execution",
+    "Call Stack (current execution)",
+    "Web APIs / Background handlers (timers, fetch)",
+    "Task Queue / Callback Queue waiting for stack to clear"
+  ],
+  "hints": [
+    "Think of the call stack as a stack of plates and the queue as a waiting line.",
+    "Notice what prints first when you run console.log before and after setTimeout."
+  ]
+}

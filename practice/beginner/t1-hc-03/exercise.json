@@ -1,0 +1,19 @@
+{
+  "id": "t1-hc-03",
+  "title": "How does CSS specificity work and what are the main selector types?",
+  "category": "HTML and CSS",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 3,
+  "expectedConcepts": [
+    "Type (element) selector (p, div, h1)",
+    "Class selector (.button, .card)",
+    "ID selector (#navbar, #hero)",
+    "Inline styles and !important",
+    "Specificity hierarchy: Inline > ID > Class/Attribute/Pseudo-class > Element"
+  ],
+  "hints": [
+    "Which is more specific: an ID like #header or a class like .header?",
+    "If two rules have the exact same specificity, which one applies?"
+  ]
+}

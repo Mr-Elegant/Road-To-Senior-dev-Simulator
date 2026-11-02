@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-nplus-1",
+    "name": "Combines queries and uses composite index",
+    "inputDescription": "null",
+    "expectedOutput": "\"batch_join_with_composite_index\"",
+    "explanation": "Replaces 51 queries with a single indexed query."
+  }
+]

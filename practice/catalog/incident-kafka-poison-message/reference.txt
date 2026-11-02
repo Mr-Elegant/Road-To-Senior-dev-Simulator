@@ -1,0 +1,8 @@
+For each source event:
+1. Read event ID, partition, offset and schema version.
+2. Validate compatible payload.
+3. If processable: apply business effect through durable deduplication.
+4. If not: write durable quarantine with payload + error + coordinates.
+5. Confirm disposition, then commit the next source offset.
+6. On ambiguous external writes: reconcile before advancing.
+Kafka transactions do not automatically include an external warehouse API.

@@ -1,0 +1,91 @@
+{
+  "id": "sql-t2-04",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 4,
+  "title": "Ranking Products Within Categories Using DENSE_RANK()",
+  "category": "Window Functions",
+  "questionType": "executable",
+  "executionDialect": "postgresql",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Merchandising wants to display product rank within each category from most expensive to least expensive.",
+  "questionStatement": "Write a query to rank products within each `category` based on `price` descending. Return `category`, `name`, `price`, and `category_price_rank` using `DENSE_RANK() OVER (PARTITION BY category ORDER BY price DESC)`. Order final results by `category` ascending, then `category_price_rank` ascending.",
+  "starterCode": "-- Rank products per category with DENSE_RANK\nSELECT\n  category,\n  name,\n  price,\n  DENSE_RANK() OVER (PARTITION BY category ORDER BY price DESC) AS category_price_rank\nFROM products\nORDER BY category ASC, category_price_rank ASC;",
+  "expectedConcepts": [
+    "Window function OVER() clause",
+    "PARTITION BY window grouping",
+    "DENSE_RANK vs RANK vs ROW_NUMBER"
+  ],
+  "hints": [
+    "Use DENSE_RANK() OVER (PARTITION BY category ORDER BY price DESC).",
+    "Order the final query by category ASC, category_price_rank ASC."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t2-04",
+      "description": "Verify category-based pricing ranks",
+      "expectedRows": [
+        {
+          "category": "Apparel",
+          "name": "Waterproof Trail Running Shoes",
+          "price": 135,
+          "category_price_rank": 1
+        },
+        {
+          "category": "Apparel",
+          "name": "Merino Wool Pullover",
+          "price": 89,
+          "category_price_rank": 2
+        },
+        {
+          "category": "Books",
+          "name": "Database Internals in Practice",
+          "price": 52,
+          "category_price_rank": 1
+        },
+        {
+          "category": "Books",
+          "name": "Designing Data-Intensive Applications",
+          "price": 45,
+          "category_price_rank": 2
+        },
+        {
+          "category": "Electronics",
+          "name": "Ultra-Wide 4K Gaming Monitor",
+          "price": 549,
+          "category_price_rank": 1
+        },
+        {
+          "category": "Electronics",
+          "name": "Noise-Cancelling Headphones",
+          "price": 199.99,
+          "category_price_rank": 2
+        },
+        {
+          "category": "Electronics",
+          "name": "Mechanical Wireless Keyboard",
+          "price": 129.5,
+          "category_price_rank": 3
+        },
+        {
+          "category": "Electronics",
+          "name": "Discontinued USB Hub",
+          "price": 25,
+          "category_price_rank": 4
+        },
+        {
+          "category": "Home & Kitchen",
+          "name": "Smart Induction Espresso Machine",
+          "price": 249.99,
+          "category_price_rank": 1
+        },
+        {
+          "category": "Home & Kitchen",
+          "name": "Ergonomic Standing Desk Mat",
+          "price": 49.95,
+          "category_price_rank": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "nodejs-graceful-shutdown-worker",
+  "title": "Kubernetes Rolling Deployment Background Transaction Data Loss",
+  "type": "debugging",
+  "topic": "Node.js",
+  "subtopic": "Graceful shutdown",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "During automated CI/CD deployments of a payout processing worker service on Kubernetes, payouts occasionally get left in a half-processed `PENDING` state with missing bank transfers, requiring manual database surgery to reconcile balances.",
+  "problemStatement": "When Kubernetes deploys a new replica set, it sends a `SIGTERM` signal to the old pods. The Node.js application immediately executed `process.exit(0)` inside the `SIGTERM` handler. Any background database transaction currently running mid-flight was aborted abruptly without rolling back or finishing, corrupting ledger balances.",
+  "constraints": [
+    "Must intercept `SIGTERM` and `SIGINT` signals.",
+    "Stop accepting new jobs from Redis / BullMQ / SQS queue.",
+    "Allow active in-flight transactions a graceful grace period (e.g. 15s) to complete.",
+    "Close database connection pools cleanly before exiting."
+  ],
+  "starterCode": "const http = require('http');\n\n/**\n * Buggy Abrupt Shutdown Handler\n */\nfunction setupProcessLifecycle(server, dbPool, jobQueue) {\n  // BUG: Instantly kills process, killing in-flight bank payouts!\n  process.on('SIGTERM', () => {\n    console.log(\"SIGTERM received. Terminating immediately.\");\n    process.exit(0);\n  });\n}\n\nfunction solution(input) {\n  return \"graceful_shutdown_coordinated\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain the Kubernetes pod termination lifecycle (`preStop`, `SIGTERM`, `terminationGracePeriodSeconds`, `SIGKILL`).",
+    "Implement coordinated graceful shutdown: stop accepting new work -> wait for in-flight tasks -> close DB pools -> `process.exit(0)`.",
+    "Add a hard timeout fallback so the process exits even if a stuck connection hangs."
+  ],
+  "hints": [
+    "On SIGTERM: 1) Stop listening to new HTTP requests / pause queue worker. 2) Wait for active operations. 3) Close database pool. 4) Set safety timeout (e.g. 15s) to force-exit if stuck.",
+    "Remember to call forceExitTimer.unref() so the safety timer does not keep the event loop alive on its own after all connections finish."
+  ],
+  "testCases": [
+    {
+      "id": "tc-shutdown-1",
+      "name": "Coordinates graceful shutdown and finishes active jobs",
+      "inputDescription": "null",
+      "expectedOutput": "\"graceful_shutdown_coordinated\"",
+      "explanation": "Safely protects in-flight transactions during rolling restart."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using Kubernetes `preStop` hook with `sleep 5` before SIGTERM to allow load balancer iptables propagation."
+  ],
+  "commonMistakes": [
+    "Not calling `forceExitTimer.unref()`, which can keep the event loop alive by itself.",
+    "Closing the database pool before waiting for active HTTP requests to complete, causing in-flight requests to fail with \"Connection pool closed\"."
+  ]
+}

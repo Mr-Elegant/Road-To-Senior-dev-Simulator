@@ -1,0 +1,11 @@
+Architecture Transformation:
+Phase 1: Facade
+[Client] ──► [API Gateway] ──(100% traffic)──► [Legacy Monolith] ──► [Shared DB]
+
+Phase 2: Strangler Extraction
+[Client] ──► [API Gateway] ──(90% traffic)───► [Legacy Monolith]
+                    │
+                    └───(/inventory/*)──────► [Inventory Service] ──► [Inventory DB]
+                                                    ▲
+                                                    │ (CDC Sync: Debezium)
+                                            [Shared Monolith DB]

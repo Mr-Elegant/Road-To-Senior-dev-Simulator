@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-16",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 16,
+  "title": "Partial Indexes in PostgreSQL",
+  "category": "Indexes and Query Planning",
+  "questionType": "conceptual",
+  "realWorldScenario": "A job queue table has 10 million completed jobs and 500 pending jobs. Workers frequently run: `SELECT * FROM jobs WHERE status = 'PENDING' ORDER BY priority DESC;`",
+  "questionStatement": "What is a Partial Index in PostgreSQL? Write the DDL to index only pending jobs. Why is this superior to a full table index?",
+  "expectedConcepts": [
+    "Partial index with WHERE clause",
+    "Drastic reduction in index size and disk footprint",
+    "Zero write overhead for non-matching rows",
+    "Cache efficiency in shared_buffers"
+  ],
+  "hints": [
+    "Add a WHERE clause directly to CREATE INDEX."
+  ]
+}

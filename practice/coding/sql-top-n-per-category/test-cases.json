@@ -1,0 +1,16 @@
+[
+  {
+    "id": "tc-sql-top2",
+    "name": "Ranks top 2 products in Electronics (Laptop, Monitor) and Apparel (Jacket, Shoes)",
+    "inputDescription": "",
+    "expectedOutput": "[{\"category_name\":\"Apparel\",\"product_title\":\"Winter Jacket\",\"revenue\":22000,\"ranking\":1},{\"category_name\":\"Apparel\",\"product_title\":\"Running Shoes\",\"revenue\":18000,\"ranking\":2},{\"category_name\":\"Electronics\",\"product_title\":\"Laptop Pro\",\"revenue\":50000,\"ranking\":1},{\"category_name\":\"Electronics\",\"product_title\":\"4K Monitor\",\"revenue\":35000,\"ranking\":2}]",
+    "explanation": "Accurately partitions by category and isolates the top 2 ranked items."
+  },
+  {
+    "id": "tc-sql-top-parka",
+    "name": "Correctly ranks when a new high-revenue apparel product is added",
+    "inputDescription": "INSERT INTO products (id, category_id, title, revenue) VALUES (23, 2, 'Luxury Parka', 25000);",
+    "expectedOutput": "[{\"category_name\":\"Apparel\",\"product_title\":\"Luxury Parka\",\"revenue\":25000,\"ranking\":1},{\"category_name\":\"Apparel\",\"product_title\":\"Winter Jacket\",\"revenue\":22000,\"ranking\":2},{\"category_name\":\"Electronics\",\"product_title\":\"Laptop Pro\",\"revenue\":50000,\"ranking\":1},{\"category_name\":\"Electronics\",\"product_title\":\"4K Monitor\",\"revenue\":35000,\"ranking\":2}]",
+    "explanation": "Dynamic ranking adapts as category leaders change."
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-async-1",
+    "name": "Gracefully handles mixed success and failures",
+    "inputDescription": "\"batch-1\"",
+    "expectedOutput": "\"repaired\"",
+    "explanation": "All invoices are evaluated and failures do not crash the batch."
+  }
+]

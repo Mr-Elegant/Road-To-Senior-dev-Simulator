@@ -1,0 +1,24 @@
+{
+  "id": "t1-js-08",
+  "title": "How do you access, update, and destructure JavaScript object properties?",
+  "category": "JavaScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 8,
+  "expectedConcepts": [
+    "Dot notation vs Bracket notation for dynamic keys",
+    "Object destructuring syntax with default values",
+    "Adding and updating properties"
+  ],
+  "hints": [
+    "When the property name is stored in a variable, can you use dot notation?",
+    "Destructuring lets you pull out properties in one line: const { prop } = obj."
+  ],
+  "codingExercise": {
+    "instruction": "Write a function getFullName(user) that destructures firstName and lastName from the user object and returns a formatted string \"firstName lastName\".",
+    "starterCode": "function getFullName(user) {\n  // Destructure firstName and lastName here\n  return '';\n}",
+    "language": "javascript",
+    "sampleInput": "getFullName({ firstName: \"John\", lastName: \"Doe\" })",
+    "expectedOutput": "\"John Doe\""
+  }
+}

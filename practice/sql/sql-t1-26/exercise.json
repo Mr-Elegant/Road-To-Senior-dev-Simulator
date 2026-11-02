@@ -1,0 +1,19 @@
+{
+  "id": "sql-t1-26",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 26,
+  "title": "SQL Injection Prevention: Parameterized Queries vs String Concatenation",
+  "category": "Database Security and Permissions",
+  "questionType": "conceptual",
+  "realWorldScenario": "A junior developer writes: `const query = \"SELECT * FROM users WHERE email = '\" + req.body.email + \"'\";`",
+  "questionStatement": "Why is this code vulnerable to SQL Injection? What payload could an attacker submit, and how do Parameterized Queries (Prepared Statements) prevent this?",
+  "expectedConcepts": [
+    "SQL Injection vulnerability through string concatenation",
+    "Attack payload demonstration",
+    "Separation of code and data in Prepared Statements ($1 / ?)"
+  ],
+  "hints": [
+    "Show how an attacker closes the quote and injects boolean tautology."
+  ]
+}

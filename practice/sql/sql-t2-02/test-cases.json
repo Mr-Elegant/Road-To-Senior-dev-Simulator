@@ -1,0 +1,13 @@
+[
+  {
+    "id": "tc-t2-02",
+    "description": "Verify customers with recorded refunds (Customer 1 had order 110 refunded)",
+    "expectedRows": [
+      {
+        "id": 1,
+        "name": "Aarav Patel",
+        "city": "Bengaluru"
+      }
+    ]
+  }
+]

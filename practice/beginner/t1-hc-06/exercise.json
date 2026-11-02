@@ -1,0 +1,18 @@
+{
+  "id": "t1-hc-06",
+  "title": "What is CSS Grid and when would you choose it over Flexbox?",
+  "category": "HTML and CSS",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 6,
+  "expectedConcepts": [
+    "Two-dimensional layout (rows AND columns simultaneously)",
+    "grid-template-columns and grid-template-rows",
+    "repeat() and fractional units (fr)",
+    "Choosing Flexbox (content-driven / 1D) vs Grid (layout-driven / 2D page templates)"
+  ],
+  "hints": [
+    "How many dimensions can Flexbox control at once versus Grid?",
+    "What unit divides remaining space into fractions?"
+  ]
+}

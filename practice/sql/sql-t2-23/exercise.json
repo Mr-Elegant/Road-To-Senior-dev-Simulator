@@ -1,0 +1,21 @@
+{
+  "id": "sql-t2-23",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 23,
+  "title": "Understanding PostgreSQL MVCC: Tuple Headers and xmin / xmax",
+  "category": "Isolation Levels and MVCC",
+  "questionType": "conceptual",
+  "realWorldScenario": "A software engineer asks how PostgreSQL allows readers to read data without locking out concurrent writers.",
+  "questionStatement": "What is Multi-Version Concurrency Control (MVCC) in PostgreSQL? Explain how every row tuple uses hidden system columns `xmin` and `xmax` to determine visibility.",
+  "expectedConcepts": [
+    "Multi-Version Concurrency Control (MVCC)",
+    "Readers do not block writers, writers do not block readers",
+    "xmin (creation transaction ID)",
+    "xmax (deletion/update transaction ID)",
+    "Tuple visibility determination"
+  ],
+  "hints": [
+    "Think of UPDATE as inserting a new row and setting xmax on the old row."
+  ]
+}

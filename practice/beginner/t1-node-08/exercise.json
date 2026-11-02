@@ -1,0 +1,19 @@
+{
+  "id": "t1-node-08",
+  "title": "What is Express middleware and what is the role of the next() function?",
+  "category": "Node.js and API Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 8,
+  "expectedConcepts": [
+    "Middleware function signature (req, res, next)",
+    "Pipeline execution order in Express",
+    "Calling next() to pass control to the subsequent middleware or route handler",
+    "Ending the request-response cycle (sending response or returning error)",
+    "Common uses: Logging, authentication checks, request validation, CORS"
+  ],
+  "hints": [
+    "What happens if your middleware does not call next() and does not call res.send()?",
+    "What are the 3 parameters every standard Express middleware receives?"
+  ]
+}

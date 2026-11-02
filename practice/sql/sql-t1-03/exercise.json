@@ -1,0 +1,42 @@
+{
+  "id": "sql-t1-03",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 3,
+  "title": "Eliminating Duplicates with DISTINCT",
+  "category": "SQL Fundamentals",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "The marketing team wants a unique list of all merchandise categories currently offered.",
+  "questionStatement": "Write a query to retrieve all distinct product `category` names from the `products` table, sorted alphabetically.",
+  "starterCode": "-- Select unique categories\nSELECT DISTINCT category\nFROM products\nORDER BY category ASC;",
+  "expectedConcepts": [
+    "DISTINCT keyword",
+    "Deduplication",
+    "ORDER BY"
+  ],
+  "hints": [
+    "Place DISTINCT immediately after SELECT.",
+    "Order by category alphabetically."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-03",
+      "description": "Verify unique product categories",
+      "expectedRows": [
+        {
+          "category": "Apparel"
+        },
+        {
+          "category": "Books"
+        },
+        {
+          "category": "Electronics"
+        },
+        {
+          "category": "Home & Kitchen"
+        }
+      ]
+    }
+  ]
+}

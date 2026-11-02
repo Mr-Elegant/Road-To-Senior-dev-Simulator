@@ -1,0 +1,24 @@
+{
+  "id": "t1-ts-04",
+  "title": "How do you type arrays and objects in TypeScript?",
+  "category": "TypeScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 4,
+  "expectedConcepts": [
+    "Array syntax: type[] or Array<type>",
+    "Readonly arrays (readonly string[] or ReadonlyArray<string>)",
+    "Object type annotations specifying keys and values",
+    "Nested object structures"
+  ],
+  "hints": [
+    "How do you say \"an array of numbers\" in TypeScript?",
+    "What error occurs if you try to put a string into a number[] array?"
+  ],
+  "codingExercise": {
+    "instruction": "Define an interface Movie with id (number), title (string), and genres (array of strings).",
+    "starterCode": "// Define interface Movie here\n",
+    "language": "typescript",
+    "expectedOutput": "interface Movie with id: number; title: string; genres: string[];"
+  }
+}

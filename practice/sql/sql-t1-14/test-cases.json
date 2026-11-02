@@ -1,0 +1,28 @@
+[
+  {
+    "id": "tc-t1-14",
+    "description": "Verify loan applications aggregated by purpose",
+    "expectedRows": [
+      {
+        "purpose": "HOME_RENOVATION",
+        "total_applications": 2,
+        "total_amount_requested": 1300000
+      },
+      {
+        "purpose": "BUSINESS",
+        "total_applications": 1,
+        "total_amount_requested": 1200000
+      },
+      {
+        "purpose": "PERSONAL",
+        "total_applications": 3,
+        "total_amount_requested": 950000
+      },
+      {
+        "purpose": "AUTO",
+        "total_applications": 2,
+        "total_amount_requested": 550000
+      }
+    ]
+  }
+]

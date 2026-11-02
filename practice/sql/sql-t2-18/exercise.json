@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-18",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 18,
+  "title": "PostgreSQL JSONB vs JSON Storage and Operators",
+  "category": "JSONB and PostgreSQL-specific features",
+  "questionType": "conceptual",
+  "realWorldScenario": "An analytics logging platform stores heterogeneous event payloads and needs to decide between PostgreSQL's `JSON` and `JSONB` data types.",
+  "questionStatement": "What are the internal differences between `JSON` and `JSONB` in PostgreSQL? Which operators are used to extract text versus JSON objects?",
+  "expectedConcepts": [
+    "JSON textual representation vs JSONB decomposed binary format",
+    "Re-parsing overhead of JSON",
+    "GIN indexing capability of JSONB",
+    "-> (jsonb) vs ->> (text) operators"
+  ],
+  "hints": [
+    "The \"B\" in JSONB stands for Binary."
+  ]
+}

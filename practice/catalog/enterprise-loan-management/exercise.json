@@ -1,0 +1,43 @@
+{
+  "id": "enterprise-loan-management",
+  "title": "Enterprise Loan Management Dashboard (React & Redux Toolkit)",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Redux Toolkit, Concurrency & Optimistic UI",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "An enterprise Non-Banking Financial Company (NBFC) manages high-volume loan applications across diverse risk tiers. Underwriters need an interactive dashboard to search, filter, paginate, sort, inspect credit profiles, and execute optimistic loan approvals or rejections with zero-drift rollback on network rejection.",
+  "problemStatement": "Design and architect a production-grade enterprise dashboard powered by Redux Toolkit. You must structure domain slices (applications, dashboard, ui), implement asynchronous createAsyncThunk data fetching with AbortController cancellation and monotonic request-ID guards against race conditions, support optimistic status updates with atomic rollback snapshots, and optimize render performance using memoized createSelector selectors and React.memo.",
+  "constraints": [
+    "Older asynchronous search responses must never overwrite newer search queries.",
+    "Optimistic updates must record pre-mutation snapshots and roll back atomically on API failure without corrupting concurrent rows.",
+    "Filter and search mutations must reset the pagination page index to 1.",
+    "Derived metrics must be computed via createSelector rather than duplicated in state.",
+    "Component tree must use debounced inputs and React.memo to prevent keystroke render thrashing."
+  ],
+  "starterCode": "import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';\n\n// 1. Applications Slice\nexport const fetchApplications = createAsyncThunk(\n  'applications/fetch',\n  async (params, { signal }) => {\n    const res = await fetch(`/api/applications?search=${params.search}`, { signal });\n    return await res.json();\n  }\n);\n\nexport const updateLoanStatus = createAsyncThunk(\n  'applications/updateStatus',\n  async ({ id, status }, { rejectWithValue }) => {\n    try {\n      const res = await fetch(`/api/applications/${id}/status`, {\n        method: 'PATCH',\n        headers: { 'Content-Type': 'application/json' },\n        body: JSON.stringify({ status })\n      });\n      if (!res.ok) throw new Error('Update rejected');\n      return await res.json();\n    } catch (err) {\n      return rejectWithValue({ id, message: err.message });\n    }\n  }\n);\n\n// Build slices and selectors here...",
+  "codeLanguage": "typescript",
+  "candidateTasks": [
+    "Structure normalized Redux slices for applications, dashboard metrics, and UI state.",
+    "Implement createAsyncThunk with AbortSignal cancellation and latestRequestId monotonic guards.",
+    "Implement safe optimistic status updates with snapshot backups and atomic rollback on error.",
+    "Reset pagination page index to 1 on filter and search updates.",
+    "Prevent excessive re-renders using debounced search, React.memo rows, and memoized selectors.",
+    "Handle error recovery with explicit retry actions."
+  ],
+  "hints": [
+    "Pass thunkAPI.signal to fetch so in-flight requests abort when new queries are dispatched. Additionally, track action.meta.requestId in state.latestRequestId in pending, and only commit fulfilled payloads if action.meta.requestId === state.latestRequestId.",
+    "In extraReducers.pending, store a clone of the item in optimisticBackups[id] and mark updatingIds[id] = true before applying item.status = newStatus. In extraReducers.rejected, restore the backup item and unlock updatingIds[id].",
+    "Use createSelector to calculate pagination ranges, active filter counts, and status breakdowns. Do not store derived counts in Redux state when they can be computed pure from base arrays."
+  ],
+  "alternativeApproaches": [
+    "Using RTK Query with auto-generated hooks (useGetApplicationsQuery) and onQueryStarted for optimistic updates.",
+    "Using TanStack Query (React Query) with queryClient.setQueryData for optimistic rollback."
+  ],
+  "commonMistakes": [
+    "Failing to reset the page index when search or status filters change, causing empty views.",
+    "Omitting optimistic rollback on rejected thunk actions, leaving false-positive approvals on screen.",
+    "Allowing older slow search responses to overwrite newer queries due to network jitter.",
+    "Directly mutating state arrays using in-place methods like sort() inside selectors or components."
+  ]
+}

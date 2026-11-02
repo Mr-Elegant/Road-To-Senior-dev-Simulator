@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-21",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 21,
+  "title": "Row-Level Locking with SELECT FOR UPDATE",
+  "category": "Locks and Deadlocks",
+  "questionType": "conceptual",
+  "realWorldScenario": "Two concurrent requests read an account balance ($100), check that it is >= $80, and both proceed to debit $80 simultaneously, causing the balance to go negative (-$60).",
+  "questionStatement": "Explain this Check-Then-Act race condition. How does `SELECT ... FOR UPDATE` prevent it, and what row-level locks does it acquire?",
+  "expectedConcepts": [
+    "Check-then-act race condition",
+    "Pessimistic locking with FOR UPDATE",
+    "Lock contention and blocking until commit",
+    "Preventing negative balance overselling"
+  ],
+  "hints": [
+    "FOR UPDATE locks the specific rows matched by the query."
+  ]
+}

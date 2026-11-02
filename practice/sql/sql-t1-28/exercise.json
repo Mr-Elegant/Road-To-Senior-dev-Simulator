@@ -1,0 +1,19 @@
+{
+  "id": "sql-t1-28",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 28,
+  "title": "PostgreSQL Boolean Logic: COALESCE and NULLIF",
+  "category": "SQL Fundamentals",
+  "questionType": "conceptual",
+  "realWorldScenario": "An invoice PDF generator displays \"null\" or blanks when a customer does not have a registered billing contact name.",
+  "questionStatement": "Explain how the `COALESCE` function works in SQL. Provide an example showing how to replace NULL values with a default fallback string.",
+  "expectedConcepts": [
+    "COALESCE returns first non-null argument",
+    "Short-circuit evaluation",
+    "Default fallback presentation"
+  ],
+  "hints": [
+    "COALESCE takes multiple arguments and stops at the first non-null."
+  ]
+}

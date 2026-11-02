@@ -1,0 +1,51 @@
+[
+  {
+    "id": "read-1",
+    "name": "Advance a receipt",
+    "inputDescription": "{\"userId\":\"u\",\"lastRead\":1,\"highWater\":5,\"updates\":[{\"userId\":\"u\",\"sequence\":3}]}",
+    "expectedOutput": "{\"lastRead\":3,\"unread\":2,\"outcomes\":[\"advanced\"]}",
+    "hidden": false
+  },
+  {
+    "id": "read-2",
+    "name": "Ignore older device acknowledgement",
+    "inputDescription": "{\"userId\":\"u\",\"lastRead\":3,\"highWater\":5,\"updates\":[{\"userId\":\"u\",\"sequence\":2}]}",
+    "expectedOutput": "{\"lastRead\":3,\"unread\":2,\"outcomes\":[\"stale\"]}",
+    "hidden": false
+  },
+  {
+    "id": "read-3",
+    "name": "Repeated acknowledgement is stale",
+    "inputDescription": "{\"userId\":\"u\",\"lastRead\":3,\"highWater\":5,\"updates\":[{\"userId\":\"u\",\"sequence\":3}]}",
+    "expectedOutput": "{\"lastRead\":3,\"unread\":2,\"outcomes\":[\"stale\"]}",
+    "hidden": true
+  },
+  {
+    "id": "read-4",
+    "name": "Reject other user before sequence validation",
+    "inputDescription": "{\"userId\":\"u\",\"lastRead\":0,\"highWater\":5,\"updates\":[{\"userId\":\"other\",\"sequence\":99}]}",
+    "expectedOutput": "{\"lastRead\":0,\"unread\":5,\"outcomes\":[\"forbidden\"]}",
+    "hidden": true
+  },
+  {
+    "id": "read-5",
+    "name": "Reject future negative fractional and string sequences",
+    "inputDescription": "{\"userId\":\"u\",\"lastRead\":0,\"highWater\":5,\"updates\":[{\"userId\":\"u\",\"sequence\":6},{\"userId\":\"u\",\"sequence\":-1},{\"userId\":\"u\",\"sequence\":1.5},{\"userId\":\"u\",\"sequence\":\"2\"}]}",
+    "expectedOutput": "{\"lastRead\":0,\"unread\":5,\"outcomes\":[\"invalid\",\"invalid\",\"invalid\",\"invalid\"]}",
+    "hidden": true
+  },
+  {
+    "id": "read-6",
+    "name": "Out of order updates never regress",
+    "inputDescription": "{\"userId\":\"u\",\"lastRead\":0,\"highWater\":5,\"updates\":[{\"userId\":\"u\",\"sequence\":4},{\"userId\":\"u\",\"sequence\":2},{\"userId\":\"u\",\"sequence\":5}]}",
+    "expectedOutput": "{\"lastRead\":5,\"unread\":0,\"outcomes\":[\"advanced\",\"stale\",\"advanced\"]}",
+    "hidden": true
+  },
+  {
+    "id": "read-7",
+    "name": "Empty conversation stays unread-free",
+    "inputDescription": "{\"userId\":\"u\",\"lastRead\":0,\"highWater\":0,\"updates\":[]}",
+    "expectedOutput": "{\"lastRead\":0,\"unread\":0,\"outcomes\":[]}",
+    "hidden": true
+  }
+]

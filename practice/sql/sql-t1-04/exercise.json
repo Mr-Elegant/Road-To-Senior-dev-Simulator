@@ -1,0 +1,69 @@
+{
+  "id": "sql-t1-04",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 4,
+  "title": "Pattern Matching with LIKE and Wildcards",
+  "category": "Filtering, Sorting, and Aggregation",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Customer support needs to find all customers registered with an @example.com email address.",
+  "questionStatement": "Write a query to return the `id`, `name`, and `email` of all customers whose `email` ends with `@example.com`, ordered by `id` ascending.",
+  "starterCode": "-- Find customers with example.com emails\nSELECT id, name, email\nFROM customers\nWHERE email LIKE '%@example.com'\nORDER BY id ASC;",
+  "expectedConcepts": [
+    "LIKE operator",
+    "Percent wildcard %",
+    "String filtering"
+  ],
+  "hints": [
+    "The % wildcard matches zero or more characters before the string."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-04",
+      "description": "Verify customers matching email domain wildcard",
+      "expectedRows": [
+        {
+          "id": 1,
+          "name": "Aarav Patel",
+          "email": "aarav.patel@example.com"
+        },
+        {
+          "id": 2,
+          "name": "Sophia Miller",
+          "email": "sophia.m@example.com"
+        },
+        {
+          "id": 3,
+          "name": "Carlos Rodriguez",
+          "email": "carlos.r@example.com"
+        },
+        {
+          "id": 4,
+          "name": "Emma Watson",
+          "email": "emma.w@example.com"
+        },
+        {
+          "id": 5,
+          "name": "Rohan Sharma",
+          "email": "rohan.s@example.com"
+        },
+        {
+          "id": 6,
+          "name": "Yuki Tanaka",
+          "email": "yuki.t@example.com"
+        },
+        {
+          "id": 7,
+          "name": "Mia Chen",
+          "email": "mia.c@example.com"
+        },
+        {
+          "id": 8,
+          "name": "Lucas Silva",
+          "email": "lucas.s@example.com"
+        }
+      ]
+    }
+  ]
+}

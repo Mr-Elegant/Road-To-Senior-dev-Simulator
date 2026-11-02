@@ -1,0 +1,20 @@
+{
+  "id": "sql-t2-25",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 25,
+  "title": "Keyset Pagination vs. OFFSET Pagination",
+  "category": "Query Optimization",
+  "questionType": "conceptual",
+  "realWorldScenario": "A mobile app user scrolls through infinite search results: `SELECT * FROM orders ORDER BY created_at DESC LIMIT 20 OFFSET 500000;`. The API response time degrades from 15ms on page 1 to 4.2 seconds on page 25,000.",
+  "questionStatement": "Why does OFFSET pagination degrade linearly with high offsets? How does Keyset Pagination (Cursor Pagination) solve this with O(1) performance?",
+  "expectedConcepts": [
+    "OFFSET linear degradation O(N)",
+    "Keyset / Cursor pagination pattern",
+    "B-Tree direct traversal O(log N)",
+    "Consistent response time regardless of page depth"
+  ],
+  "hints": [
+    "Use the last seen date and ID in a WHERE clause instead of OFFSET."
+  ]
+}

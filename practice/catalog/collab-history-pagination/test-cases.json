@@ -1,0 +1,51 @@
+[
+  {
+    "id": "history-1",
+    "name": "Return newest messages first",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"c\",\"seq\":3,\"body\":\"c\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"}],\"before\":null,\"limit\":2}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"c\",\"seq\":3,\"body\":\"c\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"}],\"nextBefore\":2,\"hasMore\":true}",
+    "hidden": false
+  },
+  {
+    "id": "history-2",
+    "name": "Cursor is exclusive",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"},{\"id\":\"c\",\"seq\":3,\"body\":\"c\",\"channelId\":\"c\"}],\"before\":2,\"limit\":2}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"nextBefore\":1,\"hasMore\":false}",
+    "hidden": false
+  },
+  {
+    "id": "history-3",
+    "name": "New arrivals do not shift an older page",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"},{\"id\":\"new\",\"seq\":9,\"body\":\"new\",\"channelId\":\"c\"}],\"before\":3,\"limit\":1}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"}],\"nextBefore\":2,\"hasMore\":true}",
+    "hidden": true
+  },
+  {
+    "id": "history-4",
+    "name": "Foreign channels never leak into history",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"x\",\"seq\":8,\"body\":\"secret\",\"channelId\":\"other\"}],\"before\":null,\"limit\":2}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"nextBefore\":1,\"hasMore\":false}",
+    "hidden": true
+  },
+  {
+    "id": "history-5",
+    "name": "Sequence gaps do not imply missing page rows",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"z\",\"seq\":20,\"body\":\"z\",\"channelId\":\"c\"}],\"before\":20,\"limit\":3}",
+    "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"nextBefore\":1,\"hasMore\":false}",
+    "hidden": true
+  },
+  {
+    "id": "history-6",
+    "name": "Empty older page preserves cursor",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"before\":1,\"limit\":2}",
+    "expectedOutput": "{\"messages\":[],\"nextBefore\":1,\"hasMore\":false}",
+    "hidden": true
+  },
+  {
+    "id": "history-7",
+    "name": "Empty conversation preserves null cursor",
+    "inputDescription": "{\"channelId\":\"c\",\"messages\":[],\"before\":null,\"limit\":2}",
+    "expectedOutput": "{\"messages\":[],\"nextBefore\":null,\"hasMore\":false}",
+    "hidden": true
+  }
+]

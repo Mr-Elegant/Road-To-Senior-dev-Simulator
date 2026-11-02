@@ -1,0 +1,33 @@
+{
+  "id": "sql-tier3-015",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 15,
+  "title": "Window Frame Specifications: ROWS vs RANGE vs GROUPS",
+  "category": "Window Functions",
+  "questionType": "executable",
+  "datasetId": "loan_management",
+  "realWorldScenario": "A financial risk officer needs a 3-day rolling sum of repayments per borrower to detect repayment surges. Because multiple repayments occur on the same day, using `ROWS BETWEEN` produces different totals depending on arbitrary row sorting.",
+  "questionStatement": "Explain the difference between `ROWS`, `RANGE`, and `GROUPS` framing modes in SQL window functions. Write a query against `repayments` that calculates both a 2-row physical moving average (`ROWS`) and a calendar-date-based rolling 3-day sum (`RANGE`) per loan.",
+  "starterCode": "SELECT \n    id,\n    loan_id,\n    payment_date,\n    amount,\n    -- 2-row moving average (current row and 1 preceding physical row)\n    AVG(amount) OVER (\n        PARTITION BY loan_id \n        ORDER BY payment_date, id \n        ROWS BETWEEN 1 PRECEDING AND CURRENT ROW\n    ) AS physical_2row_avg,\n    -- Rolling sum over identical dates\n    SUM(amount) OVER (\n        PARTITION BY loan_id \n        ORDER BY amount\n        RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n    ) AS range_accum_sum\nFROM repayments\nORDER BY loan_id, payment_date;",
+  "expectedConcepts": [
+    "ROWS operates on physical row offsets",
+    "RANGE operates on logical value boundaries (peers lumped together)",
+    "GROUPS operates on peer rank clusters",
+    "Default window frame trap: RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW"
+  ],
+  "hints": [
+    "Notice that if two rows have the same amount, RANGE treats them as tied peers.",
+    "ROWS treats every row distinctly based on physical sequence.",
+    "Check the default frame when ORDER BY is provided."
+  ],
+  "testCases": [
+    {
+      "id": "tc-tier3-015-1",
+      "description": "Verify ROWS physical average and RANGE cumulative calculations",
+      "setupSql": "CREATE TABLE repayments (id INT, loan_id INT, payment_date VARCHAR(10), amount NUMERIC);\nINSERT INTO repayments VALUES (1, 101, '2026-01-01', 100), (2, 101, '2026-01-02', 200), (3, 101, '2026-01-03', 300);",
+      "expectedOutputSql": "SELECT id, loan_id, payment_date, amount, AVG(amount) OVER (PARTITION BY loan_id ORDER BY payment_date, id ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS physical_2row_avg, SUM(amount) OVER (PARTITION BY loan_id ORDER BY amount RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS range_accum_sum FROM repayments ORDER BY loan_id, payment_date;",
+      "orderMatters": true
+    }
+  ]
+}

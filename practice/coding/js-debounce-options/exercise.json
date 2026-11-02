@@ -1,0 +1,37 @@
+{
+  "id": "js-debounce-options",
+  "title": "Advanced Debounce with Leading & Trailing Options",
+  "language": "javascript",
+  "difficulty": "Senior",
+  "category": "Async & Concurrency",
+  "estimatedMinutes": 25,
+  "description": "Implement an enterprise-grade `debounce(func, wait, options)` utility.\nThe function delays invoking `func` until after `wait` milliseconds have elapsed since the last time it was invoked.\n\nOptions:\n- `leading` (boolean, default false): Specify invoking on the leading edge of the timeout.\n- `trailing` (boolean, default true): Specify invoking on the trailing edge of the timeout.\n\nMust support:\n- `debounced.cancel()`: Cancels pending invocation.\n- `debounced.flush()`: Immediately executes pending invocation and returns result.",
+  "constraints": [
+    "Must maintain lexical `this` and arguments.",
+    "Must not trigger trailing call if only 1 leading call occurred within the wait window.",
+    "Timer must be cleaned up on cancel() without memory leaks."
+  ],
+  "sampleInput": "Wait: 50ms, options: { leading: true, trailing: false }",
+  "sampleOutput": "Invoked immediately on first call, subsequent calls within 50ms ignored",
+  "starterCode": "/**\n * Implement debounce with leading and trailing edge options\n */\nfunction debounce(func, wait, options = {}) {\n  const leading = Boolean(options.leading);\n  const trailing = options.trailing !== undefined ? Boolean(options.trailing) : true;\n  let timerId = null;\n  let lastArgs = null;\n  let lastThis = null;\n  let lastCallTime = null;\n\n  function debounced(...args) {\n    // TODO: Implement timer management, leading/trailing execution\n  }\n\n  debounced.cancel = function() {\n    // TODO: Cancel timer\n  };\n\n  debounced.flush = function() {\n    // TODO: Flush pending execution\n  };\n\n  return debounced;\n}\n\n// Test harness entrypoint\nfunction solution(mode) {\n  let callCount = 0;\n  const fn = () => ++callCount;\n  \n  if (mode === 'leading_only') {\n    const debounced = debounce(fn, 20, { leading: true, trailing: false });\n    debounced();\n    debounced();\n    return callCount; // Should be 1\n  }\n\n  if (mode === 'cancel_pending') {\n    const debounced = debounce(fn, 50, { leading: false, trailing: true });\n    debounced();\n    debounced.cancel();\n    return callCount; // Should be 0\n  }\n  \n  return \"configured\";\n}",
+  "testCases": [
+    {
+      "id": "tc-deb-1",
+      "name": "Leading only invocation executes exactly once immediately",
+      "inputDescription": "\"leading_only\"",
+      "expectedOutput": "1",
+      "explanation": "Leading edge fires on first call; subsequent calls within wait window are suppressed."
+    },
+    {
+      "id": "tc-deb-2",
+      "name": "Cancels scheduled trailing execution before timer expiration",
+      "inputDescription": "\"cancel_pending\"",
+      "expectedOutput": "0",
+      "explanation": "cancel() clears pending timers so trailing callback never executes."
+    }
+  ],
+  "hints": [
+    "Keep track of whether a timer is currently active. If no timer is active and `leading: true`, execute immediately.",
+    "On trailing edge, execute `func` only if `trailing: true` and arguments were recorded during the wait window."
+  ]
+}

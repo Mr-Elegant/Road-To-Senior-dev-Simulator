@@ -11,10 +11,10 @@ function attempt(scenarioId: string, score: number, extra: Partial<AttemptSubmis
 }
 
 describe('Enterprise Labs registry and shared progress', () => {
-  it('groups working exercises into three distinct projects', () => {
-    expect(enterpriseLabs.map(lab => lab.id)).toEqual(['loan-operations', 'commerce-operations', 'multi-tenant-saas']);
+  it('groups working exercises into four distinct projects', () => {
+    expect(enterpriseLabs.map(lab => lab.id)).toEqual(['loan-operations', 'commerce-operations', 'multi-tenant-saas', 'real-time-collaboration']);
     const ids = enterpriseLabs.flatMap(lab => lab.exercises.map(exercise => exercise.id));
-    expect(ids).toHaveLength(14);
+    expect(ids).toHaveLength(22);
     expect(new Set(ids).size).toBe(ids.length);
     for (const lab of enterpriseLabs) {
       expect(getEnterpriseLab(lab.id)).toBe(lab);

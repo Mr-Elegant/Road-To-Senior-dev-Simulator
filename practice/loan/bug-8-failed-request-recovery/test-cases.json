@@ -1,0 +1,182 @@
+[
+  {
+    "id": "failure",
+    "name": "A network failure ends loading and preserves rows",
+    "input": {
+      "initial": {
+        "items": [
+          "original"
+        ],
+        "status": "idle",
+        "activeRequestId": null,
+        "error": null
+      },
+      "actions": [
+        {
+          "type": "pending",
+          "requestId": "x"
+        },
+        {
+          "type": "rejected",
+          "requestId": "x",
+          "error": "Offline"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        "original"
+      ],
+      "status": "failed",
+      "activeRequestId": null,
+      "error": "Offline"
+    },
+    "explanation": "The user needs a failed state and error instead of an infinite spinner.",
+    "sample": true
+  },
+  {
+    "id": "retry",
+    "name": "Retry clears the error and can recover successfully",
+    "input": {
+      "initial": {
+        "items": [
+          "original"
+        ],
+        "status": "failed",
+        "activeRequestId": null,
+        "error": "Offline"
+      },
+      "actions": [
+        {
+          "type": "pending",
+          "requestId": "r2"
+        },
+        {
+          "type": "fulfilled",
+          "requestId": "r2",
+          "items": [
+            "recovered"
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        "recovered"
+      ],
+      "status": "succeeded",
+      "activeRequestId": null,
+      "error": null
+    },
+    "explanation": "A fresh request can recover without hard-refreshing the dashboard.",
+    "sample": true
+  },
+  {
+    "id": "aborted",
+    "name": "Cancellation is not shown as a network failure",
+    "input": {
+      "initial": {
+        "items": [
+          "original"
+        ],
+        "status": "idle",
+        "activeRequestId": null,
+        "error": null
+      },
+      "actions": [
+        {
+          "type": "pending",
+          "requestId": "x"
+        },
+        {
+          "type": "rejected",
+          "requestId": "x",
+          "aborted": true
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        "original"
+      ],
+      "status": "idle",
+      "activeRequestId": null,
+      "error": null
+    },
+    "explanation": "An intentional cancellation returns to idle without an error.",
+    "sample": false
+  },
+  {
+    "id": "stale",
+    "name": "An old rejection cannot fail a newer pending request",
+    "input": {
+      "initial": {
+        "items": [
+          "original"
+        ],
+        "status": "idle",
+        "activeRequestId": null,
+        "error": null
+      },
+      "actions": [
+        {
+          "type": "pending",
+          "requestId": "a"
+        },
+        {
+          "type": "pending",
+          "requestId": "b"
+        },
+        {
+          "type": "rejected",
+          "requestId": "a",
+          "error": "old error"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        "original"
+      ],
+      "status": "loading",
+      "activeRequestId": "b",
+      "error": null
+    },
+    "explanation": "Failure handling needs the same request ownership guard as success.",
+    "sample": false
+  },
+  {
+    "id": "fallback",
+    "name": "Missing error text has a useful fallback",
+    "input": {
+      "initial": {
+        "items": [
+          "original"
+        ],
+        "status": "idle",
+        "activeRequestId": null,
+        "error": null
+      },
+      "actions": [
+        {
+          "type": "pending",
+          "requestId": "x"
+        },
+        {
+          "type": "rejected",
+          "requestId": "x"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        "original"
+      ],
+      "status": "failed",
+      "activeRequestId": null,
+      "error": "Request failed"
+    },
+    "explanation": "A rejected request must have a visible failure message.",
+    "sample": false
+  }
+]

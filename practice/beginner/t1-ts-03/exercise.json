@@ -1,0 +1,18 @@
+{
+  "id": "t1-ts-03",
+  "title": "What is the difference between an interface and a type alias in TypeScript?",
+  "category": "TypeScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 3,
+  "expectedConcepts": [
+    "interface syntax (interface User { ... }) and extension via extends",
+    "type alias syntax (type User = { ... }) and union/primitive capabilities",
+    "Declaration merging in interfaces (adding properties to existing interfaces)",
+    "General recommendation: interface for object shapes, type for unions/primitives"
+  ],
+  "hints": [
+    "Which keyword is required when defining a union like type Status = \"open\" | \"closed\"?",
+    "Which keyword uses the extends keyword for inheritance?"
+  ]
+}

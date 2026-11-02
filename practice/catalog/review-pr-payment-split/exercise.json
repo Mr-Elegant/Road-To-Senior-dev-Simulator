@@ -1,0 +1,41 @@
+{
+  "id": "review-pr-payment-split",
+  "title": "Code Review PR #412: Marketplace Payout Split & Transfer Engine",
+  "type": "code_review",
+  "topic": "Security",
+  "subtopic": "Code review",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A software engineer submitted Pull Request #412: \"Implement vendor payout splitting for marketplace orders\". If merged as-is, this code will cause cumulative financial discrepancies due to floating-point rounding, security bypasses permitting unauthorized vendor payouts, and unhandled promise rejections.",
+  "problemStatement": "Conduct a thorough Senior/Staff-level code review of PR #412. Identify critical issues spanning Correctness (floating point math), Security (missing IDOR authorization check on vendor recipient), Reliability (unhandled promise in async map), and Maintainability (magic numbers and lack of audit logging).",
+  "constraints": [
+    "Identify at least 4 distinct architectural and code-level defects.",
+    "Provide specific line-by-line feedback with suggested remediation.",
+    "Classify findings by severity: Critical, High, Medium, Low."
+  ],
+  "codeReviewFiles": [
+    {
+      "filename": "src/services/payoutService.js",
+      "language": "javascript",
+      "reviewPointsCount": 4,
+      "newCode": "const db = require('../db');\nconst stripe = require('stripe')(process.env.STRIPE_KEY);\n\n/**\n * PR #412: Calculate vendor commission and trigger bank transfer\n */\nasync function processVendorPayouts(orderId, requestedByUserId) {\n  const order = await db.getOrder(orderId);\n\n  // BUG 1 (Security - IDOR / Authorization Bypass):\n  // Checks that requestedByUserId exists, but DOES NOT verify that requestedByUserId\n  // is actually an authorized admin or the vendor who owns this order!\n  if (!requestedByUserId) {\n    throw new Error('Unauthorized');\n  }\n\n  // BUG 2 (Correctness - Floating Point Rounding):\n  // Performing currency calculations using IEEE 754 floating point arithmetic!\n  // 0.1 + 0.2 !== 0.3. Over thousands of transactions, fractions of cents accumulate.\n  const platformFeeRate = 0.15; // 15% commission\n  const platformFee = order.amount * platformFeeRate; \n  const vendorPayout = order.amount - platformFee;\n\n  // BUG 3 (Reliability - Array.map with unawaited async promises):\n  // order.vendorSplits.map(async ...) returns an array of pending promises\n  // that are never awaited with Promise.all! Errors reject silently.\n  order.vendorSplits.map(async (split) => {\n    const payoutAmount = split.percentage * vendorPayout;\n    \n    // Transfer funds to vendor Connected Account\n    await stripe.transfers.create({\n      amount: payoutAmount, // BUG: Stripe expects integer cents, not floating dollar amount!\n      currency: 'usd',\n      destination: split.vendorStripeAccountId,\n    });\n  });\n\n  return { success: true, orderId };\n}\n\nmodule.exports = { processVendorPayouts };"
+    }
+  ],
+  "candidateTasks": [
+    "Identify Line 12-14: Insecure Direct Object Reference (IDOR) - missing permission check ensuring caller has admin or owner rights.",
+    "Identify Line 18-20: IEEE 754 Floating point inaccuracy; money should always be represented as integer cents or using an arbitrary-precision Decimal library (e.g. `decimal.js` or `BigInt`).",
+    "Identify Line 27: Stripe API expects integer cents (`Math.round(payoutAmountInCents)`), not floating dollars.",
+    "Identify Line 25-33: `order.vendorSplits.map(async ...)` spawns unawaited promises that swallow errors and fail silently."
+  ],
+  "hints": [
+    "Money calculations in JavaScript must NEVER use standard `Number` floats (`order.amount * 0.15`). Store and calculate in integer cents (e.g. 1500 cents for $15.00).",
+    "What happens if `stripe.transfers.create` throws an error inside the `order.vendorSplits.map` callback? It becomes an UnhandledPromiseRejection."
+  ],
+  "alternativeApproaches": [
+    "Using Stripe Split Charges / Destination Charges natively on checkout creation to avoid custom payout logic entirely."
+  ],
+  "commonMistakes": [
+    "Only focusing on formatting or variable naming while missing the severe financial math and security flaws.",
+    "Suggesting Math.floor or Math.round without converting dollars to cents first."
+  ]
+}

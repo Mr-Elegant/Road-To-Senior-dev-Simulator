@@ -1,0 +1,101 @@
+{
+  "id": "sql-t2-08",
+  "tier": "tier-2",
+  "difficultyLabel": "Intermediate",
+  "order": 8,
+  "title": "FULL OUTER JOIN for Data Reconciliation",
+  "category": "Joins and Relationships",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Finance and inventory auditing teams need to reconcile orders and payments to identify orders without payments and orphan payments without orders.",
+  "questionStatement": "Write a query using a `FULL OUTER JOIN` between `orders` and `payments` on `orders.id = payments.order_id`. Return `orders.id` as `order_id`, `payments.id` as `payment_id`, `orders.total_amount`, and `payments.amount` as `payment_amount`, ordered by `order_id` ascending, `payment_id` ascending.",
+  "starterCode": "-- Reconcile orders and payments with FULL OUTER JOIN\nSELECT\n  o.id AS order_id,\n  p.id AS payment_id,\n  o.total_amount,\n  p.amount AS payment_amount\nFROM orders o\nFULL OUTER JOIN payments p ON o.id = p.order_id\nORDER BY o.id ASC, p.id ASC;",
+  "expectedConcepts": [
+    "FULL OUTER JOIN",
+    "Reconciliation audit pattern",
+    "Bilateral outer join semantics"
+  ],
+  "hints": [
+    "FULL OUTER JOIN keeps rows from both tables even when there is no match."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t2-08",
+      "description": "Verify bilateral reconciliation of orders and payment attempts",
+      "expectedRows": [
+        {
+          "order_id": 101,
+          "payment_id": 1,
+          "total_amount": 329.49,
+          "payment_amount": 329.49
+        },
+        {
+          "order_id": 102,
+          "payment_id": 2,
+          "total_amount": 549,
+          "payment_amount": 549
+        },
+        {
+          "order_id": 103,
+          "payment_id": 3,
+          "total_amount": 89,
+          "payment_amount": 89
+        },
+        {
+          "order_id": 104,
+          "payment_id": 4,
+          "total_amount": 249.99,
+          "payment_amount": 249.99
+        },
+        {
+          "order_id": 105,
+          "payment_id": 5,
+          "total_amount": 97,
+          "payment_amount": 97
+        },
+        {
+          "order_id": 106,
+          "payment_id": 6,
+          "total_amount": 264.5,
+          "payment_amount": 264.5
+        },
+        {
+          "order_id": 107,
+          "payment_id": 7,
+          "total_amount": 199.99,
+          "payment_amount": 199.99
+        },
+        {
+          "order_id": 108,
+          "payment_id": 8,
+          "total_amount": 798.99,
+          "payment_amount": 798.99
+        },
+        {
+          "order_id": 109,
+          "payment_id": 9,
+          "total_amount": 135,
+          "payment_amount": 135
+        },
+        {
+          "order_id": 110,
+          "payment_id": 10,
+          "total_amount": 129.5,
+          "payment_amount": 129.5
+        },
+        {
+          "order_id": 111,
+          "payment_id": 11,
+          "total_amount": 299.94,
+          "payment_amount": 299.94
+        },
+        {
+          "order_id": 112,
+          "payment_id": 12,
+          "total_amount": 97,
+          "payment_amount": 97
+        }
+      ]
+    }
+  ]
+}

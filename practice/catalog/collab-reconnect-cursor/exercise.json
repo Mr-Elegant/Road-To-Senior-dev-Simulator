@@ -1,0 +1,85 @@
+{
+  "id": "collab-reconnect-cursor",
+  "title": "Collaboration: Resume a Conversation After Disconnection",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "Real-time collaboration / Messaging and meetings",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "A laptop reconnects after a long outage. Blindly replaying the latest page loses messages, while an expired cursor silently hides history.",
+  "problemStatement": "Implement solution({ cursor, highWater, retainedFrom, limit, events }). Inputs are valid safe integers: 0 <= cursor, 0 <= highWater, 1 <= retainedFrom <= highWater+1, limit >= 1. events is the ascending contiguous retained log with seq retainedFrom through highWater. Return { status, events, nextCursor, hasMore }. cursor > highWater => invalid_cursor with empty events and unchanged cursor. cursor < retainedFrom-1 => reset with empty events and nextCursor=highWater; obtain a separate snapshot before continuing. Otherwise return up to limit events strictly after cursor, status ok, nextCursor=last returned seq or cursor, hasMore=nextCursor<highWater. Error/reset hasMore is false.",
+  "constraints": [
+    "Implement the synchronous solution(input) contract exactly. Do not mutate input; all inputs are JSON data.",
+    "This is a deterministic state model. It does not open sockets, send notifications, authorize real users, or establish media connections."
+  ],
+  "candidateTasks": [
+    "Reproduce the starter failure, implement the invariant, and pass every authored case.",
+    "How would you atomically capture a snapshot/high-water pair and handle a connection dropping before acknowledgement?"
+  ],
+  "starterCode": "function solution({events,highWater}) { return {status:'ok',events,nextCursor:highWater,hasMore:false}; }",
+  "testCases": [
+    {
+      "id": "resume-1",
+      "name": "Resume strictly after acknowledged cursor",
+      "inputDescription": "{\"cursor\":1,\"highWater\":3,\"retainedFrom\":1,\"limit\":5,\"events\":[{\"seq\":1},{\"seq\":2},{\"seq\":3}]}",
+      "expectedOutput": "{\"status\":\"ok\",\"events\":[{\"seq\":2},{\"seq\":3}],\"nextCursor\":3,\"hasMore\":false}",
+      "hidden": false
+    },
+    {
+      "id": "resume-2",
+      "name": "Bound a replay page",
+      "inputDescription": "{\"cursor\":0,\"highWater\":3,\"retainedFrom\":1,\"limit\":2,\"events\":[{\"seq\":1},{\"seq\":2},{\"seq\":3}]}",
+      "expectedOutput": "{\"status\":\"ok\",\"events\":[{\"seq\":1},{\"seq\":2}],\"nextCursor\":2,\"hasMore\":true}",
+      "hidden": false
+    },
+    {
+      "id": "resume-3",
+      "name": "Retention boundary remains resumable",
+      "inputDescription": "{\"cursor\":2,\"highWater\":4,\"retainedFrom\":3,\"limit\":1,\"events\":[{\"seq\":3},{\"seq\":4}]}",
+      "expectedOutput": "{\"status\":\"ok\",\"events\":[{\"seq\":3}],\"nextCursor\":3,\"hasMore\":true}",
+      "hidden": true
+    },
+    {
+      "id": "resume-4",
+      "name": "Expired cursor requires snapshot reset",
+      "inputDescription": "{\"cursor\":1,\"highWater\":4,\"retainedFrom\":3,\"limit\":2,\"events\":[{\"seq\":3},{\"seq\":4}]}",
+      "expectedOutput": "{\"status\":\"reset\",\"events\":[],\"nextCursor\":4,\"hasMore\":false}",
+      "hidden": true
+    },
+    {
+      "id": "resume-5",
+      "name": "Reject a future cursor",
+      "inputDescription": "{\"cursor\":5,\"highWater\":4,\"retainedFrom\":3,\"limit\":2,\"events\":[{\"seq\":3},{\"seq\":4}]}",
+      "expectedOutput": "{\"status\":\"invalid_cursor\",\"events\":[],\"nextCursor\":5,\"hasMore\":false}",
+      "hidden": true
+    },
+    {
+      "id": "resume-6",
+      "name": "Already caught up does not replay last message",
+      "inputDescription": "{\"cursor\":2,\"highWater\":2,\"retainedFrom\":1,\"limit\":2,\"events\":[{\"seq\":1},{\"seq\":2}]}",
+      "expectedOutput": "{\"status\":\"ok\",\"events\":[],\"nextCursor\":2,\"hasMore\":false}",
+      "hidden": true
+    },
+    {
+      "id": "resume-7",
+      "name": "Empty log has a stable zero cursor",
+      "inputDescription": "{\"cursor\":0,\"highWater\":0,\"retainedFrom\":1,\"limit\":2,\"events\":[]}",
+      "expectedOutput": "{\"status\":\"ok\",\"events\":[],\"nextCursor\":0,\"hasMore\":false}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "Write down validation and replay precedence before changing state.",
+    "Use stable IDs and monotonic sequence/version values; preserve input ownership."
+  ],
+  "alternativeApproaches": [
+    "Use an append-only event log with transactional projections.",
+    "Use a database snapshot plus a versioned resume cursor."
+  ],
+  "commonMistakes": [
+    "Trusting delivery order or treating retries as new operations.",
+    "Mutating caller-owned arrays or accepting cross-channel data.",
+    "Presenting a fixture result as a guarantee of real-time delivery or media connectivity."
+  ],
+  "codeLanguage": "javascript"
+}

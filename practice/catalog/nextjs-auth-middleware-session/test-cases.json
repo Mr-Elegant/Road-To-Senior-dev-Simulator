@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-mw-1",
+    "name": "Prevents infinite redirect loop and allows public routes",
+    "inputDescription": "null",
+    "expectedOutput": "\"redirect_loop_resolved\"",
+    "explanation": "Safely protects private paths while permitting public and static routes."
+  }
+]

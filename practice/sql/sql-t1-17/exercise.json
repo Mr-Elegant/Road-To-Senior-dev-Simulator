@@ -1,0 +1,20 @@
+{
+  "id": "sql-t1-17",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 17,
+  "title": "First Normal Form (1NF) Fundamentals",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "realWorldScenario": "A legacy customer table stores phone numbers as a comma-separated string: \"555-1234, 555-5678\".",
+  "questionStatement": "What rule does this design violate in relational database normalization? Explain First Normal Form (1NF) and how to refactor this design.",
+  "expectedConcepts": [
+    "Atomic values",
+    "No repeating groups or comma-separated lists",
+    "1-to-many child table refactoring"
+  ],
+  "hints": [
+    "Think about how hard it is to search for a specific phone number in a comma-separated string.",
+    "How would you enforce phone number formatting or indexing?"
+  ]
+}

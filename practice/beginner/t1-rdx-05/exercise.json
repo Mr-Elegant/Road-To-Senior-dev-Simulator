@@ -1,0 +1,18 @@
+{
+  "id": "t1-rdx-05",
+  "title": "How does Immer work inside Redux Toolkit reducers to allow \"direct state mutation\"?",
+  "category": "Redux Toolkit Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 5,
+  "expectedConcepts": [
+    "Original Redux rule: Never mutate state directly (always return new copies)",
+    "Redux Toolkit wraps reducers with Immer.js automatically",
+    "Draft state tracking mutations and producing an immutable copy behind the scenes",
+    "Syntactic convenience (state.items.push(item)) without breaking immutability"
+  ],
+  "hints": [
+    "Why did traditional Redux require so many spread operators (...state)?",
+    "What library lets you write state.push() safely in Redux Toolkit?"
+  ]
+}

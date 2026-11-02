@@ -1,0 +1,7 @@
+Recovery checklist
+[ ] Admission bounded; operational slots reserved
+[ ] Sum(max replicas x pool max) <= allocated DB slots
+[ ] One retry layer; capped attempts + jitter + deadline
+[ ] pg_stat_activity inspected; no blanket termination
+[ ] Canary -> 10% -> 25% -> 50% -> 100%, stop on gate breach
+[ ] Reconcile uncertain payments before closing incident

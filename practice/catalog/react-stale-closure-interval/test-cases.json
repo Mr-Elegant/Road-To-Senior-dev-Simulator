@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-react-stale-1",
+    "name": "Updates price monotonically without stale snapshot",
+    "inputDescription": "null",
+    "expectedOutput": "\"repaired\"",
+    "explanation": "State updater pattern successfully decouples from stale closure."
+  }
+]

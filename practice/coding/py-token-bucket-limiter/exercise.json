@@ -1,0 +1,36 @@
+{
+  "id": "py-token-bucket-limiter",
+  "title": "Python Token Bucket Distributed Rate Limiter",
+  "language": "python",
+  "difficulty": "Senior",
+  "category": "Remote Service / Sandboxing",
+  "estimatedMinutes": 20,
+  "description": "Implement a Token Bucket rate limiter in Python for distributed microservices.\nThis challenge demonstrates how unconfigured remote execution environments are safely and transparently surfaced to candidates without executing arbitrary code on the application server.",
+  "constraints": [
+    "Refills tokens monotonically based on elapsed time.",
+    "Thread-safe token debiting."
+  ],
+  "sampleInput": "capacity=10, refill_rate=2/sec",
+  "sampleOutput": "True for first 10 requests, False on 11th request until refill",
+  "starterCode": "import time\n\nclass TokenBucket:\n    def __init__(self, capacity: int, refill_rate: float):\n        self.capacity = capacity\n        self.refill_rate = refill_rate\n        self.tokens = capacity\n        self.last_refill = time.time()\n\n    def consume(self, amount: int = 1) -> bool:\n        # TODO: Implement token refill and debit\n        return True\n",
+  "testCases": [
+    {
+      "id": "tc-py-1",
+      "name": "Consumes tokens within capacity bound",
+      "inputDescription": "consume(1)",
+      "expectedOutput": "True",
+      "explanation": "Tokens are debited when capacity is available."
+    },
+    {
+      "id": "tc-py-2",
+      "name": "Rejects consumption when capacity is exceeded",
+      "inputDescription": "consume(100)",
+      "expectedOutput": "False",
+      "explanation": "Exceeding bucket capacity returns False."
+    }
+  ],
+  "hints": [
+    "In production, containerized sandboxes (gVisor / Firecracker microVMs) execute non-JS languages with strict network and CPU limits.",
+    "Review the reference Python solution and compare against your architectural design."
+  ]
+}

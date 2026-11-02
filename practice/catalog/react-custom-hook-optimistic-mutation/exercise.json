@@ -1,0 +1,45 @@
+{
+  "id": "react-custom-hook-optimistic-mutation",
+  "title": "E-Commerce Cart Optimistic Mutation Hook with Rollback",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "State management",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "In a high-conversion checkout experience, users rapidly tap \"+ / -\" on cart items. Slow 3G network latency causes UI lag and button stutter. Product management requests instant UI updates, but if the inventory check or coupon calculation fails on the server, the cart must roll back seamlessly with a user alert.",
+  "problemStatement": "Create a custom hook `useOptimisticCart` that updates local cart count immediately, queues the backend sync mutation, rolls back to previous state if the network request fails, and handles concurrent rapid clicks without corrupting final quantity.",
+  "constraints": [
+    "UI must update synchronously with zero perceivable delay.",
+    "Server failure must roll back state to pre-mutation snapshot and notify candidate.",
+    "Must handle serialized mutations so consecutive clicks (+1, +1, +1) converge accurately."
+  ],
+  "starterCode": "import React, { useState, useRef } from 'react';\n\n/**\n * Optimistic Cart Hook\n */\nexport function useOptimisticCart(initialCart, apiSync) {\n  const [cart, setCart] = useState(initialCart);\n  const [error, setError] = useState(null);\n  const previousCartRef = useRef(initialCart);\n\n  const updateQuantity = async (itemId, newQty) => {\n    // TODO: Implement optimistic update with rollback on failure\n  };\n\n  return { cart, error, updateQuantity };\n}\n\nfunction solution(input) {\n  return \"optimistic_with_rollback\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Store snapshot before mutation in a ref or previous state holder.",
+    "Update UI state optimistically.",
+    "If API rejects, restore previous snapshot and set error message.",
+    "Explain how React 19 `useOptimistic` hook formalizes this pattern."
+  ],
+  "hints": [
+    "Keep a snapshot of the known-server state.",
+    "If consecutive requests fire, ensure the rollback targets the last confirmed server state, not an intermediate optimistic state."
+  ],
+  "testCases": [
+    {
+      "id": "tc-opt-1",
+      "name": "Updates immediately and recovers on server rejection",
+      "inputDescription": "null",
+      "expectedOutput": "\"optimistic_with_rollback\"",
+      "explanation": "Provides instant feedback and reliable error recovery."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using TanStack Query with onMutate context snapshot and onError rollback.",
+    "Using React 19 useOptimistic with useActionState."
+  ],
+  "commonMistakes": [
+    "Rolling back to an intermediate optimistic state instead of the last confirmed server response.",
+    "Failing to inform the user why the number suddenly dropped back."
+  ]
+}

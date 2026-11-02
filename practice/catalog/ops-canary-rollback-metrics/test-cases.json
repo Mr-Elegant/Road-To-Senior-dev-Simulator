@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-canary-1",
+    "name": "Triggers automated rollback on error rate breach",
+    "inputDescription": "null",
+    "expectedOutput": "\"canary_rolled_back_traffic_restored\"",
+    "explanation": "Enforces rapid rollback to preserve user experience."
+  }
+]

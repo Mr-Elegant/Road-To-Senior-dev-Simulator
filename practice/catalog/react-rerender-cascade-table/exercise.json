@@ -1,0 +1,44 @@
+{
+  "id": "react-rerender-cascade-table",
+  "title": "10,000-Row Logistics Inventory Table Cascading Re-Render Freeze",
+  "type": "debugging",
+  "topic": "React",
+  "subtopic": "Re-rendering",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A freight forwarding dispatch dashboard displays a live table of 10,000 shipments. When the operator types into a search input at the top of the page, keystrokes experience 800ms input lag, rendering the application unusable.",
+  "problemStatement": "Every single keystroke updates search query state in the parent page component. Because the table row components are un-memoized and receive newly created inline arrow functions and object literals on every render, all 10,000 row components re-render and re-calculate DOM styles on every character typed.",
+  "constraints": [
+    "Typing in the search input must feel instantaneous (under 16ms input latency).",
+    "Table must display filtered results responsively.",
+    "Must demonstrate proper use of React.memo, useMemo, useCallback, or virtualization."
+  ],
+  "starterCode": "import React, { useState } from 'react';\n\n/**\n * Laggy Inventory Table\n */\nexport function LogisticsDashboard({ items }) {\n  const [query, setQuery] = useState('');\n\n  // BUG 1: Re-filtering 10,000 items synchronously on every render\n  const filtered = items.filter(item => \n    item.trackingNumber.toLowerCase().includes(query.toLowerCase())\n  );\n\n  return (\n    <div>\n      <input \n        value={query} \n        onChange={e => setQuery(e.target.value)} \n        placeholder=\"Filter shipments...\"\n      />\n      <div>\n        {/* BUG 2: Rendering 10,000 un-virtualized, un-memoized rows with inline props */}\n        {filtered.map(item => (\n          <TableRow \n            key={item.id} \n            item={item} \n            onSelect={() => console.log('Selected', item.id)} // Inline callback breaks memo\n          />\n        ))}\n      </div>\n    </div>\n  );\n}\n\nfunction TableRow({ item, onSelect }) {\n  // Heavy computation per row\n  return <div onClick={onSelect}>{item.trackingNumber} - {item.status}</div>;\n}\n\nfunction solution(input) {\n  return \"virtualized_and_memoized\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Diagnose the two major performance bottlenecks: cascading re-renders and un-virtualized DOM node count.",
+    "Apply `useMemo` for filtered dataset and `useCallback` or stable handler for `onSelect`.",
+    "Explain windowing/virtualization (e.g. `@tanstack/react-virtual` or `react-window`) to only render visible DOM rows."
+  ],
+  "hints": [
+    "Creating inline arrow functions `<TableRow onSelect={() => ...} />` creates a new function reference on every render, defeating `React.memo(TableRow)`.",
+    "Even with React.memo, rendering 10,000 actual DOM nodes in the browser causes severe layout and style recalculation bottlenecks."
+  ],
+  "testCases": [
+    {
+      "id": "tc-render-1",
+      "name": "Eliminates cascading re-renders and bounds rendered nodes",
+      "inputDescription": "null",
+      "expectedOutput": "\"virtualized_and_memoized\"",
+      "explanation": "Transforms heavy table to lightweight virtualized rendering."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using React 18 useTransition to mark filtering as non-urgent.",
+    "Server-side filtering with pagination / cursor fetching."
+  ],
+  "commonMistakes": [
+    "Assuming React.memo alone solves rendering 10,000 DOM nodes.",
+    "Wrapping everything in useMemo without measuring overhead."
+  ]
+}

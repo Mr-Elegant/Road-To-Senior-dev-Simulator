@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-029",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 29,
+  "title": "Zero-Downtime NOT NULL Constraint Addition on 100-Million Row Tables",
+  "category": "Migrations and Schema Evolution",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "You need to enforce `NOT NULL` on `orders(customer_id)`. Running `ALTER TABLE orders ALTER COLUMN customer_id SET NOT NULL;` on a 100-million row table takes an `ACCESS EXCLUSIVE` lock and scans all 100 million rows to verify no NULLs exist, locking out the entire business for 4 minutes.",
+  "questionStatement": "Explain why traditional `SET NOT NULL` causes database downtime on large tables in PostgreSQL. Detail the 2-step zero-downtime technique using `CHECK ... NOT VALID` followed by `VALIDATE CONSTRAINT`. Explain how PostgreSQL 12+ optimizes this pattern.",
+  "expectedConcepts": [
+    "ACCESS EXCLUSIVE lock held during full table scan in standard SET NOT NULL",
+    "CHECK (col IS NOT NULL) NOT VALID instant metadata lock",
+    "VALIDATE CONSTRAINT running under SHARE UPDATE EXCLUSIVE (concurrent DML allowed)",
+    "PostgreSQL 12+ instant promotion from validated check constraint to attnotnull",
+    "Dropping redundant check constraint after attnotnull is set"
+  ],
+  "hints": [
+    "What lock does VALIDATE CONSTRAINT acquire compared to ADD CONSTRAINT?",
+    "Does NOT VALID scan existing rows when the constraint is created?",
+    "Check how PostgreSQL 12 promotes a validated check constraint to SET NOT NULL."
+  ]
+}

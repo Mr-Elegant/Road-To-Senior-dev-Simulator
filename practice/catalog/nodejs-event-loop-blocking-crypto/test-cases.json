@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-crypto-1",
+    "name": "Uses libuv asynchronous thread pool without blocking event loop",
+    "inputDescription": "null",
+    "expectedOutput": "\"non_blocking_async_libuv\"",
+    "explanation": "Offloads CPU-intensive hashing to background worker threads."
+  }
+]

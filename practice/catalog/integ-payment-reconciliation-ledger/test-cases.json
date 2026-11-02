@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-recon-1",
+    "name": "Detects variances and balances settlement ledger",
+    "inputDescription": "null",
+    "expectedOutput": "\"reconciliation_ledger_balanced\"",
+    "explanation": "Accurately reconciles financial records and isolates discrepancies."
+  }
+]

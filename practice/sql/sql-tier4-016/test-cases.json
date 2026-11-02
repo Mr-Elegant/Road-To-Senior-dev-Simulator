@@ -1,0 +1,13 @@
+[
+  {
+    "id": "tc-tier4-016-1",
+    "description": "Verify chunked duplicate deletion keeping lowest ID",
+    "setupSql": "CREATE TABLE payments (id INT PRIMARY KEY, order_id INT, transaction_ref VARCHAR(20), amount NUMERIC);\nINSERT INTO payments VALUES (1, 101, 'TXN_A', 100), (2, 101, 'TXN_A', 100), (3, 102, 'TXN_B', 200);",
+    "expectedRows": [
+      {
+        "id": 2
+      }
+    ],
+    "orderMatters": true
+  }
+]

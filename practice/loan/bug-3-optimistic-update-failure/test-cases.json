@@ -1,0 +1,302 @@
+[
+  {
+    "id": "rollback",
+    "name": "Rejected approval restores the exact previous status",
+    "input": {
+      "initial": {
+        "items": [
+          {
+            "id": "a",
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "status": "UNDER_REVIEW"
+          }
+        ],
+        "pending": {}
+      },
+      "actions": [
+        {
+          "type": "start",
+          "id": "a",
+          "status": "APPROVED",
+          "requestId": "r1"
+        },
+        {
+          "type": "failure",
+          "id": "a",
+          "requestId": "r1"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        {
+          "id": "a",
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "status": "UNDER_REVIEW"
+        }
+      ],
+      "pending": {}
+    },
+    "explanation": "A failed optimistic change must restore its own snapshot.",
+    "sample": true
+  },
+  {
+    "id": "lock",
+    "name": "A second click cannot replace an in-flight backup",
+    "input": {
+      "initial": {
+        "items": [
+          {
+            "id": "a",
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "status": "UNDER_REVIEW"
+          }
+        ],
+        "pending": {}
+      },
+      "actions": [
+        {
+          "type": "start",
+          "id": "a",
+          "status": "APPROVED",
+          "requestId": "r1"
+        },
+        {
+          "type": "start",
+          "id": "a",
+          "status": "REJECTED",
+          "requestId": "r2"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        {
+          "id": "a",
+          "status": "APPROVED"
+        },
+        {
+          "id": "b",
+          "status": "UNDER_REVIEW"
+        }
+      ],
+      "pending": {
+        "a": {
+          "requestId": "r1",
+          "before": "PENDING"
+        }
+      }
+    },
+    "explanation": "A duplicate start cannot replace the original owner or snapshot.",
+    "sample": true
+  },
+  {
+    "id": "stale-settle",
+    "name": "An unrelated failure cannot roll back a newer operation",
+    "input": {
+      "initial": {
+        "items": [
+          {
+            "id": "a",
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "status": "UNDER_REVIEW"
+          }
+        ],
+        "pending": {}
+      },
+      "actions": [
+        {
+          "type": "start",
+          "id": "a",
+          "status": "APPROVED",
+          "requestId": "r1"
+        },
+        {
+          "type": "failure",
+          "id": "a",
+          "requestId": "old"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        {
+          "id": "a",
+          "status": "APPROVED"
+        },
+        {
+          "id": "b",
+          "status": "UNDER_REVIEW"
+        }
+      ],
+      "pending": {
+        "a": {
+          "requestId": "r1",
+          "before": "PENDING"
+        }
+      }
+    },
+    "explanation": "Check request identity before touching a backup.",
+    "sample": false
+  },
+  {
+    "id": "concurrent",
+    "name": "Settling one loan preserves another pending update",
+    "input": {
+      "initial": {
+        "items": [
+          {
+            "id": "a",
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "status": "UNDER_REVIEW"
+          }
+        ],
+        "pending": {}
+      },
+      "actions": [
+        {
+          "type": "start",
+          "id": "a",
+          "status": "APPROVED",
+          "requestId": "r1"
+        },
+        {
+          "type": "start",
+          "id": "b",
+          "status": "APPROVED",
+          "requestId": "r2"
+        },
+        {
+          "type": "failure",
+          "id": "a",
+          "requestId": "r1"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        {
+          "id": "a",
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "status": "APPROVED"
+        }
+      ],
+      "pending": {
+        "b": {
+          "requestId": "r2",
+          "before": "UNDER_REVIEW"
+        }
+      }
+    },
+    "explanation": "Concurrency is scoped to a row, not to the entire table.",
+    "sample": false
+  },
+  {
+    "id": "success",
+    "name": "Successful server status replaces optimistic status and unlocks",
+    "input": {
+      "initial": {
+        "items": [
+          {
+            "id": "a",
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "status": "UNDER_REVIEW"
+          }
+        ],
+        "pending": {}
+      },
+      "actions": [
+        {
+          "type": "start",
+          "id": "a",
+          "status": "APPROVED",
+          "requestId": "r1"
+        },
+        {
+          "type": "success",
+          "id": "a",
+          "requestId": "r1",
+          "status": "UNDER_REVIEW"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        {
+          "id": "a",
+          "status": "UNDER_REVIEW"
+        },
+        {
+          "id": "b",
+          "status": "UNDER_REVIEW"
+        }
+      ],
+      "pending": {}
+    },
+    "explanation": "The confirmed server status is authoritative.",
+    "sample": false
+  },
+  {
+    "id": "missing",
+    "name": "Ignore updates for absent records",
+    "input": {
+      "initial": {
+        "items": [
+          {
+            "id": "a",
+            "status": "PENDING"
+          },
+          {
+            "id": "b",
+            "status": "UNDER_REVIEW"
+          }
+        ],
+        "pending": {}
+      },
+      "actions": [
+        {
+          "type": "start",
+          "id": "missing",
+          "status": "APPROVED",
+          "requestId": "r1"
+        }
+      ]
+    },
+    "expected": {
+      "items": [
+        {
+          "id": "a",
+          "status": "PENDING"
+        },
+        {
+          "id": "b",
+          "status": "UNDER_REVIEW"
+        }
+      ],
+      "pending": {}
+    },
+    "explanation": "Unknown IDs must not create orphaned locks.",
+    "sample": false
+  }
+]

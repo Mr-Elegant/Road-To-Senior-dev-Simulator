@@ -1,0 +1,43 @@
+{
+  "id": "db-keyset-pagination-performance",
+  "title": "CRM Million-Row Activity Log OFFSET Pagination Degradation",
+  "type": "debugging",
+  "topic": "Databases",
+  "subtopic": "Pagination",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "An enterprise CRM displays a historical audit trail containing 45,000,000 customer interaction events. When auditors navigate to page 5,000 (`OFFSET 100000 LIMIT 20`), the query takes 18 seconds, frequently hitting query timeouts and pegging DB IOPS at 100%.",
+  "problemStatement": "The API uses traditional `OFFSET / LIMIT` pagination. For `OFFSET 100000`, PostgreSQL must scan the index, fetch 100,020 rows from disk, count past the first 100,000 rows, discard them all, and return only the final 20 rows. Migrate the query to Keyset (Cursor-Based) Pagination using `(created_at, id) < ($cursor_created_at, $cursor_id)`.",
+  "constraints": [
+    "Query execution time on deep pages (e.g. 500,000th item) must execute under 5ms.",
+    "Must handle ties in `created_at` timestamps gracefully by including primary key `id` as tie-breaker.",
+    "Eliminate full table / index scanning of discarded offset rows."
+  ],
+  "starterCode": "/**\n * Degrading OFFSET Pagination\n */\nasync function getAuditLogsOffset(db, tenantId, pageNumber = 1, pageSize = 20) {\n  const offset = (pageNumber - 1) * pageSize;\n\n  // BUG: OFFSET 100000 forces Postgres to read 100,020 rows and discard 100,000 of them!\n  const query = `\n    SELECT id, event_name, created_at, actor \n    FROM audit_logs \n    WHERE tenant_id = $1 \n    ORDER BY created_at DESC \n    LIMIT $2 OFFSET $3\n  `;\n\n  return db.query(query, [tenantId, pageSize, offset]);\n}\n\nfunction solution(input) {\n  return \"keyset_cursor_pagination_implemented\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain the algorithmic complexity of `OFFSET N LIMIT M` (O(N + M)) vs Keyset pagination (O(log N + M)).",
+    "Refactor the SQL query to use cursor keyset: `WHERE tenant_id = $1 AND (created_at, id) < ($cursorTime, $cursorId) ORDER BY created_at DESC, id DESC LIMIT $pageSize`.",
+    "Construct a composite index supporting this query: `(tenant_id, created_at DESC, id DESC)`."
+  ],
+  "hints": [
+    "Keyset pagination uses the last seen item's values as a direct seek into the B-Tree index.",
+    "Tuples in SQL: `(created_at, id) < ($cursor_time, $cursor_id)` allow multi-column cursor comparison in a single expression."
+  ],
+  "testCases": [
+    {
+      "id": "tc-keyset-1",
+      "name": "Uses keyset cursor for constant time O(1) page access",
+      "inputDescription": "null",
+      "expectedOutput": "\"keyset_cursor_pagination_implemented\"",
+      "explanation": "Enables high-performance scrolling across millions of records."
+    }
+  ],
+  "alternativeApproaches": [
+    "Deferred Join with OFFSET: `JOIN (SELECT id FROM audit_logs WHERE ... OFFSET ... LIMIT ...) ON ...` to avoid pulling wide columns."
+  ],
+  "commonMistakes": [
+    "Not including a unique tie-breaker (like `id`): if multiple events share the exact same timestamp millisecond, `< created_at` skips records entirely.",
+    "Attempting to allow random-access jumping to \"Page 400\" with keyset pagination (keyset is inherently sequential / cursor-based)."
+  ]
+}

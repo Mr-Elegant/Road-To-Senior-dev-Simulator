@@ -1,0 +1,38 @@
+{
+  "id": "sql-t1-08",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 8,
+  "title": "Aggregating Totals with COUNT, SUM, and AVG",
+  "category": "Filtering, Sorting, and Aggregation",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "The CFO needs macro metrics on delivered orders: total order count, total gross revenue, and the average order value.",
+  "questionStatement": "Write a query on the `orders` table to calculate `total_orders` (count of rows), `gross_revenue` (sum of total_amount), and `avg_order_value` (average of total_amount rounded to 2 decimals) for orders with status `DELIVERED`.",
+  "starterCode": "-- Aggregate delivered orders\nSELECT\n  COUNT(*) AS total_orders,\n  SUM(total_amount) AS gross_revenue,\n  ROUND(AVG(total_amount), 2) AS avg_order_value\nFROM orders\nWHERE status = 'DELIVERED';",
+  "expectedConcepts": [
+    "COUNT(*)",
+    "SUM() aggregate",
+    "AVG() aggregate",
+    "ROUND() function",
+    "Column aliases AS"
+  ],
+  "hints": [
+    "Use COUNT(*) to count all matching rows.",
+    "Use SUM(total_amount) for revenue and AVG(total_amount) for average value."
+  ],
+  "executionDialect": "generic-sql",
+  "testCases": [
+    {
+      "id": "tc-t1-08",
+      "description": "Verify aggregate metrics for delivered orders",
+      "expectedRows": [
+        {
+          "total_orders": 7,
+          "gross_revenue": 1878.92,
+          "avg_order_value": 268.42
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tc-t1-03",
+    "description": "Verify unique product categories",
+    "expectedRows": [
+      {
+        "category": "Apparel"
+      },
+      {
+        "category": "Books"
+      },
+      {
+        "category": "Electronics"
+      },
+      {
+        "category": "Home & Kitchen"
+      }
+    ]
+  }
+]

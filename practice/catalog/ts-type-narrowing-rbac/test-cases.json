@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-rbac-1",
+    "name": "Narrows org scoped session accurately",
+    "inputDescription": "null",
+    "expectedOutput": "\"Access granted to tenant: tenant-99\"",
+    "explanation": "Allows scoped access with safe tenantId."
+  }
+]

@@ -1,0 +1,11 @@
+Private invoice response policy
+Cache-Control: private, no-store
+CDN behavior: caching disabled for /api/invoices/*
+Origin: resolve tenant from verified server session; authorize document ownership.
+
+Synthetic verification matrix:
+A -> A invoice: allowed
+B -> A invoice: rejected
+anonymous -> private invoice: rejected
+repeat after A warms edge: same authorization results
+Repeat at each relevant edge region; retain redacted evidence.

@@ -1,0 +1,37 @@
+{
+  "id": "sql-tier4-025",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 25,
+  "title": "PostgreSQL Advisory Locks for Queue Worker Deadlock Prevention",
+  "category": "Locks and Deadlocks",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A multi-node payment capture service processes refunds. When a refund arrives, it must lock the customer record to update their ledger balance. Two concurrent refund requests for the same customer deadlock against each other because each transaction locks `payments` first, then attempts to lock `customers`.",
+  "questionStatement": "Implement a distributed mutual-exclusion lock using PostgreSQL 64-bit transaction advisory locks (`pg_advisory_xact_lock`) against the customer ID before acquiring row locks. Explain why this completely eliminates deadlocks, and write the query acquiring the lock and executing the ledger deduction.",
+  "starterCode": "-- Concurrency-safe payment capture with transaction advisory lock\n-- Parameters: customer_id = 42, refund_amount = 50.00\nBEGIN;\n\n-- 1. Acquire transaction-level advisory lock on customer ID to serialize customer operations\nSELECT pg_advisory_xact_lock(42);\n\n-- 2. Safely deduct balance without risk of deadlocks with other transactions\nUPDATE customers\nSET balance = balance - 50.00\nWHERE id = 42\nRETURNING id, balance;\n\nCOMMIT;",
+  "expectedConcepts": [
+    "Deadlock root cause: non-deterministic lock acquisition order across tables",
+    "pg_advisory_xact_lock establishing mutual exclusion before table access",
+    "Serialization of concurrent customer operations in shared memory",
+    "Automatic lock release at COMMIT/ROLLBACK boundary"
+  ],
+  "hints": [
+    "By acquiring the advisory lock first, any concurrent transaction for the same customer waits before touching tables.",
+    "Transaction-level locks release on COMMIT or ROLLBACK automatically."
+  ],
+  "testCases": [
+    {
+      "id": "tc-tier4-025-1",
+      "description": "Verify balance deduction under transaction lock simulation",
+      "setupSql": "CREATE TABLE customers (id INT PRIMARY KEY, balance NUMERIC);\nINSERT INTO customers VALUES (42, 500.00);",
+      "expectedRows": [
+        {
+          "id": 42,
+          "balance": 450
+        }
+      ],
+      "orderMatters": true
+    }
+  ]
+}

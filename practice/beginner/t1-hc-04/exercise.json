@@ -1,0 +1,17 @@
+{
+  "id": "t1-hc-04",
+  "title": "What is the CSS Box Model and what does box-sizing: border-box do?",
+  "category": "HTML and CSS",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 4,
+  "expectedConcepts": [
+    "Four layers: Content, Padding, Border, Margin",
+    "content-box default behavior adding padding/border to width",
+    "border-box keeping total width constant"
+  ],
+  "hints": [
+    "Name the 4 parts from the innermost text to the outermost space.",
+    "Why would a 100px wide box with 10px padding become 120px wide without border-box?"
+  ]
+}

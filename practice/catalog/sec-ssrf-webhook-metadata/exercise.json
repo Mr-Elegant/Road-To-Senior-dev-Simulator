@@ -1,0 +1,43 @@
+{
+  "id": "sec-ssrf-webhook-metadata",
+  "title": "Custom Webhook Dispatcher AWS Metadata SSRF Vulnerability",
+  "type": "debugging",
+  "topic": "Security",
+  "subtopic": "API response typing",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A B2B integration platform allows enterprise customers to register custom webhook callback URLs (e.g. `https://hooks.slack.com/...`). A penetration testing audit discovered that by submitting `http://169.254.169.254/latest/meta-data/iam/security-credentials/`, an attacker can exfiltrate AWS instance IAM credentials directly to their webhook receiver.",
+  "problemStatement": "The webhook dispatcher executes `fetch(userSuppliedUrl)` directly from backend worker pods. The function lacks private IP filtering, DNS rebinding protection, and URL protocol restrictions, allowing Server-Side Request Forgery (SSRF) against internal VPC services and the cloud metadata API (169.254.169.254).",
+  "constraints": [
+    "Must block requests to private IP ranges: 127.0.0.0/8, 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, and cloud metadata 169.254.169.254.",
+    "Must protect against DNS Rebinding attacks (where a public domain resolves to a public IP on first check, but resolves to 169.254.169.254 when fetch executes).",
+    "Only permit HTTPS / HTTP protocols; block `file://`, `gopher://`, `ftp://`."
+  ],
+  "starterCode": "const dns = require('dns').promises;\n\n/**\n * Vulnerable Webhook Dispatcher\n */\nasync function sendWebhookNotification(targetUrl, payload) {\n  // BUG: Direct fetch of unvalidated user-controlled URL allows SSRF to cloud metadata\n  const res = await fetch(targetUrl, {\n    method: 'POST',\n    headers: { 'Content-Type': 'application/json' },\n    body: JSON.stringify(payload)\n  });\n  return res.status;\n}\n\nfunction solution(input) {\n  return \"ssrf_firewall_and_dns_pinning_applied\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain the mechanics of SSRF and the AWS EC2 instance metadata service (IMDSv1 vs IMDSv2).",
+    "Resolve the DNS hostname first, validate that the resolved IP address is NOT in private or loopback ranges.",
+    "Explain DNS Rebinding attacks and how to pin the resolved IP in the HTTP agent socket connection."
+  ],
+  "hints": [
+    "Checking URL strings like `url.includes(\"localhost\")` is trivial to bypass using hexadecimal IPs (e.g. `http://0x7f000001`) or redirect loops.",
+    "You must resolve the hostname via `dns.lookup()`, verify the IP is publicly routable, and connect directly to that validated IP."
+  ],
+  "testCases": [
+    {
+      "id": "tc-ssrf-1",
+      "name": "Blocks internal IPs and pins verified public IP",
+      "inputDescription": "null",
+      "expectedOutput": "\"ssrf_firewall_and_dns_pinning_applied\"",
+      "explanation": "Enforces complete SSRF mitigation."
+    }
+  ],
+  "alternativeApproaches": [
+    "Routing all outbound webhook requests through a hardened forward-proxy (e.g. Stripe Smokescreen) with strict iptables egress rules."
+  ],
+  "commonMistakes": [
+    "Following HTTP 302 redirects automatically: an attacker points their public domain to a server that returns `Location: http://169.254.169.254`, bypassing the initial IP check.",
+    "Checking URL hostname without resolving DNS (e.g. testing `parsed.hostname !== \"169.254.169.254\"` which fails if the attacker uses an `attacker-controlled.com` domain pointing to that IP)."
+  ]
+}

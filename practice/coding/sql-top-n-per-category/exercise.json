@@ -1,0 +1,48 @@
+{
+  "id": "sql-top-n-per-category",
+  "title": "Top 2 Revenue Products Per Category (Window Functions)",
+  "language": "sql",
+  "difficulty": "Senior",
+  "category": "Window Functions",
+  "estimatedMinutes": 25,
+  "description": "An e-commerce marketplace needs to identify the top 2 highest-grossing products in every category.\nIn the event of identical revenues, both products should receive the same rank without skipping rank numbers (`DENSE_RANK`).\n\nDatabase Tables:\n1. `categories` (id INT, name VARCHAR)\n2. `products` (id INT, category_id INT, title VARCHAR, revenue INT)\n\nOutput Requirements:\nReturn columns:\n- `category_name`: Name of the product category\n- `product_title`: Title of the product\n- `revenue`: Product revenue\n- `ranking`: The dense rank (1 or 2) within that category\nOrder by `category_name` ASC, `ranking` ASC, `revenue` DESC.",
+  "constraints": [
+    "Must use SQL Window function DENSE_RANK() OVER (PARTITION BY ... ORDER BY ...).",
+    "Filter output to ranking <= 2."
+  ],
+  "sampleInput": "Electronics and Apparel products with varied revenues",
+  "sampleOutput": "Top 2 products per category ordered by dense rank",
+  "sqlSetup": [
+    {
+      "tableName": "categories",
+      "schemaSql": "CREATE TABLE categories (id INT PRIMARY KEY, name VARCHAR(50));",
+      "seedDataSql": "\n          INSERT INTO categories VALUES (1, 'Electronics');\n          INSERT INTO categories VALUES (2, 'Apparel');\n        "
+    },
+    {
+      "tableName": "products",
+      "schemaSql": "CREATE TABLE products (id INT PRIMARY KEY, category_id INT, title VARCHAR(100), revenue INT);",
+      "seedDataSql": "\n          INSERT INTO products VALUES (10, 1, 'Laptop Pro', 50000);\n          INSERT INTO products VALUES (11, 1, 'Wireless Mouse', 8000);\n          INSERT INTO products VALUES (12, 1, '4K Monitor', 35000);\n          INSERT INTO products VALUES (20, 2, 'Winter Jacket', 22000);\n          INSERT INTO products VALUES (21, 2, 'Running Shoes', 18000);\n          INSERT INTO products VALUES (22, 2, 'Cotton Socks', 3000);\n        "
+    }
+  ],
+  "starterCode": "-- Find top 2 products per category using DENSE_RANK\nSELECT \n  c.name AS category_name,\n  p.title AS product_title,\n  p.revenue,\n  DENSE_RANK() OVER (PARTITION BY p.category_id ORDER BY p.revenue DESC) AS ranking\nFROM products p\nJOIN categories c ON p.category_id = c.id;",
+  "testCases": [
+    {
+      "id": "tc-sql-top2",
+      "name": "Ranks top 2 products in Electronics (Laptop, Monitor) and Apparel (Jacket, Shoes)",
+      "inputDescription": "",
+      "expectedOutput": "[{\"category_name\":\"Apparel\",\"product_title\":\"Winter Jacket\",\"revenue\":22000,\"ranking\":1},{\"category_name\":\"Apparel\",\"product_title\":\"Running Shoes\",\"revenue\":18000,\"ranking\":2},{\"category_name\":\"Electronics\",\"product_title\":\"Laptop Pro\",\"revenue\":50000,\"ranking\":1},{\"category_name\":\"Electronics\",\"product_title\":\"4K Monitor\",\"revenue\":35000,\"ranking\":2}]",
+      "explanation": "Accurately partitions by category and isolates the top 2 ranked items."
+    },
+    {
+      "id": "tc-sql-top-parka",
+      "name": "Correctly ranks when a new high-revenue apparel product is added",
+      "inputDescription": "INSERT INTO products (id, category_id, title, revenue) VALUES (23, 2, 'Luxury Parka', 25000);",
+      "expectedOutput": "[{\"category_name\":\"Apparel\",\"product_title\":\"Luxury Parka\",\"revenue\":25000,\"ranking\":1},{\"category_name\":\"Apparel\",\"product_title\":\"Winter Jacket\",\"revenue\":22000,\"ranking\":2},{\"category_name\":\"Electronics\",\"product_title\":\"Laptop Pro\",\"revenue\":50000,\"ranking\":1},{\"category_name\":\"Electronics\",\"product_title\":\"4K Monitor\",\"revenue\":35000,\"ranking\":2}]",
+      "explanation": "Dynamic ranking adapts as category leaders change."
+    }
+  ],
+  "hints": [
+    "Wrap the query with a Common Table Expression (CTE) or subquery: `WITH Ranked AS (...) SELECT ... WHERE ranking <= 2`.",
+    "Window functions cannot be placed directly in a `WHERE` clause of the same query block."
+  ]
+}

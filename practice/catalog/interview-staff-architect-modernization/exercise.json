@@ -1,0 +1,34 @@
+{
+  "id": "interview-staff-architect-modernization",
+  "title": "Staff Architect Interview: Legacy Monolith Modernization to Event-Driven Architecture",
+  "type": "senior_interview",
+  "topic": "System Design",
+  "subtopic": "Scalable APIs",
+  "difficulty": "Staff/Principal",
+  "estimatedMinutes": 45,
+  "businessContext": "A multi-billion dollar retail and subscription enterprise runs on a 12-year-old monolithic Ruby on Rails / PostgreSQL codebase. The database is hitting hardware scaling limits (96-core server at 85% CPU during normal days). Deploying any code change takes 45 minutes and occasionally introduces regression bugs across unrelated domains.",
+  "problemStatement": "Lead an architectural discussion to decompose the monolith into domain-driven modular microservices (Identity, Catalog, Checkout, Inventory, Fulfillment). You must address data migration without downtime (Strangler Fig pattern), shared database decomposition, distributed transaction management, and team organizational alignment (Conway's Law).",
+  "constraints": [
+    "Zero downtime and zero lost customer orders during multi-year migration.",
+    "Must avoid \"Distributed Monolith\" anti-patterns.",
+    "Provide clear technical trade-offs between Choreography vs Orchestration for order fulfillment."
+  ],
+  "candidateTasks": [
+    "Question 1: How do you identify which bounded context / domain to carve out first from the monolith?",
+    "Question 2: Explain how the Strangler Fig Pattern and API Gateway reverse proxies route traffic progressively.",
+    "Question 3: How do you decouple the shared PostgreSQL database without breaking transactional integrity?",
+    "Question 4: Compare Saga Orchestration (e.g. Temporal) vs Saga Choreography (Kafka events) for the checkout workflow.",
+    "Question 5: How do you apply Conway's Law and Domain-Driven Design (DDD) to restructure engineering teams?"
+  ],
+  "hints": [
+    "Never extract the most complex and coupled core (Checkout) first. Start with a self-contained, high-value domain like Notifications or Inventory.",
+    "Use the Strangler Fig pattern: place an API Gateway in front of the monolith and intercept specific route paths to new services."
+  ],
+  "alternativeApproaches": [
+    "Modular Monolith architecture first: refactoring code into strict in-process modules before splitting into physical network services."
+  ],
+  "commonMistakes": [
+    "Recommending a complete ground-up rewrite from scratch: business features stall for 2 years and the rewrite frequently fails.",
+    "Allowing new microservices to directly query tables in the monolith database."
+  ]
+}

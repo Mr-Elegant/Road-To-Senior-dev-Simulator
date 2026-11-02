@@ -1,0 +1,23 @@
+{
+  "id": "t1-ts-02",
+  "title": "What are the basic primitive types in TypeScript and how do type annotations work?",
+  "category": "TypeScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 2,
+  "expectedConcepts": [
+    "string, number, boolean, null, undefined, symbol, bigint",
+    "Type annotations using colon syntax (let name: string = \"Alice\")",
+    "Type inference (TypeScript automatically inferring types without explicit annotations)"
+  ],
+  "hints": [
+    "What symbol is used to annotate a variable with a type?",
+    "Do you always need to write : string if you initialize let name = \"Alex\"?"
+  ],
+  "codingExercise": {
+    "instruction": "Add type annotations to a function calculateTotal(price, quantity) that accepts two numbers and returns a number.",
+    "starterCode": "function calculateTotal(price, quantity) {\n  return price * quantity;\n}",
+    "language": "typescript",
+    "expectedOutput": "calculateTotal(price: number, quantity: number): number"
+  }
+}

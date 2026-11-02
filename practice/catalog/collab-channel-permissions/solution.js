@@ -1,0 +1,1 @@
+function solution({session}) { return {allowed:!!session,reason:session?'allowed':'unauthenticated'}; }

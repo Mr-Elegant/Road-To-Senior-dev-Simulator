@@ -1,0 +1,1 @@
+function solution({lastRead,highWater,updates}) { for(const u of updates) lastRead=u.sequence; return {lastRead,unread:highWater-lastRead,outcomes:updates.map(()=>'advanced')}; }

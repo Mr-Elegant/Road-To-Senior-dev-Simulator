@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-render-1",
+    "name": "Eliminates cascading re-renders and bounds rendered nodes",
+    "inputDescription": "null",
+    "expectedOutput": "\"virtualized_and_memoized\"",
+    "explanation": "Transforms heavy table to lightweight virtualized rendering."
+  }
+]

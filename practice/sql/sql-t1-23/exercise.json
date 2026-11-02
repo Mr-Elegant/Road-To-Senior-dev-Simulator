@@ -1,0 +1,19 @@
+{
+  "id": "sql-t1-23",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 23,
+  "title": "Transactions with BEGIN, COMMIT, and ROLLBACK",
+  "category": "Transactions and ACID",
+  "questionType": "conceptual",
+  "realWorldScenario": "An order checkout process must deduct inventory and create an order simultaneously.",
+  "questionStatement": "Write the SQL structure for a transaction that updates inventory and inserts an order. What happens if an error occurs halfway through?",
+  "expectedConcepts": [
+    "BEGIN / START TRANSACTION",
+    "COMMIT commits changes atomically",
+    "ROLLBACK restores previous state"
+  ],
+  "hints": [
+    "Wrap multi-statement writes inside BEGIN and COMMIT blocks."
+  ]
+}

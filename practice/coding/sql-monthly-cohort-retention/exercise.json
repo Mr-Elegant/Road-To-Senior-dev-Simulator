@@ -1,0 +1,49 @@
+{
+  "id": "sql-monthly-cohort-retention",
+  "title": "Monthly User Cohort Retention & Churn Analysis",
+  "language": "sql",
+  "difficulty": "Senior",
+  "category": "SQL Aggregations & Joins",
+  "estimatedMinutes": 30,
+  "description": "A subscription SaaS platform analyzes customer retention month-over-month.\nWrite a SQL query that calculates the active cohort user count for each cohort month (based on user signup date) and their recurring retention in subsequent months.\n\nDatabase Tables:\n1. `users` (id INT, email VARCHAR, signup_date DATE)\n2. `activity` (id INT, user_id INT, activity_date DATE)\n\nOutput Requirements:\nReturn columns:\n- `cohort_month`: The YYYY-MM formatted signup month of the cohort.\n- `active_month`: The YYYY-MM formatted activity month.\n- `retained_users`: Count of unique users from that cohort who performed an activity in that active month.\nOrder by `cohort_month` ASC, `active_month` ASC.",
+  "constraints": [
+    "Only count distinct users per active month.",
+    "Format dates as YYYY-MM (e.g. `2026-01`).",
+    "Filter out activity prior to user signup date."
+  ],
+  "sampleInput": "Users signed up in 2026-01 who logged in during 2026-01 and 2026-02",
+  "sampleOutput": "[{\"cohort_month\":\"2026-01\",\"active_month\":\"2026-01\",\"retained_users\":2},{\"cohort_month\":\"2026-01\",\"active_month\":\"2026-02\",\"retained_users\":1}]",
+  "sqlSetup": [
+    {
+      "tableName": "users",
+      "schemaSql": "CREATE TABLE users (id INT PRIMARY KEY, email VARCHAR(100), signup_date DATE);",
+      "seedDataSql": "\n          INSERT INTO users VALUES (1, 'alice@acme.com', '2026-01-05');\n          INSERT INTO users VALUES (2, 'bob@acme.com', '2026-01-15');\n          INSERT INTO users VALUES (3, 'charlie@acme.com', '2026-02-01');\n        "
+    },
+    {
+      "tableName": "activity",
+      "schemaSql": "CREATE TABLE activity (id INT PRIMARY KEY, user_id INT, activity_date DATE);",
+      "seedDataSql": "\n          INSERT INTO activity VALUES (101, 1, '2026-01-08');\n          INSERT INTO activity VALUES (102, 1, '2026-02-12');\n          INSERT INTO activity VALUES (103, 2, '2026-01-18');\n          INSERT INTO activity VALUES (104, 3, '2026-02-05');\n        "
+    }
+  ],
+  "starterCode": "-- Calculate monthly cohort retention\nSELECT \n  -- Format cohort_month and active_month as YYYY-MM\n  SUBSTRING(u.signup_date, 1, 7) AS cohort_month,\n  SUBSTRING(a.activity_date, 1, 7) AS active_month,\n  COUNT(DISTINCT u.id) AS retained_users\nFROM users u\nJOIN activity a ON u.id = a.user_id\nWHERE a.activity_date >= u.signup_date\nGROUP BY cohort_month, active_month\nORDER BY cohort_month ASC, active_month ASC;",
+  "testCases": [
+    {
+      "id": "tc-sql-1",
+      "name": "Calculates cohort retention counts for January and February cohorts",
+      "inputDescription": "",
+      "expectedOutput": "[{\"cohort_month\":\"2026-01\",\"active_month\":\"2026-01\",\"retained_users\":2},{\"cohort_month\":\"2026-01\",\"active_month\":\"2026-02\",\"retained_users\":1},{\"cohort_month\":\"2026-02\",\"active_month\":\"2026-02\",\"retained_users\":1}]",
+      "explanation": "Cohort 2026-01 has 2 active users in Jan, 1 in Feb. Cohort 2026-02 has 1 active user in Feb."
+    },
+    {
+      "id": "tc-sql-2",
+      "name": "Calculates cohort retention including additional active cohort user",
+      "inputDescription": "INSERT INTO activity (id, user_id, activity_date) VALUES (8, 2, '2026-02-20');",
+      "expectedOutput": "[{\"cohort_month\":\"2026-01\",\"active_month\":\"2026-01\",\"retained_users\":2},{\"cohort_month\":\"2026-01\",\"active_month\":\"2026-02\",\"retained_users\":2},{\"cohort_month\":\"2026-02\",\"active_month\":\"2026-02\",\"retained_users\":1}]",
+      "explanation": "User 2 from the January cohort logs activity in February, incrementing January cohort retention to 2."
+    }
+  ],
+  "hints": [
+    "Extract the month prefix using `SUBSTRING(date_column, 1, 7)` or `strftime` / `to_char`.",
+    "Use `COUNT(DISTINCT u.id)` to avoid counting duplicate logins by the same user in the same month."
+  ]
+}

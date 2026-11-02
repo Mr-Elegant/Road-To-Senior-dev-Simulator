@@ -1,0 +1,24 @@
+{
+  "id": "t1-ts-07",
+  "title": "What are union types and how do you narrow them using typeof guards?",
+  "category": "TypeScript Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 7,
+  "expectedConcepts": [
+    "Union operator (|) allowing a value to be one of several types",
+    "Type narrowing: TypeScript refining a broad type into a specific type based on runtime checks",
+    "typeof type guards for primitives (typeof val === \"string\")",
+    "Compile-time safety preventing invalid operations on unions"
+  ],
+  "hints": [
+    "What symbol means \"or\" in TypeScript types?",
+    "How does an if (typeof x === \"string\") statement help TypeScript understand the type?"
+  ],
+  "codingExercise": {
+    "instruction": "Write a function formatInput(val: string | number): string that converts numbers to string with .toFixed(2) and trims strings.",
+    "starterCode": "function formatInput(val: string | number): string {\n  // Use typeof to narrow and format\n}",
+    "language": "typescript",
+    "expectedOutput": "Narrowed string or number handling"
+  }
+}

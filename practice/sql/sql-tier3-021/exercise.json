@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-021",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 21,
+  "title": "PostgreSQL Foreign Data Wrappers (postgres_fdw) and Pushdown",
+  "category": "Database Design and Normalization",
+  "questionType": "conceptual",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "Your architecture team separates high-volume analytics into an isolated PostgreSQL cluster while user authentication lives in the core database. You need the analytics database to join `events` with `users` from the core database seamlessly.",
+  "questionStatement": "Explain how PostgreSQL Foreign Data Wrappers (`postgres_fdw`) implement the SQL/MED standard. Detail the setup steps (`CREATE SERVER`, `CREATE USER MAPPING`, `IMPORT FOREIGN SCHEMA`). What is query pushdown (WHERE clauses, aggregates, joins), and how does network latency impact FDW performance?",
+  "expectedConcepts": [
+    "SQL/MED standard and postgres_fdw extension",
+    "CREATE SERVER, USER MAPPING, and IMPORT FOREIGN SCHEMA workflow",
+    "Predicate, aggregate, and sort pushdown to remote engine",
+    "Network round-trip latency and fetch_size parameter",
+    "Local-to-foreign join limitations"
+  ],
+  "hints": [
+    "How does postgres_fdw avoid downloading the whole table when a WHERE clause is present?",
+    "What user mapping is required so the local user has rights on the remote server?",
+    "Consider the impact of network latency on joins between local and foreign tables."
+  ]
+}

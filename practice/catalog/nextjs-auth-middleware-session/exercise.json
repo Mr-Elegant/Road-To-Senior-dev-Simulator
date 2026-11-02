@@ -1,0 +1,44 @@
+{
+  "id": "nextjs-auth-middleware-session",
+  "title": "Edge Middleware JWT Validation Infinite Redirect Loop",
+  "type": "debugging",
+  "topic": "Next.js",
+  "subtopic": "Authentication and authorization",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "A B2B SaaS platform deployed Next.js Edge Middleware for authentication. Immediately after deployment, all enterprise users logging into `/dashboard` receive a `ERR_TOO_MANY_REDIRECTS` browser error.",
+  "problemStatement": "The middleware intercepts all requests, checks for a session token cookie, and if invalid or expired, redirects to `/login`. However, `/login` itself was not excluded in the middleware matcher config or route check. When the user was redirected to `/login`, the middleware ran again, found no cookie, and redirected to `/login` infinitely.",
+  "constraints": [
+    "Public routes (`/login`, `/signup`, `/api/auth`, `/_next`, `/favicon.ico`) must be excluded from authentication redirects.",
+    "Must properly forward cookies and path headers using `NextResponse.next()`.",
+    "Redirect URL must preserve original destination query parameter (e.g. `/login?from=/dashboard`)."
+  ],
+  "starterCode": "import { NextResponse } from 'next/server';\n\n/**\n * Buggy Next.js Auth Middleware\n */\nexport function middleware(request) {\n  const token = request.cookies.get('session_token')?.value;\n\n  // BUG 1: Matches /login and public assets, causing infinite redirect loop!\n  if (!token) {\n    // BUG 2: Creating new URL without preserving return URL\n    return NextResponse.redirect(new URL('/login', request.url));\n  }\n\n  return NextResponse.next();\n}\n\n// BUG 3: Matcher does not filter out static assets or public routes\nexport const config = {\n  matcher: ['/:path*'],\n};\n\nfunction solution(input) {\n  return \"redirect_loop_resolved\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Identify the missing route exclusion condition causing `ERR_TOO_MANY_REDIRECTS`.",
+    "Configure the matcher regex to exclude `/_next/static`, `/_next/image`, `favicon.ico`, and public auth routes.",
+    "Attach `?redirectUrl=` parameter so user returns to target page after login."
+  ],
+  "hints": [
+    "Check `request.nextUrl.pathname.startsWith(\"/login\")` before issuing a redirect.",
+    "Use standard Next.js matcher exclusion: `/((?!api/auth|_next/static|_next/image|favicon.ico|login|signup).*)`."
+  ],
+  "testCases": [
+    {
+      "id": "tc-mw-1",
+      "name": "Prevents infinite redirect loop and allows public routes",
+      "inputDescription": "null",
+      "expectedOutput": "\"redirect_loop_resolved\"",
+      "explanation": "Safely protects private paths while permitting public and static routes."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using NextAuth.js (Auth.js) built-in authorized callback middleware.",
+    "Validating JWT signature cryptographically using jose library inside Edge runtime."
+  ],
+  "commonMistakes": [
+    "Not excluding Next.js static asset chunks: Every JS and CSS chunk request gets redirected to /login, breaking styles and hydration.",
+    "Checking cookies via client-side JavaScript document.cookie instead of HTTP-only cookies in middleware."
+  ]
+}

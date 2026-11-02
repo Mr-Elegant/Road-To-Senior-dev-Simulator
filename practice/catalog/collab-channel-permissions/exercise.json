@@ -1,0 +1,106 @@
+{
+  "id": "collab-channel-permissions",
+  "title": "Collaboration: Authorize Channel Reads and Sends",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "Real-time collaboration / Messaging and meetings",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "A guessed private-channel ID lets an authenticated user read another team’s messages. Archived channels also accept new sends.",
+  "problemStatement": "Implement solution({ tenantId, channel, session, members, action }). channel has id, tenantId, private and archived booleans. session is null or { userId, tenantId, active }. members contains unique users with { userId, role:member|admin, active }. action outside read/send/manage => invalid_action first. Missing/inactive session or empty userId => unauthenticated. Session or channel tenant mismatch => forbidden. Private channels require active membership; manage always requires an active admin membership, including public channels. Fail these checks as forbidden. An authorized send to an archived channel => read_only. Otherwise allow. Return { allowed, reason } with reason allowed for success. Inputs otherwise have valid shapes.",
+  "constraints": [
+    "Implement the synchronous solution(input) contract exactly. Do not mutate input; all inputs are JSON data.",
+    "This is a deterministic state model. It does not open sockets, send notifications, authorize real users, or establish media connections."
+  ],
+  "candidateTasks": [
+    "Reproduce the starter failure, implement the invariant, and pass every authored case.",
+    "How would you revoke an active socket subscription immediately when channel membership changes?"
+  ],
+  "starterCode": "function solution({session}) { return {allowed:!!session,reason:session?'allowed':'unauthenticated'}; }",
+  "testCases": [
+    {
+      "id": "auth-1",
+      "name": "Read a public channel as active tenant user",
+      "inputDescription": "{\"tenantId\":\"t\",\"channel\":{\"id\":\"c\",\"tenantId\":\"t\",\"private\":false,\"archived\":false},\"session\":{\"userId\":\"u\",\"tenantId\":\"t\",\"active\":true},\"members\":[],\"action\":\"read\"}",
+      "expectedOutput": "{\"allowed\":true,\"reason\":\"allowed\"}",
+      "hidden": false
+    },
+    {
+      "id": "auth-2",
+      "name": "Deny private channel to nonmember",
+      "inputDescription": "{\"tenantId\":\"t\",\"channel\":{\"id\":\"c\",\"tenantId\":\"t\",\"private\":true,\"archived\":false},\"session\":{\"userId\":\"u\",\"tenantId\":\"t\",\"active\":true},\"members\":[],\"action\":\"read\"}",
+      "expectedOutput": "{\"allowed\":false,\"reason\":\"forbidden\"}",
+      "hidden": false
+    },
+    {
+      "id": "auth-3",
+      "name": "Deny cross-tenant session even with membership",
+      "inputDescription": "{\"tenantId\":\"t\",\"channel\":{\"id\":\"c\",\"tenantId\":\"t\",\"private\":false,\"archived\":false},\"session\":{\"userId\":\"u\",\"tenantId\":\"other\",\"active\":true},\"members\":[{\"userId\":\"u\",\"role\":\"admin\",\"active\":true}],\"action\":\"read\"}",
+      "expectedOutput": "{\"allowed\":false,\"reason\":\"forbidden\"}",
+      "hidden": true
+    },
+    {
+      "id": "auth-4",
+      "name": "Deny inactive membership in private channel",
+      "inputDescription": "{\"tenantId\":\"t\",\"channel\":{\"id\":\"c\",\"tenantId\":\"t\",\"private\":true,\"archived\":false},\"session\":{\"userId\":\"u\",\"tenantId\":\"t\",\"active\":true},\"members\":[{\"userId\":\"u\",\"role\":\"member\",\"active\":false}],\"action\":\"read\"}",
+      "expectedOutput": "{\"allowed\":false,\"reason\":\"forbidden\"}",
+      "hidden": true
+    },
+    {
+      "id": "auth-5",
+      "name": "Archived channels reject authorized sends",
+      "inputDescription": "{\"tenantId\":\"t\",\"channel\":{\"id\":\"c\",\"tenantId\":\"t\",\"private\":false,\"archived\":true},\"session\":{\"userId\":\"u\",\"tenantId\":\"t\",\"active\":true},\"members\":[],\"action\":\"send\"}",
+      "expectedOutput": "{\"allowed\":false,\"reason\":\"read_only\"}",
+      "hidden": true
+    },
+    {
+      "id": "auth-6",
+      "name": "Public channel management still requires admin",
+      "inputDescription": "{\"tenantId\":\"t\",\"channel\":{\"id\":\"c\",\"tenantId\":\"t\",\"private\":false,\"archived\":false},\"session\":{\"userId\":\"u\",\"tenantId\":\"t\",\"active\":true},\"members\":[],\"action\":\"manage\"}",
+      "expectedOutput": "{\"allowed\":false,\"reason\":\"forbidden\"}",
+      "hidden": true
+    },
+    {
+      "id": "auth-7",
+      "name": "Active admin can manage archived private channel",
+      "inputDescription": "{\"tenantId\":\"t\",\"channel\":{\"id\":\"c\",\"tenantId\":\"t\",\"private\":true,\"archived\":true},\"session\":{\"userId\":\"u\",\"tenantId\":\"t\",\"active\":true},\"members\":[{\"userId\":\"u\",\"role\":\"admin\",\"active\":true}],\"action\":\"manage\"}",
+      "expectedOutput": "{\"allowed\":true,\"reason\":\"allowed\"}",
+      "hidden": true
+    },
+    {
+      "id": "auth-8",
+      "name": "Reject unknown action before missing session",
+      "inputDescription": "{\"tenantId\":\"t\",\"channel\":{\"id\":\"c\",\"tenantId\":\"t\",\"private\":false,\"archived\":false},\"session\":null,\"members\":[],\"action\":\"delete_everything\"}",
+      "expectedOutput": "{\"allowed\":false,\"reason\":\"invalid_action\"}",
+      "hidden": true
+    },
+    {
+      "id": "auth-9",
+      "name": "Reject inactive session",
+      "inputDescription": "{\"tenantId\":\"t\",\"channel\":{\"id\":\"c\",\"tenantId\":\"t\",\"private\":false,\"archived\":false},\"session\":{\"userId\":\"u\",\"tenantId\":\"t\",\"active\":false},\"members\":[],\"action\":\"read\"}",
+      "expectedOutput": "{\"allowed\":false,\"reason\":\"unauthenticated\"}",
+      "hidden": true
+    },
+    {
+      "id": "auth-10",
+      "name": "Reject cross-tenant channel",
+      "inputDescription": "{\"tenantId\":\"t\",\"channel\":{\"id\":\"c\",\"tenantId\":\"other\",\"private\":false,\"archived\":false},\"session\":{\"userId\":\"u\",\"tenantId\":\"t\",\"active\":true},\"members\":[],\"action\":\"read\"}",
+      "expectedOutput": "{\"allowed\":false,\"reason\":\"forbidden\"}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "Write down validation and replay precedence before changing state.",
+    "Use stable IDs and monotonic sequence/version values; preserve input ownership."
+  ],
+  "alternativeApproaches": [
+    "Use an append-only event log with transactional projections.",
+    "Use a database snapshot plus a versioned resume cursor."
+  ],
+  "commonMistakes": [
+    "Trusting delivery order or treating retries as new operations.",
+    "Mutating caller-owned arrays or accepting cross-channel data.",
+    "Presenting a fixture result as a guarantee of real-time delivery or media connectivity."
+  ],
+  "codeLanguage": "javascript"
+}

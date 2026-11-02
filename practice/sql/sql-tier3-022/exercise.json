@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier3-022",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 22,
+  "title": "Audit Logging with Trigger Functions and pg_trigger_depth",
+  "category": "Migrations and Schema Evolution",
+  "questionType": "conceptual",
+  "datasetId": "loan_management",
+  "realWorldScenario": "For regulatory compliance, an NBFC must maintain an immutable audit trail of every update to interest rates or loan statuses, recording the old values, new values, timestamp, and the database user who executed the change.",
+  "questionStatement": "Implement an automated audit trail trigger function in PostgreSQL. Detail the differences between `BEFORE` and `AFTER` triggers, statement-level vs row-level triggers (`FOR EACH ROW`), the role of `OLD` and `NEW` pseudo-records, and how to use `pg_trigger_depth()` to prevent infinite trigger loops.",
+  "expectedConcepts": [
+    "BEFORE vs AFTER trigger lifecycle",
+    "FOR EACH ROW vs FOR EACH STATEMENT execution scope",
+    "OLD and NEW record structures and TG_OP variable",
+    "to_jsonb(OLD/NEW) serialization into structured JSONB",
+    "pg_trigger_depth() guard against recursive cascades"
+  ],
+  "hints": [
+    "Can an AFTER trigger modify the NEW row values?",
+    "How does to_jsonb() simplify storing arbitrary table schemas into a single audit table?",
+    "Why check pg_trigger_depth()?"
+  ]
+}

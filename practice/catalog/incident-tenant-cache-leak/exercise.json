@@ -1,0 +1,498 @@
+{
+  "id": "incident-tenant-cache-leak",
+  "title": "Tenant Isolation: A CDN Serves Another Customer’s Invoice",
+  "type": "incident",
+  "topic": "Security",
+  "subtopic": "Evolving production incident",
+  "difficulty": "Staff/Principal",
+  "estimatedMinutes": 35,
+  "businessContext": "A SaaS invoice API authenticates at the origin, but a CDN rollout caches /api/invoices/42 by path alone. Different tenants use the same local invoice IDs, so cache hits can bypass origin authorization.",
+  "problemStatement": "A customer reports an invoice bearing another company’s name. The response has X-Cache: Hit and Age: 83. Work through three timed developments, justify your actions, and write an evidence-based incident response. The simulation starts paused; advancing time can expire unanswered decisions.",
+  "constraints": [
+    "Treat the report as a potential confidentiality incident and preserve access evidence.",
+    "Do not trust a client-supplied tenant header as authorization.",
+    "Use synthetic tenant fixtures for verification; do not expose more customer records while testing.",
+    "All telemetry is synthetic. Actions only affect this practice simulation."
+  ],
+  "candidateTasks": [
+    "Contain customer impact while preserving evidence and data integrity.",
+    "Respond to each new development and explain the selected action.",
+    "Cite telemetry supporting the root cause; distinguish observation from inference.",
+    "Define a permanent correction, regression coverage, recovery gates, and stakeholder update."
+  ],
+  "incidentTelemetry": {
+    "logs": [
+      {
+        "timestamp": "T+00:00",
+        "level": "WARN",
+        "service": "invoice-edge",
+        "message": "A customer reports an invoice bearing another company’s name. The response has X-Cache: Hit and Age: 83."
+      }
+    ],
+    "metrics": [
+      {
+        "metricName": "affected_operations_percent",
+        "baseline": "0.1",
+        "incidentPeak": "35",
+        "unit": "%",
+        "status": "critical",
+        "trend": "Latest observation after the selected action; not a live production metric"
+      }
+    ],
+    "customerReports": [
+      {
+        "id": "incident-tenant-cache-leak-report",
+        "reporter": "Incident commander",
+        "impact": "Active customer impact",
+        "quote": "A customer reports an invoice bearing another company’s name. The response has X-Cache: Hit and Age: 83."
+      }
+    ],
+    "recentDeployments": [
+      {
+        "commitHash": "e-leak-r1",
+        "author": "service-team",
+        "message": "Enable CDN caching for authenticated invoice paths",
+        "timeAgo": "12 minutes before the alert",
+        "diffSnippet": "cache_key = request.pathname\n/api/invoices/* -> cache TTL 300s\norigin still authenticates on cache misses"
+      }
+    ]
+  },
+  "incidentSimulation": {
+    "version": 1,
+    "initialSeverity": "SEV1",
+    "stages": [
+      {
+        "id": "development-1",
+        "atSeconds": 0,
+        "title": "Authorization on a cache miss is not enough",
+        "briefing": "Two tenants request the same invoice path. Only the first request reaches the origin; the second gets the cached first response.",
+        "branches": {
+          "effective": "Authenticated invoice responses no longer reuse shared cached objects.",
+          "partial": "Some impact remains. Path-only reuse can continue exposing cached documents even if origin authorization is correct.",
+          "harmful": "Path-only reuse can continue exposing cached documents even if origin authorization is correct.",
+          "timeout": "The previous deadline passed without a response. Path-only reuse can continue exposing cached documents even if origin authorization is correct."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+00:00",
+              "level": "WARN",
+              "service": "invoice-edge",
+              "message": "path=/api/invoices/42; tenant A MISS then tenant B HIT; origin authorization absent on HIT."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "1-partial",
+            "label": "Patch origin authorization only",
+            "outcome": "partial",
+            "consequence": "Cache misses are checked, but existing cache hits still avoid the origin.",
+            "customerImpact": "Cross-tenant exposure can continue.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "invoice-edge",
+                  "message": "Cache misses are checked, but existing cache hits still avoid the origin."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "23",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-harmful",
+            "label": "Add a browser-controlled tenant header to the key and close the incident",
+            "outcome": "harmful",
+            "consequence": "Attackers can choose header values and shared objects may still be reachable without trusted authorization.",
+            "customerImpact": "Tenant isolation remains unproven.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "invoice-edge",
+                  "message": "Attackers can choose header values and shared objects may still be reachable without trusted authorization."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "51",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-effective",
+            "label": "Disable caching for private invoice routes and invalidate affected objects",
+            "outcome": "effective",
+            "consequence": "Verified edge behavior bypasses private invoice caching; known cached objects are invalidated while logs are preserved.",
+            "customerImpact": "New invoice reads use authenticated origin checks.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "invoice-edge",
+                  "message": "Verified edge behavior bypasses private invoice caching; known cached objects are invalidated while logs are preserved."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "1",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Authorization on a cache miss is not enough\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+00:00",
+                "level": "WARN",
+                "service": "invoice-edge",
+                "message": "Decision deadline missed: path=/api/invoices/42; tenant A MISS then tenant B HIT; origin authorization absent on HIT."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "1-effective",
+          "reasoning": "Contain the shared cache path immediately. Origin checks cannot protect a response served before reaching the origin, and user-controlled identity is not a trust boundary."
+        }
+      },
+      {
+        "id": "development-2",
+        "atSeconds": 120,
+        "title": "Containment must reach every edge",
+        "briefing": "One region still returns cached responses after invalidation began. Support asks whether logs can be deleted to remove exposed invoice references.",
+        "branches": {
+          "effective": "The bypass policy is active in most regions, but containment needs verification everywhere.",
+          "partial": "Some impact remains. Apply a real private-route bypass before relying on invalidation or header changes.",
+          "harmful": "Apply a real private-route bypass before relying on invalidation or header changes.",
+          "timeout": "The previous deadline passed without a response. Apply a real private-route bypass before relying on invalidation or header changes."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+02:00",
+              "level": "WARN",
+              "service": "invoice-edge",
+              "message": "edge region C still HIT; invalidation not complete; access logs available for 24h."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "2-harmful",
+            "label": "Delete access logs and rely on the customer report",
+            "outcome": "harmful",
+            "consequence": "Evidence needed to scope possible recipients and document containment is lost.",
+            "customerImpact": "The team cannot reliably identify all affected customers.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "invoice-edge",
+                  "message": "Evidence needed to scope possible recipients and document containment is lost."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "38",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-effective",
+            "label": "Verify bypass globally and preserve restricted evidence for scope analysis",
+            "outcome": "effective",
+            "consequence": "All tested edge locations bypass the route; logs are retained under restricted access for exposure mapping.",
+            "customerImpact": "New exposure stops; affected tenants can be identified.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "invoice-edge",
+                  "message": "All tested edge locations bypass the route; logs are retained under restricted access for exposure mapping."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "0.5",
+                  "unit": "%",
+                  "status": "normal",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-partial",
+            "label": "Wait for TTL expiry without checking edge behavior",
+            "outcome": "partial",
+            "consequence": "Objects may age out eventually, but active exposure and deployment coverage remain unknown.",
+            "customerImpact": "Some customers remain at risk during the wait.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "invoice-edge",
+                  "message": "Objects may age out eventually, but active exposure and deployment coverage remain unknown."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "12",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Containment must reach every edge\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+02:00",
+                "level": "WARN",
+                "service": "invoice-edge",
+                "message": "Decision deadline missed: edge region C still HIT; invalidation not complete; access logs available for 24h."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "2-effective",
+          "reasoning": "Verify enforcement at the edge and preserve scoped evidence with privacy controls. Cache invalidation alone is not a complete route policy or an exposure investigation."
+        }
+      },
+      {
+        "id": "development-3",
+        "atSeconds": 300,
+        "title": "A safe release and incident closure",
+        "briefing": "An uncached private route is ready. Product wants invoice caching re-enabled for latency, and incident scope includes 12 potentially exposed documents.",
+        "branches": {
+          "effective": "Private reads are contained; scope and regression gates now determine closure.",
+          "partial": "Some impact remains. Keep caching disabled until cross-tenant synthetic probes and global bypass verification succeed.",
+          "harmful": "Keep caching disabled until cross-tenant synthetic probes and global bypass verification succeed.",
+          "timeout": "The previous deadline passed without a response. Keep caching disabled until cross-tenant synthetic probes and global bypass verification succeed."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+05:00",
+              "level": "WARN",
+              "service": "invoice-edge",
+              "message": "Synthetic A/B tenant probes pass uncached; 12 document IDs need access-log correlation."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "3-effective",
+            "label": "Keep private reads uncached, verify isolation, and complete scoped response",
+            "outcome": "effective",
+            "consequence": "Cross-tenant and signed-out fixture tests reject access; the 12-document exposure review gets owners and an approved customer response.",
+            "customerImpact": "Invoice access is correct and affected customers receive a coordinated update.",
+            "severity": "SEV3",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "invoice-edge",
+                  "message": "Cross-tenant and signed-out fixture tests reject access; the 12-document exposure review gets owners and an approved customer response."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "0.1",
+                  "unit": "%",
+                  "status": "normal",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-partial",
+            "label": "Close after the original reporter sees the correct invoice",
+            "outcome": "partial",
+            "consequence": "One path works, but other tenants, objects and edge regions remain unverified.",
+            "customerImpact": "Residual exposure may be missed.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "invoice-edge",
+                  "message": "One path works, but other tenants, objects and edge regions remain unverified."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "4",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-harmful",
+            "label": "Restore path-only caching because latency improved",
+            "outcome": "harmful",
+            "consequence": "The original identity-blind cache key is restored and cross-tenant reuse recurs.",
+            "customerImpact": "Confidential invoice data is exposed again.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "invoice-edge",
+                  "message": "The original identity-blind cache key is restored and cross-tenant reuse recurs."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "59",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"A safe release and incident closure\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+05:00",
+                "level": "WARN",
+                "service": "invoice-edge",
+                "message": "Decision deadline missed: Synthetic A/B tenant probes pass uncached; 12 document IDs need access-log correlation."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "3-effective",
+          "reasoning": "Keep private responses uncached unless a reviewed authorization-aware design is demonstrated. Close only after containment, synthetic isolation tests and scoped incident response have owners and evidence."
+        }
+      }
+    ],
+    "endSeconds": 480
+  },
+  "hints": [
+    "Tenant A MISS followed by tenant B HIT on the same path returns the same invoice.",
+    "Disable shared caching for private invoice paths through verified CDN policy, then invalidate affected objects.",
+    "Keep private invoice responses uncached with private, no-store semantics and a CDN configuration that respects them."
+  ],
+  "alternativeApproaches": [
+    "Cache only public invoice-independent assets and retain private data access at the origin.",
+    "A separately reviewed edge authorization design may support private caching, but identity verification and cache partitioning must hold for every hit."
+  ],
+  "commonMistakes": [
+    "Assuming correct origin authorization protects CDN cache hits.",
+    "Trusting a client-provided tenant identity.",
+    "Deleting evidence or closing the investigation after testing one customer path."
+  ]
+}

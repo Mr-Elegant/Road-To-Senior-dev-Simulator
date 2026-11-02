@@ -1,0 +1,9 @@
+Durable operation record
+UNIQUE(order_id, operation_type) -> stable idempotency_key, payload_hash, provider_id, state
+
+Create operation transactionally BEFORE provider request.
+Retry same operation with same key + same payload.
+Timeout -> PENDING_RECONCILIATION, not FAILED.
+Verified webhook -> deduplicated inbox -> allowed state transition.
+Confirmed excess capture -> unique refund operation -> reconcile refund outcome.
+Provider key retention is finite: long-delayed retries require reconciliation first.

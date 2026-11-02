@@ -1,0 +1,25 @@
+{
+  "id": "t1-hc-05",
+  "title": "What is Flexbox and what are its core container and item properties?",
+  "category": "HTML and CSS",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 5,
+  "expectedConcepts": [
+    "One-dimensional layout (row or column)",
+    "display: flex and flex-direction",
+    "justify-content (main axis alignment)",
+    "align-items (cross axis alignment)",
+    "flex-grow, flex-shrink, flex-wrap"
+  ],
+  "hints": [
+    "Is Flexbox intended for 1-dimensional or 2-dimensional layouts?",
+    "Which property aligns items horizontally in a standard row flex container?"
+  ],
+  "codingExercise": {
+    "instruction": "Write CSS for a .container that uses Flexbox to center its child item both horizontally and vertically.",
+    "starterCode": ".container {\n  display: flex;\n  /* Add alignment properties here */\n}",
+    "language": "css",
+    "expectedOutput": "justify-content: center and align-items: center"
+  }
+}

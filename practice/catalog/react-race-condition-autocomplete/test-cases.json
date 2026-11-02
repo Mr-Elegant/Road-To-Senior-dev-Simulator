@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-race-auto-1",
+    "name": "Discards stale in-flight responses and aborts signal",
+    "inputDescription": "null",
+    "expectedOutput": "\"aborted_stale_requests\"",
+    "explanation": "Cleanly cancels superseded fetch requests on dependency change."
+  }
+]

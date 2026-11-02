@@ -1,0 +1,100 @@
+[
+  {
+    "id": "tenant-1",
+    "name": "Owner can delete within their tenant",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"owner\",\"active\":true}]},\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"a\"},\"action\":\"delete\"}",
+    "expectedOutput": "{\"allowed\":true}",
+    "hidden": false
+  },
+  {
+    "id": "tenant-2",
+    "name": "Changing invoice ID cannot cross tenants",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"owner\",\"active\":true}]},\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"b\"},\"action\":\"read\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": false
+  },
+  {
+    "id": "tenant-3",
+    "name": "Routing tenant alone does not grant membership",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"owner\",\"active\":true}]},\"requestedTenantId\":\"b\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"b\"},\"action\":\"read\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-4",
+    "name": "Viewer cannot edit",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"viewer\",\"active\":true}]},\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"a\"},\"action\":\"edit\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-5",
+    "name": "Editor can edit",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"editor\",\"active\":true}]},\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"a\"},\"action\":\"edit\"}",
+    "expectedOutput": "{\"allowed\":true}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-6",
+    "name": "Inactive membership is denied",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"owner\",\"active\":false}]},\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"a\"},\"action\":\"read\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-7",
+    "name": "Missing session is denied",
+    "inputDescription": "{\"session\":null,\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"a\"},\"action\":\"read\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-8",
+    "name": "Unknown action is denied",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"owner\",\"active\":true}]},\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"a\"},\"action\":\"export\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-9",
+    "name": "Prototype-like role cannot grant permissions",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"constructor\",\"active\":true}]},\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"a\"},\"action\":\"read\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-10",
+    "name": "Truthy active string does not grant access",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"owner\",\"active\":\"true\"}]},\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"a\"},\"action\":\"read\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-11",
+    "name": "Owner of another tenant cannot upgrade viewer permissions",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"owner\",\"active\":true},{\"tenantId\":\"b\",\"role\":\"viewer\",\"active\":true}]},\"requestedTenantId\":\"b\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"b\"},\"action\":\"delete\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-12",
+    "name": "Missing invoice is denied",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"owner\",\"active\":true}]},\"requestedTenantId\":\"a\",\"invoice\":null,\"action\":\"read\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-13",
+    "name": "Viewer can read",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"viewer\",\"active\":true}]},\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"a\"},\"action\":\"read\"}",
+    "expectedOutput": "{\"allowed\":true}",
+    "hidden": true
+  },
+  {
+    "id": "tenant-14",
+    "name": "Editor cannot delete",
+    "inputDescription": "{\"session\":{\"userId\":\"u\",\"memberships\":[{\"tenantId\":\"a\",\"role\":\"editor\",\"active\":true}]},\"requestedTenantId\":\"a\",\"invoice\":{\"id\":\"i\",\"tenantId\":\"a\"},\"action\":\"delete\"}",
+    "expectedOutput": "{\"allowed\":false}",
+    "hidden": true
+  }
+]

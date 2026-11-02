@@ -1,0 +1,18 @@
+{
+  "id": "t1-rdx-07",
+  "title": "How do you handle asynchronous operations like API calls using createAsyncThunk?",
+  "category": "Redux Toolkit Fundamentals",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 7,
+  "expectedConcepts": [
+    "What a thunk is: Function containing async logic dispatched like a regular action",
+    "createAsyncThunk generates three promise lifecycle actions: pending, fulfilled, rejected",
+    "Handling lifecycle actions in extraReducers inside createSlice",
+    "Managing loading spinners and error messages cleanly"
+  ],
+  "hints": [
+    "What are the 3 states of an async request: started, succeeded, failed?",
+    "Where do you place createAsyncThunk cases in createSlice: reducers or extraReducers?"
+  ]
+}

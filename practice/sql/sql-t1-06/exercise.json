@@ -1,0 +1,44 @@
+{
+  "id": "sql-t1-06",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 6,
+  "title": "Membership Filtering with the IN Operator",
+  "category": "Filtering, Sorting, and Aggregation",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Warehouse logistics needs to see orders that require immediate physical shipping or delivery attention.",
+  "questionStatement": "Write a query to retrieve all orders with status in `('PAID', 'SHIPPED')`, displaying `id`, `status`, and `total_amount`, sorted by `id` ascending.",
+  "starterCode": "-- Filter orders with status IN ('PAID', 'SHIPPED')\nSELECT id, status, total_amount\nFROM orders\nWHERE status IN ('PAID', 'SHIPPED')\nORDER BY id ASC;",
+  "expectedConcepts": [
+    "IN operator",
+    "Set membership",
+    "Status lifecycle"
+  ],
+  "hints": [
+    "The IN operator accepts a comma-separated list of literals in parentheses."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-06",
+      "description": "Verify orders in PAID or SHIPPED state",
+      "expectedRows": [
+        {
+          "id": 105,
+          "status": "PAID",
+          "total_amount": 97
+        },
+        {
+          "id": 107,
+          "status": "PAID",
+          "total_amount": 199.99
+        },
+        {
+          "id": 108,
+          "status": "SHIPPED",
+          "total_amount": 798.99
+        }
+      ]
+    }
+  ]
+}

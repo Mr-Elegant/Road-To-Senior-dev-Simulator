@@ -14,7 +14,13 @@
     "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "practice:generate": "node scripts/practice/cli.cjs generate",
+    "practice:list": "node scripts/practice/cli.cjs list",
+    "practice:test": "node scripts/practice/cli.cjs test",
+    "practice:test:all": "node scripts/practice/cli.cjs test all",
+    "practice:watch": "node scripts/practice/cli.cjs watch",
+    "practice:verify": "node --test tests/practice/*.test.cjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.14",

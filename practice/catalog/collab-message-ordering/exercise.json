@@ -1,0 +1,85 @@
+{
+  "id": "collab-message-ordering",
+  "title": "Collaboration: Deduplicate and Order Retried Messages",
+  "type": "debugging",
+  "topic": "Integrations",
+  "subtopic": "Real-time collaboration / Messaging and meetings",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "After reconnecting, a team chat shows duplicate messages and places delayed deliveries after newer messages.",
+  "problemStatement": "Implement solution({ channelId, messages, incoming }). Existing messages are valid and have unique IDs/sequences in this channel. A message has nonempty string id/channelId, positive safe-integer seq, and string body. For each incoming record: invalid shape => invalid; foreign channel => forbidden; an existing ID with identical seq/body => duplicate, otherwise conflict; an occupied seq under another ID => conflict; otherwise accepted. Return { messages, outcomes }, ordered by ascending seq. Inputs are plain objects; incoming records may have missing or invalid fields.",
+  "constraints": [
+    "Implement the synchronous solution(input) contract exactly. Do not mutate input; all inputs are JSON data.",
+    "This is a deterministic state model. It does not open sockets, send notifications, authorize real users, or establish media connections."
+  ],
+  "candidateTasks": [
+    "Reproduce the starter failure, implement the invariant, and pass every authored case.",
+    "How would you persist server-assigned ordering and idempotency keys across concurrent message producers?"
+  ],
+  "starterCode": "function solution({messages, incoming}) { return {messages: messages.concat(incoming), outcomes: incoming.map(() => 'accepted')}; }",
+  "testCases": [
+    {
+      "id": "msg-1",
+      "name": "Accept first message",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[],\"incoming\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}]}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"outcomes\":[\"accepted\"]}",
+      "hidden": false
+    },
+    {
+      "id": "msg-2",
+      "name": "Sort delayed deliveries",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"}],\"incoming\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}]}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":2,\"body\":\"b\",\"channelId\":\"c\"}],\"outcomes\":[\"accepted\"]}",
+      "hidden": false
+    },
+    {
+      "id": "msg-3",
+      "name": "Deduplicate a retry in the same batch",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[],\"incoming\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}]}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"outcomes\":[\"accepted\",\"duplicate\"]}",
+      "hidden": true
+    },
+    {
+      "id": "msg-4",
+      "name": "Reject changed payload under same ID",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"incoming\":[{\"id\":\"a\",\"seq\":1,\"body\":\"changed\",\"channelId\":\"c\"}]}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"outcomes\":[\"conflict\"]}",
+      "hidden": true
+    },
+    {
+      "id": "msg-5",
+      "name": "Reject sequence collision",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"incoming\":[{\"id\":\"b\",\"seq\":1,\"body\":\"b\",\"channelId\":\"c\"}]}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"outcomes\":[\"conflict\"]}",
+      "hidden": true
+    },
+    {
+      "id": "msg-6",
+      "name": "Reject cross-channel deliveries before deduplication",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"incoming\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"other\"}]}",
+      "expectedOutput": "{\"messages\":[{\"id\":\"a\",\"seq\":1,\"body\":\"a\",\"channelId\":\"c\"}],\"outcomes\":[\"forbidden\"]}",
+      "hidden": true
+    },
+    {
+      "id": "msg-7",
+      "name": "Validate malformed and unsafe sequence fields",
+      "inputDescription": "{\"channelId\":\"c\",\"messages\":[],\"incoming\":[{\"id\":\"a\",\"seq\":0,\"body\":\"a\",\"channelId\":\"c\"},{\"id\":\"b\",\"seq\":1.5,\"body\":\"b\",\"channelId\":\"c\"},{\"id\":\"c\",\"seq\":9007199254740992,\"body\":\"c\",\"channelId\":\"c\"},{\"id\":\"x\"},{\"id\":\"\",\"seq\":1,\"body\":\"\",\"channelId\":\"c\"}]}",
+      "expectedOutput": "{\"messages\":[],\"outcomes\":[\"invalid\",\"invalid\",\"invalid\",\"invalid\",\"invalid\"]}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "Write down validation and replay precedence before changing state.",
+    "Use stable IDs and monotonic sequence/version values; preserve input ownership."
+  ],
+  "alternativeApproaches": [
+    "Use an append-only event log with transactional projections.",
+    "Use a database snapshot plus a versioned resume cursor."
+  ],
+  "commonMistakes": [
+    "Trusting delivery order or treating retries as new operations.",
+    "Mutating caller-owned arrays or accepting cross-channel data.",
+    "Presenting a fixture result as a guarantee of real-time delivery or media connectivity."
+  ],
+  "codeLanguage": "javascript"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "t1-hc-10",
+  "title": "What are the most reliable modern ways to center an element in CSS?",
+  "category": "HTML and CSS",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 10,
+  "expectedConcepts": [
+    "Flexbox centering (justify-content: center; align-items: center;)",
+    "CSS Grid centering (display: grid; place-items: center;)",
+    "Margin auto centering for block elements with defined width"
+  ],
+  "hints": [
+    "What two-word CSS Grid shorthand combines align-items and justify-items into one line?",
+    "What flex properties handle horizontal and vertical alignment?"
+  ],
+  "codingExercise": {
+    "instruction": "Use CSS Grid to write a single rule on .center-box that centers all its content both horizontally and vertically.",
+    "starterCode": ".center-box {\n  display: grid;\n  /* Add place-items shorthand here */\n}",
+    "language": "css",
+    "expectedOutput": "place-items: center"
+  }
+}

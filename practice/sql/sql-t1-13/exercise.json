@@ -1,0 +1,54 @@
+{
+  "id": "sql-t1-13",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 13,
+  "title": "Multi-Table Join: Order Items with Products and Customers",
+  "category": "Joins and Relationships",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Customer support needs a consolidated view of line items purchased by customer \"Aarav Patel\".",
+  "questionStatement": "Write a query joining `orders`, `customers`, `order_items`, and `products` to list all products bought by `Aarav Patel`. Return `order_id`, `product_name` (as `name`), `quantity`, and `unit_price`, sorted by `order_id` ascending.",
+  "starterCode": "-- Multi-table join for Aarav Patel purchases\nSELECT\n  o.id AS order_id,\n  p.name AS product_name,\n  oi.quantity,\n  oi.unit_price\nFROM orders o\nJOIN customers c ON o.customer_id = c.id\nJOIN order_items oi ON o.id = oi.order_id\nJOIN products p ON oi.product_id = p.id\nWHERE c.name = 'Aarav Patel'\nORDER BY o.id ASC, p.name ASC;",
+  "expectedConcepts": [
+    "Chained relational joins",
+    "Entity-relationship traversal",
+    "Foreign key paths"
+  ],
+  "hints": [
+    "Join orders to customers, then order_items to orders, then products to order_items.",
+    "Filter where customer name is Aarav Patel."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-13",
+      "description": "Verify items purchased across Aarav Patel orders",
+      "expectedRows": [
+        {
+          "order_id": 101,
+          "product_name": "Mechanical Wireless Keyboard",
+          "quantity": 1,
+          "unit_price": 129.5
+        },
+        {
+          "order_id": 101,
+          "product_name": "Noise-Cancelling Headphones",
+          "quantity": 1,
+          "unit_price": 199.99
+        },
+        {
+          "order_id": 103,
+          "product_name": "Merino Wool Pullover",
+          "quantity": 1,
+          "unit_price": 89
+        },
+        {
+          "order_id": 110,
+          "product_name": "Mechanical Wireless Keyboard",
+          "quantity": 1,
+          "unit_price": 129.5
+        }
+      ]
+    }
+  ]
+}

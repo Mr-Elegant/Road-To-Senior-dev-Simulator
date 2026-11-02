@@ -1,0 +1,49 @@
+{
+  "id": "sql-t1-14",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 14,
+  "title": "Loan Approval Rates and Risk Categorization",
+  "category": "Filtering, Sorting, and Aggregation",
+  "questionType": "executable",
+  "datasetId": "loan_management",
+  "realWorldScenario": "Risk managers at ApexFin NBFC need a summary of loan application statuses grouped by purpose.",
+  "questionStatement": "Write a query on `loan_applications` grouping by `purpose`, returning the `purpose`, `total_applications` (count of rows), and `total_amount_requested` (sum of requested_amount), ordered by `total_amount_requested` descending.",
+  "starterCode": "-- Group loan applications by purpose\nSELECT\n  purpose,\n  COUNT(*) AS total_applications,\n  SUM(requested_amount) AS total_amount_requested\nFROM loan_applications\nGROUP BY purpose\nORDER BY total_amount_requested DESC;",
+  "expectedConcepts": [
+    "GROUP BY categorization",
+    "SUM financial totals",
+    "NBFC credit analytics"
+  ],
+  "hints": [
+    "Group by purpose and sum the requested_amount column."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-14",
+      "description": "Verify loan applications aggregated by purpose",
+      "expectedRows": [
+        {
+          "purpose": "HOME_RENOVATION",
+          "total_applications": 2,
+          "total_amount_requested": 1300000
+        },
+        {
+          "purpose": "BUSINESS",
+          "total_applications": 1,
+          "total_amount_requested": 1200000
+        },
+        {
+          "purpose": "PERSONAL",
+          "total_applications": 3,
+          "total_amount_requested": 950000
+        },
+        {
+          "purpose": "AUTO",
+          "total_applications": 2,
+          "total_amount_requested": 550000
+        }
+      ]
+    }
+  ]
+}

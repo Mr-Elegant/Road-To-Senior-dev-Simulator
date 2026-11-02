@@ -1,0 +1,90 @@
+{
+  "id": "saas-subscription-entitlements",
+  "title": "SaaS: Repair Subscription Access After Delayed Updates",
+  "type": "coding",
+  "topic": "Integrations",
+  "subtopic": "SaaS / Subscription entitlements",
+  "difficulty": "Senior",
+  "estimatedMinutes": 35,
+  "businessContext": "A reporting SaaS restores export access from an old billing update after a cancellation. A separate expiry bug lets trial accounts keep exporting indefinitely.",
+  "problemStatement": "Implement solution({ state, snapshots, now }) returning { state, canExport, outcomes }. state is the current valid subscription { tenantId, version, status, plan, periodEnd, cancelAtPeriodEnd }. Each snapshot has the same fields. version is a positive integer assigned by our serialized internal reconciler, NOT a Stripe event timestamp or provider version. now and periodEnd use integer epoch seconds. Process snapshots in order, then compute export access from the final state.",
+  "constraints": [
+    "Check tenant first: a different tenant returns mismatch. Invalid fields return invalid: version positive safe integer, periodEnd nonnegative safe integer, cancelAtPeriodEnd boolean, plan starter/pro, status active/trialing/past_due/canceled/unpaid/incomplete. Then version <= current version returns stale; otherwise replace state and return applied.",
+    "Export requires plan pro, status active or trialing, and now < periodEnd. An active subscription with cancelAtPeriodEnd true retains access until periodEnd. No grace period is configured. Do not mutate inputs; current state and now are valid."
+  ],
+  "candidateTasks": [
+    "Implement ordered snapshot reconciliation and the explicit entitlement policy.",
+    "Explain how reconciliation obtains fresh authoritative provider state without inventing ordering guarantees."
+  ],
+  "starterCode": "function solution({ state, snapshots }) {\n  const next = snapshots.length ? snapshots[snapshots.length - 1] : state;\n  return { state: next, canExport: next.plan === \"pro\", outcomes: snapshots.map(() => \"applied\") };\n}",
+  "testCases": [
+    {
+      "id": "sub-1",
+      "name": "Active pro subscription can export",
+      "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[],\"now\":100}",
+      "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":true,\"outcomes\":[]}",
+      "hidden": false
+    },
+    {
+      "id": "sub-2",
+      "name": "Expiry boundary denies export",
+      "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"trialing\",\"plan\":\"pro\",\"periodEnd\":100,\"cancelAtPeriodEnd\":false},\"snapshots\":[],\"now\":100}",
+      "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"trialing\",\"plan\":\"pro\",\"periodEnd\":100,\"cancelAtPeriodEnd\":false},\"canExport\":false,\"outcomes\":[]}",
+      "hidden": false
+    },
+    {
+      "id": "sub-3",
+      "name": "Stale and replayed snapshots cannot restore canceled access",
+      "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":3,\"status\":\"canceled\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"a\",\"version\":2,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},{\"tenantId\":\"a\",\"version\":3,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false}],\"now\":100}",
+      "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":3,\"status\":\"canceled\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":false,\"outcomes\":[\"stale\",\"stale\"]}",
+      "hidden": true
+    },
+    {
+      "id": "sub-4",
+      "name": "Cancellation scheduled for period end preserves current access",
+      "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"a\",\"version\":2,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":true}],\"now\":100}",
+      "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":2,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":true},\"canExport\":true,\"outcomes\":[\"applied\"]}",
+      "hidden": true
+    },
+    {
+      "id": "sub-5",
+      "name": "Cross-tenant snapshot is rejected",
+      "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"starter\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"b\",\"version\":2,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false}],\"now\":100}",
+      "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"starter\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":false,\"outcomes\":[\"mismatch\"]}",
+      "hidden": true
+    },
+    {
+      "id": "sub-6",
+      "name": "Past due does not grant an implicit grace period",
+      "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"a\",\"version\":2,\"status\":\"past_due\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false}],\"now\":100}",
+      "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":2,\"status\":\"past_due\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":false,\"outcomes\":[\"applied\"]}",
+      "hidden": true
+    },
+    {
+      "id": "sub-7",
+      "name": "Invalid internal version is not applied",
+      "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"a\",\"version\":2.5,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false}],\"now\":100}",
+      "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"active\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":true,\"outcomes\":[\"invalid\"]}",
+      "hidden": true
+    },
+    {
+      "id": "sub-8",
+      "name": "A newer downgrade removes exports",
+      "inputDescription": "{\"state\":{\"tenantId\":\"a\",\"version\":1,\"status\":\"trialing\",\"plan\":\"pro\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"snapshots\":[{\"tenantId\":\"a\",\"version\":2,\"status\":\"active\",\"plan\":\"starter\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false}],\"now\":100}",
+      "expectedOutput": "{\"state\":{\"tenantId\":\"a\",\"version\":2,\"status\":\"active\",\"plan\":\"starter\",\"periodEnd\":200,\"cancelAtPeriodEnd\":false},\"canExport\":false,\"outcomes\":[\"applied\"]}",
+      "hidden": true
+    }
+  ],
+  "hints": [
+    "Event arrival time does not establish provider state order. This fixture explicitly supplies internal reconciler versions.",
+    "Apply validated newer snapshots first; evaluate access using both billing state and the supplied time."
+  ],
+  "alternativeApproaches": [
+    "Use provider entitlement APIs behind a cached server-side policy, with explicit cache expiry and a documented outage policy."
+  ],
+  "commonMistakes": [
+    "Using event.created as a guaranteed per-subscription sequence.",
+    "Revoking access immediately when cancelAtPeriodEnd becomes true."
+  ],
+  "codeLanguage": "javascript"
+}

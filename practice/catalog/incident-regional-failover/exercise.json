@@ -1,0 +1,498 @@
+{
+  "id": "incident-regional-failover",
+  "title": "Regional Failover: The Replica Is Ninety Seconds Behind",
+  "type": "incident",
+  "topic": "System Design",
+  "subtopic": "Evolving production incident",
+  "difficulty": "Staff/Principal",
+  "estimatedMinutes": 35,
+  "businessContext": "A regional failure isolates the primary order database. The standby is asynchronous and 90 seconds behind. The business recovery-point objective is 30 seconds, and the old primary may still be accepting writes from internal workers.",
+  "problemStatement": "Public order writes fail in region A; the region B standby is reachable but has not replayed the latest acknowledged orders. Work through three timed developments, justify your actions, and write an evidence-based incident response. The simulation starts paused; advancing time can expire unanswered decisions.",
+  "constraints": [
+    "Prevent two writable primaries.",
+    "Do not promise zero data loss with asynchronous replication.",
+    "Escalate any recovery-point breach and preserve reconciliation evidence.",
+    "All telemetry is synthetic. Actions only affect this practice simulation."
+  ],
+  "candidateTasks": [
+    "Contain customer impact while preserving evidence and data integrity.",
+    "Respond to each new development and explain the selected action.",
+    "Cite telemetry supporting the root cause; distinguish observation from inference.",
+    "Define a permanent correction, regression coverage, recovery gates, and stakeholder update."
+  ],
+  "incidentTelemetry": {
+    "logs": [
+      {
+        "timestamp": "T+00:00",
+        "level": "WARN",
+        "service": "order-routing",
+        "message": "Public order writes fail in region A; the region B standby is reachable but has not replayed the latest acknowledged orders."
+      }
+    ],
+    "metrics": [
+      {
+        "metricName": "affected_operations_percent",
+        "baseline": "0.1",
+        "incidentPeak": "35",
+        "unit": "%",
+        "status": "critical",
+        "trend": "Latest observation after the selected action; not a live production metric"
+      }
+    ],
+    "customerReports": [
+      {
+        "id": "incident-regional-failover-report",
+        "reporter": "Incident commander",
+        "impact": "Active customer impact",
+        "quote": "Public order writes fail in region A; the region B standby is reachable but has not replayed the latest acknowledged orders."
+      }
+    ],
+    "recentDeployments": [
+      {
+        "commitHash": "ilover-r1",
+        "author": "service-team",
+        "message": "Route public API to standby region during primary network isolation",
+        "timeAgo": "12 minutes before the alert",
+        "diffSnippet": "public_region: A -> B\nworker_region: A (unchanged)\nreplication: asynchronous"
+      }
+    ]
+  },
+  "incidentSimulation": {
+    "version": 1,
+    "initialSeverity": "SEV1",
+    "stages": [
+      {
+        "id": "development-1",
+        "atSeconds": 0,
+        "title": "Failover pressure",
+        "briefing": "A manager requests immediate promotion. Internal workers can still reach the old primary, and the standby is 90 seconds behind the last observed primary LSN.",
+        "branches": {
+          "effective": "Write ownership is controlled before a recovery decision.",
+          "partial": "Some impact remains. Two independent write paths remain possible; availability pressure does not remove split-brain risk.",
+          "harmful": "Two independent write paths remain possible; availability pressure does not remove split-brain risk.",
+          "timeout": "The previous deadline passed without a response. Two independent write paths remain possible; availability pressure does not remove split-brain risk."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+00:00",
+              "level": "WARN",
+              "service": "order-routing",
+              "message": "standby_replay_delay = 90s; target RPO = 30s; primary write fencing unconfirmed."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "1-partial",
+            "label": "Move reads to the standby but leave writer routing unchanged",
+            "outcome": "partial",
+            "consequence": "Some reads work, but acknowledged recent orders may appear missing and old workers can still write.",
+            "customerImpact": "Customers see inconsistent order status.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "order-routing",
+                  "message": "Some reads work, but acknowledged recent orders may appear missing and old workers can still write."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "24",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-harmful",
+            "label": "Promote now and leave old workers running",
+            "outcome": "harmful",
+            "consequence": "Both regions can accept divergent writes for the same order identifiers.",
+            "customerImpact": "Order history diverges and reconciliation becomes more complex.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "order-routing",
+                  "message": "Both regions can accept divergent writes for the same order identifiers."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "68",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "1-effective",
+            "label": "Fence old writers and assess replay position before promotion",
+            "outcome": "effective",
+            "consequence": "Public and worker writes are stopped or fenced; the team records LSNs and seeks recoverable WAL.",
+            "customerImpact": "Writes remain briefly unavailable while integrity is protected.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+00:00",
+                  "level": "WARN",
+                  "service": "order-routing",
+                  "message": "Public and worker writes are stopped or fenced; the team records LSNs and seeks recoverable WAL."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "12",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"Failover pressure\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+00:00",
+                "level": "WARN",
+                "service": "order-routing",
+                "message": "Decision deadline missed: standby_replay_delay = 90s; target RPO = 30s; primary write fencing unconfirmed."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "1-effective",
+          "reasoning": "Fence the old primary and all writer paths first. Measure recoverable WAL and actual replay, then explicitly approve any RPO breach before promotion."
+        }
+      },
+      {
+        "id": "development-2",
+        "atSeconds": 120,
+        "title": "WAL recovery reaches its limit",
+        "briefing": "Archived WAL recovers 70 seconds, leaving a confirmed 20-second exposure window. DNS still points some clients at region A.",
+        "branches": {
+          "effective": "Fencing is confirmed and the measured exposure is within the stated 30-second RPO.",
+          "partial": "Some impact remains. Confirm fencing and reconstruct the actual replay gap before deciding; routing alone is not a safety barrier.",
+          "harmful": "Confirm fencing and reconstruct the actual replay gap before deciding; routing alone is not a safety barrier.",
+          "timeout": "The previous deadline passed without a response. Confirm fencing and reconstruct the actual replay gap before deciding; routing alone is not a safety barrier."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+02:00",
+              "level": "WARN",
+              "service": "order-routing",
+              "message": "remaining_replay_gap = 20s; fencing confirmed; DNS TTL remaining = 45s."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "2-harmful",
+            "label": "Re-enable old primary writes to satisfy stale clients",
+            "outcome": "harmful",
+            "consequence": "Fencing is undone and competing writers reappear.",
+            "customerImpact": "Recent orders can conflict across regions.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "order-routing",
+                  "message": "Fencing is undone and competing writers reappear."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "72",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-effective",
+            "label": "Approve the measured RPO, promote once, and update all writer routes",
+            "outcome": "effective",
+            "consequence": "A single recovery authority promotes region B; stale clients cannot write to region A.",
+            "customerImpact": "Writes resume through one authority; exposed orders are tracked.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "order-routing",
+                  "message": "A single recovery authority promotes region B; stale clients cannot write to region A."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "3",
+                  "unit": "%",
+                  "status": "warning",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "2-partial",
+            "label": "Change DNS only and assume all clients moved",
+            "outcome": "partial",
+            "consequence": "Cached clients and internal connection pools continue using old endpoints.",
+            "customerImpact": "Some users still cannot write.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+02:00",
+                  "level": "WARN",
+                  "service": "order-routing",
+                  "message": "Cached clients and internal connection pools continue using old endpoints."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "15",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"WAL recovery reaches its limit\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+02:00",
+                "level": "WARN",
+                "service": "order-routing",
+                "message": "Decision deadline missed: remaining_replay_gap = 20s; fencing confirmed; DNS TTL remaining = 45s."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "2-effective",
+          "reasoning": "Promotion is a controlled authority change with confirmed fencing, measured loss exposure and complete routing. DNS convergence alone cannot enforce single-writer ownership."
+        }
+      },
+      {
+        "id": "development-3",
+        "atSeconds": 300,
+        "title": "The old region returns",
+        "briefing": "Region A returns with orders not present in region B. The team proposes making it primary again immediately.",
+        "branches": {
+          "effective": "Region B remains authoritative while divergent records are reconciled.",
+          "partial": "Some impact remains. Stop competing writes and choose one authority before inspecting differences; merging two live primaries is unsafe.",
+          "harmful": "Stop competing writes and choose one authority before inspecting differences; merging two live primaries is unsafe.",
+          "timeout": "The previous deadline passed without a response. Stop competing writes and choose one authority before inspecting differences; merging two live primaries is unsafe."
+        },
+        "telemetry": {
+          "logs": [
+            {
+              "timestamp": "T+05:00",
+              "level": "WARN",
+              "service": "order-routing",
+              "message": "old_primary contains 41 potentially divergent order records; region B has accepted new orders for 6 minutes."
+            }
+          ],
+          "metrics": [],
+          "customerReports": [],
+          "recentDeployments": []
+        },
+        "options": [
+          {
+            "id": "3-effective",
+            "label": "Keep one authority, reconcile by business IDs, and rebuild the old replica",
+            "outcome": "effective",
+            "consequence": "Divergent records are preserved for review; the old node is rebuilt from the new primary before any planned failback.",
+            "customerImpact": "Order status is reconciled without another unplanned authority switch.",
+            "severity": "SEV3",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "order-routing",
+                  "message": "Divergent records are preserved for review; the old node is rebuilt from the new primary before any planned failback."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "0.1",
+                  "unit": "%",
+                  "status": "normal",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-partial",
+            "label": "Keep region A offline without recording the divergence",
+            "outcome": "partial",
+            "consequence": "Split-brain is avoided, but potentially lost orders have no assigned reconciliation workflow.",
+            "customerImpact": "Some customers remain without confirmed order outcomes.",
+            "severity": "SEV2",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "order-routing",
+                  "message": "Split-brain is avoided, but potentially lost orders have no assigned reconciliation workflow."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "7",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          },
+          {
+            "id": "3-harmful",
+            "label": "Fail back immediately because region A is healthy again",
+            "outcome": "harmful",
+            "consequence": "New region B writes and old region A writes diverge further.",
+            "customerImpact": "Recovery creates a second order incident.",
+            "severity": "SEV1",
+            "telemetry": {
+              "logs": [
+                {
+                  "timestamp": "T+05:00",
+                  "level": "WARN",
+                  "service": "order-routing",
+                  "message": "New region B writes and old region A writes diverge further."
+                }
+              ],
+              "metrics": [
+                {
+                  "metricName": "affected_operations_percent",
+                  "baseline": "0.1",
+                  "incidentPeak": "58",
+                  "unit": "%",
+                  "status": "critical",
+                  "trend": "Latest observation after the selected action; not a live production metric"
+                }
+              ],
+              "customerReports": [],
+              "recentDeployments": []
+            }
+          }
+        ],
+        "timeout": {
+          "consequence": "No action was recorded for \"The old region returns\". The risk described in this development remains unaddressed.",
+          "severity": "SEV1",
+          "customerImpact": "The incident remains open; affected operations need reconciliation and recovery verification.",
+          "telemetry": {
+            "logs": [
+              {
+                "timestamp": "T+05:00",
+                "level": "WARN",
+                "service": "order-routing",
+                "message": "Decision deadline missed: old_primary contains 41 potentially divergent order records; region B has accepted new orders for 6 minutes."
+              }
+            ],
+            "metrics": [],
+            "customerReports": [],
+            "recentDeployments": []
+          }
+        },
+        "review": {
+          "recommendedOptionId": "3-effective",
+          "reasoning": "A recovered machine is not automatically an authoritative database. Preserve divergent evidence, reconcile business operations and rebuild replication before a planned failback."
+        }
+      }
+    ],
+    "endSeconds": 480
+  },
+  "hints": [
+    "The initial replay gap is 90 seconds versus a 30-second RPO.",
+    "Fence every old writer path using the reviewed infrastructure mechanism and confirm enforcement.",
+    "Automate failover authority, fencing checks and writer routing as one tested runbook."
+  ],
+  "alternativeApproaches": [
+    "Wait for primary recovery if the expected delay is preferable to the measured data-loss risk.",
+    "Use synchronous replication for workloads whose durability requirement justifies its latency and availability trade-offs."
+  ],
+  "commonMistakes": [
+    "Equating a reachable standby with a current standby.",
+    "Using DNS as the only fencing mechanism.",
+    "Automatically failing back to the old primary without divergence analysis."
+  ]
+}

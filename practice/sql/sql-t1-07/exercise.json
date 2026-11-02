@@ -1,0 +1,35 @@
+{
+  "id": "sql-t1-07",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 7,
+  "title": "Handling Missing Data with IS NULL and IS NOT NULL",
+  "category": "Filtering, Sorting, and Aggregation",
+  "questionType": "executable",
+  "datasetId": "saas_analytics",
+  "realWorldScenario": "Finance accounts receivable needs to audit unpaid invoices requiring payment collection.",
+  "questionStatement": "Write a query from the `invoices` table to retrieve `id`, `organization_id`, `amount`, and `status` for all invoices where `paid_at IS NULL`, ordered by `amount` descending.",
+  "starterCode": "-- Find unpaid invoices\nSELECT id, organization_id, amount, status\nFROM invoices\nWHERE paid_at IS NULL\nORDER BY amount DESC;",
+  "expectedConcepts": [
+    "IS NULL predicate",
+    "Three-valued logic",
+    "NULL comparison"
+  ],
+  "hints": [
+    "Never use = NULL in SQL; always use IS NULL or IS NOT NULL."
+  ],
+  "testCases": [
+    {
+      "id": "tc-t1-07",
+      "description": "Verify invoices with missing payment date",
+      "expectedRows": [
+        {
+          "id": 9,
+          "organization_id": 104,
+          "amount": 49,
+          "status": "OVERDUE"
+        }
+      ]
+    }
+  ]
+}

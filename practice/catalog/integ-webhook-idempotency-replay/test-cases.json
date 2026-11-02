@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-hook-1",
+    "name": "Prevents duplicate processing of identical event IDs",
+    "inputDescription": "null",
+    "expectedOutput": "\"idempotent_webhook_with_signature\"",
+    "explanation": "Enforces idempotency and cryptographic signature validation."
+  }
+]

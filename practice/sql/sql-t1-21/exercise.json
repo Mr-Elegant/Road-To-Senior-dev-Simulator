@@ -1,0 +1,20 @@
+{
+  "id": "sql-t1-21",
+  "tier": "tier-1",
+  "difficultyLabel": "Beginner",
+  "order": 21,
+  "title": "Date and Time Types: TIMESTAMP vs. TIMESTAMPTZ",
+  "category": "PostgreSQL Data Types",
+  "questionType": "conceptual",
+  "realWorldScenario": "An e-commerce store operates across New York, London, and Tokyo. Order timestamps are becoming desynchronized during daylight saving transitions.",
+  "questionStatement": "What is the difference between TIMESTAMP (without time zone) and TIMESTAMPTZ (with time zone) in PostgreSQL? Which should you use for audit and transaction records?",
+  "expectedConcepts": [
+    "TIMESTAMPTZ converts to and stores UTC internally",
+    "Client session timezone conversion",
+    "TIMESTAMP without time zone lacks timezone awareness",
+    "Production best practice for audit logs"
+  ],
+  "hints": [
+    "Does TIMESTAMPTZ store a timezone name or convert to UTC?"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-004",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 4,
+  "title": "Zero-Downtime Table Bloat Remediation: pg_repack vs VACUUM FULL",
+  "category": "Production Debugging",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Due to a buggy batch job that updated 5 million rows 20 times in a loop, the `inventory` table ballooned from 4 GB to 85 GB. Queries doing sequential scans are now 20x slower. Running `VACUUM FULL inventory;` is rejected by leadership because it requires an ACCESS EXCLUSIVE lock for 3 hours.",
+  "questionStatement": "Explain why standard `VACUUM` cannot return space to the OS. Compare `VACUUM FULL` with `pg_repack`. Detail step-by-step how `pg_repack` rebuilds the table and all indexes online without holding exclusive locks, and explain its log-replay catch-up phase.",
+  "expectedConcepts": [
+    "Why standard VACUUM only updates FSM and cannot return middle pages to OS",
+    "VACUUM FULL ACCESS EXCLUSIVE lock blocking all reads and writes",
+    "pg_repack shadow table, trigger logging, and online bulk copy",
+    "Log replay catch-up phase",
+    "Brief catalog pointer swap (relfilenode) for zero downtime"
+  ],
+  "hints": [
+    "Why can standard VACUUM only truncate pages from the end of the file?",
+    "How does pg_repack capture concurrent writes that happen while it copies rows?",
+    "How does it finalize the replacement in catalog tables?"
+  ]
+}

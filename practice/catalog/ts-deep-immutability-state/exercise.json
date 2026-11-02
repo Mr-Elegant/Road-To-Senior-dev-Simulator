@@ -1,0 +1,44 @@
+{
+  "id": "ts-deep-immutability-state",
+  "title": "Deep Readonly State Container with Lens-Based Immutability",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "Utility types",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "In a high-frequency trading and portfolio management dashboard, unintended in-place mutations of deeply nested asset objects caused subtle desynchronizations between the UI chart and underlying websocket order feeds.",
+  "problemStatement": "Create a recursive utility type `DeepReadonly<T>` that converts all nested objects, arrays, and maps into immutable types at compile time. Then create a safe updater function `updateAtPath(state, path, updater)` that enforces type safety on nested property updates.",
+  "constraints": [
+    "Must recursively make all nested properties readonly, including arrays and Maps.",
+    "Must preserve function types without making their signatures unusable.",
+    "Do not use any third-party libraries."
+  ],
+  "starterCode": "/**\n * DeepReadonly Utility Type and Immutable Store\n */\n\nexport type DeepReadonly<T> = T extends (infer R)[]\n  ? ReadonlyArray<DeepReadonly<R>>\n  : T extends (...args: any[]) => any\n  ? T\n  : T extends object\n  ? { readonly [K in keyof T]: DeepReadonly<T[K]> }\n  : T;\n\nexport class ImmutableStore<T extends object> {\n  private state: DeepReadonly<T>;\n\n  constructor(initial: T) {\n    this.state = Object.freeze({ ...initial }) as unknown as DeepReadonly<T>;\n  }\n\n  getState(): DeepReadonly<T> {\n    return this.state;\n  }\n}\n\nfunction solution(input) {\n  interface Portfolio {\n    user: { name: string; settings: { currency: string } };\n    assets: { symbol: string; allocation: number }[];\n  }\n\n  const store = new ImmutableStore<Portfolio>({\n    user: { name: 'Alex', settings: { currency: 'USD' } },\n    assets: [{ symbol: 'BTC', allocation: 0.6 }]\n  });\n\n  return store.getState().user.settings.currency;\n}",
+  "codeLanguage": "typescript",
+  "candidateTasks": [
+    "Write recursive `DeepReadonly<T>` utility type covering primitives, functions, arrays, and plain objects.",
+    "Explain how `ReadonlyArray<T>` protects against `.push()` and `.splice()`.",
+    "Explain why TypeScript readonly is a compile-time check and how it pairs with runtime `Object.freeze`."
+  ],
+  "hints": [
+    "Check for function types first so you do not turn functions into empty objects.",
+    "Handle arrays with `ReadonlyArray<DeepReadonly<R>>`."
+  ],
+  "testCases": [
+    {
+      "id": "tc-deep-1",
+      "name": "Retrieves nested property from deeply immutable state",
+      "inputDescription": "null",
+      "expectedOutput": "\"USD\"",
+      "explanation": "Deep property access succeeds safely."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using Immer.js with Draft<T> and Immutable<T> library types.",
+    "Using Immutable.js Record and Map data structures."
+  ],
+  "commonMistakes": [
+    "Applying object mapping to functions, turning methods into {} types.",
+    "Forgetting that Array is also an object, mapping it to { [0]: ..., [1]: ... } instead of ReadonlyArray."
+  ]
+}

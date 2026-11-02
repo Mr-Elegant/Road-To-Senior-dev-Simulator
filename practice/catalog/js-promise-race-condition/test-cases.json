@@ -1,0 +1,9 @@
+[
+  {
+    "id": "tc-race-1",
+    "name": "Serializes tasks sequentially for same key",
+    "inputDescription": "null",
+    "expectedOutput": "[\"start-1\",\"end-1\",\"start-2\",\"end-2\"]",
+    "explanation": "Task 2 must wait until Task 1 finishes completely before starting."
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "id": "sql-tier3-018",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 18,
+  "title": "Advisory Locks vs FOR UPDATE SKIP LOCKED for Message Queues",
+  "category": "Locks and Deadlocks",
+  "questionType": "executable",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "You are building a background task processor where multiple worker processes concurrently poll an `outbox_events` table to process and publish pending events. Standard `SELECT ... FOR UPDATE` causes workers to block each other and serialize execution.",
+  "questionStatement": "Compare `SELECT FOR UPDATE`, `SELECT FOR UPDATE NOWAIT`, and `SELECT FOR UPDATE SKIP LOCKED`. Write a concurrency-safe worker query that claims exactly 5 unprocessed events, locks them so no other worker can touch them, and updates their status to `PROCESSING` in an atomic transaction.",
+  "starterCode": "-- Concurrently safe job queue claim query\nWITH claimed_jobs AS (\n    SELECT id\n    FROM outbox_events\n    WHERE status = 'PENDING'\n    ORDER BY id ASC\n    LIMIT 5\n    FOR UPDATE SKIP LOCKED\n)\nUPDATE outbox_events\nSET \n    status = 'PROCESSING',\n    processed_at = CURRENT_TIMESTAMP\nFROM claimed_jobs\nWHERE outbox_events.id = claimed_jobs.id\nRETURNING outbox_events.id, outbox_events.payload, outbox_events.status;",
+  "expectedConcepts": [
+    "FOR UPDATE blocking behavior vs NOWAIT failure",
+    "SKIP LOCKED silently bypassing locked rows for parallel worker queues",
+    "CTE pairing SELECT ... FOR UPDATE SKIP LOCKED with UPDATE ... RETURNING",
+    "Index requirement on (status, id) to avoid sequential scan locking"
+  ],
+  "hints": [
+    "SKIP LOCKED skips rows that are currently locked by other transactions.",
+    "Wrap the SELECT in a CTE to feed the IDs directly into an UPDATE statement.",
+    "Use RETURNING to fetch the job payload in the same round-trip."
+  ],
+  "testCases": [
+    {
+      "id": "tc-tier3-018-1",
+      "description": "Verify CTE update with claimed status",
+      "setupSql": "CREATE TABLE outbox_events (id INT PRIMARY KEY, status VARCHAR(20), payload VARCHAR(50), processed_at VARCHAR(30));\nINSERT INTO outbox_events VALUES (1, 'PENDING', 'event_1', NULL), (2, 'PENDING', 'event_2', NULL), (3, 'DONE', 'event_3', '2026-01-01');",
+      "expectedOutputSql": "UPDATE outbox_events SET status = 'PROCESSING' WHERE status = 'PENDING'; SELECT id, status, payload FROM outbox_events WHERE status = 'PROCESSING' ORDER BY id;",
+      "orderMatters": true
+    }
+  ]
+}

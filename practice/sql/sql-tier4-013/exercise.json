@@ -1,0 +1,44 @@
+{
+  "id": "sql-tier4-013",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 13,
+  "title": "Linux OOM Killer Tuning, overcommit_memory, and PostgreSQL Work_mem",
+  "category": "Production Debugging",
+  "questionType": "incident",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "Without warning, the primary PostgreSQL instance abruptly shuts down during month-end reporting. Kernel syslog shows: `Out of Memory: Killed process 4102 (postgres) total-vm: 64GB, anon-rss: 58GB`. After restart, the database went through a 15-minute crash recovery.",
+  "questionStatement": "Analyze how Linux Out-Of-Memory (OOM) Killer interacts with PostgreSQL memory management. Explain `shared_buffers` vs `work_mem` multiplication per connection, Linux `vm.overcommit_memory`, `vm.overcommit_ratio`, and how to configure `oom_score_adj` to protect the PostgreSQL postmaster.",
+  "incidentDetails": {
+    "symptoms": [
+      "Sudden total database crash and connection drop",
+      "Kernel dmesg: Out of Memory: Killed process",
+      "15-minute crash recovery replay on restart",
+      "Dozens of complex analytical queries running concurrently"
+    ],
+    "systemTelemetry": {
+      "activeConnections": 350,
+      "cpuUtilizationPercent": 95,
+      "bufferCacheHitRatio": 99,
+      "logSnippet": "kernel: [89104.12] Out of memory: Kill process 4102 (postgres) score 852 or sacrifice child\nkernel: [89104.14] Killed process 4102 (postgres) total-vm:67108864kB, anon-rss:61440000kB\npostgres[101]: [1-1] LOG:  server process (PID 4102) was terminated by signal 9: Killed\npostgres[101]: [2-1] LOG:  terminating any other active server processes\npostgres[101]: [3-1] LOG:  all server processes terminated; reinitializing shared memory and database"
+    },
+    "candidateTasks": [
+      "Explain why Linux killed postmaster or backend child with SIGKILL (signal 9)",
+      "Demonstrate how work_mem * max_connections causes RAM oversubscription",
+      "Configure Linux vm.overcommit_memory = 2 and vm.overcommit_ratio",
+      "Configure oom_score_adj = -1000 for the main postmaster process"
+    ]
+  },
+  "expectedConcepts": [
+    "Linux OOM killer killing processes with SIGKILL (signal 9)",
+    "Shared memory corruption risk forcing database restart",
+    "work_mem allocated per operation per connection (multiplication factor)",
+    "vm.overcommit_memory = 2 (strict no-overcommit)",
+    "OOMScoreAdjust=-1000 protecting postmaster in systemd"
+  ],
+  "hints": [
+    "Is work_mem allocated once per connection, or once per sort/hash operation in a query?",
+    "What happens when Linux kills a backend process holding shared buffers?",
+    "Check OOMScoreAdjust in systemd."
+  ]
+}

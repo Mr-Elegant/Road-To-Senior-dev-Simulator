@@ -1,0 +1,18 @@
+{
+  "id": "t1-hc-07",
+  "title": "How do you create a responsive web design using media queries?",
+  "category": "HTML and CSS",
+  "difficulty": "Beginner",
+  "tier": "tier-1",
+  "order": 7,
+  "expectedConcepts": [
+    "Viewport meta tag (<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">)",
+    "CSS Media Queries (@media)",
+    "Mobile-first design principles (min-width)",
+    "Fluid layouts and responsive images"
+  ],
+  "hints": [
+    "What CSS @-rule is used to check device width?",
+    "Why is mobile-first (min-width) preferred over desktop-first (max-width)?"
+  ]
+}

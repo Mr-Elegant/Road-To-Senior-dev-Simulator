@@ -1,0 +1,23 @@
+[
+  {
+    "id": "tc-t1-06",
+    "description": "Verify orders in PAID or SHIPPED state",
+    "expectedRows": [
+      {
+        "id": 105,
+        "status": "PAID",
+        "total_amount": 97
+      },
+      {
+        "id": 107,
+        "status": "PAID",
+        "total_amount": 199.99
+      },
+      {
+        "id": 108,
+        "status": "SHIPPED",
+        "total_amount": 798.99
+      }
+    ]
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "id": "sql-tier4-006",
+  "tier": "tier-4",
+  "difficultyLabel": "Senior/Staff",
+  "order": 6,
+  "title": "Point-In-Time Recovery (PITR) Disaster Recovery Architecture",
+  "category": "Backup, Recovery, and Replication",
+  "questionType": "conceptual",
+  "datasetId": "loan_management",
+  "realWorldScenario": "At 14:32:10 UTC, a junior developer running an ad-hoc cleanup script accidentally executed `DELETE FROM repayments;` without a WHERE clause in production. Nightly pg_dump backups were taken at 00:00 UTC (14 hours ago).",
+  "questionStatement": "Design a Point-In-Time Recovery (PITR) procedure to restore the database to 14:32:05 UTC (5 seconds prior to the incident), recovering all 14 hours of transactions without data loss. Explain physical base backups (`pg_basebackup`), continuous WAL archiving (`archive_command` / WAL-G), and `recovery_target_time`.",
+  "expectedConcepts": [
+    "Base backup + continuous WAL archive replay methodology",
+    "wal_level, archive_mode, and archive_command prerequisites",
+    "recovery.signal file and restore_command in PG 12+",
+    "recovery_target_time exact stopping point",
+    "recovery_target_action = pause for verification before promotion"
+  ],
+  "hints": [
+    "Why is a pg_dump logical backup alone insufficient for restoring to an exact microsecond?",
+    "How does recovery.signal tell PostgreSQL to enter recovery mode?",
+    "What parameter pauses replay so you can inspect data before promoting to write mode?"
+  ]
+}

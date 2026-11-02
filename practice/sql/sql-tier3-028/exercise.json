@@ -1,0 +1,23 @@
+{
+  "id": "sql-tier3-028",
+  "tier": "tier-3",
+  "difficultyLabel": "Advanced",
+  "order": 28,
+  "title": "PostgreSQL NULLS FIRST / NULLS LAST Index Semantics",
+  "category": "Indexes and Query Planning",
+  "questionType": "conceptual",
+  "datasetId": "ecommerce",
+  "realWorldScenario": "A pagination endpoint sorts orders by `shipped_at DESC NULLS LAST` to display the most recently shipped orders first and pending unshipped orders at the end. Despite having an index on `(shipped_at DESC)`, the query takes 1.2 seconds and shows `Sort Method: external merge Disk` in the plan.",
+  "questionStatement": "Explain how PostgreSQL indexes store NULL values by default in B-Trees. What is the difference between `NULLS FIRST` and `NULLS LAST`? Why did the index on `(shipped_at DESC)` fail to eliminate the explicit sort, and what exact index definition matches `ORDER BY shipped_at DESC NULLS LAST`?",
+  "expectedConcepts": [
+    "B-Tree physical sort ordering and NULL placement",
+    "Default rules: ASC defaults to NULLS LAST; DESC defaults to NULLS FIRST",
+    "Sort elimination requirement: index ordering must match query ORDER BY exactly",
+    "CREATE INDEX ... DESC NULLS LAST syntax"
+  ],
+  "hints": [
+    "What is the default NULL placement for DESC indexes in PostgreSQL?",
+    "If the query specifies NULLS LAST but the index was built with NULLS FIRST, can the planner eliminate the sort?",
+    "Define the index with explicit DESC NULLS LAST."
+  ]
+}

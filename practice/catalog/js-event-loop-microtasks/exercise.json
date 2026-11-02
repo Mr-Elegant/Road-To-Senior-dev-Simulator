@@ -1,0 +1,53 @@
+{
+  "id": "js-event-loop-microtasks",
+  "title": "Flash-Sale Batch Processor Microtask Queue Starvation",
+  "type": "debugging",
+  "topic": "JavaScript",
+  "subtopic": "Event loop and microtasks",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "During Black Friday peak traffic on a flash-sale e-commerce platform, the checkout order-ingestion service experiences severe WebSocket heartbeat timeouts and dropping health-check endpoints, leading Kubernetes to repeatedly restart healthy pods.",
+  "problemStatement": "The order batching function processes order queues recursively using Promise.resolve().then(processNextOrder). While CPU load appears moderate (~65%), the HTTP server stops responding to TCP health probes and WebSocket ping/pongs disconnect thousands of shoppers. Diagnose why the event loop is blocked and implement a cooperative scheduling mechanism.",
+  "constraints": [
+    "Orders must continue to process with maximum throughput without starving macrotasks (I/O, timers, incoming network packets).",
+    "Memory consumption must remain bounded under a 50,000 order surge.",
+    "Cannot use synchronous blocking loops."
+  ],
+  "starterCode": "/**\n * Buggy Flash-Sale Ingestion Worker\n * Processes order batches recursively using chained microtasks.\n */\nfunction processOrderBatch(orders, onOrderProcessed) {\n  let index = 0;\n  \n  function step() {\n    if (index >= orders.length) return Promise.resolve('completed');\n    \n    const order = orders[index++];\n    onOrderProcessed(order);\n    \n    // BUG: Chaining unresolved microtasks recursively starves the Macrotask Queue (I/O, Timers)!\n    return Promise.resolve().then(step);\n  }\n  \n  return step();\n}\n\n// Simulated export for test runner\nfunction solution(orderCount) {\n  const orders = Array.from({ length: orderCount }, (_, i) => ({ id: i + 1, total: 99.99 }));\n  let processed = 0;\n  \n  // Return how you cooperatively yield to the event loop macrotask queue every N iterations\n  return processOrderBatch(orders, () => { processed++; });\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Identify why Promise.resolve().then() recursion starves macrotasks like I/O and setTimeout.",
+    "Refactor the processor to use cooperative scheduling (e.g., yielding via setImmediate or setTimeout every N iterations or when a budget threshold is exceeded).",
+    "Explain the difference in event loop phases (Timer, Poll, Check, Microtask drain)."
+  ],
+  "hints": [
+    "Microtasks (Promise reactions, queueMicrotask, process.nextTick) are drained completely before the event loop advances to the next macrotask phase.",
+    "If microtasks continually queue more microtasks, macrotasks (such as socket I/O, HTTP server accept, ping/pong timers) never get executed.",
+    "Introduce a batch threshold (e.g. process 50 items) or a time slice budget (e.g. 8ms), then yield control using setImmediate() or setTimeout(..., 0)."
+  ],
+  "testCases": [
+    {
+      "id": "tc-1",
+      "name": "Processes small batch accurately",
+      "inputDescription": "10",
+      "expectedOutput": "\"completed\"",
+      "explanation": "Small batches should resolve successfully without unbounded delay."
+    },
+    {
+      "id": "tc-2",
+      "name": "Yields cooperatively on large batch",
+      "inputDescription": "500",
+      "expectedOutput": "\"completed\"",
+      "explanation": "Large orders must complete without starving macrotasks."
+    }
+  ],
+  "alternativeApproaches": [
+    "Using Async Generators with for-await-of loop and time-budgeted yields.",
+    "Offloading heavy batch ingestion to Node.js Worker Threads (worker_threads) with SharedArrayBuffer or message passing."
+  ],
+  "commonMistakes": [
+    "Replacing Promise.resolve().then() with setImmediate on every single item, introducing 100x timer bookkeeping overhead.",
+    "Converting to a synchronous while loop, which freezes the event loop completely for seconds.",
+    "Using process.nextTick(), which is even more aggressive than Promises and immediately crashes process health checks."
+  ]
+}

@@ -1,0 +1,24 @@
+API Specification:
+POST /v1/notifications/send
+Headers:
+  Authorization: Bearer <token>
+  Idempotency-Key: <uuid>
+Payload:
+{
+  "recipientId": "user_987123",
+  "priority": "P0", // P0 = Transactional, P1 = Important, P2 = Marketing
+  "channels": ["PUSH", "SMS"],
+  "templateId": "tmpl_otp_verification",
+  "templateData": {
+    "code": "482910",
+    "expiresInMinutes": 5
+  },
+  "deduplicationWindowSeconds": 300
+}
+
+Response (202 Accepted):
+{
+  "notificationId": "notif_01HXYZ1234",
+  "status": "QUEUED",
+  "estimatedDeliveryMs": 450
+}

@@ -1,0 +1,44 @@
+{
+  "id": "react-stale-closure-interval",
+  "title": "Order-Book Live Ticker Stale Closure Hook Bug",
+  "type": "debugging",
+  "topic": "React",
+  "subtopic": "Stale closures",
+  "difficulty": "Senior",
+  "estimatedMinutes": 25,
+  "businessContext": "A crypto exchange trading terminal renders live price ticks. Traders report that the price counter freezes after the first tick, or flickers wildly between old and new prices. The bug causes incorrect stop-loss orders to trigger.",
+  "problemStatement": "The custom hook `useIntervalTicker` sets up a `setInterval` inside `useEffect`, but closes over the initial `price` state from render #1. Every time the interval fires, it computes the new price based on the initial stale value rather than the latest accumulated value.",
+  "constraints": [
+    "Must maintain accurate ticker increment based on the latest state.",
+    "Must not re-create the setInterval timer on every single tick (which resets the timer drift and causes interval jitter).",
+    "Must clean up interval on unmount."
+  ],
+  "starterCode": "import React, { useState, useEffect, useRef } from 'react';\n\n/**\n * Buggy Live Ticker Hook\n */\nexport function useIntervalTicker(initialPrice = 100) {\n  const [price, setPrice] = useState(initialPrice);\n\n  useEffect(() => {\n    // BUG: Closure over 'price' captures initial render state (100) forever!\n    const timer = setInterval(() => {\n      const delta = (Math.random() - 0.48) * 2;\n      setPrice(price + delta); // Always calculates 100 + delta\n    }, 1000);\n\n    return () => clearInterval(timer);\n  }, []); // Empty dependency array keeps stale closure alive\n\n  return price;\n}\n\nfunction solution(input) {\n  // Return the pattern that fixes the stale closure:\n  // Option A: Functional state update setPrice(prev => prev + delta)\n  // Option B: useRef for callback pattern (useInterval)\n  return \"repaired\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain how the empty dependency array `[]` locks the `useEffect` closure to initial render variables.",
+    "Fix the bug using functional state updates: `setPrice(prevPrice => prevPrice + delta)`.",
+    "Explain Dan Abramov's `useInterval` ref pattern for dynamic callback updates without timer recreation."
+  ],
+  "hints": [
+    "When state updates depend on the previous state, pass an updater function `(prev) => prev + delta` to the setter.",
+    "If you include `price` in the dependency array, `clearInterval` and `setInterval` run on every single second, which can cause jitter."
+  ],
+  "testCases": [
+    {
+      "id": "tc-react-stale-1",
+      "name": "Updates price monotonically without stale snapshot",
+      "inputDescription": "null",
+      "expectedOutput": "\"repaired\"",
+      "explanation": "State updater pattern successfully decouples from stale closure."
+    }
+  ],
+  "alternativeApproaches": [
+    "useReducer: dispatch({ type: \"TICK\", delta }) inherently decouples state logic from effect closures.",
+    "useRef for storing the mutable price if it only drives canvas rendering without React DOM reconciliation."
+  ],
+  "commonMistakes": [
+    "Adding [price] to the dependency array: this tears down and recreates the interval on every second, causing timer drift and unnecessary effect thrashing.",
+    "Using a global variable outside the hook, creating bugs across multiple hook instances."
+  ]
+}

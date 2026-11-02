@@ -1,0 +1,43 @@
+{
+  "id": "nodejs-stream-backpressure",
+  "title": "Multi-Gigabyte Financial Audit CSV Export Out-of-Memory (OOM) Crash",
+  "type": "debugging",
+  "topic": "Node.js",
+  "subtopic": "Validation",
+  "difficulty": "Senior",
+  "estimatedMinutes": 30,
+  "businessContext": "A compliance portal provides a button for financial auditors to export yearly transaction records (typically 3,000,000 rows, ~1.8GB CSV). Whenever an auditor triggers the export, the Node.js container memory spikes past the 2GB limit and Kubernetes kills the container with `ExitCode 137 (OOMKilled)`.",
+  "problemStatement": "The export handler queries all 3 million rows from PostgreSQL with a single `db.query()` and pushes formatted CSV strings into an HTTP response stream using `res.write()` in a fast while loop without respecting stream backpressure or `readable.pause()`. The buffer memory fills up faster than the client can download, crashing the server.",
+  "constraints": [
+    "Export must stream smoothly with flat, bounded memory consumption (under 80MB RSS).",
+    "Must respect Stream backpressure (`res.write() === false` and `drain` event).",
+    "Use Node.js `stream.pipeline` or database cursor stream."
+  ],
+  "starterCode": "const { Readable } = require('stream');\n\n/**\n * Buggy Memory-Flooding Exporter\n */\nasync function exportAuditCsv(req, res, db) {\n  res.setHeader('Content-Type', 'text/csv');\n  res.setHeader('Content-Disposition', 'attachment; filename=\"audit.csv\"');\n\n  // BUG 1: Loads entire multi-gigabyte dataset into V8 heap at once\n  const rows = await db.query('SELECT * FROM transactions');\n\n  // BUG 2: Ignores backpressure! res.write() returns false when TCP send buffer is full,\n  // but this loop continues shoving data into the unbounded internal buffer until OOM crash.\n  for (const row of rows) {\n    const csvLine = `${row.id},${row.amount},${row.timestamp}\\n`;\n    res.write(csvLine);\n  }\n\n  res.end();\n}\n\nfunction solution(input) {\n  return \"stream_pipeline_backpressure_handled\";\n}",
+  "codeLanguage": "javascript",
+  "candidateTasks": [
+    "Explain how `res.write()` backpressure works and what the return value `false` indicates.",
+    "Refactor to use PostgreSQL Cursor stream (`pg-query-stream`) piped through a Transform stream.",
+    "Use `stream.pipeline()` to handle errors and clean up socket listeners on premature client disconnect."
+  ],
+  "hints": [
+    "When `res.write()` returns `false`, stop writing and wait for the `drain` event on `res`.",
+    "Even better: `stream.pipeline(dbStream, transformCsvStream, res, (err) => ...)` handles backpressure and abort cleanup automatically."
+  ],
+  "testCases": [
+    {
+      "id": "tc-stream-oom-1",
+      "name": "Streams gigabyte dataset with constant bounded memory",
+      "inputDescription": "null",
+      "expectedOutput": "\"stream_pipeline_backpressure_handled\"",
+      "explanation": "Enforces backpressure and cursor-based chunking."
+    }
+  ],
+  "alternativeApproaches": [
+    "Generating the file asynchronously via background worker, uploading to S3, and providing a pre-signed download URL."
+  ],
+  "commonMistakes": [
+    "Using `stream.pipe()` instead of `stream.pipeline()`: `.pipe()` does not properly forward errors or destroy source streams when the client disconnects.",
+    "Increasing Node heap memory `--max-old-space-size=8192` as a band-aid instead of fixing the streaming architecture."
+  ]
+}
