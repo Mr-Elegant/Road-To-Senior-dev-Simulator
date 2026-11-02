@@ -70,7 +70,7 @@ The loan lab is an editable exercise workspace. Each submission executes against
 | **Evolving incidents** | Eight incidents with 24 timed developments and 72 response choices. Decisions change observations and subsequent briefings; missed deadlines record inaction. Solutions include containment, recovery gates, permanent corrections, regression tests, and rollback constraints. |
 | **Loan bug-fixing lab** | Eight JavaScript exercises covering stale responses, duplicate requests, optimistic rollback, pagination, state mutation, selector memoization, stale closures, and error recovery. Two sample cases per exercise and 41 cases across the full suites. |
 | **SQL practice** | Four preparation tiers, PostgreSQL execution through PGlite, generic execution through AlaSQL, conceptual questions, incident exercises, and mock interviews. |
-| **Coding & interview practice** | Monaco workspaces, sample/full submission flows, progressive hints, reference solutions, a foundational question track, and timed mock sessions. |
+| **Coding & interview practice** | Full-height Monaco challenge workspaces with on-demand, closable test results; sample/full submission flows, progressive hints, reference solutions, a foundational question track, and timed mock sessions. |
 | **Code review** | Diff-based review workspaces with candidate comments and reference review guidance. |
 | **System design** | Requirements, API/data/scaling/trade-off notes, and an architecture canvas with nodes and edges. |
 | **Beginner track** | JavaScript, HTML/CSS, React, Redux Toolkit, TypeScript, and Node/API fundamentals; exploration, hints, short reference answers, and timed mock mode. |
@@ -469,7 +469,8 @@ For an existing database, follow the [baseline and migration procedure](docs/AUT
 | Check | Recorded result |
 |---|---|
 | Unit tests | **203 passed across 17 suites** |
-| Browser regression tests | **34 Chromium journeys verified against the production build:** 33 passed in the full run; the remaining cloud-sync check passed in a focused rerun after correcting its save-completion wait. |
+| Browser regression tests (previous full audit) | **34 Chromium journeys verified against the production build:** 33 passed in the full run; the remaining cloud-sync check passed in a focused rerun after correcting its save-completion wait. |
+| Challenge workspace layout update | **Eight targeted Chromium journeys passed against the updated production build**, including full-height editor, on-demand results, close/rerun, mobile layout, and related SQL/incident/workspace flows. |
 | Production build | Passed |
 | TypeScript and ESLint | Passed |
 | Loan exercise reference implementations | **All 41 authored cases passed** |

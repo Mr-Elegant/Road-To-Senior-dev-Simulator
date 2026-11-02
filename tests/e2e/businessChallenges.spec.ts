@@ -24,7 +24,7 @@ test('all six business challenges reproduce bugs and execute reference solutions
   for (const scenario of [...commerceScenarios, ...saasScenarios]) {
     await page.goto(`/challenge/${scenario.id}`);
     await expect(page.getByRole('heading', { name: scenario.title, exact: true })).toBeVisible();
-    await page.getByRole('button', { name: 'Run All Tests', exact: true }).click();
+    await page.getByRole('button', { name: 'Run Tests', exact: true }).click();
     const total = scenario.testCases!.length;
     const summary = page.getByText(/\d+ \/ \d+ Tests Passed/, { exact: true });
     await expect(summary).toBeVisible();

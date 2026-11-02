@@ -46,7 +46,7 @@ export function WorkspaceHeader({
   const typeBadge = getTypeBadge(scenario.type);
 
   return (
-    <header className="border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl px-4 sm:px-6 py-3 transition-colors">
+    <header className="shrink-0 border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl px-4 sm:px-6 py-3 transition-colors">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Left: Back link, title, badges */}
         <div className="flex items-center gap-3">

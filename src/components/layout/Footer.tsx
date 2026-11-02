@@ -1,8 +1,14 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Terminal, Shield, Award, Cpu, CheckCircle2 } from 'lucide-react';
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/challenge/') || pathname?.startsWith('/challenges/')) return null;
+
   return (
     <footer className="w-full border-t border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/70 dark:bg-zinc-950/70 backdrop-blur-md py-12 mt-20 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

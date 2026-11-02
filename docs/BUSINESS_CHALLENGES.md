@@ -15,6 +15,8 @@ Six senior exercises extend the existing scenario library. Search **E-commerce**
 
 Read the explicit input/output contract, run the broken starter, edit `solution(input)`, and rerun tests. Each exercise has two visible example fixtures and additional cases for edge behavior. Use progressive hints before revealing the reference. Submit through the existing rubric flow to record an attempt. Behavioral test results and the written production assessment serve different purposes.
 
+Challenge workspaces omit the website footer and give the editor the available workspace height. The results panel opens when you select **Run Tests**. **Close test results** returns that space to the editor and restores keyboard focus to the run button; code and recorded test results remain available for submission. Running tests again reopens the panel. The compact mobile layout keeps the specification, editor, and close control reachable.
+
 Each solution includes runnable JavaScript, diagnosis, production boundaries, verification ideas, alternatives, common mistakes, and an interview follow-up. The pack has **53 behavioral cases**. Repository checks compare authored references against independently specified JSON outputs with deeply frozen inputs. A browser journey runs every starter and reference through the real workspace.
 
 ## Scope of the model

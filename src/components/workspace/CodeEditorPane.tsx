@@ -23,6 +23,7 @@ interface CodeEditorPaneProps {
   isRunningTests?: boolean;
   hasTestCases?: boolean;
   readOnly?: boolean;
+  runButtonRef?: React.Ref<HTMLButtonElement>;
 }
 
 export function CodeEditorPane({
@@ -33,6 +34,7 @@ export function CodeEditorPane({
   isRunningTests,
   hasTestCases,
   readOnly = false,
+  runButtonRef,
 }: CodeEditorPaneProps) {
   const { resolvedTheme } = useTheme();
   const [copied, setCopied] = useState(false);
@@ -45,9 +47,9 @@ export function CodeEditorPane({
   };
 
   return (
-    <div className="h-full flex flex-col bg-zinc-950 overflow-hidden">
+    <div className="h-full min-h-0 flex flex-col bg-zinc-950 overflow-hidden">
       {/* Editor Header Bar */}
-      <div className="flex items-center justify-between border-b border-zinc-800 bg-zinc-900/90 px-4 py-2">
+      <div className="shrink-0 flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 bg-zinc-900/90 px-4 py-2">
         <div className="flex items-center gap-2">
           <Code2 className="w-4 h-4 text-blue-400" />
           <span className="text-xs font-mono font-medium text-zinc-300">
@@ -84,6 +86,7 @@ export function CodeEditorPane({
           {/* Run Tests Button */}
           {hasTestCases && onRunTests && (
             <button
+              ref={runButtonRef}
               onClick={onRunTests}
               disabled={isRunningTests}
               className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-sm transition-colors disabled:opacity-50"
@@ -96,7 +99,7 @@ export function CodeEditorPane({
       </div>
 
       {/* Editor Body */}
-      <div className="flex-1 w-full relative">
+      <div className="min-h-0 flex-1 w-full relative">
         <MonacoEditor
           height="100%"
           language={language.toLowerCase() === 'typescript' ? 'typescript' : 'javascript'}

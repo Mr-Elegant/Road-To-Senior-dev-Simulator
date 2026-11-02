@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, use } from 'react';
+import React, { useEffect, useRef, useState, use } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getScenarioById } from '@/data';
@@ -79,9 +79,12 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
   // Test Suite state
   const [testResult, setTestResult] = useState<RunSuiteResult | null>(null);
   const [isRunningTests, setIsRunningTests] = useState(false);
+  const [isTestPanelOpen, setIsTestPanelOpen] = useState(false);
+  const runTestsButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleRunTests = async () => {
     if (!scenario.testCases || scenario.testCases.length === 0) return;
+    setIsTestPanelOpen(true);
     setIsRunningTests(true);
     try {
       const result = await runClientSideTestSuite(
@@ -190,6 +193,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
     if (confirm('Reset workspace code and inputs back to starter defaults?')) {
       setCode(scenario.starterCode || '');
       setTestResult(null);
+      setIsTestPanelOpen(false);
       setReviewComments([]);
       setDesignNodes([]);
       setDesignEdges([]);
@@ -205,7 +209,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
   };
 
   return (
-    <div className={scenario.incidentSimulation ? 'min-h-[calc(100vh-64px)] xl:h-[calc(100vh-64px)] flex flex-col xl:overflow-hidden bg-zinc-950' : 'h-[calc(100vh-64px)] flex flex-col overflow-hidden bg-zinc-950'}>
+    <div className={scenario.incidentSimulation ? 'min-h-[calc(100dvh-64px)] xl:h-[calc(100dvh-64px)] flex flex-col xl:overflow-hidden bg-zinc-950' : 'h-[calc(100dvh-64px)] min-h-0 flex flex-col overflow-hidden bg-zinc-950'}>
       {/* Workspace Top Header Bar */}
       <WorkspaceHeader
         scenario={scenario}
@@ -224,9 +228,9 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
       {submissionMessage && <p role="alert" className="bg-amber-500/10 text-amber-200 px-4 py-2 text-xs">{submissionMessage}</p>}
 
       {/* Main Workspace Body Split */}
-      <div className={scenario.incidentSimulation ? 'flex flex-col xl:flex-row xl:flex-1 xl:min-h-0 xl:overflow-hidden' : 'flex-1 flex flex-col md:flex-row overflow-hidden'}>
+      <div className={scenario.incidentSimulation ? 'flex flex-col xl:flex-row xl:flex-1 xl:min-h-0 xl:overflow-hidden' : 'min-h-0 flex-1 flex flex-col md:flex-row overflow-hidden'}>
         {/* Left Pane: Context, Problem Statement, Constraints & Tasks */}
-        <div className={scenario.incidentSimulation ? 'w-full xl:w-4/12 max-h-72 xl:max-h-none xl:h-full overflow-hidden flex-shrink-0' : 'w-full md:w-5/12 lg:w-4/12 h-full overflow-hidden flex-shrink-0'}>
+        <div className={scenario.incidentSimulation ? 'w-full xl:w-4/12 max-h-72 xl:max-h-none xl:h-full overflow-hidden flex-shrink-0' : 'w-full md:w-5/12 lg:w-4/12 h-1/3 min-h-32 max-h-56 md:min-h-0 md:max-h-none md:h-full overflow-hidden flex-shrink-0'}>
           <ProblemStatementPanel
             scenario={scenario}
             hintsRevealed={hintsRevealed}
@@ -237,11 +241,11 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
         </div>
 
         {/* Right Pane: Dynamic Challenge Experience by Challenge Type */}
-        <div className={scenario.incidentSimulation ? 'min-w-0 xl:flex-1 xl:min-h-0 xl:h-full xl:overflow-hidden' : 'flex-1 h-full overflow-hidden'}>
+        <div className={scenario.incidentSimulation ? 'min-w-0 xl:flex-1 xl:min-h-0 xl:h-full xl:overflow-hidden' : 'min-w-0 min-h-0 flex-1 md:h-full overflow-hidden'}>
           {/* Coding & Debugging View */}
           {(scenario.type === 'coding' || scenario.type === 'debugging') && (
-            <div className="h-full flex flex-col overflow-hidden">
-              <div className="flex-1 overflow-hidden">
+            <div className="h-full min-h-0 flex flex-col overflow-hidden">
+              <div className="min-h-0 flex-1 overflow-hidden">
                 <CodeEditorPane
                   code={code}
                   onChange={setCode}
@@ -249,18 +253,23 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
                   onRunTests={handleRunTests}
                   isRunningTests={isRunningTests}
                   hasTestCases={Boolean(scenario.testCases && scenario.testCases.length > 0)}
+                  runButtonRef={runTestsButtonRef}
                 />
               </div>
 
-              {scenario.testCases && scenario.testCases.length > 0 && (
-                <div className="h-64 flex-shrink-0">
+              {isTestPanelOpen && scenario.testCases && scenario.testCases.length > 0 && (
+                <section aria-label="Test results" className="h-64 max-h-[50%] min-h-0 shrink-0">
                   <TestRunnerPane
                     testSuiteResult={testResult}
                     isRunning={isRunningTests}
                     onRunAgain={handleRunTests}
                     language={scenario.codeLanguage || 'javascript'}
+                    onClose={() => {
+                      setIsTestPanelOpen(false);
+                      runTestsButtonRef.current?.focus();
+                    }}
                   />
-                </div>
+                </section>
               )}
             </div>
           )}
