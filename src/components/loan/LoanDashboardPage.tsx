@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ReduxProviderWrapper } from '@/components/loan/ReduxProviderWrapper';
 import { LoanDashboardHeader } from '@/components/loan/LoanDashboardHeader';
 import { SimulationControlsBar } from '@/components/loan/SimulationControlsBar';
@@ -16,9 +16,18 @@ import { ToastContainer } from '@/components/loan/ToastContainer';
 import { useAppDispatch } from '@/lib/redux/store';
 import { fetchApplications } from '@/lib/redux/slices/applicationsSlice';
 import { fetchDashboardStats } from '@/lib/redux/slices/dashboardSlice';
+import { LoanBugLabLauncher } from './LoanBugLabLauncher';
+import { storage } from '@/lib/persistence/localStorageAdapter';
+import { bestLoanLabScores } from '@/lib/loanLab/attempts';
+import { loanLabExerciseMap } from '@/data/loanLabExercises';
+import { setActiveBugScenarioId } from '@/lib/redux/slices/uiSlice';
 
-function LoanDashboardContent() {
+function LoanDashboardContent({ initialBugId }: { initialBugId?: string }) {
   const dispatch = useAppDispatch();
+  const [scores, setScores] = useState<Record<string, number>>({});
+  const refreshScores = useCallback(() => { void storage.getProgress().then((progress) => setScores(bestLoanLabScores(progress.attempts))); }, []);
+  useEffect(refreshScores, [refreshScores]);
+  useEffect(() => { if (initialBugId && loanLabExerciseMap.has(initialBugId)) dispatch(setActiveBugScenarioId(initialBugId)); }, [dispatch, initialBugId]);
 
   // Initial load of applications and dashboard metrics
   useEffect(() => {
@@ -33,9 +42,10 @@ function LoanDashboardContent() {
 
       {/* 2. Simulation Controls & Toggles */}
       <SimulationControlsBar />
+      <LoanBugLabLauncher completed={Object.values(scores).filter((score) => score === 100).length} />
 
       {/* 3. Conditional Bug Scenarios Explorer */}
-      <BugScenariosExplorer />
+      <BugScenariosExplorer scores={scores} onRecorded={refreshScores} />
 
       {/* 4. Conditional Senior Interview Panel */}
       <InterviewModePanel />
@@ -64,10 +74,10 @@ function LoanDashboardContent() {
   );
 }
 
-export default function EnterpriseLoanDashboardPage() {
+export default function EnterpriseLoanDashboardPage({ initialBugId }: { initialBugId?: string }) {
   return (
     <ReduxProviderWrapper>
-      <LoanDashboardContent />
+      <LoanDashboardContent initialBugId={initialBugId} />
     </ReduxProviderWrapper>
   );
 }

@@ -18,6 +18,8 @@ import { ChallengeFilters } from '@/components/library/ChallengeFilters';
 import { ChallengeCard } from '@/components/library/ChallengeCard';
 import { Terminal, ArrowRight } from 'lucide-react';
 
+const catalogScenarioIds = new Set(allScenarios.map((scenario) => scenario.id));
+
 export default function DashboardPage() {
   const [progress, setProgress] = useState<UserProgressData | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,6 +48,7 @@ export default function DashboardPage() {
     const map = new Map<string, number>();
     if (!progress) return map;
     for (const att of progress.attempts) {
+      if (!catalogScenarioIds.has(att.scenarioId)) continue;
       const cur = map.get(att.scenarioId) ?? 0;
       if (att.totalScorePercentage > cur) {
         map.set(att.scenarioId, att.totalScorePercentage);

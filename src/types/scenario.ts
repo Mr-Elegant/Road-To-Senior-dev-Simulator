@@ -1,3 +1,5 @@
+import type { IncidentPlaybook, IncidentSimulation } from './incident';
+
 export type ChallengeType = 
   | 'debugging' 
   | 'incident' 
@@ -113,6 +115,8 @@ export interface Scenario {
   codeLanguage?: string;
   testCases?: TestCase[];
   incidentTelemetry?: IncidentTelemetry;
+  incidentSimulation?: IncidentSimulation;
+  incidentPlaybook?: IncidentPlaybook;
   codeReviewFiles?: CodeReviewFile[];
   systemDesignReqs?: SystemDesignRequirement;
 

@@ -19,6 +19,10 @@ import { SeniorInterviewSession } from '@/components/workspace/SeniorInterviewSe
 import { RubricEvaluationModal } from '@/components/workspace/RubricEvaluationModal';
 import { SolutionRevealDrawer } from '@/components/workspace/SolutionRevealDrawer';
 import { AlertCircle, ArrowLeft } from 'lucide-react';
+import type { Scenario } from '@/types/scenario';
+import { EvolvingIncidentWorkspace } from '@/components/workspace/EvolvingIncidentWorkspace';
+import { useIncidentSession } from '@/components/workspace/useIncidentSession';
+import { getIncidentView, incidentTranscript } from '@/lib/incidents/engine';
 
 interface ChallengePageProps {
   params: Promise<{ id: string }>;
@@ -31,6 +35,12 @@ export default function ChallengePage({ params }: ChallengePageProps) {
   if (!scenario) {
     notFound();
   }
+  return <ChallengeWorkspace key={id} scenario={scenario} />;
+}
+
+function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
+  const incident = useIncidentSession(scenario);
+  const [submissionMessage, setSubmissionMessage] = useState('');
 
   // Active time tracking
   const [timeSpentSeconds, setTimeSpentSeconds] = useState(0);
@@ -88,12 +98,13 @@ export default function ChallengePage({ params }: ChallengePageProps) {
   };
 
   // Incident Telemetry Form state
-  const [rootCauseHypothesis, setRootCauseHypothesis] = useState('');
-  const [evidence, setEvidence] = useState('');
-  const [immediateMitigation, setImmediateMitigation] = useState('');
-  const [permanentCorrection, setPermanentCorrection] = useState('');
-  const [regressionTests, setRegressionTests] = useState('');
-  const [monitoringPlan, setMonitoringPlan] = useState('');
+  const { rootCauseHypothesis, evidence, immediateMitigation, permanentCorrection, regressionTests, monitoringPlan } = incident.notes;
+  const setRootCauseHypothesis = (value: string) => incident.setNote('rootCauseHypothesis', value);
+  const setEvidence = (value: string) => incident.setNote('evidence', value);
+  const setImmediateMitigation = (value: string) => incident.setNote('immediateMitigation', value);
+  const setPermanentCorrection = (value: string) => incident.setNote('permanentCorrection', value);
+  const setRegressionTests = (value: string) => incident.setNote('regressionTests', value);
+  const setMonitoringPlan = (value: string) => incident.setNote('monitoringPlan', value);
 
   // Code Review Comments state
   const [reviewComments, setReviewComments] = useState<CandidateReviewComment[]>([]);
@@ -125,6 +136,11 @@ export default function ChallengePage({ params }: ChallengePageProps) {
 
   // Submit and save attempt
   const handleSubmitAndEvaluate = () => {
+    if (scenario.incidentSimulation && !getIncidentView(scenario.incidentSimulation, incident.run, scenario.incidentTelemetry!).completed) {
+      setSubmissionMessage('Complete all three developments before submitting. Use the simulation clock or advance to the next event.');
+      return;
+    }
+    setSubmissionMessage('');
     // Open rubric modal for self-assessment
     setIsRubricModalOpen(true);
   };
@@ -156,7 +172,7 @@ export default function ChallengePage({ params }: ChallengePageProps) {
         scalingStrategy: scalingAnalysis,
         failureScenarios,
       },
-      interviewAnswers,
+      interviewAnswers: scenario.incidentSimulation ? { ...incidentTranscript(scenario.incidentSimulation, incident.run), 'incident.evidence': evidence } : scenario.type === 'incident' ? { 'incident.evidence': evidence } : interviewAnswers,
       rubricScores,
       totalScorePercentage,
       passedTestsCount: testResult?.passedTests || 0,
@@ -174,12 +190,6 @@ export default function ChallengePage({ params }: ChallengePageProps) {
     if (confirm('Reset workspace code and inputs back to starter defaults?')) {
       setCode(scenario.starterCode || '');
       setTestResult(null);
-      setRootCauseHypothesis('');
-      setEvidence('');
-      setImmediateMitigation('');
-      setPermanentCorrection('');
-      setRegressionTests('');
-      setMonitoringPlan('');
       setReviewComments([]);
       setDesignNodes([]);
       setDesignEdges([]);
@@ -188,11 +198,14 @@ export default function ChallengePage({ params }: ChallengePageProps) {
       setScalingAnalysis('');
       setFailureScenarios('');
       setInterviewAnswers({});
+      incident.reset();
+      setSubmissionMessage('');
+      setHasSubmitted(false);
     }
   };
 
   return (
-    <div className="h-[calc(100vh-64px)] flex flex-col overflow-hidden bg-zinc-950">
+    <div className={scenario.incidentSimulation ? 'min-h-[calc(100vh-64px)] xl:h-[calc(100vh-64px)] flex flex-col xl:overflow-hidden bg-zinc-950' : 'h-[calc(100vh-64px)] flex flex-col overflow-hidden bg-zinc-950'}>
       {/* Workspace Top Header Bar */}
       <WorkspaceHeader
         scenario={scenario}
@@ -208,10 +221,12 @@ export default function ChallengePage({ params }: ChallengePageProps) {
         hasReferenceSolution={Boolean(scenario.referenceSolution)}
       />
 
+      {submissionMessage && <p role="alert" className="bg-amber-500/10 text-amber-200 px-4 py-2 text-xs">{submissionMessage}</p>}
+
       {/* Main Workspace Body Split */}
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+      <div className={scenario.incidentSimulation ? 'flex flex-col xl:flex-row xl:flex-1 xl:min-h-0 xl:overflow-hidden' : 'flex-1 flex flex-col md:flex-row overflow-hidden'}>
         {/* Left Pane: Context, Problem Statement, Constraints & Tasks */}
-        <div className="w-full md:w-5/12 lg:w-4/12 h-full overflow-hidden flex-shrink-0">
+        <div className={scenario.incidentSimulation ? 'w-full xl:w-4/12 max-h-72 xl:max-h-none xl:h-full overflow-hidden flex-shrink-0' : 'w-full md:w-5/12 lg:w-4/12 h-full overflow-hidden flex-shrink-0'}>
           <ProblemStatementPanel
             scenario={scenario}
             hintsRevealed={hintsRevealed}
@@ -222,7 +237,7 @@ export default function ChallengePage({ params }: ChallengePageProps) {
         </div>
 
         {/* Right Pane: Dynamic Challenge Experience by Challenge Type */}
-        <div className="flex-1 h-full overflow-hidden">
+        <div className={scenario.incidentSimulation ? 'min-w-0 xl:flex-1 xl:min-h-0 xl:h-full xl:overflow-hidden' : 'flex-1 h-full overflow-hidden'}>
           {/* Coding & Debugging View */}
           {(scenario.type === 'coding' || scenario.type === 'debugging') && (
             <div className="h-full flex flex-col overflow-hidden">
@@ -251,7 +266,7 @@ export default function ChallengePage({ params }: ChallengePageProps) {
           )}
 
           {/* Production Incident View */}
-          {scenario.type === 'incident' && scenario.incidentTelemetry && (
+          {scenario.type === 'incident' && scenario.incidentTelemetry && !scenario.incidentSimulation && (
             <IncidentTelemetryPane
               telemetry={scenario.incidentTelemetry}
               rootCauseHypothesis={rootCauseHypothesis}
@@ -268,6 +283,15 @@ export default function ChallengePage({ params }: ChallengePageProps) {
               onMonitoringPlanChange={setMonitoringPlan}
             />
           )}
+
+          {scenario.incidentSimulation && <EvolvingIncidentWorkspace key={incident.resetVersion} scenario={scenario} session={incident} report={{
+            rootCauseHypothesis, onRootCauseChange: setRootCauseHypothesis,
+            evidence, onEvidenceChange: setEvidence,
+            immediateMitigation, onImmediateMitigationChange: setImmediateMitigation,
+            permanentCorrection, onPermanentCorrectionChange: setPermanentCorrection,
+            regressionTests, onRegressionTestsChange: setRegressionTests,
+            monitoringPlan, onMonitoringPlanChange: setMonitoringPlan,
+          }} />}
 
           {/* Code Review PR View */}
           {scenario.type === 'code_review' && scenario.codeReviewFiles && (

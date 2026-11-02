@@ -22,6 +22,7 @@ interface CodeEditorPaneProps {
   onRunTests?: () => void;
   isRunningTests?: boolean;
   hasTestCases?: boolean;
+  readOnly?: boolean;
 }
 
 export function CodeEditorPane({
@@ -31,6 +32,7 @@ export function CodeEditorPane({
   onRunTests,
   isRunningTests,
   hasTestCases,
+  readOnly = false,
 }: CodeEditorPaneProps) {
   const { resolvedTheme } = useTheme();
   const [copied, setCopied] = useState(false);
@@ -102,6 +104,7 @@ export function CodeEditorPane({
           onChange={(val) => onChange(val || '')}
           theme={resolvedTheme === 'dark' ? 'vs-dark' : 'light'}
           options={{
+            readOnly,
             minimap: { enabled: false },
             fontSize: 13,
             fontFamily: 'JetBrains Mono, Fira Code, Menlo, monospace',

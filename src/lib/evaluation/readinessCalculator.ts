@@ -7,8 +7,10 @@ export function calculateReadinessReport(
 ): InterviewReadinessReport {
   const attempts = progress.attempts || [];
   const completedMap = new Map<string, number>(); // scenarioId -> best score
+  const scenarioIds = new Set(allScenarios.map((scenario) => scenario.id));
 
   for (const att of attempts) {
+    if (!scenarioIds.has(att.scenarioId)) continue;
     const existing = completedMap.get(att.scenarioId) ?? 0;
     if (att.totalScorePercentage > existing) {
       completedMap.set(att.scenarioId, att.totalScorePercentage);

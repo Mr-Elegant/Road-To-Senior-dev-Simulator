@@ -1,279 +1,265 @@
 # Full Stack Engineering Interview Lab
 
-Authentication is implemented with email/password signup, secure database sessions, account-scoped progress, and deliberate anonymous-history import. See [Authentication setup and migration guide](docs/AUTHENTICATION.md) before configuring or deploying this application. After `npm ci`, run `npm run db:generate`; set `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, and the existing `DATABASE_URL` before production use.
+**Debug the failure. Build the fix. Explain the trade-off.**
 
-The application now runs on Next.js 16.4.3 with Turbopack for development and production builds. See [the upgrade and recovery notes](docs/NEXTJS_UPGRADE.md) for compatibility changes and the explicit Webpack fallback commands.
+A full-stack learning platform for practicing the work behind senior engineering interviews: diagnosing production incidents, fixing concurrency bugs, reviewing code, querying PostgreSQL, and defending system-design decisions.
 
-An interactive engineering simulation platform designed for developers with 2–10 years of experience preparing for senior full-stack, staff engineer, and technical leadership interviews.
+The project brings these experiences into one application with authenticated accounts, browser-based execution, persistent progress, and reproducible evaluation. Its engineering focus is **correctness under failure**: stale responses, failed optimistic updates, interrupted sessions, conflicting imports, and untrusted candidate code.
 
-Unlike static flashcard or question bank sites, this is an **interactive engineering simulation platform** featuring realistic production incidents, code reviews, deep event-loop and memory debugging, system design architecture diagrams, senior hiring committee rubric evaluations, and a dedicated **in-browser coding practice environment**.
+**59 engineering scenarios · 8 evolving incidents · 8 editable bug exercises · 41 bug-lab test cases**
 
----
+[Review the product](#a-five-minute-product-review) · [Architecture](#architecture) · [Engineering decisions](#engineering-decisions) · [Run locally](#run-locally) · [Verification](#verification)
 
-## 🚀 Key Architectural Features
+## A five-minute product review
 
-### 1. In-Browser Coding Practice Environment (`/practice`)
-- **Integrated Monaco Editor**: Professional code editor with syntax highlighting, automatic indentation, line numbers, and minimap. Operates completely inside the web browser and is strictly decoupled from any IDE or terminal.
-- **Initial Supported Languages**:
-  - **JavaScript**: Executed in a client-side isolated sandbox with console log capture, restricted global scope, and 1,500ms timeout guards.
-  - **TypeScript**: Processed with a client-side syntax and type stripper (removes interfaces, type aliases, generic type parameters, and type annotations) allowing immediate client-side test execution without server-side compile latency.
-  - **SQL**: In-memory relational database engine powered by AlaSQL. Sets up independent schema DDL and seed tables per test case, executes complex queries (CTEs, window functions, partitions, aggregations), and formats tabular query results.
-- **Dual-Action Evaluation Workflow**:
-  - **Run Code (Samples)**: Fast iteration against sample test cases with real-time console log and return-value inspection.
-  - **Submit Answer (Full Suite)**: Runs the candidate's code against the full suite (including edge cases and hidden tests), computing percentage score and execution duration.
-- **Progressive Hints & Staff Solutions**:
-  - Tiered hints revealed sequentially without spoiling the problem.
-  - Detailed reference solutions featuring complexity analysis ($O(N)$ time and space benchmarks) and architectural trade-off explanations.
+After starting the application locally, these three paths show its core engineering depth:
 
-### 2. Strict Security & Sandbox Execution Boundaries
-- **Zero Arbitrary Server Execution**: User-submitted code is **never** executed directly on the Next.js application server. This protects infrastructure from server-side request forgery (SSRF), resource starvation, and process escape vulnerabilities.
-- **Unconfigured Language Guard**: When languages that require containerized virtualization (e.g., Python, Go, Rust) are selected, the platform clearly displays an **Execution Service Not Configured** notice explaining why arbitrary server execution is barred and provides candidate tasks, sample inputs, expected outputs, progressive hints, and a reference solution for self-assessment.
+| Experience | What to try | What to inspect |
+|---|---|---|
+| **Evolving incident response** — `/incidents` | Open the connection-storm scenario, choose a response, then advance the simulation. Compare the new briefing, telemetry, customer impact, and decision journal. | Pure state transitions, scheduled developments, consequence replay, and validated draft restoration. |
+| **Hands-on bug fixing** — `/challenges/loan-management` | Sign in, choose **Start bug-fixing lab**, run the broken starter, edit the function in Monaco, and submit the fix. | Real behavioral tests, worker termination, request ownership, immutable state, and account-scoped submissions. |
+| **SQL & PostgreSQL lab** — `/sql` | Execute a PostgreSQL-specific query in the playground, then compare the generic SQL engine. | PGlite WebAssembly execution, seeded datasets, result comparison, and explicit dialect boundaries. |
 
-### 3. Five Realistic Simulation Modes
-- **Debugging Challenges**: Inspect realistic buggy code (event-loop microtask starvation, closure memory leaks, stale React closures, N+1 query loops, connection pool collapses). Edit the code, run sandboxed tests safely in the browser, review failures, and submit root-cause explanations.
-- **Production Incidents**: Investigate live outages with simulated telemetry: system logs, Prometheus/APM metrics, customer impact reports, and recent git commit diffs. Candidates formulate root-cause hypotheses, cite telemetry evidence, prescribe immediate mitigation, design permanent corrections, write regression tests, and configure PromQL alerting rules.
-- **Coding Challenges**: Solve complex concurrency, typing, and architectural coding problems (generic route parsers, discriminated union event routing, async mutex locks, full-jitter retry algorithms, monotonic event versioning) with Monaco Editor and client-side test execution.
-- **Code Review Pull Requests**: Review realistic Pull Requests (multi-vendor payout split, Redis session revocation) to catch IDOR authorization bypasses, IEEE 754 floating-point financial bugs, unhandled promise rejections, and blocking `KEYS *` commands.
-- **System Design Architecture Canvas**: Interactive drag-and-drop architecture canvas (Clients, CDNs, Load Balancers, API Gateways, Microservices, Redis Caches, PostgreSQL, Columnar OLAP, Kafka / SQS Queues, Workers). Define API contracts, data models, sharding strategies, and failure modes.
-- **Senior & Staff Interview Dialogue**: Multi-stage architectural and leadership interviews with dynamic follow-ups, expected competency tags, and exemplary answer benchmarks.
+The loan lab is an editable exercise workspace. Each submission executes against fixtures and records test results; the dashboard also provides a working demonstration of the same engineering concerns.
 
-### 4. Rich Scenario Library (50 Complete Scenarios)
-Zero placeholder content. Real-world business contexts across:
-- **JavaScript**: Event loop microtask starvation, SSE connection closure memory leaks, multi-tab wallet race conditions, unhandled promise crash loops, V8 GC object allocation latency.
-- **TypeScript**: Multi-gateway webhook discriminated unions with compile-time exhaustiveness (`assertNever`), generic RPC route param inferrers, multi-tenant RBAC type narrowing, deep immutable state containers.
-- **React**: Order-book live ticker stale closures, 10,000-row inventory table cascading re-renders & virtualization, debounced autocomplete out-of-order race conditions with `AbortController`, WCAG 2.1 AA accessible comboboxes, optimistic UI mutation hooks with rollback.
-- **Next.js**: Server/client component private key leaks, multi-timezone SSR hydration mismatches, high-traffic ISR cache stampedes (dog-piling), Edge middleware infinite redirect loops, streaming Suspense with localized error boundaries.
-- **Node.js**: CPU-intensive password hashing freezing event loops (libuv threadpool tuning), Express async error middleware swallowing rejections, distributed Redis sliding-window rate limiters, multi-gigabyte CSV stream backpressure, Kubernetes rolling restart graceful shutdown.
-- **Databases (PostgreSQL)**: Cart reservation row deadlocks (`SELECT FOR UPDATE` deterministic sorting), N+1 query optimization with composite indexes, financial ledger write-skew under `READ COMMITTED` vs `SERIALIZABLE`, million-row keyset (cursor) pagination, zero-downtime 50M-row expand/contract column migrations.
-- **Integrations**: Stripe webhook replay idempotency keys and signature validation, multi-provider WhatsApp/SMS circuit breaker fallbacks, bi-directional CRM out-of-order event synchronization, exponential backoff with full jitter.
-- **Engineering Operations**: Node.js container memory leak post-mortem, AWS IAM / Stripe key leak triage & OIDC migration, canary release automated rollback analysis, OpenTelemetry distributed trace waterfall bottleneck resolution.
-- **System Design**: 50M notifications/day multi-channel notification engine, idempotent high-volume checkout service with transactional outbox, real-time multi-tenant CRM columnar analytics engine (ClickHouse), distributed cron & delayed job scheduler (Redis Sorted Sets).
-- **Security & Leadership**: Custom webhook AWS metadata SSRF (IMDSv2 & DNS rebinding), 45-minute outage blameless post-mortem facilitation, legacy monolith strangler fig modernization.
+<details>
+<summary><strong>Product preview: editable loan bug lab with verified test results</strong></summary>
 
-### 5. Transparent Rubric-Based Evaluation Engine
-- Scores across 7 critical engineering dimensions: Root-Cause Reasoning, Correctness, Code Quality, Security, Reliability, Testing, and Trade-off Analysis.
-- Explicit non-guaranteed prediction disclaimer: Practice benchmarks provide structured skill growth without making misleading guarantees regarding live company hiring decisions.
-- Reference solutions remain strictly hidden until submitted or explicitly revealed.
+![Loan bug-fixing workspace showing eight exercises, an editable Monaco solution, and five passing regression tests](docs/screenshots/15_loan_bug_lab.png)
 
-### 6. Decoupled Persistence Layer
-- **LocalStorageAdapter**: Fully functional local MVP with automatic streak tracking, attempt history, bookmarks, and full JSON export/import.
-- **PrismaStorageAdapter & PostgreSQL Schema**: Ready in `prisma/schema.prisma` (`User`, `ScenarioAttempt`, `Bookmark`, `UserNote`) for seamless server database drop-in without rewriting challenge or evaluation logic.
+</details>
 
-### 7. Conversational AI Interviewer (Google Gemini Developer API)
-- **Official `@google/genai` Integration**: Communicates with Google's latest `gemini-2.0-flash` model via the official `@google/genai` JavaScript SDK.
-- **Full Server-Side Isolation**: Next.js App Router API Route Handler (`src/app/api/ai-interview/route.ts`) acts as a secure proxy. The API key is never bundled in client code or returned in network payloads.
-- **Dynamic Multi-Turn Dialogue**:
-  - Generates tailored architectural and coding questions based on candidate role (Full Stack, Senior Frontend, Senior Backend, Tech Lead / Staff), topic, and difficulty.
-  - Accepts candidate answers in plain text or code, evaluating technical correctness, depth of reasoning, trade-off awareness, and production readiness.
-  - Generates contextual, probing follow-up questions tailored directly to the candidate's actual answer (e.g., addressing unhandled race conditions or scaling bottlenecks).
-  - Progressive hint system: Delivers nudges on request without disclosing full reference implementations.
-  - Final Hiring Committee Evaluation: Comprehensive breakdown containing verified strengths, growth areas, dimensional scores (Architecture, Problem Solving, Production Readiness, Communication), and an overall hiring recommendation.
-- **Reliable Offline & Quota Simulation Engine**:
-  - When `GEMINI_API_KEY` is not supplied or if Gemini's rate limits/quotas are reached, the platform automatically engages `src/lib/gemini/offlineFallback.ts`.
-  - Simulates authentic multi-turn technical interviews across all engineering roles with evaluative turn feedback and scorecard generation, ensuring 100% test and offline availability.
-- **Resilient Session State**:
-  - The current live interview session is persisted locally under `fullstack_ai_interview_session_v1` in `localStorage`. Page refreshes or accidental navigation will not erase the in-flight conversation.
-  - Completed AI evaluations can be archived directly into the candidate's historical progress record.
-- **Cost & Abuse Controls**:
-  - In-memory sliding-window rate limiting (max 30 requests/minute per client IP).
-  - Strict input size validation (max 10,000 characters per answer/config).
-  - Turn bounding (up to 5 follow-up turns per question) and 25-second server timeout guards to avoid hanging connections.
+## Product capabilities
 
-### 8. Enterprise Loan Management Dashboard (`/challenges/loan-management`)
-- **Realistic NBFC Underwriting Suite**: An interactive enterprise application for loan officers managing thousands of high-volume loan applications across diverse risk tiers.
-- **Redux Toolkit Architecture**:
-  - `applicationsSlice`: Manages server-side entity state, pagination, multi-attribute filtering (search, status, loan type, risk rating), column sorting, and monotonic request-ID concurrency tokens.
-  - `dashboardSlice`: Aggregates real-time portfolio KPI metrics (Total Volume, Pending Facilities, Funded Loans, Approval Rates, and Average Credit Scores).
-  - `uiSlice`: Manages slide-over drawer visibility, confirmation modals, non-intrusive floating toasts, and production simulation parameters.
-- **Dual-Layer Concurrency & Race-Condition Defense**:
-  - In-flight request cancellation via Redux Toolkit `thunkAPI.signal` passed directly to `fetch`.
-  - Monotonic request-token guards (`latestRequestId`): Stale out-of-order search responses resolving during network jitter are discarded before mutating state.
-- **Atomic Optimistic Updates with Rollback**:
-  - On status update dispatch, the UI transitions immediately while capturing pre-mutation snapshots in `optimisticBackups[id]`.
-  - Row locking (`updatingIds[id] = true`) prevents duplicate submissions during in-flight network transit.
-  - Upon network rejection or policy failure (HTTP 409/422), state is atomically rolled back to the original snapshot and a detailed error toast is displayed.
-- **Performance Optimizations**:
-  - `createSelector` memoized selectors compute pagination bounds, active filter tallies, and status distributions without duplicating state.
-  - `React.memo` wrapped `LoanTableRow` components with `useCallback` stable handlers shield rows from parent keystroke re-renders.
-  - 300ms debounced search input decouples typing latency from Redux dispatches.
-- **8 Interactive Production Bug Scenarios**:
-  - **Bug 1: Race Condition** (Rapid search typing overwrites newer results; solved via monotonic request tokens).
-  - **Bug 2: Duplicate API Calls** (Unmemoized object dependencies trigger repeated fetches; solved via stable primitives & condition guards).
-  - **Bug 3: Optimistic Update Failure** (Rejection leaves broken approvals on screen; solved via backup snapshots and atomic rollback).
-  - **Bug 4: Incorrect Pagination** (Narrowing filters leaves page out-of-bounds; solved via explicit page resets).
-  - **Bug 5: Redux State Mutation** (Accidental in-place array mutation; solved via immutable clones).
-  - **Bug 6: Excessive Re-renders** (Typing causes full table re-render; solved via debouncing and React.memo).
-  - **Bug 7: Stale Closure** (Callbacks enclosing outdated filter state; solved via dynamic `getState()` reads).
-  - **Bug 8: Failed Request Recovery** (Network drop causes infinite loading wheel; solved via rejected state transitions and retry actions).
-- **Senior & Staff Interview Oral Defense Mode**:
-  - 8-question structured interview progression evaluating candidates across the 7 weighted categories (Redux Architecture 20%, API 20%, React Design 15%, Concurrency 15%, Performance 10%, Testing 10%, Code Quality 10%).
+| Area | Implemented behavior |
+|---|---|
+| **Scenario library** | 59 scenarios across JavaScript, TypeScript, React, Next.js, Node.js, databases, integrations, operations, system design, and security. Includes debugging, coding, incident response, code review, architecture, and interview exercises. |
+| **Evolving incidents** | Eight incidents with 24 timed developments and 72 response choices. Decisions change observations and subsequent briefings; missed deadlines record inaction. Solutions include containment, recovery gates, permanent corrections, regression tests, and rollback constraints. |
+| **Loan bug-fixing lab** | Eight JavaScript exercises covering stale responses, duplicate requests, optimistic rollback, pagination, state mutation, selector memoization, stale closures, and error recovery. Two sample cases per exercise and 41 cases across the full suites. |
+| **SQL practice** | Four preparation tiers, PostgreSQL execution through PGlite, generic execution through AlaSQL, conceptual questions, incident exercises, and mock interviews. |
+| **Coding & interview practice** | Monaco workspaces, sample/full submission flows, progressive hints, reference solutions, a foundational question track, and timed mock sessions. |
+| **AI interviewer** | Server-side Gemini integration with contextual follow-ups, hints, and scorecards. A deterministic fallback supports practice when the provider is unavailable or unconfigured. |
+| **Accounts & progress** | Email/password authentication, revocable database sessions, account-scoped history and drafts, bookmarks, notes, JSON import/export, and explicit anonymous-history import. |
 
-### 9. Beginner / Tier 1 Interview Track & 4-Tier Preparation System (`/interview?tier=tier-1`)
-- **Four Distinct Interview Preparation Tiers**:
-  - **Tier 1: Beginner**: 0–2 Years Experience (Junior & Associate Full-Stack Engineers). Master core fundamentals with 63 original questions, progressive hints, code exercises, and instant supportive evaluation.
-  - **Tier 2: Intermediate**: 2–5 Years Experience (Mid-Level Engineers). Deep component lifecycles, state synchronization, REST & GraphQL integration, and PostgreSQL query planning.
-  - **Tier 3: Advanced**: 5–8 Years Experience (Senior Engineers). High-throughput queue architectures, SSR hydration boundaries, deadlock avoidance, and distributed caching.
-  - **Tier 4: Senior / Production-Level**: 8+ Years Experience (Staff & Principal Architects, Lead SREs). The existing 50 production incidents, system design canvases, and enterprise loan management challenges.
-- **63 Original Tier 1 Questions Across 6 Foundational Categories**:
-  - **JavaScript Fundamentals (12 Questions)**: `var`, `let`, `const`, scope & TDZ, primitive vs reference types, `==` vs `===`, conditionals & switch fall-through, `for`, `while`, `for...of` loops, arrow functions vs regular `this`, array methods (`map`, `filter`, `find`), object destructuring & dynamic property keys, closures in plain terms, hoisting, Promises & `async/await`, and the event loop call stack vs task queue.
-  - **HTML and CSS (10 Questions)**: Semantic tags & accessibility, form inputs paired with labels, CSS selector specificity hierarchy, CSS Box Model & `box-sizing: border-box`, Flexbox container & alignment axes, CSS Grid 2D templates, responsive design with mobile-first media queries, CSS units (`px`, `rem`, `em`, `%`), CSS position values (`static`, `relative`, `absolute`, `fixed`, `sticky`), and modern element centering.
-  - **React Fundamentals (11 Questions)**: Declarative UI & Virtual DOM benefits, functional components & JSX syntax rules, props vs internal state, event handling & synthetic events, conditional rendering techniques, rendering lists with unique keys, `useState` & functional updater patterns, `useEffect` dependencies & cleanup handlers, controlled components, parent-child communication & lifting state up, and functional lifecycle phases.
-  - **Redux Toolkit Fundamentals (10 Questions)**: Why state management is needed & avoiding prop drilling, local component state vs global store, Store, Actions, and Reducers, `createSlice` auto-generation, Immer direct-mutation draft state, `useSelector` subscriptions & `useDispatch`, async request lifecycles with `createAsyncThunk`, `configureStore` and Redux DevTools, when Redux is useful vs unnecessary, and action payloads.
-  - **TypeScript Fundamentals (10 Questions)**: Why TypeScript exists & compile-time error detection, primitive types & type annotations, `interface` vs `type` aliases, typing arrays & objects, function parameter & return types (`void`), optional properties (`?`) & optional chaining (`?.`), union types & `typeof` narrowing guards, `any` vs `unknown` type safety, literal types for discrete states, and basic generics (`<T>`).
-  - **Node.js and API Fundamentals (10 Questions)**: What Node.js is & browser JS differences (no DOM, OS/fs access), non-blocking event-driven I/O in plain terms, REST API core principles & statelessness, HTTP methods (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`) & idempotency, HTTP status codes (`2xx`, `4xx`, `5xx`), Express server setup & route definitions, `req.params` vs `req.query` vs `req.body`, Express middleware & `next()`, environment variables & `.env` security, and Relational (SQL) vs Document (NoSQL) database concepts for beginners.
-- **Two Distinct Beginner Preparation Modes**:
-  - **Practice Mode**: Filter by category or search; view question statements and expected concept tags; write explanations or run interactive coding exercises; reveal progressive hints; inspect reference solutions with practical code examples; receive instant supportive feedback; retry questions anytime.
-  - **Mock Interview Mode**: Sequentially answers 5, 10, or 15 questions under simulated interview pacing without viewing reference solutions; tracks elapsed time and scores each round immediately; generates a comprehensive final assessment report with readiness verdict, category performance breakdown, key strengths, and weak topics to revisit.
-- **Dual-Engine Evaluation Architecture**:
-  - **Gemini Live Evaluation**: Contextual evaluation and friendly follow-ups via `@google/genai` when configured.
-  - **Tier 1 Conceptual Benchmark Rubric**: Instant heuristic evaluation matching concept stems, explanation depth, and code exercises with transparent attribution (`evaluatorType: 'rubric-benchmark'`).
-- **Isolated & Backward-Compatible Persistence**:
-  - Tier 1 attempts and bookmarks are stored under `fullstack_interview_lab_tier1_v1` without colliding with or altering existing senior challenge progress.
+The eight evolving incidents cover connection storms, cache stampedes, migration locks, regional failover, ambiguous payments, poison-message backlogs, restart cascades, and tenant-data exposure.
 
----
+## Architecture
 
-## 🛠️ Technology Stack
-- **Framework**: Next.js 16.4.3 (App Router, Turbopack)
-- **Language**: TypeScript 5
-- **Styling**: Tailwind CSS 3.4
-- **State Management**: Redux Toolkit 2.x (`@reduxjs/toolkit`) & React Redux 9.x (`react-redux`)
-- **AI / LLM Integration**: Official Google Gen AI JavaScript SDK (`@google/genai` 2.x) with `gemini-2.0-flash`
-- **Code Editor**: Monaco Editor (`@monaco-editor/react` 4.7)
-- **In-Memory SQL Engine**: AlaSQL (relational client-side execution)
-- **Icons**: Lucide React
-- **Database / ORM**: Prisma 6 & PostgreSQL schema
-- **Unit Testing**: Vitest 2.1 (104 tests across 11 suites)
-- **E2E Testing**: Playwright (18 browser and integration tests)
+A modular Next.js application keeps presentation, scenario content, evaluation, and persistence in separate modules. It uses one deployable application while maintaining explicit boundaries around identity, data ownership, external AI calls, and code execution.
 
----
+```mermaid
+flowchart LR
+    UI["React workspaces<br/>Monaco · Redux Toolkit"] --> API["Next.js Route Handlers<br/>Session checks · Validation"]
+    UI --> CACHE["Account-scoped device cache<br/>Drafts · Pending progress"]
+    UI --> LAB["Loan code runner<br/>Opaque iframe + disposable Workers"]
+    UI --> SQL["Browser SQL datasets<br/>PGlite WASM · AlaSQL"]
+    API --> AUTH["Better Auth<br/>Database sessions"]
+    AUTH --> DB[("PostgreSQL<br/>Prisma")]
+    API --> DB
+    API --> AI["Gemini service<br/>Bounded calls + offline fallback"]
+```
 
-## 🏁 Getting Started
+The worker boundary shown above belongs to the **loan bug lab**. Other practice modes have their own execution/evaluation paths; their guarantees should be reviewed independently.
+
+## Engineering decisions
+
+### State ownership follows the problem
+
+Redux Toolkit manages the loan dashboard's coordinated filters, pagination, request lifecycle, and optimistic updates. Workspace-specific input stays in local React state. PostgreSQL owns authenticated history; account-scoped device caches keep drafts and immediate progress available while background synchronization runs.
+
+This makes the responsibilities visible: transient UI state, recoverable local work, and durable account data have different lifecycles.
+
+**Read the implementation:** [loan slices](src/lib/redux/slices), [workspace draft handling](src/components/loan/useLoanBugLab.ts), [persistence adapter](src/lib/persistence/localStorageAdapter.ts).
+
+### Async correctness is observable and testable
+
+The dashboard uses request-ID guards to prevent stale responses from replacing newer results. Optimistic updates retain backups and row-level pending state for rollback. The bug lab turns these behaviors into deterministic event sequences, so candidate fixes can be evaluated without relying on unpredictable network timing.
+
+Selector exercises check result identity as well as contents. Sorting exercises freeze inputs to catch state mutation. Retry exercises verify that a failed request can leave loading state and recover.
+
+**Read the implementation:** [exercise contracts and reference fixes](src/data/loanLabExercises.ts), [behavioral harness](src/lib/loanLab/harness.ts), [regression tests](tests/unit/loanBugLab.test.ts).
+
+### Candidate execution has a dedicated boundary
+
+Loan exercises run in disposable Workers created inside a sandboxed, opaque-origin iframe. A private MessageChannel carries input and results. The iframe's content security policy blocks network connections and external script loading; case timeouts terminate workers, and cancellation removes runner resources.
+
+Results use structural equality rather than code-string matching. Reference reveal is recorded as assistance, and editing a draft clears old test feedback.
+
+This approach supports focused browser exercises without adding a server-side execution service. It remains client-reported practice feedback, with browser resource limits rather than a hard memory quota.
+
+**Read the implementation:** [isolated runner](src/lib/loanLab/runner.ts), [browser boundary tests](tests/e2e/loanBugLab.spec.ts), [execution details](docs/LOAN_BUG_LAB.md).
+
+### Identity is enforced at the data boundary
+
+Protected APIs derive account ownership from the server session. Client-supplied user IDs cannot select another account's progress. Better Auth provides password handling and database-backed sessions; application handlers add bounded request validation and ownership checks.
+
+Device caches are scoped by account before workspaces mount. Signing in does not silently upload anonymous history: importing it is an explicit user action.
+
+**Read the implementation:** [session/authorization helpers](src/lib/auth/server.ts), [authentication configuration](src/lib/auth.ts), [ownership and migration guide](docs/AUTHENTICATION.md).
+
+### Persistence has explicit conflict rules
+
+Progress imports run transactionally with a per-user row lock. Attempts are deduplicated within an account, existing server records win collisions, and bookmark/completion sets are merged. Repeating an import preserves existing history.
+
+Background sync failures retain local work and surface a retry notice. The current design does not provide a durable background retry queue or general multi-device conflict resolution; these are deliberate boundaries of the implementation.
+
+**Read the implementation:** [progress API](src/lib/persistence/progressServer.ts), [merge policy](src/lib/persistence/progressMerge.ts), [account-isolation tests](tests/e2e/auth.spec.ts).
+
+### Evaluation distinguishes different kinds of evidence
+
+Executable tests, authored decision benchmarks, self-assessed rubrics, and AI feedback are presented as different evaluation modes. Loan exercises remain in activity history while catalog completion and readiness averages include only registered scenario IDs.
+
+The incident engine separates time advancement, action selection, telemetry derivation, and draft restoration. This keeps simulations reproducible and makes premature decisions, duplicate actions, missed deadlines, and fabricated drafts testable.
+
+**Read the implementation:** [incident engine](src/lib/incidents/engine.ts), [incident tests](tests/unit/incidentEngine.test.ts), [readiness calculation](src/lib/evaluation/readinessCalculator.ts).
+
+## Technology stack
+
+| Layer | Technologies |
+|---|---|
+| Application | Next.js 16.4.3, App Router, React 19, TypeScript |
+| Build | Turbopack for development and production; explicit Webpack fallback commands |
+| Interface | Tailwind CSS, Lucide icons, Monaco Editor |
+| Dashboard state | Redux Toolkit, React Redux |
+| Authentication & persistence | Better Auth 1.7.15, Prisma 6, PostgreSQL, Zod |
+| SQL execution | PGlite WebAssembly, AlaSQL |
+| AI integration | Google GenAI SDK, server-side Gemini adapter |
+| Verification | Vitest, Playwright/Chromium, TypeScript, ESLint |
+
+[Framework migration and recovery notes](docs/NEXTJS_UPGRADE.md) document the Next.js upgrade, bundler compatibility changes, and verified Webpack fallback.
+
+## Run locally
 
 ### Prerequisites
-- **Node.js**: v20.9.0 or later for Next.js; v22.13+ or a newer supported LTS is recommended for the existing lint tooling.
-- **npm**: v9 or later (comes bundled with Node.js)
 
-### 1. Installation
-Clone the repository and install dependencies:
-\`\`\`bash
-npm install
-\`\`\`
+- Node.js: Next.js requires 20.9+. Use Node 22.13+ within the 22.x line, or another version satisfying the installed lint tooling's engine requirements.
+- npm and a PostgreSQL database.
+- An optional Gemini API key for live AI responses.
 
-### 2. Environment Variables (.env.local)
+From the repository root:
 
-The application functions completely out of the box with zero external configuration using client-side `localStorage` persistence and the built-in offline interview simulation engine.
+```sh
+npm ci
+```
 
-To enable live AI interviewing powered by Google Gemini:
+Create `.env.local` from [.env.example](.env.example) if you do not already have a local configuration. Set:
 
-1. Obtain an API key from [Google AI Studio](https://aistudio.google.com/).
-2. Create a `.env.local` file in the root directory:
-\`\`\`env
-# Google Gemini Developer API Configuration (Server-Side Only)
-GEMINI_API_KEY="your_gemini_api_key_here"
+| Variable | Purpose |
+|---|---|
+| `DATABASE_URL` | PostgreSQL connection for accounts, sessions, and saved progress. |
+| `BETTER_AUTH_SECRET` | A stable, cryptographically random secret of at least 32 characters. |
+| `BETTER_AUTH_URL` | Application origin, such as `http://localhost:3000`. Use the public HTTPS origin for deployment. |
+| `GEMINI_API_KEY` | Optional server-side key for live interviewing. |
+| `GEMINI_MODEL` | Optional model override available to your Gemini project. |
 
-# Optional: Override the model (defaults to gemini-2.0-flash)
-# GEMINI_MODEL="gemini-2.0-flash"
+Generate an authentication secret locally:
 
-# Optional: PostgreSQL Connection (if using Prisma backend)
-# DATABASE_URL="postgresql://postgres:password@localhost:5432/interview_lab?schema=public"
-# NEXT_PUBLIC_APP_URL="http://localhost:3000"
-\`\`\`
+```sh
+node -e "console.log(require('node:crypto').randomBytes(48).toString('base64url'))"
+```
 
-> [!IMPORTANT]
-> **API Key Security**: `GEMINI_API_KEY` is loaded strictly server-side by Next.js Route Handlers (`src/app/api/ai-interview/route.ts`). It is never prefixed with `NEXT_PUBLIC_`, never bundled into client JavaScript, and never echoed back in API responses.
+For a **new, empty database**:
 
-> [!NOTE]
-> **Free Tier Quotas & Pricing**: `gemini-2.0-flash` is available on the Google AI Studio free tier (up to 15 RPM, 1,500 RPD, and 1M tokens/min). If your quota is exhausted or if no API key is configured, the application automatically switches to the built-in offline simulation engine without throwing unhandled exceptions.
-
-To generate and push Prisma migrations when PostgreSQL is active:
-\`\`\`bash
-npx prisma generate
-npx prisma db push
-\`\`\`
-
-### 3. Run Local Development Server
-\`\`\`bash
+```sh
+npm run db:generate
+npm run db:migrate
 npm run dev
-\`\`\`
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+```
 
-- **Main Dashboard**: `http://localhost:3000/`
-- **Coding Practice Lab (Monaco)**: `http://localhost:3000/practice`
-- **Scenario Catalog**: `http://localhost:3000/library`
-- **Mock Interview Simulator**: `http://localhost:3000/interview`
-- **Progress & Analytics**: `http://localhost:3000/progress`
+Open [localhost:3000](http://localhost:3000). Incident, coding, and SQL practice have public entry points. Sign up to use the protected loan dashboard, AI interview operations, and account synchronization.
 
-### 4. Code Quality & Linting
-Executes ESLint across all TypeScript components and Route Handlers:
-\`\`\`bash
-npm run lint
-\`\`\`
+For an existing database, follow the [baseline and migration procedure](docs/AUTHENTICATION.md#schema-and-safe-migration) before applying migrations. The checked-in `.npmrc` disables dependency lifecycle scripts; Prisma Client generation is therefore an explicit step.
 
-### 5. Run Unit Tests (Vitest)
-Executes unit tests for Gemini API payload validation, offline fallback simulation, rubric scoring, readiness calculation, safe sandboxing (JavaScript, TypeScript, and AlaSQL engines), and scenario consistency:
-\`\`\`bash
-npm test
-\`\`\`
+### Commands
 
-### 6. Run End-to-End Tests (Playwright)
-Executes complete user journey verification across the dashboard, library filters, interactive workspace, mock interview generator, conversational AI interviewer, and Monaco coding practice lab:
-\`\`\`bash
-npm run test:e2e
-\`\`\`
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Start Turbopack development. |
+| `npm run typecheck` | Run standalone TypeScript checks. |
+| `npm run lint` | Run ESLint against application source. |
+| `npm test` | Run the unit suite. |
+| `npm run build` / `npm start` | Build and serve production output. |
+| `npm run test:e2e` | Run Playwright; requires built output or a configured external server. |
+| `npm run dev:webpack` / `npm run build:webpack` | Use the retained Webpack configuration. |
 
-### 7. Build and Run in Production
-\`\`\`bash
-npm run build
-npm start
-\`\`\`
+## Verification
 
----
+**Latest recorded verification: 2 November 2026.** These are local verification results, not a CI badge or a claim about production traffic.
 
-## 🧪 Conversational AI Interview Manual Testing Guide
+| Check | Recorded result |
+|---|---|
+| Unit tests | **137 passed across 15 suites** |
+| Browser regression tests | **28 passed against the final Turbopack production build** |
+| Production build | Passed |
+| TypeScript and ESLint | Passed |
+| Loan exercise reference implementations | **All 41 authored cases passed** |
 
-Follow this step-by-step walkthrough to verify the conversational AI interviewer end-to-end:
+Coverage includes authentication and account isolation, idempotent progress imports, stale-request handling, optimistic rollback, PostgreSQL/AlaSQL execution, real Monaco edits, incident deadlines and restoration, worker timeout/cancellation, and mobile exercise navigation.
 
-### Step 1: Launch Application
-Start the development or production server:
-\`\`\`bash
-npm run dev
-\`\`\`
-Navigate to [http://localhost:3000/interview](http://localhost:3000/interview) or click **AI Interview** in the navigation bar.
+The AI interview journey mocks live Gemini responses. This verifies application behavior without claiming to validate the external provider.
 
-### Step 2: Configure Session Parameters
-1. Choose a **Target Engineering Role** (e.g., *Senior Full-Stack Engineer* or *Staff / Tech Lead*).
-2. Select a **Primary Technology Domain** (e.g., *Distributed Systems & Node.js*, *React & Frontend Architecture*, or *Databases & High-Throughput SQL*).
-3. Select a **Target Difficulty** (*Intermediate (Mid-Level)*, *Advanced (Senior)*, or *Principal / Staff*).
-4. Set **Estimated Duration** (e.g., *30 Minutes*).
-5. Notice the **Engine Indicator** badge in the configuration card:
-   - Green `Live Gemini API Connected` if `GEMINI_API_KEY` is present.
-   - Yellow `Offline Simulation Engine` if no key is configured (allows full testing without credentials).
-6. Click **Generate Original Question & Begin Session**.
+For the same isolated-account browser workflow used during development, install Chromium once:
 
-### Step 3: Candidate Response & Evaluation
-1. The AI interviewer outputs a customized question with an **Expected Competencies** checklist.
-2. In the answer box, enter a technical explanation outlining architecture, trade-offs, and failure mitigation.
-3. Click **Submit Answer & Request Feedback**.
-4. The system analyzes the answer in real time, displaying:
-   - Evaluative badge (*Strong*, *Partially Flawed*, *Needs Revision*).
-   - Dimension scores across Technical Correctness, Depth of Reasoning, Trade-off Analysis, and Production Readiness.
-   - Constructive critique and areas for improvement.
-   - A contextual follow-up question specifically probing an edge case or scaling concern raised in your response.
+```sh
+npx playwright install chromium
+```
 
-### Step 4: Progressive Hint Request
-1. Click **Request Architectural Hint**.
-2. A progressive hint appears in the timeline giving conceptual direction without revealing the complete solution.
+Start the verification build/server in one terminal:
 
-### Step 5: Session Persistence Verification
-1. Refresh the browser page (`F5` or `Ctrl+R`).
-2. Verify that the interview session, past turns, question history, and timer remain intact without loss of context (persisted in `localStorage` under `fullstack_ai_interview_session_v1`).
+```sh
+node scripts/auth-check.mjs build
+node scripts/auth-check.mjs serve
+```
 
-### Step 6: Complete Session & Hiring Committee Scorecard
-1. Click **Conclude & View Final Evaluation**.
-2. Confirm the **Hiring Committee Evaluation Scorecard** is displayed:
-   - Overall Hiring Recommendation (*Strong Hire*, *Hire*, *Lean Hire*, *Lean No Hire*).
-   - Numerical score benchmark (out of 100).
-   - Dimensional breakdown (Architecture & System Design, Problem Solving & Algorithmic Rigor, Production Readiness & Reliability, Technical Communication).
-   - Bulleted **Verified Strengths** and **Critical Areas for Growth**.
-   - Clear attribution: `AI-Generated Evaluation (Google Gemini Developer API)`.
-3. Click **Save to Historical Progress** to record the session into your permanent practice history.
+Run the browser suite from a second PowerShell terminal:
+
+```powershell
+$env:PLAYWRIGHT_BASE_URL = 'http://localhost:3100'
+$env:PLAYWRIGHT_EXTERNAL_SERVER = '1'
+node node_modules/@playwright/test/cli.js test --workers=1
+```
+
+For a POSIX shell:
+
+```sh
+PLAYWRIGHT_BASE_URL=http://localhost:3100 PLAYWRIGHT_EXTERNAL_SERVER=1 node node_modules/@playwright/test/cli.js test --workers=1
+```
+
+The helper supplies a test-only ephemeral secret when needed. Browser tests create disposable accounts in the configured database; use a development/test database. Normal deployments require a persistent authentication secret.
+
+## Project map
+
+```text
+src/
+  app/                  Routes, protected pages, and API handlers
+  components/           Workspaces, dashboard, loan lab, and account UI
+  data/                 Scenario library, incident content, SQL datasets, exercises
+  lib/
+    auth/               Session checks, validation, and account quotas
+    evaluation/         Rubrics, readiness, SQL evaluation, legacy practice execution
+    incidents/          Deterministic incident transitions and replay
+    loanLab/            Exercise harness, isolated runner, drafts, progress metadata
+    persistence/        Device cache, authenticated sync, merge rules
+    redux/              Loan dashboard state and selectors
+    gemini/             Provider adapter, prompts, and fallback responses
+  types/                Shared domain contracts
+prisma/                 PostgreSQL schema and migration history
+tests/unit/             Domain, validation, execution, and regression tests
+tests/e2e/              Browser journeys and account-isolation checks
+docs/                   Feature guides, migration notes, and screenshots
+```
+
+## Scope and trade-offs
+
+- **Synthetic operations:** incident telemetry and loan records are training data. Loan simulation state is account-scoped and process-local; it resets when the server restarts.
+- **Execution scope:** the loan lab evaluates extracted JavaScript functions. Generic TypeScript practice strips syntax; it is not a full TypeScript compiler/type-checking service. Python, Go, and Rust execution services are not configured.
+- **Assessment scope:** deterministic tests, rubrics, and AI feedback support practice. Scores are not hiring predictions or tamper-proof certification.
+- **Account lifecycle:** email/password sessions are implemented; password recovery, email verification, OAuth, and MFA are not implemented.
+- **Scale evidence:** the repository demonstrates failure handling through simulations and tests. Scenario traffic volumes are exercise assumptions, not measured application throughput.
+
+## Further reading
+
+- [Authentication, ownership, and database migration](docs/AUTHENTICATION.md)
+- [Evolving incidents: behavior, scenarios, and verification](docs/EVOLVING_INCIDENTS.md)
+- [Loan bug lab: contracts, execution model, and verification](docs/LOAN_BUG_LAB.md)
+- [Next.js 16 and Turbopack migration](docs/NEXTJS_UPGRADE.md)

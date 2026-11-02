@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   X,
   Eye,
@@ -13,6 +13,7 @@ import {
   HelpCircle,
 } from 'lucide-react';
 import { Scenario } from '@/types/scenario';
+import { IncidentPlaybookView } from './IncidentPlaybookView';
 
 interface SolutionRevealDrawerProps {
   isOpen: boolean;
@@ -26,7 +27,13 @@ export function SolutionRevealDrawer({
   scenario,
 }: SolutionRevealDrawerProps) {
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState<'explanation' | 'code' | 'alternatives' | 'pitfalls' | 'followup'>('explanation');
+  const [activeTab, setActiveTab] = useState<'explanation' | 'code' | 'alternatives' | 'pitfalls' | 'followup' | 'incident'>(scenario.incidentPlaybook ? 'incident' : 'explanation');
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (isOpen && dialog && !dialog.open) dialog.showModal();
+    return () => { if (dialog?.open) dialog.close(); };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -39,7 +46,7 @@ export function SolutionRevealDrawer({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm">
+    <dialog ref={dialogRef} aria-labelledby="reference-solution-heading" onCancel={(event) => { event.preventDefault(); onClose(); }} className="fixed inset-0 z-50 m-0 h-dvh w-screen max-h-none max-w-none border-0 p-0 open:flex justify-end bg-black/60 backdrop-blur-sm">
       <div className="w-full max-w-2xl h-full bg-zinc-950 border-l border-zinc-800 shadow-2xl flex flex-col overflow-hidden text-zinc-100">
         {/* Header */}
         <div className="p-4 sm:p-5 border-b border-zinc-800 bg-zinc-900 flex items-center justify-between">
@@ -48,7 +55,7 @@ export function SolutionRevealDrawer({
               <Eye className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-zinc-100">
+              <h2 id="reference-solution-heading" className="text-sm font-bold text-zinc-100">
                 Staff Reference Benchmark & Solution
               </h2>
               <div className="text-[11px] text-zinc-400 font-mono">
@@ -59,6 +66,7 @@ export function SolutionRevealDrawer({
 
           <button
             onClick={onClose}
+            aria-label="Close reference solution"
             className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
           >
             <X className="w-5 h-5" />
@@ -67,6 +75,7 @@ export function SolutionRevealDrawer({
 
         {/* Tab Navigation */}
         <div className="flex items-center border-b border-zinc-800 bg-zinc-900/60 px-4 overflow-x-auto text-xs">
+          {scenario.incidentPlaybook && <button onClick={() => setActiveTab('incident')} className={`py-2.5 px-3 font-semibold border-b-2 whitespace-nowrap ${activeTab === 'incident' ? 'border-blue-500 text-blue-400' : 'border-transparent text-zinc-400'}`}>Incident playbook</button>}
           <button
             onClick={() => setActiveTab('explanation')}
             className={`py-2.5 px-3 font-semibold border-b-2 transition-colors whitespace-nowrap ${
@@ -127,6 +136,7 @@ export function SolutionRevealDrawer({
 
         {/* Content Body */}
         <div className="flex-1 overflow-y-auto p-5 space-y-5 text-xs sm:text-sm">
+          {activeTab === 'incident' && scenario.incidentPlaybook && <IncidentPlaybookView scenario={scenario} />}
           {activeTab === 'explanation' && (
             <div className="space-y-4">
               <div className="text-xs font-bold text-zinc-200 uppercase tracking-wider flex items-center gap-1.5">
@@ -245,7 +255,7 @@ export function SolutionRevealDrawer({
           </button>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }
 

@@ -33,7 +33,8 @@ extraReducers: (builder) => {
 export const fetchApplications = createAsyncThunk(
   'applications/fetch',
   async (params: LoanFilters, { signal }) => {
-    // Passes AbortSignal directly to fetch; aborts stale previous calls
+    // The caller must abort the previous dispatched thunk to cancel its fetch.
+    // Passing this signal alone does not automatically cancel older requests.
     const res = await fetch(\`/api/applications?search=\${params.search}\`, { signal });
     return await res.json();
   }
@@ -82,18 +83,23 @@ export const fetchApplications = createAsyncThunk(
     return await loanService.getApplications(params, { signal });
   },
   {
-    // Condition guard prevents duplicate concurrent executions
-    condition: (_, { getState }) => {
+    // Suppress the same query, while still admitting a different latest query.
+    condition: (next, { getState }) => {
       const { applications } = getState() as RootState;
-      if (applications.status === 'loading') {
-        return false; // Skip duplicate dispatch
-      }
-      return true;
+      const key = JSON.stringify([next.search, next.status, next.page, next.limit]);
+      return applications.status !== 'loading' || applications.activeQueryKey !== key;
     },
   }
 );
 
 // Component: use individual stable primitive keys
+// In the slice's pending handler, record the dispatched query key:
+builder.addCase(fetchApplications.pending, (state, action) => {
+  const query = action.meta.arg;
+  state.status = 'loading';
+  state.activeQueryKey = JSON.stringify([query.search, query.status, query.page, query.limit]);
+});
+
 useEffect(() => {
   dispatch(fetchApplications({ search, status, page, limit }));
 }, [dispatch, search, status, page, limit]);`,

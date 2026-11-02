@@ -63,6 +63,7 @@ export function Navbar() {
     { label: 'Beginner Track', href: '/interview?tier=tier-1', icon: GraduationCap, badge: 'Tier 1' },
     { label: 'SQL & Postgres Lab', href: '/sql', icon: Database, badge: '120 Qs' },
     { label: 'Challenges', href: '/library', icon: BookOpen },
+    { label: 'Incidents', href: '/incidents', icon: Flame },
     { label: 'Coding Practice', href: '/practice', icon: Code2 },
     { label: 'Loan Dashboard', href: '/challenges/loan-management', icon: Landmark, badge: 'Redux' },
     { label: 'AI Interview', href: '/interview', icon: Sparkles, badge: 'Gemini' },

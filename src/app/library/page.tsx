@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useMemo, Suspense } from 'react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { allScenarios } from '@/data';
 import { storage } from '@/lib/persistence/localStorageAdapter';
@@ -20,7 +21,7 @@ function LibraryContent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTopic, setSelectedTopic] = useState(initialTopic);
   const [selectedDifficulty, setSelectedDifficulty] = useState('All');
-  const [selectedType, setSelectedType] = useState('All');
+  const [selectedType, setSelectedType] = useState(searchParams?.get('type') === 'incident' ? 'incident' : 'All');
   const [selectedStatus, setSelectedStatus] = useState(
     initialFilter === 'bookmarked' ? 'bookmarked' : initialFilter === 'needs_practice' ? 'incomplete' : 'All'
   );
@@ -31,6 +32,7 @@ function LibraryContent() {
 
   // Sync state when URL query params change dynamically
   useEffect(() => {
+    setSelectedType(searchParams?.get('type') === 'incident' ? 'incident' : 'All');
     const topicParam = searchParams?.get('topic');
     if (topicParam) {
       setSelectedTopic(topicParam);
@@ -117,6 +119,7 @@ function LibraryContent() {
         <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 max-w-3xl leading-relaxed">
           Production-grade scenarios covering JavaScript, TypeScript, React, Next.js, Node.js, PostgreSQL, Integrations, Engineering Operations, and System Design.
         </p>
+        <Link href="/incidents" className="inline-block mt-3 text-sm font-semibold text-blue-600 dark:text-blue-300 underline underline-offset-2">Practice evolving production incidents →</Link>
       </div>
 
       {/* Filters Bar */}

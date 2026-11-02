@@ -22,6 +22,7 @@ import { storage } from '@/lib/persistence/localStorageAdapter';
 import { UserProgressData } from '@/types/userProgress';
 import { calculateReadinessReport } from '@/lib/evaluation/readinessCalculator';
 import { formatDuration } from '@/lib/utils';
+import { loanLabAttemptInfo } from '@/lib/loanLab/attempts';
 
 export default function ProgressPage() {
   const [progress, setProgress] = useState<UserProgressData | null>(null);
@@ -315,6 +316,7 @@ export default function ProgressPage() {
               <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/80">
                 {attempts.map((att) => {
                   const scen = scenarioMap.get(att.scenarioId);
+                  const loanLab = loanLabAttemptInfo(att.scenarioId);
                   const isPassed = att.totalScorePercentage >= 70;
 
                   return (
@@ -326,10 +328,10 @@ export default function ProgressPage() {
                         {new Date(att.timestamp).toLocaleDateString()}
                       </td>
                       <td className="py-3 px-3 font-semibold text-zinc-900 dark:text-zinc-100">
-                        {scen?.title || att.scenarioId}
+                        {scen?.title || loanLab?.title || att.scenarioId}
                       </td>
                       <td className="py-3 px-3 font-mono text-zinc-500">
-                        {scen?.topic || 'Core'}
+                        {scen?.topic || loanLab?.topic || 'Core'}
                       </td>
                       <td className="py-3 px-3 font-mono text-zinc-500 flex items-center gap-1">
                         <Clock className="w-3 h-3 text-zinc-400" />
@@ -351,7 +353,7 @@ export default function ProgressPage() {
                       </td>
                       <td className="py-3 px-3">
                         <Link
-                          href={`/challenge/${att.scenarioId}`}
+                          href={loanLab?.href || `/challenge/${att.scenarioId}`}
                           className="text-blue-600 dark:text-blue-400 hover:underline font-semibold"
                         >
                           Review

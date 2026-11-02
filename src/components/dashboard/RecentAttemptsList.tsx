@@ -4,6 +4,7 @@ import { History, CheckCircle2, XCircle, ArrowUpRight, Clock } from 'lucide-reac
 import { AttemptSubmission } from '@/types/userProgress';
 import { scenarioMap } from '@/data';
 import { formatDuration } from '@/lib/utils';
+import { loanLabAttemptInfo } from '@/lib/loanLab/attempts';
 
 interface RecentAttemptsListProps {
   attempts: AttemptSubmission[];
@@ -56,6 +57,7 @@ export function RecentAttemptsList({ attempts }: RecentAttemptsListProps) {
       <div className="divide-y divide-zinc-100 dark:divide-zinc-800/80">
         {recent.map((att) => {
           const scenario = scenarioMap.get(att.scenarioId);
+          const loanLab = loanLabAttemptInfo(att.scenarioId);
           const isPassed = att.totalScorePercentage >= 70;
 
           return (
@@ -79,13 +81,13 @@ export function RecentAttemptsList({ attempts }: RecentAttemptsListProps) {
                 </div>
                 <div className="min-w-0">
                   <Link
-                    href={`/challenge/${att.scenarioId}`}
+                    href={loanLab?.href || `/challenge/${att.scenarioId}`}
                     className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors truncate block"
                   >
-                    {scenario?.title || att.scenarioId}
+                    {scenario?.title || loanLab?.title || att.scenarioId}
                   </Link>
                   <div className="flex items-center gap-2 text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 font-mono">
-                    <span>{scenario?.topic || 'Core'}</span>
+                    <span>{scenario?.topic || loanLab?.topic || 'Core'}</span>
                     <span>•</span>
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />
@@ -113,7 +115,7 @@ export function RecentAttemptsList({ attempts }: RecentAttemptsListProps) {
                   </div>
                 </div>
                 <Link
-                  href={`/challenge/${att.scenarioId}`}
+                  href={loanLab?.href || `/challenge/${att.scenarioId}`}
                   className="p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-600 dark:text-zinc-300 transition-colors"
                   title="View Scenario"
                 >

@@ -10,6 +10,7 @@ import { operationScenarios } from './scenarios/operations';
 import { systemDesignScenarios } from './scenarios/systemDesign';
 import { securityReviewScenarios } from './scenarios/securityReview';
 import { additionalCoreScenarios } from './scenarios/additionalCore';
+import { evolvingIncidents } from './incidents';
 
 export const allScenarios: Scenario[] = [
   ...javascriptScenarios,
@@ -23,6 +24,7 @@ export const allScenarios: Scenario[] = [
   ...systemDesignScenarios,
   ...securityReviewScenarios,
   ...additionalCoreScenarios,
+  ...evolvingIncidents,
 ];
 
 export const scenarioMap = new Map<string, Scenario>();

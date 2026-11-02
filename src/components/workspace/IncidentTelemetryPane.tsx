@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { IncidentTelemetry } from '@/types/scenario';
 
-interface IncidentTelemetryPaneProps {
+export interface IncidentTelemetryPaneProps {
   telemetry: IncidentTelemetry;
   rootCauseHypothesis: string;
   onRootCauseChange: (val: string) => void;
@@ -252,13 +252,14 @@ export function IncidentTelemetryPane({
         <div className="flex-1 overflow-y-auto p-5 space-y-5 text-xs">
           {/* 1. Root Cause Hypothesis */}
           <div>
-            <label className="block font-semibold text-zinc-200 mb-1">
+            <label htmlFor="incident-root-cause" className="block font-semibold text-zinc-200 mb-1">
               1. Root-Cause Hypothesis
             </label>
             <p className="text-[11px] text-zinc-400 mb-2">
               Explain precisely why production failed at the architectural or code level.
             </p>
             <textarea
+              id="incident-root-cause"
               rows={3}
               value={rootCauseHypothesis}
               onChange={(e) => onRootCauseChange(e.target.value)}
@@ -269,13 +270,14 @@ export function IncidentTelemetryPane({
 
           {/* 2. Evidence Supporting Hypothesis */}
           <div>
-            <label className="block font-semibold text-zinc-200 mb-1">
+            <label htmlFor="incident-evidence" className="block font-semibold text-zinc-200 mb-1">
               2. Evidence Supporting Hypothesis
             </label>
             <p className="text-[11px] text-zinc-400 mb-2">
               Cite specific telemetry metrics, timestamps, logs, or commit diffs.
             </p>
             <textarea
+              id="incident-evidence"
               rows={3}
               value={evidence}
               onChange={(e) => onEvidenceChange(e.target.value)}
@@ -286,13 +288,14 @@ export function IncidentTelemetryPane({
 
           {/* 3. Immediate Mitigation */}
           <div>
-            <label className="block font-semibold text-zinc-200 mb-1">
+            <label htmlFor="incident-mitigation" className="block font-semibold text-zinc-200 mb-1">
               3. Immediate Mitigation (Stabilization)
             </label>
             <p className="text-[11px] text-zinc-400 mb-2">
               What immediate action will stop active customer impact right now?
             </p>
             <textarea
+              id="incident-mitigation"
               rows={2}
               value={immediateMitigation}
               onChange={(e) => onImmediateMitigationChange(e.target.value)}
@@ -303,13 +306,14 @@ export function IncidentTelemetryPane({
 
           {/* 4. Permanent Correction */}
           <div>
-            <label className="block font-semibold text-zinc-200 mb-1">
+            <label htmlFor="incident-correction" className="block font-semibold text-zinc-200 mb-1">
               4. Permanent Architectural Correction
             </label>
             <p className="text-[11px] text-zinc-400 mb-2">
               How will you refactor the code/system to solve the root problem?
             </p>
             <textarea
+              id="incident-correction"
               rows={3}
               value={permanentCorrection}
               onChange={(e) => onPermanentCorrectionChange(e.target.value)}
@@ -320,13 +324,14 @@ export function IncidentTelemetryPane({
 
           {/* 5. Regression Tests */}
           <div>
-            <label className="block font-semibold text-zinc-200 mb-1">
+            <label htmlFor="incident-regression" className="block font-semibold text-zinc-200 mb-1">
               5. Regression Testing Strategy
             </label>
             <p className="text-[11px] text-zinc-400 mb-2">
               What automated test will guarantee this specific failure never returns?
             </p>
             <textarea
+              id="incident-regression"
               rows={2}
               value={regressionTests}
               onChange={(e) => onRegressionTestsChange(e.target.value)}
@@ -337,13 +342,14 @@ export function IncidentTelemetryPane({
 
           {/* 6. Monitoring & Alerting Improvements */}
           <div>
-            <label className="block font-semibold text-zinc-200 mb-1">
+            <label htmlFor="incident-monitoring" className="block font-semibold text-zinc-200 mb-1">
               6. Monitoring & Alerting Improvements
             </label>
             <p className="text-[11px] text-zinc-400 mb-2">
               Define PromQL alerting rules, SLO thresholds, or telemetry guards.
             </p>
             <textarea
+              id="incident-monitoring"
               rows={2}
               value={monitoringPlan}
               onChange={(e) => onMonitoringPlanChange(e.target.value)}
