@@ -2,6 +2,8 @@
 
 Authentication is implemented with email/password signup, secure database sessions, account-scoped progress, and deliberate anonymous-history import. See [Authentication setup and migration guide](docs/AUTHENTICATION.md) before configuring or deploying this application. After `npm ci`, run `npm run db:generate`; set `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, and the existing `DATABASE_URL` before production use.
 
+The application now runs on Next.js 16.4.3 with Turbopack for development and production builds. See [the upgrade and recovery notes](docs/NEXTJS_UPGRADE.md) for compatibility changes and the explicit Webpack fallback commands.
+
 An interactive engineering simulation platform designed for developers with 2–10 years of experience preparing for senior full-stack, staff engineer, and technical leadership interviews.
 
 Unlike static flashcard or question bank sites, this is an **interactive engineering simulation platform** featuring realistic production incidents, code reviews, deep event-loop and memory debugging, system design architecture diagrams, senior hiring committee rubric evaluations, and a dedicated **in-browser coding practice environment**.
@@ -131,7 +133,7 @@ Zero placeholder content. Real-world business contexts across:
 ---
 
 ## 🛠️ Technology Stack
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16.4.3 (App Router, Turbopack)
 - **Language**: TypeScript 5
 - **Styling**: Tailwind CSS 3.4
 - **State Management**: Redux Toolkit 2.x (`@reduxjs/toolkit`) & React Redux 9.x (`react-redux`)
@@ -140,15 +142,15 @@ Zero placeholder content. Real-world business contexts across:
 - **In-Memory SQL Engine**: AlaSQL (relational client-side execution)
 - **Icons**: Lucide React
 - **Database / ORM**: Prisma 6 & PostgreSQL schema
-- **Unit Testing**: Vitest 2.1 (64 tests across 6 suites)
-- **E2E Testing**: Playwright 1.49 (8 user journey flows)
+- **Unit Testing**: Vitest 2.1 (104 tests across 11 suites)
+- **E2E Testing**: Playwright (18 browser and integration tests)
 
 ---
 
 ## 🏁 Getting Started
 
 ### Prerequisites
-- **Node.js**: v18.18.0 or later (v20+ or v22 LTS recommended)
+- **Node.js**: v20.9.0 or later for Next.js; v22.13+ or a newer supported LTS is recommended for the existing lint tooling.
 - **npm**: v9 or later (comes bundled with Node.js)
 
 ### 1. Installation

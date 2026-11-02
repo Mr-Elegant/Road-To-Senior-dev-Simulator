@@ -2,6 +2,17 @@
 const nextConfig = {
   reactStrictMode: true,
   serverExternalPackages: ['@electric-sql/pglite'],
+  // Next.js 16 uses Turbopack by default. The Webpack configuration below is
+  // retained for the explicit dev:webpack/build:webpack recovery commands.
+  turbopack: {
+    resolveAlias: {
+      // AlaSQL's Node/SSR export references optional native adapters that this
+      // web application never uses. Match the existing Webpack exclusions.
+      'react-native': './src/lib/compat/emptyOptionalModule.ts',
+      'react-native-fs': './src/lib/compat/emptyOptionalModule.ts',
+      'react-native-fetch-blob': './src/lib/compat/emptyOptionalModule.ts',
+    },
+  },
   async headers() {
     return [
       { source: '/:path*', headers: [

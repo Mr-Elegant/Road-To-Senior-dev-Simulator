@@ -32,8 +32,11 @@ test.describe.serial('Authentication and account isolation', () => {
   });
   test.afterAll(async () => {
     // Delete only the two disposable accounts created by this exact test run.
-    await db.user.deleteMany({ where: { email: { in: [email, otherEmail] }, id: { in: [ownerId, otherId].filter(Boolean) } } });
-    await db.rateLimit.deleteMany({ where: { key: { in: [`ai:${ownerId}`, `ai:${otherId}`] } } });
+    // Resolve IDs by these exact generated emails even if a UI assertion failed
+    // before the session response assigned ownerId.
+    const disposable = await db.user.findMany({ where: { email: { in: [email, otherEmail] } }, select: { id: true } });
+    await db.user.deleteMany({ where: { email: { in: [email, otherEmail] }, id: { in: disposable.map((user) => user.id) } } });
+    await db.rateLimit.deleteMany({ where: { key: { in: disposable.map((user) => `ai:${user.id}`) } } });
     await owner?.dispose(); await other?.dispose(); await db.$disconnect();
   });
 

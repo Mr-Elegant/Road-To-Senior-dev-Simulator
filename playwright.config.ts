@@ -1,6 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
+  // Development compiles routes on demand; production keeps the stricter budget.
+  timeout: process.env.PLAYWRIGHT_DEV_SERVER === '1' ? 90000 : 30000,
+  expect: { timeout: process.env.PLAYWRIGHT_DEV_SERVER === '1' ? 15000 : 5000 },
   testDir: './tests/e2e',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,

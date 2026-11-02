@@ -1,6 +1,6 @@
 # Authentication and progress ownership
 
-The existing Next.js 15 / Prisma 6 application uses Better Auth 1.7.15 for email/password authentication. The package declares compatibility with Next.js 15, React 19, and Prisma 6. Credentials, session cookies, validation, CSRF checks, and rate limiting are handled by the library. The application adds bounded request bodies, signup confirmation validation, protected page checks, and account ownership at each private API.
+The Next.js 16.4.3 / Prisma 6 application uses Better Auth 1.7.15 for email/password authentication. The package declares compatibility with Next.js 16, React 19, and Prisma 6. Credentials, session cookies, validation, CSRF checks, and rate limiting are handled by the library. The application adds bounded request bodies, signup confirmation validation, protected page checks, and account ownership at each private API. See [the Next.js migration notes](NEXTJS_UPGRADE.md) for the later framework/bundler upgrade and its current verification results; the verification snapshot below records the original authentication implementation.
 
 ## Configuration
 
