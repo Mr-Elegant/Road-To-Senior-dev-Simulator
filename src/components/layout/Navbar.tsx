@@ -15,7 +15,7 @@ import {
   Bookmark,
   Code2,
   Sparkles,
-  Landmark,
+  Briefcase,
   GraduationCap,
   Menu,
   X,
@@ -62,10 +62,10 @@ export function Navbar() {
     { label: 'Dashboard', href: '/', icon: Terminal },
     { label: 'Beginner Track', href: '/interview?tier=tier-1', icon: GraduationCap, badge: 'Tier 1' },
     { label: 'SQL & Postgres Lab', href: '/sql', icon: Database, badge: '120 Qs' },
+    { label: 'Enterprise Labs', href: '/enterprise-labs', icon: Briefcase },
     { label: 'Challenges', href: '/library', icon: BookOpen },
     { label: 'Incidents', href: '/incidents', icon: Flame },
     { label: 'Coding Practice', href: '/practice', icon: Code2 },
-    { label: 'Loan Dashboard', href: '/challenges/loan-management', icon: Landmark, badge: 'Redux' },
     { label: 'AI Interview', href: '/interview', icon: Sparkles, badge: 'Gemini' },
     { label: 'Progress & Analytics', href: '/progress', icon: BarChart3 },
     { label: 'Settings', href: '/settings', icon: Settings },
@@ -111,6 +111,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={isActive ? 'page' : undefined}
                 className={`relative px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-all ${
                   isActive
                     ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-950 dark:text-white font-semibold shadow-xs'
@@ -142,6 +143,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={isActive ? 'page' : undefined}
                 className={`px-2 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1 transition-colors ${
                   isActive
                     ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-950 dark:text-white font-semibold'
@@ -233,6 +235,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={isActive ? 'page' : undefined}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-3 py-2.5 rounded-xl text-sm font-medium flex items-center justify-between transition-colors ${
                   isActive

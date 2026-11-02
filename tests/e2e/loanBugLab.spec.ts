@@ -79,8 +79,10 @@ test('all eight reference fixes execute in the real browser and assisted submiss
       await expect(page.getByRole('heading', { name: exercise.title, exact: true })).toBeVisible();
       await page.getByRole('button', { name: 'Reveal reference fix', exact: true }).click();
       await page.getByRole('button', { name: 'Load reference into editor', exact: true }).click();
+      const saved = page.waitForResponse((response) => response.url().endsWith('/api/progress/attempt') && response.request().method() === 'POST');
       await page.getByRole('button', { name: 'Submit fix', exact: true }).click();
       await expect(page.getByRole('heading', { name: `${exercise.tests.length}/${exercise.tests.length} tests passed · Full submission`, exact: true })).toBeVisible({ timeout: 15000 });
+      expect((await saved).status()).toBe(200);
       await expect(page.getByText('Full test submission recorded in your progress.', { exact: true })).toBeVisible();
     }
     await expect.poll(async () => {
