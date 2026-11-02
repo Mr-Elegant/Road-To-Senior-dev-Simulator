@@ -67,3 +67,7 @@ desktop.ini
 !.vscode/extensions.json
 !.vscode/launch.json
 
+# Personal study handbook and temporary PDF authoring files
+/output/pdf/engineering-interview-study-handbook.pdf
+/tmp/pdfs/
+
