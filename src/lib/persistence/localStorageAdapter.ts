@@ -46,9 +46,13 @@ export class LocalStorageAdapter implements StorageAdapter {
   private tier1Fallback: Tier1ProgressData = { ...DEFAULT_TIER1_PROGRESS };
   private sqlFallback: SqlTrackProgressData = { ...DEFAULT_SQL_PROGRESS };
   private accountId: string | null = null;
+  private accountRevision = 0;
   private pendingSync: Promise<void> = Promise.resolve();
 
-  public setAccount(userId: string | null): void { this.accountId = userId; }
+  public setAccount(userId: string | null): void {
+    if (this.accountId !== userId) this.accountRevision++;
+    this.accountId = userId;
+  }
   public scopedKey(key: string): string { return this.accountId ? `${key}:user:${this.accountId}` : key; }
   public getAccountId(): string | null { return this.accountId; }
 
@@ -291,26 +295,44 @@ export class LocalStorageAdapter implements StorageAdapter {
   async fetchFromPostgres(): Promise<{ success: boolean; message: string }> {
     if (!this.accountId) return { success: false, message: 'Sign in to load account progress.' };
     const accountId = this.accountId;
-    await this.pendingSync;
+    const controller = new AbortController();
+    const revision = this.accountRevision;
+    const changed = () => controller.signal.aborted || this.accountId !== accountId || this.accountRevision !== revision;
+    let timer: ReturnType<typeof setTimeout> | undefined;
     try {
-      const res = await fetch('/api/progress');
-      if (!res.ok) return { success: false, message: 'Remote database returned error status' };
-      const remote = await res.json();
-      if (this.accountId !== accountId) return { success: false, message: 'Account changed. Please retry.' };
-      const data = mergeProgress(remote, await this.getProgress());
-      if (data && Array.isArray(data.attempts)) {
-        this.save(data);
-        if (data.tier1Progress) {
-          this.saveTier1Direct(data.tier1Progress);
+      const hydrate = async () => {
+        await this.pendingSync;
+        if (changed()) return { success: false, message: 'Account changed. Please retry.' };
+        const res = await fetch('/api/progress', { signal: controller.signal });
+        if (!res.ok) return { success: false, message: 'Remote database returned error status' };
+        const remote = await res.json();
+        if (changed()) return { success: false, message: 'Account changed. Please retry.' };
+        const local = await this.getProgress();
+        if (changed()) return { success: false, message: 'Account changed. Please retry.' };
+        const data = mergeProgress(remote, local);
+        if (data && Array.isArray(data.attempts)) {
+          this.save(data);
+          if (data.tier1Progress) {
+            this.saveTier1Direct(data.tier1Progress);
+          }
+          if (data.sqlProgress) {
+            this.saveSqlDirect(data.sqlProgress);
+          }
+          return { success: true, message: `Loaded ${data.attempts.length} attempts from PostgreSQL.` };
         }
-        if (data.sqlProgress) {
-          this.saveSqlDirect(data.sqlProgress);
-        }
-        return { success: true, message: `Loaded ${data.attempts.length} attempts from PostgreSQL.` };
-      }
-      return { success: false, message: 'Invalid payload from PostgreSQL' };
+        return { success: false, message: 'Invalid payload from PostgreSQL' };
+      };
+      const deadline = new Promise<{ success: boolean; message: string }>(resolve => {
+        timer = setTimeout(() => {
+          controller.abort();
+          resolve({ success: false, message: 'Cloud history timed out. Your device history is still available.' });
+        }, 8000);
+      });
+      return await Promise.race([hydrate(), deadline]);
     } catch (e: any) {
       return { success: false, message: e?.message || 'Failed to fetch from PostgreSQL' };
+    } finally {
+      clearTimeout(timer);
     }
   }
 

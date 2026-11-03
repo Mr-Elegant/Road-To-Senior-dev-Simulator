@@ -26,20 +26,24 @@ import { useTheme } from './ThemeProvider';
 import { storage } from '@/lib/persistence/localStorageAdapter';
 import { UserProgressData } from '@/types/userProgress';
 import { AccountMenu } from '@/components/auth/AccountMenu';
+import { useWorkspaceScope } from '@/components/auth/WorkspaceScope';
 
 export function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
-  const [progress, setProgress] = useState<UserProgressData | null>(null);
+  const { accountId, ready } = useWorkspaceScope();
+  const [progressState, setProgress] = useState<{ owner: string | null; data: UserProgressData } | null>(null);
+  const progress = ready && progressState && progressState.owner === accountId ? progressState.data : null;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    if (!ready || accountId === undefined) return;
     let mounted = true;
     const fetchProgress = () => {
       storage
         .getProgress()
         .then((data) => {
-          if (mounted) setProgress(data);
+          if (mounted) setProgress({ owner: accountId, data });
         })
         .catch((e) => {
           console.warn('Navbar: failed to load progress', e);
@@ -51,7 +55,7 @@ export function Navbar() {
       mounted = false;
       clearInterval(interval);
     };
-  }, [pathname]);
+  }, [pathname, accountId, ready]);
 
   // Close mobile menu on navigation
   useEffect(() => {

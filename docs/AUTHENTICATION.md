@@ -56,6 +56,20 @@ The old shared default-user remains preserved but is never automatically assigne
 
 ## Anonymous history and import
 
+### Responsive account initialization
+
+Navigation and the footer stay mounted while identity/history initializes. Login, signup, and the static Enterprise Labs hub render immediately without waiting for the client session request. Other workspaces initialize only after their account-scoped cache is selected and the initial cloud read completes or reaches its eight-second deadline. On timeout/failure they use the device cache and show a retry notice.
+
+An already resolved anonymous session remains usable during background session rechecks; the current form/editor is not replaced by a full-page loader. Genuine account changes still hide and remount history-dependent workspaces. Navbar counters are tagged with their owner and remain hidden until the matching scope is ready. Server page/API authorization is unchanged.
+
+Cloud hydration bounds both the pending write queue and response/body loading. It checks account identity/revision after asynchronous reads, so a late or timed-out response cannot write into another account or a later visit to the same account. Client session reads have a 15-second deadline combined with the SDK's cancellation signal. Credential operations retain their existing behavior; focus-based session refresh and session revocation checks remain enabled.
+
+Regression checks live in `tests/unit/progressHydration.test.ts` and `tests/e2e/authLoading.spec.ts`. Browser tests include deliberately stalled session/history requests, DOM/draft preservation, and rapid account changes; the separate auth suite checks real server-side authorization and account ownership.
+
+Verified on 3 November 2026: 279 unit tests across 20 suites, 20 targeted Chromium journeys, ESLint, TypeScript, and the production build passed. The session deadline test was first reproduced against the previous build, where the stalled request kept the workspace blocked; it passes with the combined deadline/cancellation signal.
+
+### History ownership and imports
+
 Original anonymous keys remain unchanged:
 
 - `fullstack_interview_lab_progress_v1`

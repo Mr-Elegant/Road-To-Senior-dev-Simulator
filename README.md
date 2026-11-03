@@ -31,7 +31,7 @@ The poster is a conceptual product visual from the earlier catalog, not a screen
 | Evolving incidents | Eight simulations, 24 timed developments, and 72 response choices. |
 | Executable business exercises | 41 loan-lab cases, 53 commerce/SaaS cases, and 61 collaboration cases. |
 | Persistence | Account-owned history in PostgreSQL; account-scoped device caches and local drafts. |
-| Current evidence | 273 unit tests across 18 suites; browser verification and qualifications recorded under [Verification](#verification). |
+| Current evidence | 279 unit tests across 20 suites; browser verification and qualifications recorded under [Verification](#verification). |
 
 These counts describe different collections and must not be summed into one challenge count. The eight evolving incidents, six commerce/SaaS challenges, and eight collaboration challenges are included in the 73-scenario catalog. Enterprise Labs reuses those six commerce/SaaS challenges, eight collaboration scenarios, and the eight separate loan exercises.
 
@@ -82,6 +82,7 @@ The loan lab is an editable exercise workspace. Each submission executes against
 | **Loan dashboard** | Search, status/type/risk filters, sorting, pagination, application details and timeline, dashboard statistics, optimistic status changes, and latency/failure/offline simulation controls. |
 | **AI interviewer** | Server-side Gemini integration with contextual follow-ups, hints, and scorecards. A deterministic fallback supports practice when the provider is unavailable or unconfigured. |
 | **Accounts & progress** | Email/password authentication, revocable database sessions, account-scoped history and drafts, bookmarks, notes, JSON import/export, and explicit anonymous-history import. |
+| **Responsive session loading** | Navigation and public login/signup forms remain available during session checks. Background rechecks preserve an open visitor workspace; account changes still isolate and remount personal content. Session reads and cloud-history initialization have bounded waits, with device-history fallback for failed cloud reads. |
 | **Analytics & usability** | Readiness estimates, topic breakdowns, activity/streak history, recommendations, dark/light themes, and responsive navigation. Scores are practice indicators. |
 | **Local IDE practice** | A separate 270-exercise workspace covering every authored collection, with editable starters/answers, references, terminal tests, save-to-rerun mode, and a generated index. 61 exercises have automated runners; 209 use guided review. Website features and cloud progress remain separate. [Local practice guide](practice/README.md). |
 
@@ -495,7 +496,7 @@ The local workflow needs no Next.js server, account database, authentication, or
 
 ## Verification
 
-**Latest recorded verification: 3 November 2026.** These are local verification results, not a CI badge or a claim about production traffic. Earlier browser journeys retain the 2 November baseline; the collaboration row records the latest targeted browser run.
+**Latest recorded verification: 3 November 2026.** These are local verification results, not a CI badge or a claim about production traffic. Earlier browser journeys retain their recorded baseline; the session-loading row records the latest targeted browser run.
 
 **Earlier local IDE workspace baseline: 3 November 2026.** Its independent suite passed **60 checks**, covering the original 262 exported exercises, preservation on refresh, the original 53 executable reference solutions, expected failures in the 14 business/loan starters, TypeScript/async execution, exact comparisons, and timeout behavior. The app unit suite passed **203 tests across 17 suites** at that stage. A recursive-category SQL fixture/reference was corrected with an explicit breadcrumb text cast after PostgreSQL execution exposed its type mismatch.
 
@@ -503,7 +504,8 @@ The local workflow needs no Next.js server, account database, authentication, or
 
 | Check | Recorded result |
 |---|---|
-| Unit tests | **273 passed across 18 suites** |
+| Unit tests | **279 passed across 20 suites** |
+| Session-loading update | **20 Chromium journeys passed against the updated production build**, including slow session/history requests, form/filter DOM preservation during refresh, rapid account changes, real authentication and API ownership, cloud progress, responsive navigation, and editor/results layout. TypeScript, ESLint, and the production build passed. |
 | Real-Time Collaboration update | **15 targeted Chromium journeys passed against the updated production build**, covering all eight collaboration starters/references, mobile discovery, four-project navigation, both themes at 320–1440 px, existing commerce/SaaS execution, and closable full-height editor results. |
 | Browser regression tests (previous full audit) | **34 Chromium journeys verified against the production build:** 33 passed in the full run; the remaining cloud-sync check passed in a focused rerun after correcting its save-completion wait. |
 | Challenge workspace layout update | **Eight targeted Chromium journeys passed against the updated production build**, including full-height editor, on-demand results, close/rerun, mobile layout, and related SQL/incident/workspace flows. |
