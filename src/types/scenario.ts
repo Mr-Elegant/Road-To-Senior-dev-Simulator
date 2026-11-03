@@ -8,7 +8,7 @@ export type ChallengeType =
   | 'system_design' 
   | 'senior_interview';
 
-export type Difficulty = 'Mid-Level' | 'Senior' | 'Staff/Principal';
+export type Difficulty = 'Beginner' | 'Mid-Level' | 'Senior' | 'Staff/Principal';
 
 export type Topic = 
   | 'JavaScript'
@@ -113,6 +113,8 @@ export interface Scenario {
   // Specific data for challenge types
   starterCode?: string;
   codeLanguage?: string;
+  /** JSX component exercises use DOM journeys rather than function-return tests. */
+  reactExercise?: true;
   testCases?: TestCase[];
   incidentTelemetry?: IncidentTelemetry;
   incidentSimulation?: IncidentSimulation;

@@ -21,7 +21,7 @@ function entry(group, source, language, starter, reference, mode) {
 }
 const entries = [
   ...allScenarios.map(s => entry('catalog', s, (s.codeLanguage ?? '').toLowerCase(), s.starterCode,
-    s.referenceSolution, /^(javascript|typescript|js|ts)$/.test((s.codeLanguage ?? '').toLowerCase()) && s.testCases?.length && /function\s+(solution|handler|solve|execute)\s*\(/.test(s.referenceSolution.codeOrArtifact ?? '') ? 'javascript' : 'guided')),
+    s.referenceSolution, s.reactExercise ? 'react' : /^(javascript|typescript|js|ts)$/.test((s.codeLanguage ?? '').toLowerCase()) && s.testCases?.length && /function\s+(solution|handler|solve|execute)\s*\(/.test(s.referenceSolution.codeOrArtifact ?? '') ? 'javascript' : 'guided')),
   ...loanLabExercises.map(s => {
     const bug = loanBugScenarios.find(b => b.id === s.bugId);
     return entry('loan', { ...s, businessContext: bug?.description, productionSymptom: bug?.productionSymptom, dashboardBuggyCode: bug?.buggyCodeSnippet }, 'javascript', s.starterCode,

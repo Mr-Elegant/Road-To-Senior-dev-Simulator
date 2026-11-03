@@ -32,7 +32,7 @@ const TOPICS = [
   'Security',
 ];
 
-const DIFFICULTIES = ['All', 'Mid-Level', 'Senior', 'Staff/Principal'];
+const DIFFICULTIES = ['All', 'Beginner', 'Mid-Level', 'Senior', 'Staff/Principal'];
 
 const TYPES = [
   { id: 'All', label: 'All Types' },

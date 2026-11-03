@@ -14,6 +14,7 @@ import { evolvingIncidents } from './incidents';
 import { commerceScenarios } from './scenarios/commerce';
 import { saasScenarios } from './scenarios/saas';
 import { collaborationScenarios } from './scenarios/collaboration';
+import { reactPracticeScenarios } from './scenarios/reactPractice';
 
 export const allScenarios: Scenario[] = [
   ...javascriptScenarios,
@@ -31,6 +32,7 @@ export const allScenarios: Scenario[] = [
   ...commerceScenarios,
   ...saasScenarios,
   ...collaborationScenarios,
+  ...reactPracticeScenarios,
 ];
 
 export const scenarioMap = new Map<string, Scenario>();

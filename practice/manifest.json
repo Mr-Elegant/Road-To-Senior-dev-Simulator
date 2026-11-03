@@ -657,6 +657,78 @@
     "filename": "solution.js"
   },
   {
+    "key": "catalog/react-ui-password-feedback",
+    "group": "catalog",
+    "id": "react-ui-password-feedback",
+    "title": "React UI: Account Password Feedback",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/react-ui-web-address",
+    "group": "catalog",
+    "id": "react-ui-web-address",
+    "title": "React UI: Web Address Inspector",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/react-ui-tag-editor",
+    "group": "catalog",
+    "id": "react-ui-tag-editor",
+    "title": "React UI: Team Tag Editor",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/react-ui-project-progress",
+    "group": "catalog",
+    "id": "react-ui-project-progress",
+    "title": "React UI: Project Completion Meter",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/react-ui-loan-estimator",
+    "group": "catalog",
+    "id": "react-ui-loan-estimator",
+    "title": "React UI: Monthly Loan Estimator",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/react-ui-help-panels",
+    "group": "catalog",
+    "id": "react-ui-help-panels",
+    "title": "React UI: Expandable Support Answers",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/react-ui-theme-switch",
+    "group": "catalog",
+    "id": "react-ui-theme-switch",
+    "title": "React UI: Scoped Appearance Switch",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/react-ui-recipe-browser",
+    "group": "catalog",
+    "id": "react-ui-recipe-browser",
+    "title": "React UI: Searchable Kitchen Cards",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
     "key": "loan/bug-1-race-condition",
     "group": "loan",
     "id": "bug-1-race-condition",

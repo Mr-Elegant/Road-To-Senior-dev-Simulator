@@ -1,0 +1,32 @@
+[
+  {
+    "id": "loan-empty",
+    "name": "Blank submission is rejected",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Enter valid loan details\"},{\"selector\":\"[data-testid=\\\"payment\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "loan-zero",
+    "name": "Zero interest divides principal by months",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"principal\\\"]\",\"value\":\"1200\"},{\"type\":\"input\",\"selector\":\"[name=\\\"rate\\\"]\",\"value\":\"0\"},{\"type\":\"input\",\"selector\":\"[name=\\\"years\\\"]\",\"value\":\"1\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"payment\\\"]\",\"property\":\"text\",\"equals\":\"100.00\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "loan-interest",
+    "name": "Positive interest uses amortization",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"principal\\\"]\",\"value\":\"100000\"},{\"type\":\"input\",\"selector\":\"[name=\\\"rate\\\"]\",\"value\":\"6\"},{\"type\":\"input\",\"selector\":\"[name=\\\"years\\\"]\",\"value\":\"30\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"payment\\\"]\",\"property\":\"text\",\"equals\":\"599.55\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "loan-fraction",
+    "name": "Fractional years are rejected",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"principal\\\"]\",\"value\":\"1000\"},{\"type\":\"input\",\"selector\":\"[name=\\\"rate\\\"]\",\"value\":\"5\"},{\"type\":\"input\",\"selector\":\"[name=\\\"years\\\"]\",\"value\":\"1.5\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Enter valid loan details\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "loan-clear",
+    "name": "An invalid resubmission clears a previous payment",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"principal\\\"]\",\"value\":\"1200\"},{\"type\":\"input\",\"selector\":\"[name=\\\"rate\\\"]\",\"value\":\"0\"},{\"type\":\"input\",\"selector\":\"[name=\\\"years\\\"]\",\"value\":\"1\"},{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"input\",\"selector\":\"[name=\\\"principal\\\"]\",\"value\":\"-1\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"payment\\\"]\",\"property\":\"text\",\"equals\":\"\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Enter valid loan details\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

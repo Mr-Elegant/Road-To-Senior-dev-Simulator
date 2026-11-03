@@ -29,6 +29,7 @@ export function ChallengeCard({
         {/* Header: Type, Difficulty, Bookmark */}
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-1.5 flex-wrap">
+            {scenario.reactExercise && <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold border border-cyan-500/40 text-cyan-700 dark:text-cyan-200">React UI · Preview + tests</span>}
             {scenario.incidentSimulation && <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold border border-amber-500/40 text-amber-700 dark:text-amber-200">Evolving · {scenario.incidentSimulation.stages.length} stages</span>}
             <span
               className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider border ${typeBadge.color}`}

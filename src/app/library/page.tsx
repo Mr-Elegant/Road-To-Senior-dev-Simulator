@@ -116,6 +116,7 @@ function LibraryContent() {
         <h1 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-zinc-100 tracking-tight">
           Challenge Catalog ({allScenarios.length} Scenarios)
         </h1>
+        <Link href="/library?topic=React" className="inline-flex mt-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">Explore React UI practice with preview and tests</Link>
         <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 max-w-3xl leading-relaxed">
           Production-grade scenarios covering JavaScript, TypeScript, React, Next.js, Node.js, PostgreSQL, Integrations, Engineering Operations, and System Design.
         </p>

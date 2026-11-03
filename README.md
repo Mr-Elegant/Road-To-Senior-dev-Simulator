@@ -8,7 +8,7 @@ A full-stack learning platform for practicing the work behind senior engineering
 
 The project brings these experiences into one application with authenticated accounts, browser-based execution, persistent progress, and reproducible evaluation. Its engineering focus is **correctness under failure**: stale responses, failed optimistic updates, interrupted sessions, conflicting imports, and untrusted candidate code.
 
-**73 engineering scenarios · 4 enterprise projects · 120 SQL questions · 8 evolving incidents**
+**81 engineering scenarios · 4 enterprise projects · 120 SQL questions · 8 evolving incidents**
 
 **Live demo:** [engineering-interview-lab.vercel.app](https://engineering-interview-lab.vercel.app/)
 
@@ -25,15 +25,15 @@ The poster is a conceptual product visual from the earlier catalog, not a screen
 | Product | A full-stack engineering practice simulator with guided learning, editable exercises, incident response, and interview preparation. |
 | Audience | Developers building foundations and engineers preparing for senior/staff interviews. |
 | Architecture | Modular monolith: one Next.js application, PostgreSQL persistence, browser execution engines, and an optional external AI provider. |
-| Main catalog | 73 scenarios across 10 technical topics and six challenge formats. |
+| Main catalog | 81 scenarios across 10 technical topics and six challenge formats, including eight beginner React UI exercises. |
 | Enterprise Labs | Four project overviews grouping 22 exercises: eight loan, six commerce/SaaS, and eight collaboration exercises. |
 | SQL track | 120 authored questions across four tiers, with executable, conceptual, and incident formats. |
 | Evolving incidents | Eight simulations, 24 timed developments, and 72 response choices. |
 | Executable business exercises | 41 loan-lab cases, 53 commerce/SaaS cases, and 61 collaboration cases. |
 | Persistence | Account-owned history in PostgreSQL; account-scoped device caches and local drafts. |
-| Current evidence | 279 unit tests across 20 suites; browser verification and qualifications recorded under [Verification](#verification). |
+| Current evidence | 282 unit tests across 21 suites; browser verification and qualifications recorded under [Verification](#verification). |
 
-These counts describe different collections and must not be summed into one challenge count. The eight evolving incidents, six commerce/SaaS challenges, and eight collaboration challenges are included in the 73-scenario catalog. Enterprise Labs reuses those six commerce/SaaS challenges, eight collaboration scenarios, and the eight separate loan exercises.
+These counts describe different collections and must not be summed into one challenge count. The eight evolving incidents, six commerce/SaaS challenges, eight collaboration challenges, and eight React UI exercises are included in the 81-scenario catalog. Enterprise Labs reuses those six commerce/SaaS challenges, eight collaboration scenarios, and the eight separate loan exercises.
 
 ## A five-minute product review
 
@@ -68,7 +68,8 @@ The loan lab is an editable exercise workspace. Each submission executes against
 
 | Area | Implemented behavior |
 |---|---|
-| **Scenario library** | 73 scenarios across JavaScript, TypeScript, React, Next.js, Node.js, databases, integrations, operations, system design, and security. Includes debugging, coding, incident response, code review, architecture, and interview exercises. |
+| **Scenario library** | 81 scenarios across JavaScript, TypeScript, React, Next.js, Node.js, databases, integrations, operations, system design, and security. Includes debugging, coding, incident response, code review, architecture, and interview exercises. |
+| **React UI practice** | Eight original beginner JSX component exercises with interactive previews, 43 DOM journeys, references, hints, and follow-up answers. On-demand closable panels, current-code test requirements, and test-derived submission scores. Self-hosted React/ReactDOM/Sucrase runtime in opaque-origin iframes. [Workflow and execution limits](docs/REACT_UI_PRACTICE.md). |
 | **E-commerce & SaaS** | Six editable challenges with 53 behavioral cases: inventory reservations, payment reconciliation, tenant authorization, subscription entitlements, resumable catalog imports, and safe audit history. [Learning sequence and model boundaries](docs/BUSINESS_CHALLENGES.md). |
 | **Enterprise Labs** | Four business-project overviews grouping 22 exercises. Skills, learning sequences, direct workspace links, and best saved progress share the existing challenge and loan-lab history. [Project structure and progress rules](docs/ENTERPRISE_LABS.md). |
 | **Real-Time Collaboration** | Eight editable challenges with 61 behavioral cases: message deduplication, reconnect cursors, read receipts, presence expiry, channel permissions, notification preferences, meeting signaling, and history pagination. [Contracts and production boundaries](docs/REAL_TIME_COLLABORATION.md). |
@@ -84,7 +85,7 @@ The loan lab is an editable exercise workspace. Each submission executes against
 | **Accounts & progress** | Email/password authentication, revocable database sessions, account-scoped history and drafts, bookmarks, notes, JSON import/export, and explicit anonymous-history import. |
 | **Responsive session loading** | Navigation and public login/signup forms remain available during session checks. Background rechecks preserve an open visitor workspace; account changes still isolate and remount personal content. Session reads and cloud-history initialization have bounded waits, with device-history fallback for failed cloud reads. |
 | **Analytics & usability** | Readiness estimates, topic breakdowns, activity/streak history, recommendations, dark/light themes, and responsive navigation. Scores are practice indicators. |
-| **Local IDE practice** | A separate 270-exercise workspace covering every authored collection, with editable starters/answers, references, terminal tests, save-to-rerun mode, and a generated index. 61 exercises have automated runners; 209 use guided review. Website features and cloud progress remain separate. [Local practice guide](practice/README.md). |
+| **Local IDE practice** | A separate 278-exercise workspace covering every authored collection, with editable starters/answers, references, terminal tests, save-to-rerun mode, and a generated index. 69 exercises have automated runners, including eight React components in local Chromium; 209 use guided review. Website features and cloud progress remain separate. [Local practice guide](practice/README.md). |
 
 The eight evolving incidents cover connection storms, cache stampedes, migration locks, regional failover, ambiguous payments, poison-message backlogs, restart cascades, and tenant-data exposure.
 
@@ -481,7 +482,7 @@ For an existing database, follow the [baseline and migration procedure](docs/AUT
 
 ## Practice in VS Code or another local IDE
 
-Open [the practice index](practice/INDEX.md) to choose from all **270 authored exercises**: 73 catalog scenarios, eight loan labs, 120 SQL questions, 63 beginner questions, and six standalone coding problems. Enterprise project sequences link to the same exercises. The eight evolving incidents and six commerce/SaaS scenarios remain included in the catalog count.
+Open [the practice index](practice/INDEX.md) to choose from all **278 authored exercises**: 81 catalog scenarios, eight loan labs, 120 SQL questions, 63 beginner questions, and six standalone coding problems. Enterprise project sequences link to the same exercises. The eight React UI exercises, eight evolving incidents, and six commerce/SaaS scenarios remain included in the catalog count.
 
 ```sh
 npm ci
@@ -490,13 +491,13 @@ npm run practice:test -- catalog/commerce-inventory-reservations
 npm run practice:watch -- catalog/commerce-inventory-reservations
 ```
 
-Edit the exercise's `solution.*` file and record your reasoning in `answer.md`. Each folder includes instructions, full authored task data, cases, and separate reference material. Broken starters are expected to fail. The 61 executable exercises use JavaScript/TypeScript, loan harnesses, SQL engines, or the optional local Python interpreter. The other 209 exercises include review, UI snippets, architecture, incidents, interviews, and foundational questions; use their answer files and reference rubrics rather than treating them as automated passes.
+Edit the exercise's `solution.*` file and record your reasoning in `answer.md`. Each folder includes instructions, full authored task data, cases, and separate reference material. Broken starters are expected to fail. The 69 executable exercises use JavaScript/TypeScript, loan harnesses, SQL engines, local Chromium for React UI, or the optional local Python interpreter. React tests require `npx playwright install chromium` and `npm run react:runtime`. The other 209 exercises include review, UI snippets, architecture, incidents, interviews, and foundational questions; use their answer files and reference rubrics rather than treating them as automated passes.
 
 The local workflow needs no Next.js server, account database, authentication, or AI credentials. It does not update website progress or patch app exercises. Practice code is excluded from the application's TypeScript build, so unfinished solutions remain independent. [The practice guide](practice/README.md) explains dialect differences, manual review, process limits, and regeneration that preserves candidate work.
 
 ## Verification
 
-**Latest recorded verification: 3 November 2026.** These are local verification results, not a CI badge or a claim about production traffic. Earlier browser journeys retain their recorded baseline; the session-loading row records the latest targeted browser run.
+**Latest recorded verification: 3 November 2026.** These are local verification results, not a CI badge or a claim about production traffic. Earlier browser journeys retain their recorded baseline; the React UI row records the latest targeted browser verification.
 
 **Earlier local IDE workspace baseline: 3 November 2026.** Its independent suite passed **60 checks**, covering the original 262 exported exercises, preservation on refresh, the original 53 executable reference solutions, expected failures in the 14 business/loan starters, TypeScript/async execution, exact comparisons, and timeout behavior. The app unit suite passed **203 tests across 17 suites** at that stage. A recursive-category SQL fixture/reference was corrected with an explicit breadcrumb text cast after PostgreSQL execution exposed its type mismatch.
 
@@ -504,7 +505,9 @@ The local workflow needs no Next.js server, account database, authentication, or
 
 | Check | Recorded result |
 |---|---|
-| Unit tests | **279 passed across 20 suites** |
+| Unit tests | **282 passed across 21 suites** |
+| React UI update | **27 Chromium journeys verified against the updated production build:** 26 passed in the combined run; the remaining score-persistence journey passed on a focused rerun after correcting an ambiguous alert selector. Covers all eight failing starters/passing references, mobile preview, malformed code/import errors, host-DOM isolation, native form events with blocked navigation, current-code submission checks, saved test scores, authentication, editor layout, and enterprise projects. TypeScript, ESLint, and the production build passed. |
+| Local practice update | **76 checks passed**, covering all 278 exports, all 69 executable references (including 43 React DOM cases), candidate-file preservation, and existing execution regressions. |
 | Session-loading update | **20 Chromium journeys passed against the updated production build**, including slow session/history requests, form/filter DOM preservation during refresh, rapid account changes, real authentication and API ownership, cloud progress, responsive navigation, and editor/results layout. TypeScript, ESLint, and the production build passed. |
 | Real-Time Collaboration update | **15 targeted Chromium journeys passed against the updated production build**, covering all eight collaboration starters/references, mobile discovery, four-project navigation, both themes at 320–1440 px, existing commerce/SaaS execution, and closable full-height editor results. |
 | Browser regression tests (previous full audit) | **34 Chromium journeys verified against the production build:** 33 passed in the full run; the remaining cloud-sync check passed in a focused rerun after correcting its save-completion wait. |

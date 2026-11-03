@@ -20,6 +20,7 @@ interface RubricEvaluationModalProps {
   onClose: () => void;
   rubric: RubricCriteria[];
   initialScores?: RubricScoreItem[];
+  recordedTestScore?: number;
   onSubmitScores: (scores: RubricScoreItem[], totalPercentage: number) => void;
 }
 
@@ -28,6 +29,7 @@ export function RubricEvaluationModal({
   onClose,
   rubric,
   initialScores = [],
+  recordedTestScore,
   onSubmitScores,
 }: RubricEvaluationModalProps) {
   const [scores, setScores] = useState<Record<string, number>>(() => {
@@ -106,7 +108,9 @@ export function RubricEvaluationModal({
         <div className="px-6 py-2.5 bg-blue-500/5 border-b border-blue-500/10 text-[11px] text-blue-300 flex items-center gap-2">
           <HelpCircle className="w-3.5 h-3.5 flex-shrink-0" />
           <span>
-            Semantic integrity notice: We do not claim simplistic keyword matching provides reliable semantic evaluation. You review concrete rubric tiers below.
+            {recordedTestScore !== undefined
+              ? `Your recorded score is ${recordedTestScore}% from the current DOM tests. Use the rubric below to assess your reasoning separately.`
+              : 'Semantic integrity notice: We do not claim simplistic keyword matching provides reliable semantic evaluation. You review concrete rubric tiers below.'}
           </span>
         </div>
 
@@ -177,7 +181,7 @@ export function RubricEvaluationModal({
         {/* Footer Actions */}
         <div className="p-4 border-t border-zinc-800 bg-zinc-900 flex items-center justify-between">
           <div className="text-xs text-zinc-400 font-mono">
-            Overall Score: <strong className="text-zinc-100 font-bold">{evaluation.percentage}%</strong>
+            {recordedTestScore !== undefined ? 'Recorded test score' : 'Overall Score'}: <strong className="text-zinc-100 font-bold">{recordedTestScore ?? evaluation.percentage}%</strong>
           </div>
 
           <div className="flex items-center gap-3">

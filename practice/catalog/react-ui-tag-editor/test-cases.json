@@ -1,0 +1,38 @@
+[
+  {
+    "id": "tag-add",
+    "name": "Enter trims the draft and adds a tag",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"  Ops  \"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"text\",\"equals\":\"OpsRemove\"},{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tag-duplicate",
+    "name": "Case-insensitive duplicates retain the draft",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Ops\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"ops\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Tag already exists\"},{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"ops\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tag-limit",
+    "name": "Configured limit prevents extra tags",
+    "inputDescription": "{\"props\":{\"limit\":1},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"One\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Two\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Tag limit reached\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tag-remove",
+    "name": "Removing a tag frees a slot",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Ops\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"},{\"type\":\"click\",\"selector\":\"[aria-label=\\\"Remove Ops\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tag-backspace",
+    "name": "Empty Backspace removes only the last tag",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"First\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Second\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Backspace\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"text\",\"equals\":\"FirstRemove\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tag-blank",
+    "name": "Whitespace does not create a tag",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"   \"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -8,7 +8,7 @@ const { entries, generate } = require('../../scripts/practice/catalog.cjs');
 test('every authored collection is included with unique stable paths', () => {
   const counts = Object.fromEntries(['catalog', 'loan', 'sql', 'beginner', 'coding'].map(group =>
     [group, entries.filter(e => e.group === group).length]));
-  assert.deepEqual(counts, { catalog: 73, loan: 8, sql: 120, beginner: 63, coding: 6 });
+  assert.deepEqual(counts, { catalog: 81, loan: 8, sql: 120, beginner: 63, coding: 6 });
   assert.equal(new Set(entries.map(e => e.key)).size, entries.length);
   assert.ok(entries.every(e => /^[a-z0-9-]+\/[a-z0-9-]+$/.test(e.key)));
 });

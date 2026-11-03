@@ -1,0 +1,2862 @@
+{
+  "reviewedOn": "2026-11-03",
+  "source": "https://namastedev.com/practice",
+  "requestedUrl": "https://namastedev.com/practice?difficulty_level=easy&language=reactJs&sortBy=easy-medium-hard",
+  "scope": "All 21 public, unfiltered catalog pages and all 203 listed detail URLs at review time.",
+  "limits": [
+    "Metadata and title-based original learning notes only; no challenge statement, code, solutions, test fixtures, or editorial copied.",
+    "HTTP 200 and visible heading confirm a detail-page visit, not that all gated content, editor execution, or tests were examined.",
+    "Suggested learning topics are inferred from titles and are not representations of the source's exact acceptance criteria.",
+    "No login, purchase, protected-content bypass, or simulator integration performed."
+  ],
+  "counts": {
+    "total": 203,
+    "react": 113,
+    "javascript": 90,
+    "easyReact": 39
+  },
+  "challenges": [
+    {
+      "id": 1,
+      "title": "Find Missing Number",
+      "url": "https://namastedev.com/practice/find-missing-number",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/find-missing-number",
+        "status": 200,
+        "heading": "Find Missing Number"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Max SubArray",
+      "url": "https://namastedev.com/practice/max-subarray",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/max-subarray",
+        "status": 200,
+        "heading": "Max SubArray"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Make Counter",
+      "url": "https://namastedev.com/practice/make-counter",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "State transitions, persistence where relevant, effects, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/make-counter",
+        "status": 200,
+        "heading": "Make Counter"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Power of Two",
+      "url": "https://namastedev.com/practice/power-of-two",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/power-of-two",
+        "status": 200,
+        "heading": "Power of Two"
+      }
+    },
+    {
+      "id": 5,
+      "title": "sum()",
+      "url": "https://namastedev.com/practice/sum",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/sum",
+        "status": 200,
+        "heading": "sum()"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Password Strength",
+      "url": "https://namastedev.com/practice/password-strength",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/password-strength",
+        "status": 200,
+        "heading": "Password Strength"
+      }
+    },
+    {
+      "id": 7,
+      "title": "URL Validator",
+      "url": "https://namastedev.com/practice/url-validator",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/url-validator",
+        "status": 200,
+        "heading": "URL Validator"
+      }
+    },
+    {
+      "id": 8,
+      "title": "Get Result By Path",
+      "url": "https://namastedev.com/practice/get-result-by-path",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data representation, nested structures, input contracts, and mutation behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/get-result-by-path",
+        "status": 200,
+        "heading": "Get Result By Path"
+      }
+    },
+    {
+      "id": 9,
+      "title": "Find smallest number",
+      "url": "https://namastedev.com/practice/find-smallest-number",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/find-smallest-number",
+        "status": 200,
+        "heading": "Find smallest number"
+      }
+    },
+    {
+      "id": 10,
+      "title": "Chips Input",
+      "url": "https://namastedev.com/practice/chips-input",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/chips-input",
+        "status": 200,
+        "heading": "Chips Input"
+      }
+    },
+    {
+      "id": 11,
+      "title": "Progress Bar",
+      "url": "https://namastedev.com/practice/progress-bar",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Time-driven updates, effect cleanup, reduced motion, and predictable rendering.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/progress-bar",
+        "status": 200,
+        "heading": "Progress Bar"
+      }
+    },
+    {
+      "id": 12,
+      "title": "Mortgage Calculator",
+      "url": "https://namastedev.com/practice/mortgage-calculator",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Numeric inputs, calculation boundaries, rounding, and presentation.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/mortgage-calculator",
+        "status": 200,
+        "heading": "Mortgage Calculator"
+      }
+    },
+    {
+      "id": 13,
+      "title": "Power of Three",
+      "url": "https://namastedev.com/practice/power-of-three",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/power-of-three",
+        "status": 200,
+        "heading": "Power of Three"
+      }
+    },
+    {
+      "id": 14,
+      "title": "Accordion",
+      "url": "https://namastedev.com/practice/accordion",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/accordion",
+        "status": 200,
+        "heading": "Accordion"
+      }
+    },
+    {
+      "id": 15,
+      "title": "Dark Mode",
+      "url": "https://namastedev.com/practice/dark-mode",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "State transitions, persistence where relevant, effects, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/dark-mode",
+        "status": 200,
+        "heading": "Dark Mode"
+      }
+    },
+    {
+      "id": 16,
+      "title": "Count Negative",
+      "url": "https://namastedev.com/practice/count-negative",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/count-negative",
+        "status": 200,
+        "heading": "Count Negative"
+      }
+    },
+    {
+      "id": 17,
+      "title": "Find largest number",
+      "url": "https://namastedev.com/practice/find-largest-number",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/find-largest-number",
+        "status": 200,
+        "heading": "Find largest number"
+      }
+    },
+    {
+      "id": 18,
+      "title": "Loop A to Z",
+      "url": "https://namastedev.com/practice/loop-a-to-z",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/loop-a-to-z",
+        "status": 200,
+        "heading": "Loop A to Z"
+      }
+    },
+    {
+      "id": 19,
+      "title": "Custom Sort",
+      "url": "https://namastedev.com/practice/custom-sort",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/custom-sort",
+        "status": 200,
+        "heading": "Custom Sort"
+      }
+    },
+    {
+      "id": 20,
+      "title": "implement curry()",
+      "url": "https://namastedev.com/practice/implement-curry",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/implement-curry",
+        "status": 200,
+        "heading": "implement curry()"
+      }
+    },
+    {
+      "id": 21,
+      "title": "once(fn)",
+      "url": "https://namastedev.com/practice/oncefn",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/oncefn",
+        "status": 200,
+        "heading": "once(fn)"
+      }
+    },
+    {
+      "id": 22,
+      "title": "groupBy(arr, key)",
+      "url": "https://namastedev.com/practice/groupbyarr-key",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/groupbyarr-key",
+        "status": 200,
+        "heading": "groupBy(arr, key)"
+      }
+    },
+    {
+      "id": 23,
+      "title": "Filter Recipes",
+      "url": "https://namastedev.com/practice/filter-recipes",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Derived collections, selection state, empty results, and pagination boundaries.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/filter-recipes",
+        "status": 200,
+        "heading": "Filter Recipes"
+      }
+    },
+    {
+      "id": 24,
+      "title": "Remove Duplicates from Array",
+      "url": "https://namastedev.com/practice/remove-duplicates-from-array",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/remove-duplicates-from-array",
+        "status": 200,
+        "heading": "Remove Duplicates from Array"
+      }
+    },
+    {
+      "id": 25,
+      "title": "Voting Eligibility",
+      "url": "https://namastedev.com/practice/voting-eligibility",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/voting-eligibility",
+        "status": 200,
+        "heading": "Voting Eligibility"
+      }
+    },
+    {
+      "id": 26,
+      "title": "Validate Palindrome",
+      "url": "https://namastedev.com/practice/validate-palindrome",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Text processing, empty input, character handling, and deterministic output.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/validate-palindrome",
+        "status": 200,
+        "heading": "Validate Palindrome"
+      }
+    },
+    {
+      "id": 27,
+      "title": "Implement a Stack",
+      "url": "https://namastedev.com/practice/implement-a-stack",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data-structure invariants, lifecycle behavior, and operation costs.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/implement-a-stack",
+        "status": 200,
+        "heading": "Implement a Stack"
+      }
+    },
+    {
+      "id": 28,
+      "title": "Power of Four",
+      "url": "https://namastedev.com/practice/power-of-four",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/power-of-four",
+        "status": 200,
+        "heading": "Power of Four"
+      }
+    },
+    {
+      "id": 29,
+      "title": "Count even numbers",
+      "url": "https://namastedev.com/practice/count-even-numbers",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/count-even-numbers",
+        "status": 200,
+        "heading": "Count even numbers"
+      }
+    },
+    {
+      "id": 30,
+      "title": "Back To Top",
+      "url": "https://namastedev.com/practice/back-to-top",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Browser APIs, event handling, cleanup, and user feedback.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/back-to-top",
+        "status": 200,
+        "heading": "Back To Top"
+      }
+    },
+    {
+      "id": 31,
+      "title": "Copy to Clipboard",
+      "url": "https://namastedev.com/practice/copy-to-clipboard",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Browser APIs, event handling, cleanup, and user feedback.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/copy-to-clipboard",
+        "status": 200,
+        "heading": "Copy to Clipboard"
+      }
+    },
+    {
+      "id": 32,
+      "title": "Capitalize Words",
+      "url": "https://namastedev.com/practice/capitalize-words",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Text processing, empty input, character handling, and deterministic output.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/capitalize-words",
+        "status": 200,
+        "heading": "Capitalize Words"
+      }
+    },
+    {
+      "id": 33,
+      "title": "Count Vowels",
+      "url": "https://namastedev.com/practice/count-vowels",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Text processing, empty input, character handling, and deterministic output.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/count-vowels",
+        "status": 200,
+        "heading": "Count Vowels"
+      }
+    },
+    {
+      "id": 34,
+      "title": "Contact Form",
+      "url": "https://namastedev.com/practice/contact-form",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/contact-form",
+        "status": 200,
+        "heading": "Contact Form"
+      }
+    },
+    {
+      "id": 35,
+      "title": "Sum of all numbers in an array",
+      "url": "https://namastedev.com/practice/sum-of-all-numbers-in-an-array",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/sum-of-all-numbers-in-an-array",
+        "status": 200,
+        "heading": "Sum of all numbers in an array"
+      }
+    },
+    {
+      "id": 36,
+      "title": "Array to Zigzag String Converter",
+      "url": "https://namastedev.com/practice/array-to-zigzag-string-converter",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/array-to-zigzag-string-converter",
+        "status": 200,
+        "heading": "Array to Zigzag String Converter"
+      }
+    },
+    {
+      "id": 37,
+      "title": "Auto Save Text",
+      "url": "https://namastedev.com/practice/auto-save-text",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "State transitions, persistence where relevant, effects, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/auto-save-text",
+        "status": 200,
+        "heading": "Auto Save Text"
+      }
+    },
+    {
+      "id": 38,
+      "title": "Counter Using React",
+      "url": "https://namastedev.com/practice/counter-using-react",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "State transitions, persistence where relevant, effects, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/counter-using-react",
+        "status": 200,
+        "heading": "Counter Using React"
+      }
+    },
+    {
+      "id": 39,
+      "title": "Anagram Checker",
+      "url": "https://namastedev.com/practice/anagram-checker",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Text processing, empty input, character handling, and deterministic output.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/anagram-checker",
+        "status": 200,
+        "heading": "Anagram Checker"
+      }
+    },
+    {
+      "id": 40,
+      "title": "findMaxNumber",
+      "url": "https://namastedev.com/practice/findmaxnumber",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/findmaxnumber",
+        "status": 200,
+        "heading": "findMaxNumber"
+      }
+    },
+    {
+      "id": 41,
+      "title": "Factorial of a number",
+      "url": "https://namastedev.com/practice/factorial-of-a-number",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/factorial-of-a-number",
+        "status": 200,
+        "heading": "Factorial of a number"
+      }
+    },
+    {
+      "id": 42,
+      "title": "Fibonacci Series",
+      "url": "https://namastedev.com/practice/fibonacci-series",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/fibonacci-series",
+        "status": 200,
+        "heading": "Fibonacci Series"
+      }
+    },
+    {
+      "id": 43,
+      "title": "Secret Code Shuffler",
+      "url": "https://namastedev.com/practice/secret-code-shuffler",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/secret-code-shuffler",
+        "status": 200,
+        "heading": "Secret Code Shuffler"
+      }
+    },
+    {
+      "id": 44,
+      "title": "Tooltip",
+      "url": "https://namastedev.com/practice/tooltip",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/tooltip",
+        "status": 200,
+        "heading": "Tooltip"
+      }
+    },
+    {
+      "id": 45,
+      "title": "Guess the number",
+      "url": "https://namastedev.com/practice/guess-the-number",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/guess-the-number",
+        "status": 200,
+        "heading": "Guess the number"
+      }
+    },
+    {
+      "id": 46,
+      "title": "Toggle button with custom hook",
+      "url": "https://namastedev.com/practice/toggle-button-with-custom-hook",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "State transitions, persistence where relevant, effects, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/toggle-button-with-custom-hook",
+        "status": 200,
+        "heading": "Toggle button with custom hook"
+      }
+    },
+    {
+      "id": 47,
+      "title": "Leap year",
+      "url": "https://namastedev.com/practice/leap-year",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/leap-year",
+        "status": 200,
+        "heading": "Leap year"
+      }
+    },
+    {
+      "id": 48,
+      "title": "Blog Post",
+      "url": "https://namastedev.com/practice/blog-post",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/blog-post",
+        "status": 200,
+        "heading": "Blog Post"
+      }
+    },
+    {
+      "id": 49,
+      "title": "Flatten Nested Array",
+      "url": "https://namastedev.com/practice/flatten-nested-array",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/flatten-nested-array",
+        "status": 200,
+        "heading": "Flatten Nested Array"
+      }
+    },
+    {
+      "id": 50,
+      "title": "Even or odd",
+      "url": "https://namastedev.com/practice/even-or-odd",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/even-or-odd",
+        "status": 200,
+        "heading": "Even or odd"
+      }
+    },
+    {
+      "id": 51,
+      "title": "Read More",
+      "url": "https://namastedev.com/practice/read-more",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/read-more",
+        "status": 200,
+        "heading": "Read More"
+      }
+    },
+    {
+      "id": 52,
+      "title": "Acronym Generator",
+      "url": "https://namastedev.com/practice/acronym-generator",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Text processing, empty input, character handling, and deterministic output.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/acronym-generator",
+        "status": 200,
+        "heading": "Acronym Generator"
+      }
+    },
+    {
+      "id": 53,
+      "title": "Character Counter",
+      "url": "https://namastedev.com/practice/character-counter",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "State transitions, persistence where relevant, effects, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/character-counter",
+        "status": 200,
+        "heading": "Character Counter"
+      }
+    },
+    {
+      "id": 54,
+      "title": "Dynamic Greeting App",
+      "url": "https://namastedev.com/practice/dynamic-greeting-app",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/dynamic-greeting-app",
+        "status": 200,
+        "heading": "Dynamic Greeting App"
+      }
+    },
+    {
+      "id": 55,
+      "title": "Get Weekday",
+      "url": "https://namastedev.com/practice/get-weekday",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/get-weekday",
+        "status": 200,
+        "heading": "Get Weekday"
+      }
+    },
+    {
+      "id": 56,
+      "title": "Focus Input",
+      "url": "https://namastedev.com/practice/focus-input",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Browser APIs, event handling, cleanup, and user feedback.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/focus-input",
+        "status": 200,
+        "heading": "Focus Input"
+      }
+    },
+    {
+      "id": 57,
+      "title": "Authentication",
+      "url": "https://namastedev.com/practice/authentication",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/authentication",
+        "status": 200,
+        "heading": "Authentication"
+      }
+    },
+    {
+      "id": 58,
+      "title": "shuffle()",
+      "url": "https://namastedev.com/practice/shuffle",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/shuffle",
+        "status": 200,
+        "heading": "shuffle()"
+      }
+    },
+    {
+      "id": 59,
+      "title": "Navbar",
+      "url": "https://namastedev.com/practice/navbar",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/navbar",
+        "status": 200,
+        "heading": "Navbar"
+      }
+    },
+    {
+      "id": 60,
+      "title": "Largest number formed",
+      "url": "https://namastedev.com/practice/largest-number-formed",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/largest-number-formed",
+        "status": 200,
+        "heading": "Largest number formed"
+      }
+    },
+    {
+      "id": 61,
+      "title": "Color Explorer",
+      "url": "https://namastedev.com/practice/color-explorer",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/color-explorer",
+        "status": 200,
+        "heading": "Color Explorer"
+      }
+    },
+    {
+      "id": 62,
+      "title": "Confirmation Modal",
+      "url": "https://namastedev.com/practice/confirmation-modal",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Dialog state, focus restoration, Escape handling, and accessible names.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/confirmation-modal",
+        "status": 200,
+        "heading": "Confirmation Modal"
+      }
+    },
+    {
+      "id": 63,
+      "title": "Toggle password",
+      "url": "https://namastedev.com/practice/toggle-password",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/toggle-password",
+        "status": 200,
+        "heading": "Toggle password"
+      }
+    },
+    {
+      "id": 64,
+      "title": "Array Chunking",
+      "url": "https://namastedev.com/practice/array-chunking",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/array-chunking",
+        "status": 200,
+        "heading": "Array Chunking"
+      }
+    },
+    {
+      "id": 65,
+      "title": "Tab Switcher",
+      "url": "https://namastedev.com/practice/tab-switcher",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/tab-switcher",
+        "status": 200,
+        "heading": "Tab Switcher"
+      }
+    },
+    {
+      "id": 66,
+      "title": "usePreviousHook",
+      "url": "https://namastedev.com/practice/useprevioushook",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "State transitions, persistence where relevant, effects, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/useprevioushook",
+        "status": 200,
+        "heading": "usePreviousHook"
+      }
+    },
+    {
+      "id": 67,
+      "title": "Sum of n natural numbers",
+      "url": "https://namastedev.com/practice/sum-of-n-natural-numbers",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/sum-of-n-natural-numbers",
+        "status": 200,
+        "heading": "Sum of n natural numbers"
+      }
+    },
+    {
+      "id": 68,
+      "title": "Holy Grail",
+      "url": "https://namastedev.com/practice/holy-grail",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/holy-grail",
+        "status": 200,
+        "heading": "Holy Grail"
+      }
+    },
+    {
+      "id": 69,
+      "title": "User profile",
+      "url": "https://namastedev.com/practice/user-profile",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/user-profile",
+        "status": 200,
+        "heading": "User profile"
+      }
+    },
+    {
+      "id": 70,
+      "title": "Age calculator",
+      "url": "https://namastedev.com/practice/age-calculator",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Numeric inputs, calculation boundaries, rounding, and presentation.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/age-calculator",
+        "status": 200,
+        "heading": "Age calculator"
+      }
+    },
+    {
+      "id": 71,
+      "title": "Frequently Asked Questions",
+      "url": "https://namastedev.com/practice/frequently-asked-questions",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/frequently-asked-questions",
+        "status": 200,
+        "heading": "Frequently Asked Questions"
+      }
+    },
+    {
+      "id": 72,
+      "title": "Asterisk Field Validation",
+      "url": "https://namastedev.com/practice/asterisk-field-validation",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/asterisk-field-validation",
+        "status": 200,
+        "heading": "Asterisk Field Validation"
+      }
+    },
+    {
+      "id": 73,
+      "title": "Array.prototype.reduce",
+      "url": "https://namastedev.com/practice/arrayprototypereduce",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/arrayprototypereduce",
+        "status": 200,
+        "heading": "Array.prototype.reduce"
+      }
+    },
+    {
+      "id": 74,
+      "title": "Sidebar",
+      "url": "https://namastedev.com/practice/sidebar",
+      "language": "React.js",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": true,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/sidebar",
+        "status": 200,
+        "heading": "Sidebar"
+      }
+    },
+    {
+      "id": 75,
+      "title": "ReverseWords",
+      "url": "https://namastedev.com/practice/reversewords",
+      "language": "JavaScript",
+      "difficulty": "Easy",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Text processing, empty input, character handling, and deterministic output.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/reversewords",
+        "status": 200,
+        "heading": "ReverseWords"
+      }
+    },
+    {
+      "id": 76,
+      "title": "Todo List",
+      "url": "https://namastedev.com/practice/todo-list",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/todo-list",
+        "status": 200,
+        "heading": "Todo List"
+      }
+    },
+    {
+      "id": 77,
+      "title": "Flatten Nested Objects",
+      "url": "https://namastedev.com/practice/flatten-nested-objects",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data representation, nested structures, input contracts, and mutation behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/flatten-nested-objects",
+        "status": 200,
+        "heading": "Flatten Nested Objects"
+      }
+    },
+    {
+      "id": 78,
+      "title": "Flatten Deep Object",
+      "url": "https://namastedev.com/practice/flatten-deep-object",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data representation, nested structures, input contracts, and mutation behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/flatten-deep-object",
+        "status": 200,
+        "heading": "Flatten Deep Object"
+      }
+    },
+    {
+      "id": 79,
+      "title": "Compress String with Limited Repetition",
+      "url": "https://namastedev.com/practice/compress-string-with-limited-repetition",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Text processing, empty input, character handling, and deterministic output.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/compress-string-with-limited-repetition",
+        "status": 200,
+        "heading": "Compress String with Limited Repetition"
+      }
+    },
+    {
+      "id": 80,
+      "title": "Todo List II",
+      "url": "https://namastedev.com/practice/todo-list-ii",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/todo-list-ii",
+        "status": 200,
+        "heading": "Todo List II"
+      }
+    },
+    {
+      "id": 81,
+      "title": "Billing Counter",
+      "url": "https://namastedev.com/practice/billing-counter",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "State transitions, persistence where relevant, effects, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/billing-counter",
+        "status": 200,
+        "heading": "Billing Counter"
+      }
+    },
+    {
+      "id": 82,
+      "title": "Resizable Split Pane",
+      "url": "https://namastedev.com/practice/resizable-split-pane",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Pointer interactions, stable ordering, state updates, and keyboard alternatives.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/resizable-split-pane",
+        "status": 200,
+        "heading": "Resizable Split Pane"
+      }
+    },
+    {
+      "id": 83,
+      "title": "Kanban Board",
+      "url": "https://namastedev.com/practice/kanban-board",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Pointer interactions, stable ordering, state updates, and keyboard alternatives.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/kanban-board",
+        "status": 200,
+        "heading": "Kanban Board"
+      }
+    },
+    {
+      "id": 84,
+      "title": "Tabs Component",
+      "url": "https://namastedev.com/practice/tabs-component",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/tabs-component",
+        "status": 200,
+        "heading": "Tabs Component"
+      }
+    },
+    {
+      "id": 85,
+      "title": "Drag And Drop II",
+      "url": "https://namastedev.com/practice/drag-and-drop-ii",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Pointer interactions, stable ordering, state updates, and keyboard alternatives.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/drag-and-drop-ii",
+        "status": 200,
+        "heading": "Drag And Drop II"
+      }
+    },
+    {
+      "id": 86,
+      "title": "Image Carousel",
+      "url": "https://namastedev.com/practice/image-carousel",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Index boundaries, navigation state, responsive layout, and image handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/image-carousel",
+        "status": 200,
+        "heading": "Image Carousel"
+      }
+    },
+    {
+      "id": 87,
+      "title": "Rate Limiter",
+      "url": "https://namastedev.com/practice/rate-limiter",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Timing policies, cancellation, and burst handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/rate-limiter",
+        "status": 200,
+        "heading": "Rate Limiter"
+      }
+    },
+    {
+      "id": 88,
+      "title": "JSON.stringify",
+      "url": "https://namastedev.com/practice/jsonstringify",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data representation, nested structures, input contracts, and mutation behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/jsonstringify",
+        "status": 200,
+        "heading": "JSON.stringify"
+      }
+    },
+    {
+      "id": 89,
+      "title": "Word Search",
+      "url": "https://namastedev.com/practice/word-search",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/word-search",
+        "status": 200,
+        "heading": "Word Search"
+      }
+    },
+    {
+      "id": 90,
+      "title": "Topological Sort (DFS)",
+      "url": "https://namastedev.com/practice/topological-sort-dfs",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/topological-sort-dfs",
+        "status": 200,
+        "heading": "Topological Sort (DFS)"
+      }
+    },
+    {
+      "id": 91,
+      "title": "Paginated Article Bookmark Viewer",
+      "url": "https://namastedev.com/practice/paginated-article-bookmark-viewer",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Derived collections, selection state, empty results, and pagination boundaries.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/paginated-article-bookmark-viewer",
+        "status": 200,
+        "heading": "Paginated Article Bookmark Viewer"
+      }
+    },
+    {
+      "id": 92,
+      "title": "Price Range Slider",
+      "url": "https://namastedev.com/practice/price-range-slider",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/price-range-slider",
+        "status": 200,
+        "heading": "Price Range Slider"
+      }
+    },
+    {
+      "id": 93,
+      "title": "Detect Cycle in an Undirected Connected Graph (DFS)",
+      "url": "https://namastedev.com/practice/detect-cycle-in-an-undirected-connected-graph-dfs",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/detect-cycle-in-an-undirected-connected-graph-dfs",
+        "status": 200,
+        "heading": "Detect Cycle in an Undirected Connected Graph (DFS)"
+      }
+    },
+    {
+      "id": 94,
+      "title": "Transfer List",
+      "url": "https://namastedev.com/practice/transfer-list",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/transfer-list",
+        "status": 200,
+        "heading": "Transfer List"
+      }
+    },
+    {
+      "id": 95,
+      "title": "Star Rating",
+      "url": "https://namastedev.com/practice/star-rating",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/star-rating",
+        "status": 200,
+        "heading": "Star Rating"
+      }
+    },
+    {
+      "id": 96,
+      "title": "Expense Tracker",
+      "url": "https://namastedev.com/practice/expense-tracker",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Numeric inputs, calculation boundaries, rounding, and presentation.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/expense-tracker",
+        "status": 200,
+        "heading": "Expense Tracker"
+      }
+    },
+    {
+      "id": 97,
+      "title": "Social Share",
+      "url": "https://namastedev.com/practice/social-share",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/social-share",
+        "status": 200,
+        "heading": "Social Share"
+      }
+    },
+    {
+      "id": 98,
+      "title": "Sortable List",
+      "url": "https://namastedev.com/practice/sortable-list",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Pointer interactions, stable ordering, state updates, and keyboard alternatives.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/sortable-list",
+        "status": 200,
+        "heading": "Sortable List"
+      }
+    },
+    {
+      "id": 99,
+      "title": "Throttle",
+      "url": "https://namastedev.com/practice/throttle",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Timing policies, cancellation, and burst handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/throttle",
+        "status": 200,
+        "heading": "Throttle"
+      }
+    },
+    {
+      "id": 100,
+      "title": "Word Counter",
+      "url": "https://namastedev.com/practice/word-counter",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "State transitions, persistence where relevant, effects, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/word-counter",
+        "status": 200,
+        "heading": "Word Counter"
+      }
+    },
+    {
+      "id": 101,
+      "title": "Dice Roller",
+      "url": "https://namastedev.com/practice/dice-roller",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/dice-roller",
+        "status": 200,
+        "heading": "Dice Roller"
+      }
+    },
+    {
+      "id": 102,
+      "title": "PromiseAll With Concurrency Limit",
+      "url": "https://namastedev.com/practice/promiseall-with-concurrency-limit",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Async coordination, bounded work, failure propagation, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/promiseall-with-concurrency-limit",
+        "status": 200,
+        "heading": "PromiseAll With Concurrency Limit"
+      }
+    },
+    {
+      "id": 103,
+      "title": "Draw Circles",
+      "url": "https://namastedev.com/practice/draw-circles",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/draw-circles",
+        "status": 200,
+        "heading": "Draw Circles"
+      }
+    },
+    {
+      "id": 104,
+      "title": "Grid Lights II",
+      "url": "https://namastedev.com/practice/grid-lights-ii",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/grid-lights-ii",
+        "status": 200,
+        "heading": "Grid Lights II"
+      }
+    },
+    {
+      "id": 105,
+      "title": "Pin Items",
+      "url": "https://namastedev.com/practice/pin-items",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/pin-items",
+        "status": 200,
+        "heading": "Pin Items"
+      }
+    },
+    {
+      "id": 106,
+      "title": "Priority Queue",
+      "url": "https://namastedev.com/practice/priority-queue",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data-structure invariants, lifecycle behavior, and operation costs.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/priority-queue",
+        "status": 200,
+        "heading": "Priority Queue"
+      }
+    },
+    {
+      "id": 107,
+      "title": "Memoization",
+      "url": "https://namastedev.com/practice/memoization",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data-structure invariants, lifecycle behavior, and operation costs.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/memoization",
+        "status": 200,
+        "heading": "Memoization"
+      }
+    },
+    {
+      "id": 108,
+      "title": "Notification Bell",
+      "url": "https://namastedev.com/practice/notification-bell",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/notification-bell",
+        "status": 200,
+        "heading": "Notification Bell"
+      }
+    },
+    {
+      "id": 109,
+      "title": "Emoji Replacer",
+      "url": "https://namastedev.com/practice/emoji-replacer",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/emoji-replacer",
+        "status": 200,
+        "heading": "Emoji Replacer"
+      }
+    },
+    {
+      "id": 110,
+      "title": "Searchable Dropdown",
+      "url": "https://namastedev.com/practice/searchable-dropdown",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Selection state, filtering, focus management, and keyboard support.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/searchable-dropdown",
+        "status": 200,
+        "heading": "Searchable Dropdown"
+      }
+    },
+    {
+      "id": 111,
+      "title": "Sum of Consecutive Integers",
+      "url": "https://namastedev.com/practice/sum-of-consecutive-integers",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/sum-of-consecutive-integers",
+        "status": 200,
+        "heading": "Sum of Consecutive Integers"
+      }
+    },
+    {
+      "id": 112,
+      "title": "Deep Clone Object",
+      "url": "https://namastedev.com/practice/deep-clone-object",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data representation, nested structures, input contracts, and mutation behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/deep-clone-object",
+        "status": 200,
+        "heading": "Deep Clone Object"
+      }
+    },
+    {
+      "id": 113,
+      "title": "Grid Lights",
+      "url": "https://namastedev.com/practice/grid-lights",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/grid-lights",
+        "status": 200,
+        "heading": "Grid Lights"
+      }
+    },
+    {
+      "id": 114,
+      "title": "Debounce",
+      "url": "https://namastedev.com/practice/debounce",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Timing policies, cancellation, and burst handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/debounce",
+        "status": 200,
+        "heading": "Debounce"
+      }
+    },
+    {
+      "id": 115,
+      "title": "Pawn Moves",
+      "url": "https://namastedev.com/practice/pawn-moves",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/pawn-moves",
+        "status": 200,
+        "heading": "Pawn Moves"
+      }
+    },
+    {
+      "id": 116,
+      "title": "Cinema Hall",
+      "url": "https://namastedev.com/practice/cinema-hall",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/cinema-hall",
+        "status": 200,
+        "heading": "Cinema Hall"
+      }
+    },
+    {
+      "id": 117,
+      "title": "Reusable Toast",
+      "url": "https://namastedev.com/practice/reusable-toast",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/reusable-toast",
+        "status": 200,
+        "heading": "Reusable Toast"
+      }
+    },
+    {
+      "id": 118,
+      "title": "Product Rating Heatmap",
+      "url": "https://namastedev.com/practice/product-rating-heatmap",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/product-rating-heatmap",
+        "status": 200,
+        "heading": "Product Rating Heatmap"
+      }
+    },
+    {
+      "id": 119,
+      "title": "Slugify a String",
+      "url": "https://namastedev.com/practice/slugify-a-string",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Text processing, empty input, character handling, and deterministic output.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/slugify-a-string",
+        "status": 200,
+        "heading": "Slugify a String"
+      }
+    },
+    {
+      "id": 120,
+      "title": "List Sorter",
+      "url": "https://namastedev.com/practice/list-sorter",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/list-sorter",
+        "status": 200,
+        "heading": "List Sorter"
+      }
+    },
+    {
+      "id": 121,
+      "title": "Knight Moves",
+      "url": "https://namastedev.com/practice/knight-moves",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/knight-moves",
+        "status": 200,
+        "heading": "Knight Moves"
+      }
+    },
+    {
+      "id": 122,
+      "title": "Spiral Matrix Pathfinder",
+      "url": "https://namastedev.com/practice/spiral-matrix-pathfinder",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/spiral-matrix-pathfinder",
+        "status": 200,
+        "heading": "Spiral Matrix Pathfinder"
+      }
+    },
+    {
+      "id": 123,
+      "title": "Queen Moves",
+      "url": "https://namastedev.com/practice/queen-moves",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/queen-moves",
+        "status": 200,
+        "heading": "Queen Moves"
+      }
+    },
+    {
+      "id": 124,
+      "title": "Lazy Evaluation",
+      "url": "https://namastedev.com/practice/lazy-evaluation",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/lazy-evaluation",
+        "status": 200,
+        "heading": "Lazy Evaluation"
+      }
+    },
+    {
+      "id": 125,
+      "title": "BMI Calculator",
+      "url": "https://namastedev.com/practice/bmi-calculator",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Numeric inputs, calculation boundaries, rounding, and presentation.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/bmi-calculator",
+        "status": 200,
+        "heading": "BMI Calculator"
+      }
+    },
+    {
+      "id": 126,
+      "title": "Longest Substring No Repeats",
+      "url": "https://namastedev.com/practice/longest-substring-no-repeats",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Text processing, empty input, character handling, and deterministic output.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/longest-substring-no-repeats",
+        "status": 200,
+        "heading": "Longest Substring No Repeats"
+      }
+    },
+    {
+      "id": 127,
+      "title": "Traffic Lights",
+      "url": "https://namastedev.com/practice/traffic-lights",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Time-driven updates, effect cleanup, reduced motion, and predictable rendering.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/traffic-lights",
+        "status": 200,
+        "heading": "Traffic Lights"
+      }
+    },
+    {
+      "id": 128,
+      "title": "Concurrency Limited Task Scheduler",
+      "url": "https://namastedev.com/practice/concurrency-limited-task-scheduler",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Async coordination, bounded work, failure propagation, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/concurrency-limited-task-scheduler",
+        "status": 200,
+        "heading": "Concurrency Limited Task Scheduler"
+      }
+    },
+    {
+      "id": 129,
+      "title": "Find the Single Element in a Sorted Array",
+      "url": "https://namastedev.com/practice/find-the-single-element-in-a-sorted-array",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/find-the-single-element-in-a-sorted-array",
+        "status": 200,
+        "heading": "Find the Single Element in a Sorted Array"
+      }
+    },
+    {
+      "id": 130,
+      "title": "Cards Carousel",
+      "url": "https://namastedev.com/practice/cards-carousel",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Index boundaries, navigation state, responsive layout, and image handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/cards-carousel",
+        "status": 200,
+        "heading": "Cards Carousel"
+      }
+    },
+    {
+      "id": 131,
+      "title": "Event Emitter",
+      "url": "https://namastedev.com/practice/event-emitter",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data-structure invariants, lifecycle behavior, and operation costs.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/event-emitter",
+        "status": 200,
+        "heading": "Event Emitter"
+      }
+    },
+    {
+      "id": 132,
+      "title": "List Format",
+      "url": "https://namastedev.com/practice/list-format",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/list-format",
+        "status": 200,
+        "heading": "List Format"
+      }
+    },
+    {
+      "id": 133,
+      "title": "Map Async Limit",
+      "url": "https://namastedev.com/practice/map-async-limit",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Async coordination, bounded work, failure propagation, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/map-async-limit",
+        "status": 200,
+        "heading": "Map Async Limit"
+      }
+    },
+    {
+      "id": 134,
+      "title": "Rock Paper Scissor",
+      "url": "https://namastedev.com/practice/rock-paper-scissor",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/rock-paper-scissor",
+        "status": 200,
+        "heading": "Rock Paper Scissor"
+      }
+    },
+    {
+      "id": 135,
+      "title": "Undo Redo",
+      "url": "https://namastedev.com/practice/undo-redo",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "State transitions, persistence where relevant, effects, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/undo-redo",
+        "status": 200,
+        "heading": "Undo Redo"
+      }
+    },
+    {
+      "id": 136,
+      "title": "Color Code Game",
+      "url": "https://namastedev.com/practice/color-code-game",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/color-code-game",
+        "status": 200,
+        "heading": "Color Code Game"
+      }
+    },
+    {
+      "id": 137,
+      "title": "Stopwatch",
+      "url": "https://namastedev.com/practice/stopwatch",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Time-driven updates, effect cleanup, reduced motion, and predictable rendering.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/stopwatch",
+        "status": 200,
+        "heading": "Stopwatch"
+      }
+    },
+    {
+      "id": 138,
+      "title": "Rook Moves",
+      "url": "https://namastedev.com/practice/rook-moves",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/rook-moves",
+        "status": 200,
+        "heading": "Rook Moves"
+      }
+    },
+    {
+      "id": 139,
+      "title": "Deep Omit",
+      "url": "https://namastedev.com/practice/deep-omit",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data representation, nested structures, input contracts, and mutation behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/deep-omit",
+        "status": 200,
+        "heading": "Deep Omit"
+      }
+    },
+    {
+      "id": 140,
+      "title": "Shortest Distance from Source (BFS)",
+      "url": "https://namastedev.com/practice/shortest-distance-from-source-bfs",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/shortest-distance-from-source-bfs",
+        "status": 200,
+        "heading": "Shortest Distance from Source (BFS)"
+      }
+    },
+    {
+      "id": 141,
+      "title": "Topological Sort (BFS)",
+      "url": "https://namastedev.com/practice/topological-sort-bfs",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/topological-sort-bfs",
+        "status": 200,
+        "heading": "Topological Sort (BFS)"
+      }
+    },
+    {
+      "id": 142,
+      "title": "Sum of Subarray Minimum",
+      "url": "https://namastedev.com/practice/sum-of-subarray-minimum",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/sum-of-subarray-minimum",
+        "status": 200,
+        "heading": "Sum of Subarray Minimum"
+      }
+    },
+    {
+      "id": 143,
+      "title": "Modal In React",
+      "url": "https://namastedev.com/practice/modal-in-react",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Dialog state, focus restoration, Escape handling, and accessible names.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/modal-in-react",
+        "status": 200,
+        "heading": "Modal In React"
+      }
+    },
+    {
+      "id": 144,
+      "title": "Image Gallery",
+      "url": "https://namastedev.com/practice/image-gallery",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Index boundaries, navigation state, responsive layout, and image handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/image-gallery",
+        "status": 200,
+        "heading": "Image Gallery"
+      }
+    },
+    {
+      "id": 145,
+      "title": "Typewriter Message",
+      "url": "https://namastedev.com/practice/typewriter-message",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Time-driven updates, effect cleanup, reduced motion, and predictable rendering.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/typewriter-message",
+        "status": 200,
+        "heading": "Typewriter Message"
+      }
+    },
+    {
+      "id": 146,
+      "title": "Generate Password",
+      "url": "https://namastedev.com/practice/generate-password",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/generate-password",
+        "status": 200,
+        "heading": "Generate Password"
+      }
+    },
+    {
+      "id": 147,
+      "title": "Tic Tac Toe",
+      "url": "https://namastedev.com/practice/tic-tac-toe",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/tic-tac-toe",
+        "status": 200,
+        "heading": "Tic Tac Toe"
+      }
+    },
+    {
+      "id": 148,
+      "title": "Temperature Convertor",
+      "url": "https://namastedev.com/practice/temperature-convertor",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Numeric inputs, calculation boundaries, rounding, and presentation.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/temperature-convertor",
+        "status": 200,
+        "heading": "Temperature Convertor"
+      }
+    },
+    {
+      "id": 149,
+      "title": "Multiselect dropdown",
+      "url": "https://namastedev.com/practice/multiselect-dropdown",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Selection state, filtering, focus management, and keyboard support.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/multiselect-dropdown",
+        "status": 200,
+        "heading": "Multiselect dropdown"
+      }
+    },
+    {
+      "id": 150,
+      "title": "Captcha Generator",
+      "url": "https://namastedev.com/practice/captcha-generator",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/captcha-generator",
+        "status": 200,
+        "heading": "Captcha Generator"
+      }
+    },
+    {
+      "id": 151,
+      "title": "Confetti Animation",
+      "url": "https://namastedev.com/practice/confetti-animation",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Time-driven updates, effect cleanup, reduced motion, and predictable rendering.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/confetti-animation",
+        "status": 200,
+        "heading": "Confetti Animation"
+      }
+    },
+    {
+      "id": 152,
+      "title": "Search Rotated Array",
+      "url": "https://namastedev.com/practice/search-rotated-array",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/search-rotated-array",
+        "status": 200,
+        "heading": "Search Rotated Array"
+      }
+    },
+    {
+      "id": 153,
+      "title": "Lucky Number",
+      "url": "https://namastedev.com/practice/lucky-number",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/lucky-number",
+        "status": 200,
+        "heading": "Lucky Number"
+      }
+    },
+    {
+      "id": 154,
+      "title": "Calculator",
+      "url": "https://namastedev.com/practice/calculator",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Numeric inputs, calculation boundaries, rounding, and presentation.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/calculator",
+        "status": 200,
+        "heading": "Calculator"
+      }
+    },
+    {
+      "id": 155,
+      "title": "Combination Sum",
+      "url": "https://namastedev.com/practice/combination-sum",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/combination-sum",
+        "status": 200,
+        "heading": "Combination Sum"
+      }
+    },
+    {
+      "id": 156,
+      "title": "Markdown Editor",
+      "url": "https://namastedev.com/practice/markdown-editor",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/markdown-editor",
+        "status": 200,
+        "heading": "Markdown Editor"
+      }
+    },
+    {
+      "id": 157,
+      "title": "Animated Loading Skeleton",
+      "url": "https://namastedev.com/practice/animated-loading-skeleton",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Time-driven updates, effect cleanup, reduced motion, and predictable rendering.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/animated-loading-skeleton",
+        "status": 200,
+        "heading": "Animated Loading Skeleton"
+      }
+    },
+    {
+      "id": 158,
+      "title": "Implement Promise Race",
+      "url": "https://namastedev.com/practice/implement-promise-race",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Async coordination, bounded work, failure propagation, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/implement-promise-race",
+        "status": 200,
+        "heading": "Implement Promise Race"
+      }
+    },
+    {
+      "id": 159,
+      "title": "Auto Save Form",
+      "url": "https://namastedev.com/practice/auto-save-form",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/auto-save-form",
+        "status": 200,
+        "heading": "Auto Save Form"
+      }
+    },
+    {
+      "id": 160,
+      "title": "Drag and Drop",
+      "url": "https://namastedev.com/practice/drag-and-drop",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Pointer interactions, stable ordering, state updates, and keyboard alternatives.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/drag-and-drop",
+        "status": 200,
+        "heading": "Drag and Drop"
+      }
+    },
+    {
+      "id": 161,
+      "title": "Progress Bar II",
+      "url": "https://namastedev.com/practice/progress-bar-ii",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Time-driven updates, effect cleanup, reduced motion, and predictable rendering.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/progress-bar-ii",
+        "status": 200,
+        "heading": "Progress Bar II"
+      }
+    },
+    {
+      "id": 162,
+      "title": "JSON Formatter and Validator",
+      "url": "https://namastedev.com/practice/json-formatter-and-validator",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/json-formatter-and-validator",
+        "status": 200,
+        "heading": "JSON Formatter and Validator"
+      }
+    },
+    {
+      "id": 163,
+      "title": "Quiz App",
+      "url": "https://namastedev.com/practice/quiz-app",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/quiz-app",
+        "status": 200,
+        "heading": "Quiz App"
+      }
+    },
+    {
+      "id": 164,
+      "title": "Reverse Words in a String",
+      "url": "https://namastedev.com/practice/reverse-words-in-a-string",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Text processing, empty input, character handling, and deterministic output.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/reverse-words-in-a-string",
+        "status": 200,
+        "heading": "Reverse Words in a String"
+      }
+    },
+    {
+      "id": 165,
+      "title": "Oranges Rotting",
+      "url": "https://namastedev.com/practice/oranges-rotting",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/oranges-rotting",
+        "status": 200,
+        "heading": "Oranges Rotting"
+      }
+    },
+    {
+      "id": 166,
+      "title": "Object.assign()",
+      "url": "https://namastedev.com/practice/objectassign",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data representation, nested structures, input contracts, and mutation behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/objectassign",
+        "status": 200,
+        "heading": "Object.assign()"
+      }
+    },
+    {
+      "id": 167,
+      "title": "Merge Array",
+      "url": "https://namastedev.com/practice/merge-array",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/merge-array",
+        "status": 200,
+        "heading": "Merge Array"
+      }
+    },
+    {
+      "id": 168,
+      "title": "pyramid pattern",
+      "url": "https://namastedev.com/practice/pyramid-pattern",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/pyramid-pattern",
+        "status": 200,
+        "heading": "pyramid pattern"
+      }
+    },
+    {
+      "id": 169,
+      "title": "Search in a 2D Sorted Matrix",
+      "url": "https://namastedev.com/practice/search-in-a-2d-sorted-matrix",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/search-in-a-2d-sorted-matrix",
+        "status": 200,
+        "heading": "Search in a 2D Sorted Matrix"
+      }
+    },
+    {
+      "id": 170,
+      "title": "King Moves",
+      "url": "https://namastedev.com/practice/king-moves",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/king-moves",
+        "status": 200,
+        "heading": "King Moves"
+      }
+    },
+    {
+      "id": 171,
+      "title": "Detect data type in JS",
+      "url": "https://namastedev.com/practice/detect-data-type-in-js",
+      "language": "JavaScript",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data representation, nested structures, input contracts, and mutation behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/detect-data-type-in-js",
+        "status": 200,
+        "heading": "Detect data type in JS"
+      }
+    },
+    {
+      "id": 172,
+      "title": "Bishop Moves",
+      "url": "https://namastedev.com/practice/bishop-moves",
+      "language": "React.js",
+      "difficulty": "Medium",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/bishop-moves",
+        "status": 200,
+        "heading": "Bishop Moves"
+      }
+    },
+    {
+      "id": 173,
+      "title": "Pagination",
+      "url": "https://namastedev.com/practice/pagination",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Derived collections, selection state, empty results, and pagination boundaries.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/pagination",
+        "status": 200,
+        "heading": "Pagination"
+      }
+    },
+    {
+      "id": 174,
+      "title": "Nested Checkbox",
+      "url": "https://namastedev.com/practice/nested-checkbox",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Recursive data, stable identities, nested updates, and accessibility.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/nested-checkbox",
+        "status": 200,
+        "heading": "Nested Checkbox"
+      }
+    },
+    {
+      "id": 175,
+      "title": "File Explorer",
+      "url": "https://namastedev.com/practice/file-explorer",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Recursive data, stable identities, nested updates, and accessibility.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/file-explorer",
+        "status": 200,
+        "heading": "File Explorer"
+      }
+    },
+    {
+      "id": 176,
+      "title": "Prim's MST Algorithm",
+      "url": "https://namastedev.com/practice/prims-mst-algorithm",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/prims-mst-algorithm",
+        "status": 200,
+        "heading": "Prim's MST Algorithm"
+      }
+    },
+    {
+      "id": 177,
+      "title": "Longest Valid Parentheses",
+      "url": "https://namastedev.com/practice/longest-valid-parentheses",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/longest-valid-parentheses",
+        "status": 200,
+        "heading": "Longest Valid Parentheses"
+      }
+    },
+    {
+      "id": 178,
+      "title": "StickyNotes Component",
+      "url": "https://namastedev.com/practice/stickynotes-component",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Pointer interactions, stable ordering, state updates, and keyboard alternatives.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/stickynotes-component",
+        "status": 200,
+        "heading": "StickyNotes Component"
+      }
+    },
+    {
+      "id": 179,
+      "title": "Chinese Remainder Theorem",
+      "url": "https://namastedev.com/practice/chinese-remainder-theorem",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/chinese-remainder-theorem",
+        "status": 200,
+        "heading": "Chinese Remainder Theorem"
+      }
+    },
+    {
+      "id": 180,
+      "title": "24 Game",
+      "url": "https://namastedev.com/practice/24-game",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/24-game",
+        "status": 200,
+        "heading": "24 Game"
+      }
+    },
+    {
+      "id": 181,
+      "title": "OTP Input Component",
+      "url": "https://namastedev.com/practice/otp-input-component",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input state, validation feedback, invalid values, and usable error handling.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/otp-input-component",
+        "status": 200,
+        "heading": "OTP Input Component"
+      }
+    },
+    {
+      "id": 182,
+      "title": "Event Management",
+      "url": "https://namastedev.com/practice/event-management",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Numeric inputs, calculation boundaries, rounding, and presentation.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/event-management",
+        "status": 200,
+        "heading": "Event Management"
+      }
+    },
+    {
+      "id": 183,
+      "title": "Tree Navigation",
+      "url": "https://namastedev.com/practice/tree-navigation",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Recursive data, stable identities, nested updates, and accessibility.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/tree-navigation",
+        "status": 200,
+        "heading": "Tree Navigation"
+      }
+    },
+    {
+      "id": 184,
+      "title": "Product Cart with Discounts",
+      "url": "https://namastedev.com/practice/product-cart-with-discounts",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Derived collections, selection state, empty results, and pagination boundaries.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/product-cart-with-discounts",
+        "status": 200,
+        "heading": "Product Cart with Discounts"
+      }
+    },
+    {
+      "id": 185,
+      "title": "Data Table",
+      "url": "https://namastedev.com/practice/data-table",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Derived collections, selection state, empty results, and pagination boundaries.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/data-table",
+        "status": 200,
+        "heading": "Data Table"
+      }
+    },
+    {
+      "id": 186,
+      "title": "Match Pair Game",
+      "url": "https://namastedev.com/practice/match-pair-game",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Explicit interaction rules, state transitions, reset behavior, and boundary checks.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/match-pair-game",
+        "status": 200,
+        "heading": "Match Pair Game"
+      }
+    },
+    {
+      "id": 187,
+      "title": "Kruskal's MST Algorithm",
+      "url": "https://namastedev.com/practice/kruskals-mst-algorithm",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/kruskals-mst-algorithm",
+        "status": 200,
+        "heading": "Kruskal's MST Algorithm"
+      }
+    },
+    {
+      "id": 188,
+      "title": "Implement LRUCache",
+      "url": "https://namastedev.com/practice/implement-lrucache",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data-structure invariants, lifecycle behavior, and operation costs.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/implement-lrucache",
+        "status": 200,
+        "heading": "Implement LRUCache"
+      }
+    },
+    {
+      "id": 189,
+      "title": "Nested Comments",
+      "url": "https://namastedev.com/practice/nested-comments",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Recursive data, stable identities, nested updates, and accessibility.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/nested-comments",
+        "status": 200,
+        "heading": "Nested Comments"
+      }
+    },
+    {
+      "id": 190,
+      "title": "Implement a Queue using Stack",
+      "url": "https://namastedev.com/practice/implement-a-queue-using-stack",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data-structure invariants, lifecycle behavior, and operation costs.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/implement-a-queue-using-stack",
+        "status": 200,
+        "heading": "Implement a Queue using Stack"
+      }
+    },
+    {
+      "id": 191,
+      "title": "Median of Two Sorted Arrays",
+      "url": "https://namastedev.com/practice/median-of-two-sorted-arrays",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/median-of-two-sorted-arrays",
+        "status": 200,
+        "heading": "Median of Two Sorted Arrays"
+      }
+    },
+    {
+      "id": 192,
+      "title": "Rick And Morty Characters Viewer",
+      "url": "https://namastedev.com/practice/rick-and-morty-characters-viewer",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Component state, event handling, semantic markup, and boundary behavior.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/rick-and-morty-characters-viewer",
+        "status": 200,
+        "heading": "Rick And Morty Characters Viewer"
+      }
+    },
+    {
+      "id": 193,
+      "title": "Product Store",
+      "url": "https://namastedev.com/practice/product-store",
+      "language": "React.js",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Derived collections, selection state, empty results, and pagination boundaries.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/product-store",
+        "status": 200,
+        "heading": "Product Store"
+      }
+    },
+    {
+      "id": 194,
+      "title": "Create Task Scheduler With Dependencies",
+      "url": "https://namastedev.com/practice/create-task-scheduler-with-dependencies",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Async coordination, bounded work, failure propagation, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/create-task-scheduler-with-dependencies",
+        "status": 200,
+        "heading": "Create Task Scheduler With Dependencies"
+      }
+    },
+    {
+      "id": 195,
+      "title": "All Pairs Shortest Path (Floyd-Warshall Algorithm)",
+      "url": "https://namastedev.com/practice/all-pairs-shortest-path-floyd-warshall-algorithm",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/all-pairs-shortest-path-floyd-warshall-algorithm",
+        "status": 200,
+        "heading": "All Pairs Shortest Path (Floyd-Warshall Algorithm)"
+      }
+    },
+    {
+      "id": 196,
+      "title": "Shortest Distance from Source (Bellman-Ford Algorithm)",
+      "url": "https://namastedev.com/practice/shortest-distance-from-source-bellman-ford-algorithm",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/shortest-distance-from-source-bellman-ford-algorithm",
+        "status": 200,
+        "heading": "Shortest Distance from Source (Bellman-Ford Algorithm)"
+      }
+    },
+    {
+      "id": 197,
+      "title": "Sliding Window Maximum",
+      "url": "https://namastedev.com/practice/sliding-window-maximum",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/sliding-window-maximum",
+        "status": 200,
+        "heading": "Sliding Window Maximum"
+      }
+    },
+    {
+      "id": 198,
+      "title": "Worker Pool",
+      "url": "https://namastedev.com/practice/worker-pool",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Async coordination, bounded work, failure propagation, and cleanup.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/worker-pool",
+        "status": 200,
+        "heading": "Worker Pool"
+      }
+    },
+    {
+      "id": 199,
+      "title": "First Missing Positive",
+      "url": "https://namastedev.com/practice/first-missing-positive",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Collection traversal, boundary cases, and time/space complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/first-missing-positive",
+        "status": 200,
+        "heading": "First Missing Positive"
+      }
+    },
+    {
+      "id": 200,
+      "title": "Design Autocomplete",
+      "url": "https://namastedev.com/practice/design-autocomplete",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Selection state, filtering, focus management, and keyboard support.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/design-autocomplete",
+        "status": 200,
+        "heading": "Design Autocomplete"
+      }
+    },
+    {
+      "id": 201,
+      "title": "Shortest Distance from Source (Dijkstra's Algorithm)",
+      "url": "https://namastedev.com/practice/shortest-distance-from-source-dijkstras-algorithm",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Graph representation, traversal, complexity, and boundary cases.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/shortest-distance-from-source-dijkstras-algorithm",
+        "status": 200,
+        "heading": "Shortest Distance from Source (Dijkstra's Algorithm)"
+      }
+    },
+    {
+      "id": 202,
+      "title": "Fibonacci Modulo (Pisano Period)",
+      "url": "https://namastedev.com/practice/fibonacci-modulo-pisano-period",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Input/output contracts, edge cases, deterministic behavior, and complexity.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/fibonacci-modulo-pisano-period",
+        "status": 200,
+        "heading": "Fibonacci Modulo (Pisano Period)"
+      }
+    },
+    {
+      "id": 203,
+      "title": "Implement Garbage Collector",
+      "url": "https://namastedev.com/practice/implement-garbage-collector",
+      "language": "JavaScript",
+      "difficulty": "Hard",
+      "originalEasyReactFilter": false,
+      "suggestedLearningTopics": "Data-structure invariants, lifecycle behavior, and operation costs.",
+      "pageVisit": {
+        "url": "https://namastedev.com/practice/implement-garbage-collector",
+        "status": 200,
+        "heading": "Implement Garbage Collector"
+      }
+    }
+  ]
+}

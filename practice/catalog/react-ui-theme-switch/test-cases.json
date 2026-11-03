@@ -1,0 +1,32 @@
+[
+  {
+    "id": "theme-default",
+    "name": "Light is the default appearance",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"surface\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-theme\",\"equals\":\"light\"},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"false\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "theme-dark",
+    "name": "Explicit dark configuration is respected",
+    "inputDescription": "{\"props\":{\"initialTheme\":\"dark\"},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"surface\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-theme\",\"equals\":\"dark\"},{\"selector\":\"[data-testid=\\\"current-theme\\\"]\",\"property\":\"text\",\"equals\":\"Dark appearance\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "theme-invalid",
+    "name": "Unknown initial values fall back to light",
+    "inputDescription": "{\"props\":{\"initialTheme\":\"sepia\"},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"surface\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-theme\",\"equals\":\"light\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "theme-toggle",
+    "name": "Toggling updates text and pressed state",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"current-theme\\\"]\",\"property\":\"text\",\"equals\":\"Dark appearance\"},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"true\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "theme-twice",
+    "name": "Two toggles restore light appearance",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"surface\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-theme\",\"equals\":\"light\"},{\"selector\":\"[data-testid=\\\"current-theme\\\"]\",\"property\":\"text\",\"equals\":\"Light appearance\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,10 +1,10 @@
 # Practice in your local IDE
 
-This workspace contains **all 270 authored exercises** from the app, grouped into five collections. The website and its progress remain independent. Open [INDEX.md](INDEX.md) in VS Code to find an exercise; Enterprise Labs project sequences appear at the bottom.
+This workspace contains **all 278 authored exercises** from the app, grouped into five collections. The website and its progress remain independent. Open [INDEX.md](INDEX.md) in VS Code to find an exercise; Enterprise Labs project sequences appear at the bottom.
 
 | Directory | Exercises | Workflow |
 |---|---:|---|
-| `catalog/` | 73 | Coding, debugging, incidents, reviews, design, and interviews |
+| `catalog/` | 81 | Coding, debugging, React UI, incidents, reviews, design, and interviews |
 | `loan/` | 8 | Function bugs with the same frozen-input behavioral harness as the app |
 | `sql/` | 120 | Executable SQL fixtures plus conceptual, incident, and design answers |
 | `beginner/` | 63 | Written questions and optional JavaScript/TypeScript/HTML/CSS exercises |
@@ -44,6 +44,7 @@ npm run practice:verify
 
 - **JavaScript/TypeScript:** awaited structured return values are compared exactly, including every field. Legacy scalar expectations also accept their exact display-string form; partial text matches never pass. TypeScript syntax is transpiled; this is not a project-wide type-check. Each case has its own context, timers are cleaned up, and the CLI terminates an exercise exceeding its process deadline.
 - **Loan bugs:** the app's actual entry point, immutable fixture harness, and expected results are reused, including selector identity observations.
+- **React UI:** eight JSX components use the same React runtime and 43 DOM journeys as the app in local Chromium. Run `npx playwright install chromium` and `npm run react:runtime` first. Edit `solution.jsx` and retain its default export; use `npm run practice:test -- catalog/react-ui-tag-editor`. Next.js and the account database are not needed. See [React UI practice](../docs/REACT_UI_PRACTICE.md).
 - **SQL track:** executable questions reuse the app's dialect-specific evaluator and authored cases. Standalone cohort retention uses AlaSQL date functions; top-N ranking uses PostgreSQL/PGlite because AlaSQL does not implement its `DENSE_RANK` function. Both compare every result row. This local dialect choice does not alter the standalone browser runner. Schemas/seeds are also available in `datasets/`.
 - **Python:** the token-bucket problem runs authored `consume` cases against a fresh `TokenBucket(10, 2)` in a local interpreter.
 - **Guided:** review code, UI snippets, foundational answers, architecture, interview, and incident exercises include the complete authored brief and reference/rubric. Some app fixtures describe an outcome (such as WCAG compliance) without an executable behavioral contract; those are deliberately guided here. They require manual review and, where appropriate, your own component or integration tests. The pack does not manufacture a passing score for them.

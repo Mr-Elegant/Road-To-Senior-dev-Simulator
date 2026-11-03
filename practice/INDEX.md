@@ -2,7 +2,7 @@
 
 Generated from the application collections. Search this file in VS Code, or use `npm run practice:list -- <search>`.
 
-## catalog (73)
+## catalog (81)
 
 - [Flash-Sale Batch Processor Microtask Queue Starvation](catalog/js-event-loop-microtasks/README.md) — `catalog/js-event-loop-microtasks` · guided
 - [SSE Connection Manager Request Context Closure Leak](catalog/js-closures-memory-leak/README.md) — `catalog/js-closures-memory-leak` · guided
@@ -77,6 +77,14 @@ Generated from the application collections. Search this file in VS Code, or use 
 - [Collaboration: Deduplicate Notifications and Respect Preferences](catalog/collab-notification-delivery/README.md) — `catalog/collab-notification-delivery` · javascript
 - [Collaboration: Reject Stale Meeting Signaling After Reconnect](catalog/collab-meeting-signaling/README.md) — `catalog/collab-meeting-signaling` · javascript
 - [Collaboration: Page Chat History Without Gaps or Repeats](catalog/collab-history-pagination/README.md) — `catalog/collab-history-pagination` · javascript
+- [React UI: Account Password Feedback](catalog/react-ui-password-feedback/README.md) — `catalog/react-ui-password-feedback` · react
+- [React UI: Web Address Inspector](catalog/react-ui-web-address/README.md) — `catalog/react-ui-web-address` · react
+- [React UI: Team Tag Editor](catalog/react-ui-tag-editor/README.md) — `catalog/react-ui-tag-editor` · react
+- [React UI: Project Completion Meter](catalog/react-ui-project-progress/README.md) — `catalog/react-ui-project-progress` · react
+- [React UI: Monthly Loan Estimator](catalog/react-ui-loan-estimator/README.md) — `catalog/react-ui-loan-estimator` · react
+- [React UI: Expandable Support Answers](catalog/react-ui-help-panels/README.md) — `catalog/react-ui-help-panels` · react
+- [React UI: Scoped Appearance Switch](catalog/react-ui-theme-switch/README.md) — `catalog/react-ui-theme-switch` · react
+- [React UI: Searchable Kitchen Cards](catalog/react-ui-recipe-browser/README.md) — `catalog/react-ui-recipe-browser` · react
 
 ## loan (8)
 

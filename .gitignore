@@ -71,3 +71,6 @@ desktop.ini
 /output/pdf/engineering-interview-study-handbook.pdf
 /tmp/pdfs/
 
+# Rebuilt from source before dev/build/local React tests
+/public/react-practice-runtime.js
+

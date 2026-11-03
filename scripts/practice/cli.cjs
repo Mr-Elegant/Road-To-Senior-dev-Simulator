@@ -20,7 +20,7 @@ function test(selected, reference = false) {
     const code = reference ? entry.reference?.code ?? entry.reference?.codeOrArtifact : fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : undefined;
     if (code === undefined) { console.error(`FAIL ${entry.key}: missing solution; run npm run practice:generate`); failed++; continue; }
     const child = spawnSync(process.execPath, [path.join(__dirname, 'worker.cjs')], {
-      input: JSON.stringify({ entry, code }), encoding: 'utf8', timeout: 30000, maxBuffer: 1024 * 1024,
+      input: JSON.stringify({ entry, code }), encoding: 'utf8', timeout: entry.mode === 'react' ? 90000 : 30000, maxBuffer: 1024 * 1024,
       cwd: root,
     });
     if (child.error || child.status !== 0) {

@@ -1,0 +1,71 @@
+{
+  "id": "react-ui-tag-editor",
+  "title": "React UI: Team Tag Editor",
+  "businessContext": "A support team labels saved views with a small set of tags and needs predictable keyboard behavior without accidental duplicates.",
+  "problemStatement": "Export App({ limit = 3 }). Render an input labelled New tag and a list [data-testid=\"tags\"]. Enter adds the trimmed nonempty draft and clears the input on success. Compare existing tags case-insensitively; a duplicate leaves the draft unchanged and sets [data-testid=\"feedback\"] to Tag already exists. At the limit show Tag limit reached and retain the draft. Duplicate checking takes precedence over the limit. Blank Enter does nothing. Each tag has a native button named Remove followed by the original tag text. Backspace on an empty input removes the last tag. Clear feedback after a successful add or removal. Preserve original capitalization and insertion order.",
+  "constraints": [
+    "limit is an integer from 1 to 5; tests only supply valid configuration.",
+    "Use immutable list updates, a labelled input, and native remove buttons. Do not submit a form on Enter."
+  ],
+  "starterCode": "import { useState } from 'react';\nexport default function App() {\n  const [draft, setDraft] = useState('');\n  return <section><label>New tag <input value={draft} onChange={e => setDraft(e.target.value)} /></label>\n    <ul data-testid=\"tags\"></ul><p data-testid=\"feedback\" role=\"status\"></p></section>;\n}",
+  "testCases": [
+    {
+      "id": "tag-add",
+      "name": "Enter trims the draft and adds a tag",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"  Ops  \"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"text\",\"equals\":\"OpsRemove\"},{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "tag-duplicate",
+      "name": "Case-insensitive duplicates retain the draft",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Ops\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"ops\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Tag already exists\"},{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"ops\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "tag-limit",
+      "name": "Configured limit prevents extra tags",
+      "inputDescription": "{\"props\":{\"limit\":1},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"One\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Two\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Tag limit reached\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "tag-remove",
+      "name": "Removing a tag frees a slot",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Ops\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"},{\"type\":\"click\",\"selector\":\"[aria-label=\\\"Remove Ops\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "tag-backspace",
+      "name": "Empty Backspace removes only the last tag",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"First\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Second\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Backspace\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"text\",\"equals\":\"FirstRemove\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "tag-blank",
+      "name": "Whitespace does not create a tag",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"   \"},{\"type\":\"key\",\"selector\":\"input\",\"key\":\"Enter\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"tags\\\"] li\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Keep draft, tags, and feedback in separate state values.",
+    "Handle duplicates before capacity and remove tags using filter or slice rather than mutating the array."
+  ],
+  "commonMistakes": [
+    "Checking capacity before duplicate detection.",
+    "Calling pop on an array held in React state."
+  ],
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "React UI Practice · Foundations",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 25,
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "candidateTasks": [
+    "Implement the default-exported App component and the documented DOM contract.",
+    "Run every interaction journey, explain edge cases, then compare your implementation with the reference."
+  ],
+  "alternativeApproaches": [
+    "Extract a small pure helper for derived values; keep input state in the component. Extend with a custom hook only when behavior is reused."
+  ]
+}

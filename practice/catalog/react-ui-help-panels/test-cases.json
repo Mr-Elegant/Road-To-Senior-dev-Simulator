@@ -1,0 +1,32 @@
+[
+  {
+    "id": "help-empty",
+    "name": "Empty configuration has a useful state",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"empty\\\"]\",\"property\":\"text\",\"equals\":\"No help articles\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "help-collapsed",
+    "name": "All answers initially collapsed",
+    "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Delivery\",\"body\":\"Ships in two days\"}]},\"actions\":[],\"assertions\":[{\"selector\":\"#trigger-a\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"},{\"selector\":\"[role=\\\"region\\\"]\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "help-open",
+    "name": "Opening creates a labelled answer region",
+    "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Delivery\",\"body\":\"Ships in two days\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"#trigger-a\"}],\"assertions\":[{\"selector\":\"#trigger-a\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"true\"},{\"selector\":\"#panel-a\",\"property\":\"text\",\"equals\":\"Ships in two days\"},{\"selector\":\"#panel-a\",\"property\":\"attribute\",\"attribute\":\"aria-labelledby\",\"equals\":\"trigger-a\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "help-exclusive",
+    "name": "Opening another answer closes the first",
+    "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Delivery\",\"body\":\"Ships in two days\"},{\"id\":\"b\",\"title\":\"Returns\",\"body\":\"Contact support\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"#trigger-a\"},{\"type\":\"click\",\"selector\":\"#trigger-b\"}],\"assertions\":[{\"selector\":\"#panel-a\",\"property\":\"count\",\"equals\":0},{\"selector\":\"#panel-b\",\"property\":\"text\",\"equals\":\"Contact support\"},{\"selector\":\"#trigger-a\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "help-toggle",
+    "name": "Activating an open heading collapses it",
+    "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Delivery\",\"body\":\"Ships in two days\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"#trigger-a\"},{\"type\":\"click\",\"selector\":\"#trigger-a\"}],\"assertions\":[{\"selector\":\"[role=\\\"region\\\"]\",\"property\":\"count\",\"equals\":0},{\"selector\":\"#trigger-a\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

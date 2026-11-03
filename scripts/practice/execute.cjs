@@ -54,6 +54,7 @@ async function javascriptCase(code, test, loan) {
 
 async function run(entry, code) {
   if (entry.mode === 'guided') return { key: entry.key, guided: true, results: [] };
+  if (entry.mode === 'react') return require('./react.cjs').runReact(entry, code);
   const source = entry.source;
   const results = [];
   if (entry.mode === 'sql') {

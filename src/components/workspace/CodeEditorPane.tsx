@@ -24,6 +24,8 @@ interface CodeEditorPaneProps {
   hasTestCases?: boolean;
   readOnly?: boolean;
   runButtonRef?: React.Ref<HTMLButtonElement>;
+  onPreview?: () => void;
+  previewButtonRef?: React.Ref<HTMLButtonElement>;
 }
 
 export function CodeEditorPane({
@@ -35,6 +37,8 @@ export function CodeEditorPane({
   hasTestCases,
   readOnly = false,
   runButtonRef,
+  onPreview,
+  previewButtonRef,
 }: CodeEditorPaneProps) {
   const { resolvedTheme } = useTheme();
   const [copied, setCopied] = useState(false);
@@ -53,7 +57,7 @@ export function CodeEditorPane({
         <div className="flex items-center gap-2">
           <Code2 className="w-4 h-4 text-blue-400" />
           <span className="text-xs font-mono font-medium text-zinc-300">
-            solution.{language === 'typescript' ? 'ts' : 'js'}
+            solution.{language === 'jsx' ? 'jsx' : language === 'typescript' ? 'ts' : 'js'}
           </span>
           <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-400 uppercase">
             {language}
@@ -61,6 +65,8 @@ export function CodeEditorPane({
         </div>
 
         <div className="flex items-center gap-2">
+          {onPreview && <button ref={previewButtonRef} type="button" onClick={onPreview} disabled={isRunningTests}
+            className="rounded border border-zinc-600 px-3 py-1.5 text-xs text-zinc-200 hover:bg-zinc-800 disabled:opacity-50">Preview</button>}
           {/* Word wrap toggle */}
           <button
             onClick={() => setWordWrap(wordWrap === 'on' ? 'off' : 'on')}

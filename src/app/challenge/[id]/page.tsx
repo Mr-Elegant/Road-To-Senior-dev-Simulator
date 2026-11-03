@@ -23,6 +23,9 @@ import type { Scenario } from '@/types/scenario';
 import { EvolvingIncidentWorkspace } from '@/components/workspace/EvolvingIncidentWorkspace';
 import { useIncidentSession } from '@/components/workspace/useIncidentSession';
 import { getIncidentView, incidentTranscript } from '@/lib/incidents/engine';
+import dynamic from 'next/dynamic';
+
+const ReactPreviewPane = dynamic(() => import('@/components/workspace/ReactPreviewPane').then(module => module.ReactPreviewPane), { ssr: false });
 
 interface ChallengePageProps {
   params: Promise<{ id: string }>;
@@ -78,21 +81,37 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
 
   // Test Suite state
   const [testResult, setTestResult] = useState<RunSuiteResult | null>(null);
+  const [testedCode, setTestedCode] = useState<string | null>(null);
   const [isRunningTests, setIsRunningTests] = useState(false);
   const [isTestPanelOpen, setIsTestPanelOpen] = useState(false);
   const runTestsButtonRef = useRef<HTMLButtonElement>(null);
+  const previewButtonRef = useRef<HTMLButtonElement>(null);
+  const reactRunController = useRef<AbortController | null>(null);
+  const [preview, setPreview] = useState<{ code: string; version: number } | null>(null);
+  const previewProps = React.useMemo(() => scenario.reactExercise
+    ? scenario.testCases?.map(test => JSON.parse(test.inputDescription).props).find(Boolean) : undefined, [scenario]);
+  useEffect(() => () => { reactRunController.current?.abort(); }, []);
+
+  const handleCodeChange = (value: string) => {
+    setCode(value);
+  };
 
   const handleRunTests = async () => {
     if (!scenario.testCases || scenario.testCases.length === 0) return;
+    if (isRunningTests) return;
+    setPreview(null);
     setIsTestPanelOpen(true);
     setIsRunningTests(true);
     try {
-      const result = await runClientSideTestSuite(
+      reactRunController.current?.abort();
+      const controller = new AbortController();
+      reactRunController.current = controller;
+      const result = scenario.reactExercise ? await (await import('@/lib/reactPractice/runner')).runReactSuite(scenario, code, controller.signal) : await runClientSideTestSuite(
         code,
         scenario.testCases,
         scenario.codeLanguage || 'javascript'
       );
-      setTestResult(result);
+      if (!controller.signal.aborted) { setTestResult(result); setTestedCode(code); }
     } catch (e: any) {
       console.error('Test execution error', e);
     } finally {
@@ -139,6 +158,10 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
 
   // Submit and save attempt
   const handleSubmitAndEvaluate = () => {
+    if (scenario.reactExercise && (!testResult || testedCode !== code)) {
+      setSubmissionMessage('Run tests on the current code before submitting this React exercise.');
+      return;
+    }
     if (scenario.incidentSimulation && !getIncidentView(scenario.incidentSimulation, incident.run, scenario.incidentTelemetry!).completed) {
       setSubmissionMessage('Complete all three developments before submitting. Use the simulation clock or advance to the next event.');
       return;
@@ -177,7 +200,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
       },
       interviewAnswers: scenario.incidentSimulation ? { ...incidentTranscript(scenario.incidentSimulation, incident.run), 'incident.evidence': evidence } : scenario.type === 'incident' ? { 'incident.evidence': evidence } : interviewAnswers,
       rubricScores,
-      totalScorePercentage,
+      totalScorePercentage: scenario.reactExercise && testResult ? Math.round(testResult.passedTests / testResult.totalTests * 100) : totalScorePercentage,
       passedTestsCount: testResult?.passedTests || 0,
       totalTestsCount: testResult?.totalTests || (scenario.testCases?.length ?? 0),
       selfAssessmentCompleted: true,
@@ -191,8 +214,11 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
 
   const handleReset = () => {
     if (confirm('Reset workspace code and inputs back to starter defaults?')) {
+      reactRunController.current?.abort();
+      setPreview(null);
       setCode(scenario.starterCode || '');
       setTestResult(null);
+      setTestedCode(null);
       setIsTestPanelOpen(false);
       setReviewComments([]);
       setDesignNodes([]);
@@ -226,6 +252,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
       />
 
       {submissionMessage && <p role="alert" className="bg-amber-500/10 text-amber-200 px-4 py-2 text-xs">{submissionMessage}</p>}
+      {scenario.reactExercise && testedCode !== null && testedCode !== code && <p role="status" className="px-4 py-1 text-xs text-amber-300 bg-zinc-900">Code changed. Run tests again to update the result.</p>}
 
       {/* Main Workspace Body Split */}
       <div className={scenario.incidentSimulation ? 'flex flex-col xl:flex-row xl:flex-1 xl:min-h-0 xl:overflow-hidden' : 'min-h-0 flex-1 flex flex-col md:flex-row overflow-hidden'}>
@@ -248,14 +275,24 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
               <div className="min-h-0 flex-1 overflow-hidden">
                 <CodeEditorPane
                   code={code}
-                  onChange={setCode}
+                  onChange={handleCodeChange}
                   language={scenario.codeLanguage || 'javascript'}
                   onRunTests={handleRunTests}
                   isRunningTests={isRunningTests}
                   hasTestCases={Boolean(scenario.testCases && scenario.testCases.length > 0)}
                   runButtonRef={runTestsButtonRef}
+                  readOnly={Boolean(scenario.reactExercise && isRunningTests)}
+                  onPreview={scenario.reactExercise ? () => {
+                    setIsTestPanelOpen(false);
+                    setPreview(previous => ({ code, version: (previous?.version ?? 0) + 1 }));
+                  } : undefined}
+                  previewButtonRef={previewButtonRef}
                 />
               </div>
+
+              {preview && <ReactPreviewPane key={preview.version} code={preview.code} sampleProps={previewProps} onClose={() => {
+                setPreview(null); previewButtonRef.current?.focus();
+              }} />}
 
               {isTestPanelOpen && scenario.testCases && scenario.testCases.length > 0 && (
                 <section aria-label="Test results" className="h-64 max-h-[50%] min-h-0 shrink-0">
@@ -347,6 +384,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
         isOpen={isRubricModalOpen}
         onClose={() => setIsRubricModalOpen(false)}
         rubric={scenario.rubric}
+        recordedTestScore={scenario.reactExercise && testResult ? Math.round(testResult.passedTests / testResult.totalTests * 100) : undefined}
         onSubmitScores={handleSaveRubricAttempt}
       />
 

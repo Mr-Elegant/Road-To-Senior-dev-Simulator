@@ -2,6 +2,8 @@ import nextEnv from '@next/env';
 import { randomBytes } from 'node:crypto';
 import { spawn } from 'node:child_process';
 
+if (process.argv[2] !== 'serve') await import('./build-react-runtime.mjs');
+
 nextEnv.loadEnvConfig(process.cwd());
 const mode = process.argv[2] || 'build';
 const port = process.env.AUTH_CHECK_PORT || '3100';

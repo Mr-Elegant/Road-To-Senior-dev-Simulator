@@ -1,0 +1,32 @@
+[
+  {
+    "id": "pw-empty",
+    "name": "Empty input starts without feedback severity",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Start typing\"},{\"selector\":\"[data-testid=\\\"passed-rules\\\"]\",\"property\":\"text\",\"equals\":\"0\"},{\"selector\":\"input\",\"property\":\"attribute\",\"attribute\":\"type\",\"equals\":\"password\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "pw-weak",
+    "name": "Short lowercase text remains weak",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"small\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Weak\"},{\"selector\":\"[data-testid=\\\"passed-rules\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "pw-fair",
+    "name": "Two independent checks produce fair feedback",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Hello1\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Fair\"},{\"selector\":\"[data-testid=\\\"passed-rules\\\"]\",\"property\":\"text\",\"equals\":\"2\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "pw-strong",
+    "name": "All four checks produce strong feedback",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"LongPass42!\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Strong\"},{\"selector\":\"[data-testid=\\\"passed-rules\\\"]\",\"property\":\"text\",\"equals\":\"4\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "pw-reset",
+    "name": "Deleting the password resets the derived feedback",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"LongPass42!\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Start typing\"},{\"selector\":\"[data-testid=\\\"passed-rules\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -14,6 +14,7 @@ export function formatDuration(seconds: number): string {
 
 export function getDifficultyColor(difficulty?: string | null): { bg: string; text: string; border: string } {
   switch ((difficulty || '').toLowerCase()) {
+    case 'beginner':
     case 'mid-level':
       return {
         bg: 'bg-emerald-500/10 dark:bg-emerald-500/20',
