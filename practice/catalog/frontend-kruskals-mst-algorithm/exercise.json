@@ -1,0 +1,53 @@
+{
+  "id": "frontend-kruskals-mst-algorithm",
+  "title": "Frontend: Kruskal's MST Algorithm",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Kruskal's MST Algorithm. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({count,edges}). Return {weight,components} for the minimum spanning forest of an undirected weighted graph using Kruskal and disjoint-set union. Self-loops are ignored. Parallel/negative edges are supported; empty graph has zero components.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "kruskals-mst-algorithm-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"count\":3,\"edges\":[[0,1,3],[1,2,1],[0,2,8]]}",
+      "expectedOutput": "{\"weight\":4,\"components\":1}"
+    },
+    {
+      "id": "kruskals-mst-algorithm-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"count\":4,\"edges\":[[0,1,-2]]}",
+      "expectedOutput": "{\"weight\":-2,\"components\":3}"
+    },
+    {
+      "id": "kruskals-mst-algorithm-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"count\":0,\"edges\":[]}",
+      "expectedOutput": "{\"weight\":0,\"components\":0}"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Sort undirected edges by weight, then use a disjoint-set union structure with path compression and union by rank/size."
+  ],
+  "alternativeApproaches": [
+    "Return component information and a deterministic tie-breaking policy without claiming the MST is unique."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Cycle edge rejected; disconnected graph; negative weights.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

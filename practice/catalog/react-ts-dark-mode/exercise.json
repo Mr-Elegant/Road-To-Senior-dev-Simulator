@@ -1,0 +1,69 @@
+{
+  "id": "react-ts-dark-mode",
+  "title": "React + TypeScript: Dark Mode",
+  "businessContext": "An embedded workspace needs a theme control that affects only its own surface and does not mutate the host website.",
+  "problemStatement": "Export App({ initialTheme = \"light\" }). Only initialTheme === \"dark\" starts dark; any other value starts light. Render a section [data-testid=\"surface\"] with data-theme equal to the current theme. Render a button named Toggle appearance with aria-pressed true exactly in dark mode. Each activation toggles light/dark, updates [data-testid=\"current-theme\"] to Light appearance or Dark appearance, and changes the surface foreground/background for readable contrast. Keep the theme local; do not write document.body, parent state, storage, or network.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Read the initial prop lazily when state is initialized; later user toggles are independent.",
+    "Use a native button and do not communicate mode through color alone.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    initialTheme?: string;\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "theme-default",
+      "name": "Light is the default appearance",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"surface\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-theme\",\"equals\":\"light\"},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"false\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "theme-dark",
+      "name": "Explicit dark configuration is respected",
+      "inputDescription": "{\"props\":{\"initialTheme\":\"dark\"},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"surface\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-theme\",\"equals\":\"dark\"},{\"selector\":\"[data-testid=\\\"current-theme\\\"]\",\"property\":\"text\",\"equals\":\"Dark appearance\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "theme-invalid",
+      "name": "Unknown initial values fall back to light",
+      "inputDescription": "{\"props\":{\"initialTheme\":\"sepia\"},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"surface\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-theme\",\"equals\":\"light\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "theme-toggle",
+      "name": "Toggling updates text and pressed state",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"current-theme\\\"]\",\"property\":\"text\",\"equals\":\"Dark appearance\"},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"true\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "theme-twice",
+      "name": "Two toggles restore light appearance",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"surface\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-theme\",\"equals\":\"light\"},{\"selector\":\"[data-testid=\\\"current-theme\\\"]\",\"property\":\"text\",\"equals\":\"Light appearance\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "A boolean state is sufficient for two appearances.",
+    "Use the same boolean for accessible state, text, data attribute, and styles."
+  ],
+  "commonMistakes": [
+    "Changing the global document class from an embedded component.",
+    "Keeping the pressed state and label out of sync with the actual appearance."
+  ],
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 25,
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "candidateTasks": [
+    "Implement the default-exported App component and the documented DOM contract.",
+    "Run every interaction journey, explain edge cases, then compare your implementation with the reference.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "alternativeApproaches": [
+    "Extract a small pure helper for derived values; keep input state in the component. Extend with a custom hook only when behavior is reused."
+  ],
+  "reactTypescriptExercise": true
+}

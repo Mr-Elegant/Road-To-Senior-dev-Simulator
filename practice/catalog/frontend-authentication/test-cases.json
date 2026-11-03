@@ -1,0 +1,20 @@
+[
+  {
+    "id": "authentication-1",
+    "name": "Empty identity",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Email required\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "authentication-2",
+    "name": "Sign in/out",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\" ada@example.com \"},{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Signed out\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "authentication-3",
+    "name": "Rejected",
+    "inputDescription": "{\"props\":{\"accept\":false},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"ada@example.com\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Sign in failed\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

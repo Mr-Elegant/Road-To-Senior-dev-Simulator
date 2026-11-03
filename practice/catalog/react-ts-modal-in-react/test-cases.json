@@ -1,0 +1,20 @@
+[
+  {
+    "id": "modal-in-react-1",
+    "name": "Open",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"open\\\"]\"}],\"assertions\":[{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":1}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "modal-in-react-2",
+    "name": "Close",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"open\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"close\\\"]\"}],\"assertions\":[{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "modal-in-react-3",
+    "name": "Escape",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"open\\\"]\"},{\"type\":\"key\",\"selector\":\"dialog\",\"key\":\"Escape\"}],\"assertions\":[{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

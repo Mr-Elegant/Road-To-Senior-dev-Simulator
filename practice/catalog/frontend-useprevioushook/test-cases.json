@@ -1,0 +1,20 @@
+[
+  {
+    "id": "useprevioushook-1",
+    "name": "First commit",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"previous\\\"]\",\"property\":\"text\",\"equals\":\"none\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "useprevioushook-2",
+    "name": "Previous value",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"current\\\"]\",\"property\":\"text\",\"equals\":\"1\"},{\"selector\":\"[data-testid=\\\"previous\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "useprevioushook-3",
+    "name": "Sequential commits",
+    "inputDescription": "{\"props\":{\"initial\":5},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"current\\\"]\",\"property\":\"text\",\"equals\":\"7\"},{\"selector\":\"[data-testid=\\\"previous\\\"]\",\"property\":\"text\",\"equals\":\"6\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

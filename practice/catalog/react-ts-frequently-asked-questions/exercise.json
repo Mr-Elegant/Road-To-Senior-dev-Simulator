@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-frequently-asked-questions",
+  "title": "React + TypeScript: Frequently Asked Questions",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Frequently Asked Questions. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({items=[]}). Controlled Search input filters title or body case-insensitively. Each visible item {id,title,body} has a button toggling its answer region #answer-ID. Multiple may stay expanded; filtering must retain expansion IDs. Empty results show No matching answers.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    items?: {\n        id: string;\n        title: string;\n        body: string;\n    }[];\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "frequently-asked-questions-1",
+      "name": "Empty",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"No matching answers\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "frequently-asked-questions-2",
+      "name": "Search body",
+      "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Timing\",\"body\":\"Delivery tomorrow\"},{\"id\":\"b\",\"title\":\"Payment\",\"body\":\"Cash\"}]},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"DELIVERY\"}],\"assertions\":[{\"selector\":\"article\",\"property\":\"count\",\"equals\":1}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "frequently-asked-questions-3",
+      "name": "Expansion survives",
+      "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Question\",\"body\":\"Answer\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"missing\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"\"}],\"assertions\":[{\"selector\":\"#answer-a\",\"property\":\"text\",\"equals\":\"Answer\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Represent FAQ items by stable IDs and derive matches from normalized question/body text."
+  ],
+  "alternativeApproaches": [
+    "Group results by category while avoiding duplicate IDs in accessibility relationships."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Search body text; no matches; clear search.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-sidebar",
+  "title": "React + TypeScript: Sidebar",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Sidebar. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. A Toggle sidebar button toggles a nav aria-label=Workspace. It starts expanded. Links Dashboard and Reports must always keep accessible names; collapsed nav is absent from the DOM. aria-expanded and aria-controls must match. Escape on the toggle collapses it.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "sidebar-1",
+      "name": "Expanded",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"nav a\",\"property\":\"count\",\"equals\":2},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"true\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "sidebar-2",
+      "name": "Collapse",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"nav\",\"property\":\"count\",\"equals\":0},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "sidebar-3",
+      "name": "Restore",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"nav a\",\"property\":\"count\",\"equals\":2}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Keep collapsed state separate from current-route state."
+  ],
+  "alternativeApproaches": [
+    "Persist only the layout preference and distinguish desktop collapse from mobile open state."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Collapse/expand; active route; mobile Escape.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

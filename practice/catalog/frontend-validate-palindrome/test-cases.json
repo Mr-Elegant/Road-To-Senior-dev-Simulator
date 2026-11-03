@@ -1,0 +1,26 @@
+[
+  {
+    "id": "validate-palindrome-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "\"A man, a plan, a canal: Panama\"",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "validate-palindrome-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "\"race a car\"",
+    "expectedOutput": "false"
+  },
+  {
+    "id": "validate-palindrome-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "\"!!!\"",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "validate-palindrome-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "\"0P\"",
+    "expectedOutput": "false"
+  }
+]

@@ -1,0 +1,60 @@
+{
+  "id": "frontend-topological-sort-bfs",
+  "title": "Frontend: Topological Sort (BFS)",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Topological Sort (BFS). This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({count,edges}) using Kahn indegree removal. Always choose the smallest ready vertex. Return the deterministic order; throw Cycle if not all vertices can be emitted.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "topological-sort-bfs-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"count\":3,\"edges\":[[0,2],[1,2]]}",
+      "expectedOutput": "[0,1,2]"
+    },
+    {
+      "id": "topological-sort-bfs-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"count\":3,\"edges\":[]}",
+      "expectedOutput": "[0,1,2]"
+    },
+    {
+      "id": "topological-sort-bfs-3",
+      "name": "Reject input: Cycle",
+      "inputDescription": "{\"count\":2,\"edges\":[[0,1],[1,0]]}",
+      "expectedOutput": "Throws: Cycle",
+      "expectedError": "Cycle"
+    },
+    {
+      "id": "topological-sort-bfs-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "{\"count\":0,\"edges\":[]}",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Compute each vertex’s indegree, enqueue all zero-indegree vertices, and remove them one by one while decrementing outgoing neighbors."
+  ],
+  "alternativeApproaches": [
+    "Produce dependency layers for concurrent execution while preserving a separate cycle-reporting path."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Independent nodes; diamond; cycle.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "frontend-confetti-animation",
+  "title": "Frontend: Confetti Animation",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Confetti Animation. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({count=8,reducedMotion=false}). Celebrate displays count decorative particle spans [data-particle] unless reducedMotion, when none appear. Show Celebration complete in a status region. Clear removes particles/status. Count is valid 0..20. Keep animations transform/opacity based.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "confetti-animation-1",
+      "name": "Celebrate",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"celebrate\\\"]\"}],\"assertions\":[{\"selector\":\"[data-particle]\",\"property\":\"count\",\"equals\":8},{\"selector\":\"[role=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Celebration complete\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "confetti-animation-2",
+      "name": "Reduced motion",
+      "inputDescription": "{\"props\":{\"reducedMotion\":true},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"celebrate\\\"]\"}],\"assertions\":[{\"selector\":\"[data-particle]\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "confetti-animation-3",
+      "name": "Clear",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"celebrate\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"clear\\\"]\"}],\"assertions\":[{\"selector\":\"[data-particle]\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[role=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Create a finite particle set at the celebration boundary and animate transforms/opacity rather than layout properties."
+  ],
+  "alternativeApproaches": [
+    "Move a larger particle simulation to canvas while bounding frame work and lifetime."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Repeated trigger; unmount; zero particles.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

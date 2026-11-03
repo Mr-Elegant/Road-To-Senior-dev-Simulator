@@ -1,0 +1,20 @@
+[
+  {
+    "id": "product-store-1",
+    "name": "Quantity",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-add=\\\"a\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-add=\\\"a\\\"]\"}],\"assertions\":[{\"selector\":\"[data-quantity=\\\"a\\\"]\",\"property\":\"text\",\"equals\":\"2\"},{\"selector\":\"[data-testid=\\\"total\\\"]\",\"property\":\"text\",\"equals\":\"200\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "product-store-2",
+    "name": "Discount",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-add=\\\"b\\\"]\"},{\"type\":\"input\",\"selector\":\"select\",\"value\":\"10\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"total\\\"]\",\"property\":\"text\",\"equals\":\"225\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "product-store-3",
+    "name": "Filtered cart retained",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-add=\\\"a\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Beta\"}],\"assertions\":[{\"selector\":\"[data-product=\\\"a\\\"]\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[data-testid=\\\"total\\\"]\",\"property\":\"text\",\"equals\":\"100\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,7 @@
+import type * as React from 'react';
+export interface AppProps {
+}
+import { useState } from 'react';
+export default function App(): React.JSX.Element { const [board, setBoard] = useState(Array(9).fill('')), [next, setNext] = useState('X'); const lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]], win = lines.map(([a, b, c]) => board[a] && board[a] === board[b] && board[b] === board[c] ? board[a] : '').find(Boolean), draw = !win && board.every(Boolean); function play(i: number) { if (board[i] || win || draw)
+    return; setBoard(old => old.map((v, k) => k === i ? next : v)); setNext(n => n === 'X' ? 'O' : 'X'); } return <section><div role="group" aria-label="Board">{board.map((v, i) => <button key={i} data-cell={i} aria-label={'Cell ' + i} onClick={() => play(i)}>{v || '·'}</button>)}</div><p data-testid="status">{win ? 'Winner: ' + win : draw ? 'Draw' : 'Next: ' + next}</p><button data-action="reset" onClick={() => { setBoard(Array(9).fill('')); setNext('X'); }}>Reset</button></section>; }
+

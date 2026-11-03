@@ -1,0 +1,11 @@
+import type * as React from 'react';
+export interface AppProps {
+    items?: {
+        id: string;
+        title: string;
+        body: string;
+    }[];
+}
+import { useState } from 'react';
+export default function App({ items = [] }: AppProps = {}): React.JSX.Element { const [query, setQuery] = useState(''), [open, setOpen] = useState<string[]>([]); const visible = items.filter(item => (item.title + ' ' + item.body).toLowerCase().includes(query.trim().toLowerCase())); return <section><label>Search<input aria-label="Search" value={query} onChange={e => setQuery(e.target.value)}/></label>{visible.map(item => <article key={item.id}><button data-id={item.id} aria-expanded={open.includes(item.id)} onClick={() => setOpen(old => old.includes(item.id) ? old.filter(id => id !== item.id) : [...old, item.id])}>{item.title}</button>{open.includes(item.id) && <div role="region" id={'answer-' + item.id}>{item.body}</div>}</article>)}{!visible.length && <p>No matching answers</p>}</section>; }
+

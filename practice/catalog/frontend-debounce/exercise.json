@@ -1,0 +1,59 @@
+{
+  "id": "frontend-debounce",
+  "title": "Frontend: Debounce",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Debounce. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({wait,calls,end}). Model trailing debounce with nondecreasing [time,value] calls and inclusive end. A timer due at a call timestamp fires first. Return emitted [time,value] entries. wait > 0. This deterministic clock model tests scheduling, not a live clock.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "debounce-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"wait\":10,\"calls\":[[0,\"a\"],[3,\"b\"],[7,\"c\"]],\"end\":20}",
+      "expectedOutput": "[[17,\"c\"]]"
+    },
+    {
+      "id": "debounce-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"wait\":5,\"calls\":[[0,1],[5,2]],\"end\":10}",
+      "expectedOutput": "[[5,1],[10,2]]"
+    },
+    {
+      "id": "debounce-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"wait\":10,\"calls\":[[0,1]],\"end\":9}",
+      "expectedOutput": "[]"
+    },
+    {
+      "id": "debounce-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "{\"wait\":2,\"calls\":[],\"end\":20}",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Keep a timer handle and clear/restart it on every call."
+  ],
+  "alternativeApproaches": [
+    "Add leading/trailing options and prove that a single leading call does not accidentally trigger an unwanted trailing duplicate."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: One call; burst; latest arguments.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

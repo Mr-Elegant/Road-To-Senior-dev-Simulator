@@ -1,0 +1,20 @@
+[
+  {
+    "id": "cinema-hall-1",
+    "name": "Reserved disabled",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-seat=\\\"A2\\\"]\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "cinema-hall-2",
+    "name": "Select two",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-seat=\\\"A1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-seat=\\\"A3\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"2000\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "cinema-hall-3",
+    "name": "Deselect",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-seat=\\\"A1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-seat=\\\"A1\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

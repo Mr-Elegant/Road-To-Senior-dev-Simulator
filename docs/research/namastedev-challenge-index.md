@@ -1,6 +1,6 @@
 # NamasteDev practice: review index
 
-Reviewed: 3 November 2026. Status: research only; implementation awaits your approval.
+Reviewed: 3 November 2026. This file preserves the original research snapshot. All 203 indexed topics now have independently authored runnable contracts in the app at `/frontend-practice`; see the [implementation record](react-practice-implementation.md).
 
 Source: [public practice catalog](https://namastedev.com/practice). [Your original easy React filter](https://namastedev.com/practice?difficulty_level=easy&language=reactJs&sortBy=easy-medium-hard).
 
@@ -10,7 +10,7 @@ Visited all 21 unfiltered catalog pages and opened each of the 203 listed detail
 
 This is a title-and-link reference, not a mirror of the website. Full questions, examples, constraints, starter code, solutions, and test cases are not reproduced. Learning notes below are original, title-based suggestions; they do not document the source's exact requirements. Detail-page visits verified availability and headings, not all editor, solution, or gated content.
 
-No app code, dependencies, routes, question banks, or runtime behavior were changed. The adjacent JSON contains the same index with visit evidence and an easy-React filter flag.
+The research pass itself changed no app code, dependencies, routes, question banks, or runtime behavior. The subsequent implementation is documented separately. The adjacent JSON preserves the index with visit evidence and an easy-React filter flag.
 
 ## Catalog totals
 

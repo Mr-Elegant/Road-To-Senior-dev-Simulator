@@ -1,0 +1,8 @@
+import type * as React from 'react';
+export interface AppProps {
+    message?: string;
+}
+import { useState } from 'react';
+export default function App({ message = 'Hello' }: AppProps = {}): React.JSX.Element { const [n, setN] = useState(0), [paused, setPaused] = useState(false), chars = Array.from(message); return <section><p data-testid="message">{chars.slice(0, n).join('')}</p><button data-action="advance" onClick={() => { if (!paused)
+    setN(i => Math.min(chars.length, i + 1)); }}>Advance</button><button data-action="pause" onClick={() => setPaused(v => !v)}>Pause</button><button data-action="reset" onClick={() => { setN(0); setPaused(false); }}>Reset</button></section>; }
+

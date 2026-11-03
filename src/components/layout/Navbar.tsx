@@ -68,6 +68,8 @@ export function Navbar() {
     { label: 'SQL & Postgres Lab', href: '/sql', icon: Database, badge: '120 Qs' },
     { label: 'Enterprise Labs', href: '/enterprise-labs', icon: Briefcase },
     { label: 'Challenges', href: '/library', icon: BookOpen },
+    { label: 'Frontend Practice', href: '/frontend-practice', icon: Code2, badge: '203 Qs' },
+    { label: 'React + TypeScript', href: '/react-typescript', icon: Code2 },
     { label: 'Incidents', href: '/incidents', icon: Flame },
     { label: 'Coding Practice', href: '/practice', icon: Code2 },
     { label: 'AI Interview', href: '/interview', icon: Sparkles, badge: 'Gemini' },
@@ -104,7 +106,7 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden min-[1800px]:flex items-center gap-0.5">
-          {navItems.map((item) => {
+          {navItems.filter(item => !['/incidents', '/practice', '/progress', '/settings'].includes(item.href)).map((item) => {
             const Icon = item.icon;
             const isActive =
               item.href === '/'
@@ -214,8 +216,10 @@ export function Navbar() {
           <AccountMenu />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors min-[1800px]:hidden"
+            className="p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             aria-label="Toggle navigation menu"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="site-navigation-menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -224,7 +228,7 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="min-[1800px]:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl px-4 py-4 space-y-1 shadow-lg animate-in slide-in-from-top duration-200">
+        <div id="site-navigation-menu" className="border-t border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl px-4 py-4 space-y-1 shadow-lg animate-in slide-in-from-top duration-200">
           <div className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 dark:text-zinc-500 px-3 pb-1">
             Navigation Menu
           </div>

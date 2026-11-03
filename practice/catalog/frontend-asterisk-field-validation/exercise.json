@@ -1,0 +1,53 @@
+{
+  "id": "frontend-asterisk-field-validation",
+  "title": "Frontend: Asterisk Field Validation",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Asterisk Field Validation. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Name and Email are required after trimming. Email must satisfy a basic local@domain.tld form; Note is optional. Return trimmed {name,email,note}; any failure shows Required fields invalid. Render controlled labelled inputs with these exact names: Name, Email, Note. A Calculate submit button computes the result. Render JSON.stringify(result) in [data-testid=\"result\"]. Validation failure clears result and shows the documented message in [data-testid=\"error\"].",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "asterisk-field-validation-1",
+      "name": "Input/derived output 1",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Name\\\"]\",\"value\":\" Ada \"},{\"type\":\"input\",\"selector\":\"[name=\\\"Email\\\"]\",\"value\":\"a@b.com\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Note\\\"]\",\"value\":\"\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"{\\\"name\\\":\\\"Ada\\\",\\\"email\\\":\\\"a@b.com\\\",\\\"note\\\":\\\"\\\"}\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "asterisk-field-validation-2",
+      "name": "Input/derived output 2",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Name\\\"]\",\"value\":\" \"},{\"type\":\"input\",\"selector\":\"[name=\\\"Email\\\"]\",\"value\":\"a@b.com\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Note\\\"]\",\"value\":\"x\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Required fields invalid\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "asterisk-field-validation-3",
+      "name": "Input/derived output 3",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Name\\\"]\",\"value\":\"Ada\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Email\\\"]\",\"value\":\"invalid\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Note\\\"]\",\"value\":\"\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Required fields invalid\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use required attributes and visible labels; an asterisk alone does not explain a requirement."
+  ],
+  "alternativeApproaches": [
+    "Support conditional requirements without leaving hidden fields invalid or unreachable."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Whitespace-only value; missing required field; optional blank field.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

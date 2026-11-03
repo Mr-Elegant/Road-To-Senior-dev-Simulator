@@ -1,0 +1,20 @@
+[
+  {
+    "id": "navbar-1",
+    "name": "Closed",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"nav\",\"property\":\"count\",\"equals\":0},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "navbar-2",
+    "name": "Open/current",
+    "inputDescription": "{\"props\":{\"current\":\"about\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"nav a\",\"property\":\"count\",\"equals\":2},{\"selector\":\"a[href=\\\"#about\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-current\",\"equals\":\"page\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "navbar-3",
+    "name": "Escape",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"key\",\"selector\":\"button\",\"key\":\"Escape\"}],\"assertions\":[{\"selector\":\"nav\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

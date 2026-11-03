@@ -1,0 +1,20 @@
+[
+  {
+    "id": "emoji-replacer-1",
+    "name": "Replace known tokens",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"Hi :smile: :fire:\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Hi 😀 🔥\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "emoji-replacer-2",
+    "name": "Unknown retained",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\":unknown:\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\":unknown:\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "emoji-replacer-3",
+    "name": "Text only",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"<b>:heart:</b>\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"<b>❤️</b>\"},{\"selector\":\"b\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

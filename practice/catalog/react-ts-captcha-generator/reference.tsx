@@ -1,0 +1,7 @@
+import type * as React from 'react';
+export interface AppProps {
+    challenges?: (string)[];
+}
+import { useState } from 'react';
+export default function App({ challenges = ['AB12', 'CD34'] }: AppProps = {}): React.JSX.Element { const [index, setIndex] = useState(0), [value, setValue] = useState(''), [feedback, setFeedback] = useState(''); return <section><p data-testid="challenge">{challenges[index]}</p><label>Answer<input aria-label="Answer" value={value} onChange={e => setValue(e.target.value)}/></label><button data-action="verify" onClick={() => setFeedback(value.trim().toUpperCase() === challenges[index] ? 'Correct' : 'Incorrect')}>Verify</button><button data-action="regenerate" onClick={() => { setIndex(i => (i + 1) % challenges.length); setValue(''); setFeedback(''); }}>Regenerate</button><p data-testid="feedback">{feedback}</p></section>; }
+

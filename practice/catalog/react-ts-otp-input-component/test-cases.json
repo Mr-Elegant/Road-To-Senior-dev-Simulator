@@ -1,0 +1,20 @@
+[
+  {
+    "id": "otp-input-component-1",
+    "name": "Paste normalized",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"12ab345678\"}],\"assertions\":[{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"123456\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"yes\"},{\"selector\":\"[data-slot=\\\"5\\\"]\",\"property\":\"text\",\"equals\":\"6\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "otp-input-component-2",
+    "name": "Partial",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"12\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"no\"},{\"selector\":\"[data-slot=\\\"2\\\"]\",\"property\":\"text\",\"equals\":\"•\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "otp-input-component-3",
+    "name": "Clear",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"123456\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"no\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

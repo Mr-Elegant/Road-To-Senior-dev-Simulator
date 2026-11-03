@@ -1,0 +1,69 @@
+{
+  "id": "react-ts-filter-recipes",
+  "title": "React + TypeScript: Filter Recipes",
+  "businessContext": "A kitchen planning screen filters a small recipe list while retaining users’ selected dishes when they change their search.",
+  "problemStatement": "Export App({ recipes = [] }). Each recipe has a unique string id, name, and category. Render a controlled Search recipes input and a Category select. All is the initial category; remaining options are unique category strings in first-seen order. Filter by trimmed, case-insensitive name substring AND exact selected category. Render visible recipes as li elements in [data-testid=\"recipes\"], each showing its name and a native toggle button named Select NAME or Deselect NAME. Track selection by ID across filtering. [data-testid=\"selected-count\"] contains the selected count as digits. No matches shows No matching recipes in [data-testid=\"empty\"]. Do not mutate recipes.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Input recipe fields are valid strings; IDs are unique. All is reserved for the aggregate option.",
+    "Selections persist when hidden by filtering; a second activation deselects the same ID.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    recipes?: {\n        id: string;\n        name: string;\n        category: string;\n    }[];\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "recipe-empty",
+      "name": "An empty dataset renders a useful state",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"recipes\\\"] li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[data-testid=\\\"empty\\\"]\",\"property\":\"text\",\"equals\":\"No matching recipes\"},{\"selector\":\"[data-testid=\\\"selected-count\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "recipe-search",
+      "name": "Name search trims and ignores case",
+      "inputDescription": "{\"props\":{\"recipes\":[{\"id\":\"s\",\"name\":\"Tomato Soup\",\"category\":\"Lunch\"},{\"id\":\"p\",\"name\":\"Pancakes\",\"category\":\"Breakfast\"}]},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"  SOUP \"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"recipes\\\"] li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"select option\",\"property\":\"count\",\"equals\":3}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "recipe-category",
+      "name": "Category combines with name search",
+      "inputDescription": "{\"props\":{\"recipes\":[{\"id\":\"s\",\"name\":\"Soup\",\"category\":\"Lunch\"},{\"id\":\"p\",\"name\":\"Pancakes\",\"category\":\"Breakfast\"}]},\"actions\":[{\"type\":\"input\",\"selector\":\"select\",\"value\":\"Lunch\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"cake\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"recipes\\\"] li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[data-testid=\\\"empty\\\"]\",\"property\":\"text\",\"equals\":\"No matching recipes\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "recipe-selection",
+      "name": "Selection survives hiding and restoring a row",
+      "inputDescription": "{\"props\":{\"recipes\":[{\"id\":\"s\",\"name\":\"Soup\",\"category\":\"Lunch\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"[aria-label=\\\"Select Soup\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"unmatched\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"selected-count\\\"]\",\"property\":\"text\",\"equals\":\"1\"},{\"selector\":\"[aria-label=\\\"Deselect Soup\\\"]\",\"property\":\"count\",\"equals\":1}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "recipe-deselect",
+      "name": "Selecting a dish twice toggles it off",
+      "inputDescription": "{\"props\":{\"recipes\":[{\"id\":\"s\",\"name\":\"Soup\",\"category\":\"Lunch\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"[aria-label=\\\"Select Soup\\\"]\"},{\"type\":\"click\",\"selector\":\"[aria-label=\\\"Deselect Soup\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"selected-count\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Derive visible rows from recipes, query, and category; do not store a filtered copy in state.",
+    "Store selected IDs independently of the visible rows."
+  ],
+  "commonMistakes": [
+    "Discarding selection whenever a recipe is filtered out.",
+    "Mutating props or using the visible row index as recipe identity."
+  ],
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 25,
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "candidateTasks": [
+    "Implement the default-exported App component and the documented DOM contract.",
+    "Run every interaction journey, explain edge cases, then compare your implementation with the reference.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "alternativeApproaches": [
+    "Extract a small pure helper for derived values; keep input state in the component. Extend with a custom hook only when behavior is reused."
+  ],
+  "reactTypescriptExercise": true
+}

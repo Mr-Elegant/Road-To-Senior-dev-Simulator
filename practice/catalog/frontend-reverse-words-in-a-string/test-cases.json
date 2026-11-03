@@ -1,0 +1,26 @@
+[
+  {
+    "id": "reverse-words-in-a-string-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "\"  hello   world \"",
+    "expectedOutput": "\"world hello\""
+  },
+  {
+    "id": "reverse-words-in-a-string-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "\"one\\ntwo\"",
+    "expectedOutput": "\"two one\""
+  },
+  {
+    "id": "reverse-words-in-a-string-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "\"\"",
+    "expectedOutput": "\"\""
+  },
+  {
+    "id": "reverse-words-in-a-string-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "\"alone\"",
+    "expectedOutput": "\"alone\""
+  }
+]

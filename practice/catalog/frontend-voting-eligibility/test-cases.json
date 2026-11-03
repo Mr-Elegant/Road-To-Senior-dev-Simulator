@@ -1,0 +1,27 @@
+[
+  {
+    "id": "voting-eligibility-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"age\":18,\"minimum\":18}",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "voting-eligibility-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"age\":17,\"minimum\":18}",
+    "expectedOutput": "false"
+  },
+  {
+    "id": "voting-eligibility-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"age\":0,\"minimum\":0}",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "voting-eligibility-4",
+    "name": "Reject input: Invalid age",
+    "inputDescription": "{\"age\":2.5,\"minimum\":18}",
+    "expectedOutput": "Throws: Invalid age",
+    "expectedError": "Invalid age"
+  }
+]

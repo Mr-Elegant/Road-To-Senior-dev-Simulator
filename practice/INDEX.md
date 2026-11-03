@@ -2,7 +2,7 @@
 
 Generated from the application collections. Search this file in VS Code, or use `npm run practice:list -- <search>`.
 
-## catalog (81)
+## catalog (389)
 
 - [Flash-Sale Batch Processor Microtask Queue Starvation](catalog/js-event-loop-microtasks/README.md) — `catalog/js-event-loop-microtasks` · guided
 - [SSE Connection Manager Request Context Closure Leak](catalog/js-closures-memory-leak/README.md) — `catalog/js-closures-memory-leak` · guided
@@ -85,6 +85,314 @@ Generated from the application collections. Search this file in VS Code, or use 
 - [React UI: Expandable Support Answers](catalog/react-ui-help-panels/README.md) — `catalog/react-ui-help-panels` · react
 - [React UI: Scoped Appearance Switch](catalog/react-ui-theme-switch/README.md) — `catalog/react-ui-theme-switch` · react
 - [React UI: Searchable Kitchen Cards](catalog/react-ui-recipe-browser/README.md) — `catalog/react-ui-recipe-browser` · react
+- [Frontend: Find Missing Number](catalog/frontend-find-missing-number/README.md) — `catalog/frontend-find-missing-number` · frontend-js
+- [Frontend: Max SubArray](catalog/frontend-max-subarray/README.md) — `catalog/frontend-max-subarray` · frontend-js
+- [Frontend: Make Counter](catalog/frontend-make-counter/README.md) — `catalog/frontend-make-counter` · frontend-js
+- [Frontend: Power of Two](catalog/frontend-power-of-two/README.md) — `catalog/frontend-power-of-two` · frontend-js
+- [Frontend: sum()](catalog/frontend-sum/README.md) — `catalog/frontend-sum` · frontend-js
+- [Frontend: Get Result By Path](catalog/frontend-get-result-by-path/README.md) — `catalog/frontend-get-result-by-path` · frontend-js
+- [Frontend: Find smallest number](catalog/frontend-find-smallest-number/README.md) — `catalog/frontend-find-smallest-number` · frontend-js
+- [Frontend: Power of Three](catalog/frontend-power-of-three/README.md) — `catalog/frontend-power-of-three` · frontend-js
+- [Frontend: Count Negative](catalog/frontend-count-negative/README.md) — `catalog/frontend-count-negative` · frontend-js
+- [Frontend: Find largest number](catalog/frontend-find-largest-number/README.md) — `catalog/frontend-find-largest-number` · frontend-js
+- [Frontend: Loop A to Z](catalog/frontend-loop-a-to-z/README.md) — `catalog/frontend-loop-a-to-z` · frontend-js
+- [Frontend: Custom Sort](catalog/frontend-custom-sort/README.md) — `catalog/frontend-custom-sort` · frontend-js
+- [Frontend: implement curry()](catalog/frontend-implement-curry/README.md) — `catalog/frontend-implement-curry` · frontend-js
+- [Frontend: once(fn)](catalog/frontend-oncefn/README.md) — `catalog/frontend-oncefn` · frontend-js
+- [Frontend: groupBy(arr, key)](catalog/frontend-groupbyarr-key/README.md) — `catalog/frontend-groupbyarr-key` · frontend-js
+- [Frontend: Remove Duplicates from Array](catalog/frontend-remove-duplicates-from-array/README.md) — `catalog/frontend-remove-duplicates-from-array` · frontend-js
+- [Frontend: Voting Eligibility](catalog/frontend-voting-eligibility/README.md) — `catalog/frontend-voting-eligibility` · frontend-js
+- [Frontend: Validate Palindrome](catalog/frontend-validate-palindrome/README.md) — `catalog/frontend-validate-palindrome` · frontend-js
+- [Frontend: Implement a Stack](catalog/frontend-implement-a-stack/README.md) — `catalog/frontend-implement-a-stack` · frontend-js
+- [Frontend: Power of Four](catalog/frontend-power-of-four/README.md) — `catalog/frontend-power-of-four` · frontend-js
+- [Frontend: Count even numbers](catalog/frontend-count-even-numbers/README.md) — `catalog/frontend-count-even-numbers` · frontend-js
+- [Frontend: Back To Top](catalog/frontend-back-to-top/README.md) — `catalog/frontend-back-to-top` · react
+- [Frontend: Copy to Clipboard](catalog/frontend-copy-to-clipboard/README.md) — `catalog/frontend-copy-to-clipboard` · react
+- [Frontend: Capitalize Words](catalog/frontend-capitalize-words/README.md) — `catalog/frontend-capitalize-words` · frontend-js
+- [Frontend: Count Vowels](catalog/frontend-count-vowels/README.md) — `catalog/frontend-count-vowels` · frontend-js
+- [Frontend: Contact Form](catalog/frontend-contact-form/README.md) — `catalog/frontend-contact-form` · react
+- [Frontend: Sum of all numbers in an array](catalog/frontend-sum-of-all-numbers-in-an-array/README.md) — `catalog/frontend-sum-of-all-numbers-in-an-array` · frontend-js
+- [Frontend: Array to Zigzag String Converter](catalog/frontend-array-to-zigzag-string-converter/README.md) — `catalog/frontend-array-to-zigzag-string-converter` · react
+- [Frontend: Auto Save Text](catalog/frontend-auto-save-text/README.md) — `catalog/frontend-auto-save-text` · react
+- [Frontend: Counter Using React](catalog/frontend-counter-using-react/README.md) — `catalog/frontend-counter-using-react` · react
+- [Frontend: Anagram Checker](catalog/frontend-anagram-checker/README.md) — `catalog/frontend-anagram-checker` · frontend-js
+- [Frontend: findMaxNumber](catalog/frontend-findmaxnumber/README.md) — `catalog/frontend-findmaxnumber` · frontend-js
+- [Frontend: Factorial of a number](catalog/frontend-factorial-of-a-number/README.md) — `catalog/frontend-factorial-of-a-number` · frontend-js
+- [Frontend: Fibonacci Series](catalog/frontend-fibonacci-series/README.md) — `catalog/frontend-fibonacci-series` · frontend-js
+- [Frontend: Secret Code Shuffler](catalog/frontend-secret-code-shuffler/README.md) — `catalog/frontend-secret-code-shuffler` · frontend-js
+- [Frontend: Tooltip](catalog/frontend-tooltip/README.md) — `catalog/frontend-tooltip` · react
+- [Frontend: Guess the number](catalog/frontend-guess-the-number/README.md) — `catalog/frontend-guess-the-number` · react
+- [Frontend: Toggle button with custom hook](catalog/frontend-toggle-button-with-custom-hook/README.md) — `catalog/frontend-toggle-button-with-custom-hook` · react
+- [Frontend: Leap year](catalog/frontend-leap-year/README.md) — `catalog/frontend-leap-year` · react
+- [Frontend: Blog Post](catalog/frontend-blog-post/README.md) — `catalog/frontend-blog-post` · react
+- [Frontend: Flatten Nested Array](catalog/frontend-flatten-nested-array/README.md) — `catalog/frontend-flatten-nested-array` · frontend-js
+- [Frontend: Even or odd](catalog/frontend-even-or-odd/README.md) — `catalog/frontend-even-or-odd` · react
+- [Frontend: Read More](catalog/frontend-read-more/README.md) — `catalog/frontend-read-more` · react
+- [Frontend: Acronym Generator](catalog/frontend-acronym-generator/README.md) — `catalog/frontend-acronym-generator` · react
+- [Frontend: Character Counter](catalog/frontend-character-counter/README.md) — `catalog/frontend-character-counter` · react
+- [Frontend: Dynamic Greeting App](catalog/frontend-dynamic-greeting-app/README.md) — `catalog/frontend-dynamic-greeting-app` · react
+- [Frontend: Get Weekday](catalog/frontend-get-weekday/README.md) — `catalog/frontend-get-weekday` · react
+- [Frontend: Focus Input](catalog/frontend-focus-input/README.md) — `catalog/frontend-focus-input` · react
+- [Frontend: Authentication](catalog/frontend-authentication/README.md) — `catalog/frontend-authentication` · react
+- [Frontend: shuffle()](catalog/frontend-shuffle/README.md) — `catalog/frontend-shuffle` · frontend-js
+- [Frontend: Navbar](catalog/frontend-navbar/README.md) — `catalog/frontend-navbar` · react
+- [Frontend: Largest number formed](catalog/frontend-largest-number-formed/README.md) — `catalog/frontend-largest-number-formed` · frontend-js
+- [Frontend: Color Explorer](catalog/frontend-color-explorer/README.md) — `catalog/frontend-color-explorer` · react
+- [Frontend: Confirmation Modal](catalog/frontend-confirmation-modal/README.md) — `catalog/frontend-confirmation-modal` · react
+- [Frontend: Toggle password](catalog/frontend-toggle-password/README.md) — `catalog/frontend-toggle-password` · react
+- [Frontend: Array Chunking](catalog/frontend-array-chunking/README.md) — `catalog/frontend-array-chunking` · frontend-js
+- [Frontend: Tab Switcher](catalog/frontend-tab-switcher/README.md) — `catalog/frontend-tab-switcher` · react
+- [Frontend: usePreviousHook](catalog/frontend-useprevioushook/README.md) — `catalog/frontend-useprevioushook` · react
+- [Frontend: Sum of n natural numbers](catalog/frontend-sum-of-n-natural-numbers/README.md) — `catalog/frontend-sum-of-n-natural-numbers` · frontend-js
+- [Frontend: Holy Grail](catalog/frontend-holy-grail/README.md) — `catalog/frontend-holy-grail` · react
+- [Frontend: User profile](catalog/frontend-user-profile/README.md) — `catalog/frontend-user-profile` · react
+- [Frontend: Age calculator](catalog/frontend-age-calculator/README.md) — `catalog/frontend-age-calculator` · react
+- [Frontend: Frequently Asked Questions](catalog/frontend-frequently-asked-questions/README.md) — `catalog/frontend-frequently-asked-questions` · react
+- [Frontend: Asterisk Field Validation](catalog/frontend-asterisk-field-validation/README.md) — `catalog/frontend-asterisk-field-validation` · react
+- [Frontend: Array.prototype.reduce](catalog/frontend-arrayprototypereduce/README.md) — `catalog/frontend-arrayprototypereduce` · frontend-js
+- [Frontend: Sidebar](catalog/frontend-sidebar/README.md) — `catalog/frontend-sidebar` · react
+- [Frontend: ReverseWords](catalog/frontend-reversewords/README.md) — `catalog/frontend-reversewords` · frontend-js
+- [Frontend: Todo List](catalog/frontend-todo-list/README.md) — `catalog/frontend-todo-list` · react
+- [Frontend: Flatten Nested Objects](catalog/frontend-flatten-nested-objects/README.md) — `catalog/frontend-flatten-nested-objects` · frontend-js
+- [Frontend: Flatten Deep Object](catalog/frontend-flatten-deep-object/README.md) — `catalog/frontend-flatten-deep-object` · frontend-js
+- [Frontend: Compress String with Limited Repetition](catalog/frontend-compress-string-with-limited-repetition/README.md) — `catalog/frontend-compress-string-with-limited-repetition` · frontend-js
+- [Frontend: Todo List II](catalog/frontend-todo-list-ii/README.md) — `catalog/frontend-todo-list-ii` · react
+- [Frontend: Billing Counter](catalog/frontend-billing-counter/README.md) — `catalog/frontend-billing-counter` · react
+- [Frontend: Resizable Split Pane](catalog/frontend-resizable-split-pane/README.md) — `catalog/frontend-resizable-split-pane` · react
+- [Frontend: Kanban Board](catalog/frontend-kanban-board/README.md) — `catalog/frontend-kanban-board` · react
+- [Frontend: Tabs Component](catalog/frontend-tabs-component/README.md) — `catalog/frontend-tabs-component` · react
+- [Frontend: Drag And Drop II](catalog/frontend-drag-and-drop-ii/README.md) — `catalog/frontend-drag-and-drop-ii` · react
+- [Frontend: Image Carousel](catalog/frontend-image-carousel/README.md) — `catalog/frontend-image-carousel` · react
+- [Frontend: Rate Limiter](catalog/frontend-rate-limiter/README.md) — `catalog/frontend-rate-limiter` · frontend-js
+- [Frontend: JSON.stringify](catalog/frontend-jsonstringify/README.md) — `catalog/frontend-jsonstringify` · frontend-js
+- [Frontend: Word Search](catalog/frontend-word-search/README.md) — `catalog/frontend-word-search` · frontend-js
+- [Frontend: Topological Sort (DFS)](catalog/frontend-topological-sort-dfs/README.md) — `catalog/frontend-topological-sort-dfs` · frontend-js
+- [Frontend: Paginated Article Bookmark Viewer](catalog/frontend-paginated-article-bookmark-viewer/README.md) — `catalog/frontend-paginated-article-bookmark-viewer` · react
+- [Frontend: Price Range Slider](catalog/frontend-price-range-slider/README.md) — `catalog/frontend-price-range-slider` · react
+- [Frontend: Detect Cycle in an Undirected Connected Graph (DFS)](catalog/frontend-detect-cycle-in-an-undirected-connected-graph-dfs/README.md) — `catalog/frontend-detect-cycle-in-an-undirected-connected-graph-dfs` · frontend-js
+- [Frontend: Transfer List](catalog/frontend-transfer-list/README.md) — `catalog/frontend-transfer-list` · react
+- [Frontend: Star Rating](catalog/frontend-star-rating/README.md) — `catalog/frontend-star-rating` · react
+- [Frontend: Expense Tracker](catalog/frontend-expense-tracker/README.md) — `catalog/frontend-expense-tracker` · react
+- [Frontend: Social Share](catalog/frontend-social-share/README.md) — `catalog/frontend-social-share` · react
+- [Frontend: Sortable List](catalog/frontend-sortable-list/README.md) — `catalog/frontend-sortable-list` · react
+- [Frontend: Throttle](catalog/frontend-throttle/README.md) — `catalog/frontend-throttle` · frontend-js
+- [Frontend: Word Counter](catalog/frontend-word-counter/README.md) — `catalog/frontend-word-counter` · react
+- [Frontend: Dice Roller](catalog/frontend-dice-roller/README.md) — `catalog/frontend-dice-roller` · react
+- [Frontend: PromiseAll With Concurrency Limit](catalog/frontend-promiseall-with-concurrency-limit/README.md) — `catalog/frontend-promiseall-with-concurrency-limit` · frontend-js
+- [Frontend: Draw Circles](catalog/frontend-draw-circles/README.md) — `catalog/frontend-draw-circles` · react
+- [Frontend: Grid Lights II](catalog/frontend-grid-lights-ii/README.md) — `catalog/frontend-grid-lights-ii` · react
+- [Frontend: Pin Items](catalog/frontend-pin-items/README.md) — `catalog/frontend-pin-items` · react
+- [Frontend: Priority Queue](catalog/frontend-priority-queue/README.md) — `catalog/frontend-priority-queue` · frontend-js
+- [Frontend: Memoization](catalog/frontend-memoization/README.md) — `catalog/frontend-memoization` · frontend-js
+- [Frontend: Notification Bell](catalog/frontend-notification-bell/README.md) — `catalog/frontend-notification-bell` · react
+- [Frontend: Emoji Replacer](catalog/frontend-emoji-replacer/README.md) — `catalog/frontend-emoji-replacer` · react
+- [Frontend: Searchable Dropdown](catalog/frontend-searchable-dropdown/README.md) — `catalog/frontend-searchable-dropdown` · react
+- [Frontend: Sum of Consecutive Integers](catalog/frontend-sum-of-consecutive-integers/README.md) — `catalog/frontend-sum-of-consecutive-integers` · frontend-js
+- [Frontend: Deep Clone Object](catalog/frontend-deep-clone-object/README.md) — `catalog/frontend-deep-clone-object` · frontend-js
+- [Frontend: Grid Lights](catalog/frontend-grid-lights/README.md) — `catalog/frontend-grid-lights` · react
+- [Frontend: Debounce](catalog/frontend-debounce/README.md) — `catalog/frontend-debounce` · frontend-js
+- [Frontend: Pawn Moves](catalog/frontend-pawn-moves/README.md) — `catalog/frontend-pawn-moves` · react
+- [Frontend: Cinema Hall](catalog/frontend-cinema-hall/README.md) — `catalog/frontend-cinema-hall` · react
+- [Frontend: Reusable Toast](catalog/frontend-reusable-toast/README.md) — `catalog/frontend-reusable-toast` · react
+- [Frontend: Product Rating Heatmap](catalog/frontend-product-rating-heatmap/README.md) — `catalog/frontend-product-rating-heatmap` · react
+- [Frontend: Slugify a String](catalog/frontend-slugify-a-string/README.md) — `catalog/frontend-slugify-a-string` · react
+- [Frontend: List Sorter](catalog/frontend-list-sorter/README.md) — `catalog/frontend-list-sorter` · react
+- [Frontend: Knight Moves](catalog/frontend-knight-moves/README.md) — `catalog/frontend-knight-moves` · react
+- [Frontend: Spiral Matrix Pathfinder](catalog/frontend-spiral-matrix-pathfinder/README.md) — `catalog/frontend-spiral-matrix-pathfinder` · frontend-js
+- [Frontend: Queen Moves](catalog/frontend-queen-moves/README.md) — `catalog/frontend-queen-moves` · react
+- [Frontend: Lazy Evaluation](catalog/frontend-lazy-evaluation/README.md) — `catalog/frontend-lazy-evaluation` · frontend-js
+- [Frontend: BMI Calculator](catalog/frontend-bmi-calculator/README.md) — `catalog/frontend-bmi-calculator` · react
+- [Frontend: Longest Substring No Repeats](catalog/frontend-longest-substring-no-repeats/README.md) — `catalog/frontend-longest-substring-no-repeats` · frontend-js
+- [Frontend: Traffic Lights](catalog/frontend-traffic-lights/README.md) — `catalog/frontend-traffic-lights` · react
+- [Frontend: Concurrency Limited Task Scheduler](catalog/frontend-concurrency-limited-task-scheduler/README.md) — `catalog/frontend-concurrency-limited-task-scheduler` · frontend-js
+- [Frontend: Find the Single Element in a Sorted Array](catalog/frontend-find-the-single-element-in-a-sorted-array/README.md) — `catalog/frontend-find-the-single-element-in-a-sorted-array` · frontend-js
+- [Frontend: Cards Carousel](catalog/frontend-cards-carousel/README.md) — `catalog/frontend-cards-carousel` · react
+- [Frontend: Event Emitter](catalog/frontend-event-emitter/README.md) — `catalog/frontend-event-emitter` · frontend-js
+- [Frontend: List Format](catalog/frontend-list-format/README.md) — `catalog/frontend-list-format` · frontend-js
+- [Frontend: Map Async Limit](catalog/frontend-map-async-limit/README.md) — `catalog/frontend-map-async-limit` · frontend-js
+- [Frontend: Rock Paper Scissor](catalog/frontend-rock-paper-scissor/README.md) — `catalog/frontend-rock-paper-scissor` · react
+- [Frontend: Undo Redo](catalog/frontend-undo-redo/README.md) — `catalog/frontend-undo-redo` · react
+- [Frontend: Color Code Game](catalog/frontend-color-code-game/README.md) — `catalog/frontend-color-code-game` · react
+- [Frontend: Stopwatch](catalog/frontend-stopwatch/README.md) — `catalog/frontend-stopwatch` · react
+- [Frontend: Rook Moves](catalog/frontend-rook-moves/README.md) — `catalog/frontend-rook-moves` · react
+- [Frontend: Deep Omit](catalog/frontend-deep-omit/README.md) — `catalog/frontend-deep-omit` · frontend-js
+- [Frontend: Shortest Distance from Source (BFS)](catalog/frontend-shortest-distance-from-source-bfs/README.md) — `catalog/frontend-shortest-distance-from-source-bfs` · frontend-js
+- [Frontend: Topological Sort (BFS)](catalog/frontend-topological-sort-bfs/README.md) — `catalog/frontend-topological-sort-bfs` · frontend-js
+- [Frontend: Sum of Subarray Minimum](catalog/frontend-sum-of-subarray-minimum/README.md) — `catalog/frontend-sum-of-subarray-minimum` · frontend-js
+- [Frontend: Modal In React](catalog/frontend-modal-in-react/README.md) — `catalog/frontend-modal-in-react` · react
+- [Frontend: Image Gallery](catalog/frontend-image-gallery/README.md) — `catalog/frontend-image-gallery` · react
+- [Frontend: Typewriter Message](catalog/frontend-typewriter-message/README.md) — `catalog/frontend-typewriter-message` · react
+- [Frontend: Generate Password](catalog/frontend-generate-password/README.md) — `catalog/frontend-generate-password` · react
+- [Frontend: Tic Tac Toe](catalog/frontend-tic-tac-toe/README.md) — `catalog/frontend-tic-tac-toe` · react
+- [Frontend: Temperature Convertor](catalog/frontend-temperature-convertor/README.md) — `catalog/frontend-temperature-convertor` · react
+- [Frontend: Multiselect dropdown](catalog/frontend-multiselect-dropdown/README.md) — `catalog/frontend-multiselect-dropdown` · react
+- [Frontend: Captcha Generator](catalog/frontend-captcha-generator/README.md) — `catalog/frontend-captcha-generator` · react
+- [Frontend: Confetti Animation](catalog/frontend-confetti-animation/README.md) — `catalog/frontend-confetti-animation` · react
+- [Frontend: Search Rotated Array](catalog/frontend-search-rotated-array/README.md) — `catalog/frontend-search-rotated-array` · frontend-js
+- [Frontend: Lucky Number](catalog/frontend-lucky-number/README.md) — `catalog/frontend-lucky-number` · react
+- [Frontend: Calculator](catalog/frontend-calculator/README.md) — `catalog/frontend-calculator` · react
+- [Frontend: Combination Sum](catalog/frontend-combination-sum/README.md) — `catalog/frontend-combination-sum` · frontend-js
+- [Frontend: Markdown Editor](catalog/frontend-markdown-editor/README.md) — `catalog/frontend-markdown-editor` · react
+- [Frontend: Animated Loading Skeleton](catalog/frontend-animated-loading-skeleton/README.md) — `catalog/frontend-animated-loading-skeleton` · react
+- [Frontend: Implement Promise Race](catalog/frontend-implement-promise-race/README.md) — `catalog/frontend-implement-promise-race` · frontend-js
+- [Frontend: Auto Save Form](catalog/frontend-auto-save-form/README.md) — `catalog/frontend-auto-save-form` · react
+- [Frontend: Drag and Drop](catalog/frontend-drag-and-drop/README.md) — `catalog/frontend-drag-and-drop` · react
+- [Frontend: Progress Bar II](catalog/frontend-progress-bar-ii/README.md) — `catalog/frontend-progress-bar-ii` · react
+- [Frontend: JSON Formatter and Validator](catalog/frontend-json-formatter-and-validator/README.md) — `catalog/frontend-json-formatter-and-validator` · react
+- [Frontend: Quiz App](catalog/frontend-quiz-app/README.md) — `catalog/frontend-quiz-app` · react
+- [Frontend: Reverse Words in a String](catalog/frontend-reverse-words-in-a-string/README.md) — `catalog/frontend-reverse-words-in-a-string` · frontend-js
+- [Frontend: Oranges Rotting](catalog/frontend-oranges-rotting/README.md) — `catalog/frontend-oranges-rotting` · frontend-js
+- [Frontend: Object.assign()](catalog/frontend-objectassign/README.md) — `catalog/frontend-objectassign` · frontend-js
+- [Frontend: Merge Array](catalog/frontend-merge-array/README.md) — `catalog/frontend-merge-array` · frontend-js
+- [Frontend: pyramid pattern](catalog/frontend-pyramid-pattern/README.md) — `catalog/frontend-pyramid-pattern` · frontend-js
+- [Frontend: Search in a 2D Sorted Matrix](catalog/frontend-search-in-a-2d-sorted-matrix/README.md) — `catalog/frontend-search-in-a-2d-sorted-matrix` · frontend-js
+- [Frontend: King Moves](catalog/frontend-king-moves/README.md) — `catalog/frontend-king-moves` · react
+- [Frontend: Detect data type in JS](catalog/frontend-detect-data-type-in-js/README.md) — `catalog/frontend-detect-data-type-in-js` · frontend-js
+- [Frontend: Bishop Moves](catalog/frontend-bishop-moves/README.md) — `catalog/frontend-bishop-moves` · react
+- [Frontend: Pagination](catalog/frontend-pagination/README.md) — `catalog/frontend-pagination` · react
+- [Frontend: Nested Checkbox](catalog/frontend-nested-checkbox/README.md) — `catalog/frontend-nested-checkbox` · react
+- [Frontend: File Explorer](catalog/frontend-file-explorer/README.md) — `catalog/frontend-file-explorer` · react
+- [Frontend: Prim's MST Algorithm](catalog/frontend-prims-mst-algorithm/README.md) — `catalog/frontend-prims-mst-algorithm` · frontend-js
+- [Frontend: Longest Valid Parentheses](catalog/frontend-longest-valid-parentheses/README.md) — `catalog/frontend-longest-valid-parentheses` · frontend-js
+- [Frontend: StickyNotes Component](catalog/frontend-stickynotes-component/README.md) — `catalog/frontend-stickynotes-component` · react
+- [Frontend: Chinese Remainder Theorem](catalog/frontend-chinese-remainder-theorem/README.md) — `catalog/frontend-chinese-remainder-theorem` · frontend-js
+- [Frontend: 24 Game](catalog/frontend-24-game/README.md) — `catalog/frontend-24-game` · react
+- [Frontend: OTP Input Component](catalog/frontend-otp-input-component/README.md) — `catalog/frontend-otp-input-component` · react
+- [Frontend: Event Management](catalog/frontend-event-management/README.md) — `catalog/frontend-event-management` · react
+- [Frontend: Tree Navigation](catalog/frontend-tree-navigation/README.md) — `catalog/frontend-tree-navigation` · react
+- [Frontend: Product Cart with Discounts](catalog/frontend-product-cart-with-discounts/README.md) — `catalog/frontend-product-cart-with-discounts` · react
+- [Frontend: Data Table](catalog/frontend-data-table/README.md) — `catalog/frontend-data-table` · react
+- [Frontend: Match Pair Game](catalog/frontend-match-pair-game/README.md) — `catalog/frontend-match-pair-game` · react
+- [Frontend: Kruskal's MST Algorithm](catalog/frontend-kruskals-mst-algorithm/README.md) — `catalog/frontend-kruskals-mst-algorithm` · frontend-js
+- [Frontend: Implement LRUCache](catalog/frontend-implement-lrucache/README.md) — `catalog/frontend-implement-lrucache` · frontend-js
+- [Frontend: Nested Comments](catalog/frontend-nested-comments/README.md) — `catalog/frontend-nested-comments` · react
+- [Frontend: Implement a Queue using Stack](catalog/frontend-implement-a-queue-using-stack/README.md) — `catalog/frontend-implement-a-queue-using-stack` · frontend-js
+- [Frontend: Median of Two Sorted Arrays](catalog/frontend-median-of-two-sorted-arrays/README.md) — `catalog/frontend-median-of-two-sorted-arrays` · frontend-js
+- [Frontend: Rick And Morty Characters Viewer](catalog/frontend-rick-and-morty-characters-viewer/README.md) — `catalog/frontend-rick-and-morty-characters-viewer` · react
+- [Frontend: Product Store](catalog/frontend-product-store/README.md) — `catalog/frontend-product-store` · react
+- [Frontend: Create Task Scheduler With Dependencies](catalog/frontend-create-task-scheduler-with-dependencies/README.md) — `catalog/frontend-create-task-scheduler-with-dependencies` · frontend-js
+- [Frontend: All Pairs Shortest Path (Floyd-Warshall Algorithm)](catalog/frontend-all-pairs-shortest-path-floyd-warshall-algorithm/README.md) — `catalog/frontend-all-pairs-shortest-path-floyd-warshall-algorithm` · frontend-js
+- [Frontend: Shortest Distance from Source (Bellman-Ford Algorithm)](catalog/frontend-shortest-distance-from-source-bellman-ford-algorithm/README.md) — `catalog/frontend-shortest-distance-from-source-bellman-ford-algorithm` · frontend-js
+- [Frontend: Sliding Window Maximum](catalog/frontend-sliding-window-maximum/README.md) — `catalog/frontend-sliding-window-maximum` · frontend-js
+- [Frontend: Worker Pool](catalog/frontend-worker-pool/README.md) — `catalog/frontend-worker-pool` · frontend-js
+- [Frontend: First Missing Positive](catalog/frontend-first-missing-positive/README.md) — `catalog/frontend-first-missing-positive` · frontend-js
+- [Frontend: Design Autocomplete](catalog/frontend-design-autocomplete/README.md) — `catalog/frontend-design-autocomplete` · frontend-js
+- [Frontend: Shortest Distance from Source (Dijkstra's Algorithm)](catalog/frontend-shortest-distance-from-source-dijkstras-algorithm/README.md) — `catalog/frontend-shortest-distance-from-source-dijkstras-algorithm` · frontend-js
+- [Frontend: Fibonacci Modulo (Pisano Period)](catalog/frontend-fibonacci-modulo-pisano-period/README.md) — `catalog/frontend-fibonacci-modulo-pisano-period` · frontend-js
+- [Frontend: Implement Garbage Collector](catalog/frontend-implement-garbage-collector/README.md) — `catalog/frontend-implement-garbage-collector` · frontend-js
+- [React + TypeScript: Password Strength](catalog/react-ts-password-strength/README.md) — `catalog/react-ts-password-strength` · react
+- [React + TypeScript: URL Validator](catalog/react-ts-url-validator/README.md) — `catalog/react-ts-url-validator` · react
+- [React + TypeScript: Chips Input](catalog/react-ts-chips-input/README.md) — `catalog/react-ts-chips-input` · react
+- [React + TypeScript: Progress Bar](catalog/react-ts-progress-bar/README.md) — `catalog/react-ts-progress-bar` · react
+- [React + TypeScript: Mortgage Calculator](catalog/react-ts-mortgage-calculator/README.md) — `catalog/react-ts-mortgage-calculator` · react
+- [React + TypeScript: Accordion](catalog/react-ts-accordion/README.md) — `catalog/react-ts-accordion` · react
+- [React + TypeScript: Dark Mode](catalog/react-ts-dark-mode/README.md) — `catalog/react-ts-dark-mode` · react
+- [React + TypeScript: Filter Recipes](catalog/react-ts-filter-recipes/README.md) — `catalog/react-ts-filter-recipes` · react
+- [React + TypeScript: Back To Top](catalog/react-ts-back-to-top/README.md) — `catalog/react-ts-back-to-top` · react
+- [React + TypeScript: Copy to Clipboard](catalog/react-ts-copy-to-clipboard/README.md) — `catalog/react-ts-copy-to-clipboard` · react
+- [React + TypeScript: Contact Form](catalog/react-ts-contact-form/README.md) — `catalog/react-ts-contact-form` · react
+- [React + TypeScript: Array to Zigzag String Converter](catalog/react-ts-array-to-zigzag-string-converter/README.md) — `catalog/react-ts-array-to-zigzag-string-converter` · react
+- [React + TypeScript: Auto Save Text](catalog/react-ts-auto-save-text/README.md) — `catalog/react-ts-auto-save-text` · react
+- [React + TypeScript: Counter Using React](catalog/react-ts-counter-using-react/README.md) — `catalog/react-ts-counter-using-react` · react
+- [React + TypeScript: Tooltip](catalog/react-ts-tooltip/README.md) — `catalog/react-ts-tooltip` · react
+- [React + TypeScript: Guess the number](catalog/react-ts-guess-the-number/README.md) — `catalog/react-ts-guess-the-number` · react
+- [React + TypeScript: Toggle button with custom hook](catalog/react-ts-toggle-button-with-custom-hook/README.md) — `catalog/react-ts-toggle-button-with-custom-hook` · react
+- [React + TypeScript: Leap year](catalog/react-ts-leap-year/README.md) — `catalog/react-ts-leap-year` · react
+- [React + TypeScript: Blog Post](catalog/react-ts-blog-post/README.md) — `catalog/react-ts-blog-post` · react
+- [React + TypeScript: Even or odd](catalog/react-ts-even-or-odd/README.md) — `catalog/react-ts-even-or-odd` · react
+- [React + TypeScript: Read More](catalog/react-ts-read-more/README.md) — `catalog/react-ts-read-more` · react
+- [React + TypeScript: Acronym Generator](catalog/react-ts-acronym-generator/README.md) — `catalog/react-ts-acronym-generator` · react
+- [React + TypeScript: Character Counter](catalog/react-ts-character-counter/README.md) — `catalog/react-ts-character-counter` · react
+- [React + TypeScript: Dynamic Greeting App](catalog/react-ts-dynamic-greeting-app/README.md) — `catalog/react-ts-dynamic-greeting-app` · react
+- [React + TypeScript: Get Weekday](catalog/react-ts-get-weekday/README.md) — `catalog/react-ts-get-weekday` · react
+- [React + TypeScript: Focus Input](catalog/react-ts-focus-input/README.md) — `catalog/react-ts-focus-input` · react
+- [React + TypeScript: Authentication](catalog/react-ts-authentication/README.md) — `catalog/react-ts-authentication` · react
+- [React + TypeScript: Navbar](catalog/react-ts-navbar/README.md) — `catalog/react-ts-navbar` · react
+- [React + TypeScript: Color Explorer](catalog/react-ts-color-explorer/README.md) — `catalog/react-ts-color-explorer` · react
+- [React + TypeScript: Confirmation Modal](catalog/react-ts-confirmation-modal/README.md) — `catalog/react-ts-confirmation-modal` · react
+- [React + TypeScript: Toggle password](catalog/react-ts-toggle-password/README.md) — `catalog/react-ts-toggle-password` · react
+- [React + TypeScript: Tab Switcher](catalog/react-ts-tab-switcher/README.md) — `catalog/react-ts-tab-switcher` · react
+- [React + TypeScript: usePreviousHook](catalog/react-ts-useprevioushook/README.md) — `catalog/react-ts-useprevioushook` · react
+- [React + TypeScript: Holy Grail](catalog/react-ts-holy-grail/README.md) — `catalog/react-ts-holy-grail` · react
+- [React + TypeScript: User profile](catalog/react-ts-user-profile/README.md) — `catalog/react-ts-user-profile` · react
+- [React + TypeScript: Age calculator](catalog/react-ts-age-calculator/README.md) — `catalog/react-ts-age-calculator` · react
+- [React + TypeScript: Frequently Asked Questions](catalog/react-ts-frequently-asked-questions/README.md) — `catalog/react-ts-frequently-asked-questions` · react
+- [React + TypeScript: Asterisk Field Validation](catalog/react-ts-asterisk-field-validation/README.md) — `catalog/react-ts-asterisk-field-validation` · react
+- [React + TypeScript: Sidebar](catalog/react-ts-sidebar/README.md) — `catalog/react-ts-sidebar` · react
+- [React + TypeScript: Todo List](catalog/react-ts-todo-list/README.md) — `catalog/react-ts-todo-list` · react
+- [React + TypeScript: Todo List II](catalog/react-ts-todo-list-ii/README.md) — `catalog/react-ts-todo-list-ii` · react
+- [React + TypeScript: Billing Counter](catalog/react-ts-billing-counter/README.md) — `catalog/react-ts-billing-counter` · react
+- [React + TypeScript: Resizable Split Pane](catalog/react-ts-resizable-split-pane/README.md) — `catalog/react-ts-resizable-split-pane` · react
+- [React + TypeScript: Kanban Board](catalog/react-ts-kanban-board/README.md) — `catalog/react-ts-kanban-board` · react
+- [React + TypeScript: Tabs Component](catalog/react-ts-tabs-component/README.md) — `catalog/react-ts-tabs-component` · react
+- [React + TypeScript: Drag And Drop II](catalog/react-ts-drag-and-drop-ii/README.md) — `catalog/react-ts-drag-and-drop-ii` · react
+- [React + TypeScript: Image Carousel](catalog/react-ts-image-carousel/README.md) — `catalog/react-ts-image-carousel` · react
+- [React + TypeScript: Paginated Article Bookmark Viewer](catalog/react-ts-paginated-article-bookmark-viewer/README.md) — `catalog/react-ts-paginated-article-bookmark-viewer` · react
+- [React + TypeScript: Price Range Slider](catalog/react-ts-price-range-slider/README.md) — `catalog/react-ts-price-range-slider` · react
+- [React + TypeScript: Transfer List](catalog/react-ts-transfer-list/README.md) — `catalog/react-ts-transfer-list` · react
+- [React + TypeScript: Star Rating](catalog/react-ts-star-rating/README.md) — `catalog/react-ts-star-rating` · react
+- [React + TypeScript: Expense Tracker](catalog/react-ts-expense-tracker/README.md) — `catalog/react-ts-expense-tracker` · react
+- [React + TypeScript: Social Share](catalog/react-ts-social-share/README.md) — `catalog/react-ts-social-share` · react
+- [React + TypeScript: Sortable List](catalog/react-ts-sortable-list/README.md) — `catalog/react-ts-sortable-list` · react
+- [React + TypeScript: Word Counter](catalog/react-ts-word-counter/README.md) — `catalog/react-ts-word-counter` · react
+- [React + TypeScript: Dice Roller](catalog/react-ts-dice-roller/README.md) — `catalog/react-ts-dice-roller` · react
+- [React + TypeScript: Draw Circles](catalog/react-ts-draw-circles/README.md) — `catalog/react-ts-draw-circles` · react
+- [React + TypeScript: Grid Lights II](catalog/react-ts-grid-lights-ii/README.md) — `catalog/react-ts-grid-lights-ii` · react
+- [React + TypeScript: Pin Items](catalog/react-ts-pin-items/README.md) — `catalog/react-ts-pin-items` · react
+- [React + TypeScript: Notification Bell](catalog/react-ts-notification-bell/README.md) — `catalog/react-ts-notification-bell` · react
+- [React + TypeScript: Emoji Replacer](catalog/react-ts-emoji-replacer/README.md) — `catalog/react-ts-emoji-replacer` · react
+- [React + TypeScript: Searchable Dropdown](catalog/react-ts-searchable-dropdown/README.md) — `catalog/react-ts-searchable-dropdown` · react
+- [React + TypeScript: Grid Lights](catalog/react-ts-grid-lights/README.md) — `catalog/react-ts-grid-lights` · react
+- [React + TypeScript: Pawn Moves](catalog/react-ts-pawn-moves/README.md) — `catalog/react-ts-pawn-moves` · react
+- [React + TypeScript: Cinema Hall](catalog/react-ts-cinema-hall/README.md) — `catalog/react-ts-cinema-hall` · react
+- [React + TypeScript: Reusable Toast](catalog/react-ts-reusable-toast/README.md) — `catalog/react-ts-reusable-toast` · react
+- [React + TypeScript: Product Rating Heatmap](catalog/react-ts-product-rating-heatmap/README.md) — `catalog/react-ts-product-rating-heatmap` · react
+- [React + TypeScript: Slugify a String](catalog/react-ts-slugify-a-string/README.md) — `catalog/react-ts-slugify-a-string` · react
+- [React + TypeScript: List Sorter](catalog/react-ts-list-sorter/README.md) — `catalog/react-ts-list-sorter` · react
+- [React + TypeScript: Knight Moves](catalog/react-ts-knight-moves/README.md) — `catalog/react-ts-knight-moves` · react
+- [React + TypeScript: Queen Moves](catalog/react-ts-queen-moves/README.md) — `catalog/react-ts-queen-moves` · react
+- [React + TypeScript: BMI Calculator](catalog/react-ts-bmi-calculator/README.md) — `catalog/react-ts-bmi-calculator` · react
+- [React + TypeScript: Traffic Lights](catalog/react-ts-traffic-lights/README.md) — `catalog/react-ts-traffic-lights` · react
+- [React + TypeScript: Cards Carousel](catalog/react-ts-cards-carousel/README.md) — `catalog/react-ts-cards-carousel` · react
+- [React + TypeScript: Rock Paper Scissor](catalog/react-ts-rock-paper-scissor/README.md) — `catalog/react-ts-rock-paper-scissor` · react
+- [React + TypeScript: Undo Redo](catalog/react-ts-undo-redo/README.md) — `catalog/react-ts-undo-redo` · react
+- [React + TypeScript: Color Code Game](catalog/react-ts-color-code-game/README.md) — `catalog/react-ts-color-code-game` · react
+- [React + TypeScript: Stopwatch](catalog/react-ts-stopwatch/README.md) — `catalog/react-ts-stopwatch` · react
+- [React + TypeScript: Rook Moves](catalog/react-ts-rook-moves/README.md) — `catalog/react-ts-rook-moves` · react
+- [React + TypeScript: Modal In React](catalog/react-ts-modal-in-react/README.md) — `catalog/react-ts-modal-in-react` · react
+- [React + TypeScript: Image Gallery](catalog/react-ts-image-gallery/README.md) — `catalog/react-ts-image-gallery` · react
+- [React + TypeScript: Typewriter Message](catalog/react-ts-typewriter-message/README.md) — `catalog/react-ts-typewriter-message` · react
+- [React + TypeScript: Generate Password](catalog/react-ts-generate-password/README.md) — `catalog/react-ts-generate-password` · react
+- [React + TypeScript: Tic Tac Toe](catalog/react-ts-tic-tac-toe/README.md) — `catalog/react-ts-tic-tac-toe` · react
+- [React + TypeScript: Temperature Convertor](catalog/react-ts-temperature-convertor/README.md) — `catalog/react-ts-temperature-convertor` · react
+- [React + TypeScript: Multiselect dropdown](catalog/react-ts-multiselect-dropdown/README.md) — `catalog/react-ts-multiselect-dropdown` · react
+- [React + TypeScript: Captcha Generator](catalog/react-ts-captcha-generator/README.md) — `catalog/react-ts-captcha-generator` · react
+- [React + TypeScript: Confetti Animation](catalog/react-ts-confetti-animation/README.md) — `catalog/react-ts-confetti-animation` · react
+- [React + TypeScript: Lucky Number](catalog/react-ts-lucky-number/README.md) — `catalog/react-ts-lucky-number` · react
+- [React + TypeScript: Calculator](catalog/react-ts-calculator/README.md) — `catalog/react-ts-calculator` · react
+- [React + TypeScript: Markdown Editor](catalog/react-ts-markdown-editor/README.md) — `catalog/react-ts-markdown-editor` · react
+- [React + TypeScript: Animated Loading Skeleton](catalog/react-ts-animated-loading-skeleton/README.md) — `catalog/react-ts-animated-loading-skeleton` · react
+- [React + TypeScript: Auto Save Form](catalog/react-ts-auto-save-form/README.md) — `catalog/react-ts-auto-save-form` · react
+- [React + TypeScript: Drag and Drop](catalog/react-ts-drag-and-drop/README.md) — `catalog/react-ts-drag-and-drop` · react
+- [React + TypeScript: Progress Bar II](catalog/react-ts-progress-bar-ii/README.md) — `catalog/react-ts-progress-bar-ii` · react
+- [React + TypeScript: JSON Formatter and Validator](catalog/react-ts-json-formatter-and-validator/README.md) — `catalog/react-ts-json-formatter-and-validator` · react
+- [React + TypeScript: Quiz App](catalog/react-ts-quiz-app/README.md) — `catalog/react-ts-quiz-app` · react
+- [React + TypeScript: King Moves](catalog/react-ts-king-moves/README.md) — `catalog/react-ts-king-moves` · react
+- [React + TypeScript: Bishop Moves](catalog/react-ts-bishop-moves/README.md) — `catalog/react-ts-bishop-moves` · react
+- [React + TypeScript: Pagination](catalog/react-ts-pagination/README.md) — `catalog/react-ts-pagination` · react
+- [React + TypeScript: Nested Checkbox](catalog/react-ts-nested-checkbox/README.md) — `catalog/react-ts-nested-checkbox` · react
+- [React + TypeScript: File Explorer](catalog/react-ts-file-explorer/README.md) — `catalog/react-ts-file-explorer` · react
+- [React + TypeScript: StickyNotes Component](catalog/react-ts-stickynotes-component/README.md) — `catalog/react-ts-stickynotes-component` · react
+- [React + TypeScript: 24 Game](catalog/react-ts-24-game/README.md) — `catalog/react-ts-24-game` · react
+- [React + TypeScript: OTP Input Component](catalog/react-ts-otp-input-component/README.md) — `catalog/react-ts-otp-input-component` · react
+- [React + TypeScript: Event Management](catalog/react-ts-event-management/README.md) — `catalog/react-ts-event-management` · react
+- [React + TypeScript: Tree Navigation](catalog/react-ts-tree-navigation/README.md) — `catalog/react-ts-tree-navigation` · react
+- [React + TypeScript: Product Cart with Discounts](catalog/react-ts-product-cart-with-discounts/README.md) — `catalog/react-ts-product-cart-with-discounts` · react
+- [React + TypeScript: Data Table](catalog/react-ts-data-table/README.md) — `catalog/react-ts-data-table` · react
+- [React + TypeScript: Match Pair Game](catalog/react-ts-match-pair-game/README.md) — `catalog/react-ts-match-pair-game` · react
+- [React + TypeScript: Nested Comments](catalog/react-ts-nested-comments/README.md) — `catalog/react-ts-nested-comments` · react
+- [React + TypeScript: Rick And Morty Characters Viewer](catalog/react-ts-rick-and-morty-characters-viewer/README.md) — `catalog/react-ts-rick-and-morty-characters-viewer` · react
+- [React + TypeScript: Product Store](catalog/react-ts-product-store/README.md) — `catalog/react-ts-product-store` · react
 
 ## loan (8)
 

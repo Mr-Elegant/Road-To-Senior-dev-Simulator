@@ -1,0 +1,53 @@
+{
+  "id": "frontend-undo-redo",
+  "title": "Frontend: Undo Redo",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Undo Redo. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Controlled Text input starts empty. Each edit commits a new history state. Undo and Redo navigate history with disabled boundary buttons. Editing after undo discards future history. Output [data-testid=current] mirrors current text.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "undo-redo-1",
+      "name": "Initial boundary",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-action=\\\"undo\\\"]\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "undo-redo-2",
+      "name": "Undo/redo",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"B\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"undo\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"redo\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"B\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "undo-redo-3",
+      "name": "Branch",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"B\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"undo\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"C\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"C\"},{\"selector\":\"[data-action=\\\"redo\\\"]\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Represent past, present, and future."
+  ],
+  "alternativeApproaches": [
+    "Group a drag or typing burst into one undoable transaction rather than hundreds of snapshots."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Undo at start; redo at end; undo then new edit.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

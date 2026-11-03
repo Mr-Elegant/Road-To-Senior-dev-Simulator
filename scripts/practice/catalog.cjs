@@ -21,7 +21,7 @@ function entry(group, source, language, starter, reference, mode) {
 }
 const entries = [
   ...allScenarios.map(s => entry('catalog', s, (s.codeLanguage ?? '').toLowerCase(), s.starterCode,
-    s.referenceSolution, s.reactExercise ? 'react' : /^(javascript|typescript|js|ts)$/.test((s.codeLanguage ?? '').toLowerCase()) && s.testCases?.length && /function\s+(solution|handler|solve|execute)\s*\(/.test(s.referenceSolution.codeOrArtifact ?? '') ? 'javascript' : 'guided')),
+    s.referenceSolution, s.reactExercise ? 'react' : s.javascriptExercise ? 'frontend-js' : /^(javascript|typescript|js|ts)$/.test((s.codeLanguage ?? '').toLowerCase()) && s.testCases?.length && /function\s+(solution|handler|solve|execute)\s*\(/.test(s.referenceSolution.codeOrArtifact ?? '') ? 'javascript' : 'guided')),
   ...loanLabExercises.map(s => {
     const bug = loanBugScenarios.find(b => b.id === s.bugId);
     return entry('loan', { ...s, businessContext: bug?.description, productionSymptom: bug?.productionSymptom, dashboardBuggyCode: bug?.buggyCodeSnippet }, 'javascript', s.starterCode,
@@ -43,6 +43,11 @@ function generate(destination = path.join(root, 'practice')) {
     fs.mkdirSync(path.dirname(file), { recursive: true });
     if (!preserve || !fs.existsSync(file)) fs.writeFileSync(file, content, 'utf8');
   };
+  // Give VS Code an isolated strict TSX project without including unfinished work in the app build.
+  write('tsconfig.json', JSON.stringify({ compilerOptions: {
+    target: 'ES2022', lib: ['DOM', 'DOM.Iterable', 'ES2022'], jsx: 'react-jsx', module: 'ESNext',
+    moduleResolution: 'Bundler', strict: true, noEmit: true, skipLibCheck: true, esModuleInterop: true, types: ['react'],
+  }, include: ['catalog/react-ts-*/*.tsx'] }, null, 2) + '\n', true);
   for (const e of entries) {
     const s = e.source;
     const brief = s.problemStatement ?? s.questionStatement ?? s.contract ?? s.description ?? s.title;

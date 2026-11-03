@@ -19,7 +19,7 @@ addEventListener('message', event => {
   port.onmessage = async ({data}) => {
     try {
       const execute = new Function(data.runtime + ';return ReactPractice.execute;')();
-      port.postMessage(await execute(data.code, data.journey));
+      port.postMessage(await execute(data.code, data.journey, data.typescript));
     } catch(error) { port.postMessage({passed:false,error:String(error.message).slice(0,1000)}); }
   };
   port.start(); port.postMessage({ready:true});
@@ -39,12 +39,13 @@ async function runtimeSource() {
 interface Reply { ready?: boolean; passed?: boolean; error?: string }
 
 /** Opaque-origin DOM isolation. A browser iframe cannot guarantee preemption of synchronous loops. */
-export async function runReactFrame(host: HTMLElement, code: string, journey: ReactJourney | undefined, signal: AbortSignal): Promise<Reply> {
+export async function runReactFrame(host: HTMLElement, code: string, journey: ReactJourney | undefined, signal: AbortSignal, typescript = false): Promise<Reply> {
   if (code.length > 100000) throw new Error('Code exceeds the 100,000 character limit.');
   const runtime = await runtimeSource();
   signal.throwIfAborted();
   const frame = document.createElement('iframe');
   frame.title = journey ? 'React exercise tests' : 'React component preview';
+  if (journey) frame.tabIndex = -1;
   frame.setAttribute('sandbox', REACT_FRAME_SANDBOX);
   frame.referrerPolicy = 'no-referrer';
   frame.className = 'w-full h-full border-0 bg-white';
@@ -65,7 +66,7 @@ export async function runReactFrame(host: HTMLElement, code: string, journey: Re
     const timer = setTimeout(() => finish(new Error('React runner did not respond within 8 seconds. Check your code and retry.')), 8000);
     signal.addEventListener('abort', abort, { once: true });
     channel.port1.onmessage = ({ data }: MessageEvent<Reply>) => {
-      if (data?.ready) channel.port1.postMessage({ runtime, code, journey });
+      if (data?.ready) channel.port1.postMessage({ runtime, code, journey, typescript });
       else if (typeof data?.passed === 'boolean') finish(undefined, data);
     };
     frame.onload = () => frame.contentWindow?.postMessage('react-practice-init', '*', [channel.port2]);
@@ -74,8 +75,15 @@ export async function runReactFrame(host: HTMLElement, code: string, journey: Re
 }
 
 export async function runReactSuite(scenario: Scenario, code: string, signal: AbortSignal): Promise<RunSuiteResult> {
+  if (scenario.reactTypescriptExercise) {
+    const errors = await (await import('@/lib/reactTypescript/runner')).checkReactTypes(code, signal);
+    if (errors.length) return { isSupported: true, totalTests: scenario.testCases?.length ?? 0, passedTests: 0,
+      results: (scenario.testCases ?? []).map(test => ({ testId: test.id, name: test.name, passed: false, expectedOutput: test.expectedOutput, actualOutput: 'Type check failed', errorMessage: errors.join('\n'), logs: [], durationMs: 0 })) };
+  }
   const host = document.createElement('div');
-  host.hidden = true;
+  // display:none prevents native focus events and document.activeElement checks.
+  // Render offscreen so focus/ref exercises run against an actual focusable DOM.
+  host.style.cssText = 'position:fixed;left:-10000px;top:0;width:800px;height:600px;opacity:0;pointer-events:none';
   document.body.appendChild(host);
   const results: RunSuiteResult['results'] = [];
   try {
@@ -83,7 +91,7 @@ export async function runReactSuite(scenario: Scenario, code: string, signal: Ab
       signal.throwIfAborted();
       const start = performance.now();
       let reply: Reply;
-      try { reply = await runReactFrame(host, code, JSON.parse(test.inputDescription), signal); }
+      try { reply = await runReactFrame(host, code, JSON.parse(test.inputDescription), signal, Boolean(scenario.reactTypescriptExercise)); }
       catch (error) { signal.throwIfAborted(); reply = { passed: false, error: error instanceof Error ? error.message : 'Runner failed.' }; }
       results.push({ testId: test.id, name: test.name, passed: reply.passed === true, expectedOutput: test.expectedOutput,
         actualOutput: reply.passed ? 'All DOM assertions passed' : reply.error, errorMessage: reply.error,

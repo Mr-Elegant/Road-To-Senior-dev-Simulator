@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-array-to-zigzag-string-converter",
+  "title": "React + TypeScript: Array to Zigzag String Converter",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Array to Zigzag String Converter. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Parse words from the Text input by whitespace. Preserve even-indexed words and reverse Unicode code points of odd-indexed words, then join with one space. This exercise defines zigzag as alternating word reversal. Render controlled labelled inputs with these exact names: Text. A Calculate submit button computes the result. Render JSON.stringify(result) in [data-testid=\"result\"]. Validation failure clears result and shows the documented message in [data-testid=\"error\"].\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "array-to-zigzag-string-converter-1",
+      "name": "Input/derived output 1",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Text\\\"]\",\"value\":\"one two three four\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\\\"one owt three ruof\\\"\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "array-to-zigzag-string-converter-2",
+      "name": "Input/derived output 2",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Text\\\"]\",\"value\":\"\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\\\"\\\"\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "array-to-zigzag-string-converter-3",
+      "name": "Input/derived output 3",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Text\\\"]\",\"value\":\"  😀a bb \"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\\\"😀a bb\\\"\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "First define what zigzag means: here even-indexed words remain unchanged and odd-indexed words reverse by Unicode code points; join with one space."
+  ],
+  "alternativeApproaches": [
+    "Extend reversal to user-perceived graphemes and state the required segmentation support."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Empty list; one word; odd/even list lengths.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "stopwatch-1",
+    "name": "Paused ticks ignored",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"tick\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "stopwatch-2",
+    "name": "Running ticks",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"start\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"tick\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"tick\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"2\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "stopwatch-3",
+    "name": "Pause/resume",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"start\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"tick\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"pause\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"tick\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

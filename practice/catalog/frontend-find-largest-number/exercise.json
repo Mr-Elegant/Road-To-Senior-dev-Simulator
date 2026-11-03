@@ -1,0 +1,60 @@
+{
+  "id": "frontend-find-largest-number",
+  "title": "Frontend: Find largest number",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Find largest number. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(values). Return the maximum finite value, preserving the array. Reject empty input with Empty array.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "find-largest-number-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[-8,-2,-4]",
+      "expectedOutput": "-2"
+    },
+    {
+      "id": "find-largest-number-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[0]",
+      "expectedOutput": "0"
+    },
+    {
+      "id": "find-largest-number-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[1,7,7]",
+      "expectedOutput": "7"
+    },
+    {
+      "id": "find-largest-number-4",
+      "name": "Reject input: Empty array",
+      "inputDescription": "[]",
+      "expectedOutput": "Throws: Empty array",
+      "expectedError": "Empty array"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use a single pass with an initial value taken from the sequence rather than zero, which fails for all-negative data."
+  ],
+  "alternativeApproaches": [
+    "Compute minimum and maximum together and report their stable first positions."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: All negative; one item; repeated maximum.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

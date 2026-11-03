@@ -1,0 +1,26 @@
+[
+  {
+    "id": "debounce-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"wait\":10,\"calls\":[[0,\"a\"],[3,\"b\"],[7,\"c\"]],\"end\":20}",
+    "expectedOutput": "[[17,\"c\"]]"
+  },
+  {
+    "id": "debounce-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"wait\":5,\"calls\":[[0,1],[5,2]],\"end\":10}",
+    "expectedOutput": "[[5,1],[10,2]]"
+  },
+  {
+    "id": "debounce-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"wait\":10,\"calls\":[[0,1]],\"end\":9}",
+    "expectedOutput": "[]"
+  },
+  {
+    "id": "debounce-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "{\"wait\":2,\"calls\":[],\"end\":20}",
+    "expectedOutput": "[]"
+  }
+]

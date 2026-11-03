@@ -1,0 +1,20 @@
+[
+  {
+    "id": "progress-bar-ii-1",
+    "name": "Capacity",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"[data-task=\\\"1\\\"]\",\"property\":\"text\",\"equals\":\"running:0\"},{\"selector\":\"[data-task=\\\"3\\\"]\",\"property\":\"text\",\"equals\":\"queued:0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "progress-bar-ii-2",
+    "name": "Advance",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"}],\"assertions\":[{\"selector\":\"[data-task=\\\"1\\\"]\",\"property\":\"text\",\"equals\":\"running:50\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "progress-bar-ii-3",
+    "name": "Slot released",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"}],\"assertions\":[{\"selector\":\"[data-task=\\\"1\\\"]\",\"property\":\"text\",\"equals\":\"completed:100\"},{\"selector\":\"[data-task=\\\"3\\\"]\",\"property\":\"text\",\"equals\":\"running:0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

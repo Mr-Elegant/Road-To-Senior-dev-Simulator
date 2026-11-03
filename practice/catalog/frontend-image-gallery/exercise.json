@@ -1,0 +1,59 @@
+{
+  "id": "frontend-image-gallery",
+  "title": "Frontend: Image Gallery",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Image Gallery. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({items=[Alpha,Beta,Gamma]}), a gallery carousel using title strings and local one-pixel images with alt=title. slides container [data-testid=slides] contains one articles with h2 titles. Next/Previous use data-action=next/previous. Navigation clamps at valid start indices. Empty items renders No images. Each thumbnail[data-thumbnail=index] opens native dialog labelled Image viewer; [data-testid=viewer] shows selected title and Close viewer closes it. This exercise focuses selection/window semantics rather than remote image loading.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "image-gallery-1",
+      "name": "Initial content",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"slides\\\"] h2\",\"property\":\"text\",\"equals\":\"Alpha\"},{\"selector\":\"[data-testid=\\\"slides\\\"] article\",\"property\":\"count\",\"equals\":1}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "image-gallery-2",
+      "name": "Next",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"slides\\\"] h2\",\"property\":\"text\",\"equals\":\"Beta\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "image-gallery-3",
+      "name": "Empty",
+      "inputDescription": "{\"props\":{\"items\":[]},\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"No images\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "image-gallery-4",
+      "name": "Thumbnail viewer",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-thumbnail=\\\"2\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"viewer\\\"]\",\"property\":\"text\",\"equals\":\"Gamma\"},{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":1}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Keep selected image ID separate from the underlying list."
+  ],
+  "alternativeApproaches": [
+    "Add a predictable focus policy for keyboard navigation between thumbnails and the lightbox."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Empty gallery; broken source; opening/closing.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

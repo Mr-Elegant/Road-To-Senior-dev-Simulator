@@ -1,0 +1,53 @@
+{
+  "id": "frontend-blog-post",
+  "title": "Frontend: Blog Post",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Blog Post. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({post}). Render an article with an h1 title, author in [data-testid=\"author\"], body as plain text in [data-testid=\"body\"], and time with dateTime=post.date. Missing post renders Article unavailable. Author defaults to Unknown. Never interpret body HTML.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "blog-post-1",
+      "name": "Missing",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Article unavailable\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "blog-post-2",
+      "name": "Article structure",
+      "inputDescription": "{\"props\":{\"post\":{\"title\":\"Notes\",\"author\":\"Ada\",\"date\":\"2026-01-01\",\"body\":\"Text\"}},\"actions\":[],\"assertions\":[{\"selector\":\"h1\",\"property\":\"text\",\"equals\":\"Notes\"},{\"selector\":\"[data-testid=\\\"author\\\"]\",\"property\":\"text\",\"equals\":\"Ada\"},{\"selector\":\"time\",\"property\":\"attribute\",\"attribute\":\"datetime\",\"equals\":\"2026-01-01\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "blog-post-3",
+      "name": "Plain content",
+      "inputDescription": "{\"props\":{\"post\":{\"title\":\"T\",\"date\":\"2026-01-02\",\"body\":\"<b>Text</b>\"}},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"body\\\"]\",\"property\":\"text\",\"equals\":\"<b>Text</b>\"},{\"selector\":\"b\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[data-testid=\\\"author\\\"]\",\"property\":\"text\",\"equals\":\"Unknown\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Keep article data separate from presentation."
+  ],
+  "alternativeApproaches": [
+    "Support a sanitized rich-content format while keeping heading hierarchy and link semantics intact."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Missing image; long title; multiline text.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

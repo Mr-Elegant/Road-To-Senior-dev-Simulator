@@ -1,0 +1,26 @@
+[
+  {
+    "id": "guess-the-number-1",
+    "name": "Low",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"10\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"guess\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Too low\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "guess-the-number-2",
+    "name": "Correct then restart",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"42\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"guess\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"restart\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"\"},{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "guess-the-number-3",
+    "name": "Invalid",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"1.5\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"guess\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Invalid guess\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "guess-the-number-4",
+    "name": "High",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"90\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"guess\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Too high\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

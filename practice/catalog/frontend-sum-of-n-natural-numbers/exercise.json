@@ -1,0 +1,60 @@
+{
+  "id": "frontend-sum-of-n-natural-numbers",
+  "title": "Frontend: Sum of n natural numbers",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Sum of n natural numbers. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(n). n is a nonnegative decimal integer string. Return exact 1+...+n as a decimal string. Reject malformed or negative input with Invalid n.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "sum-of-n-natural-numbers-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "\"0\"",
+      "expectedOutput": "\"0\""
+    },
+    {
+      "id": "sum-of-n-natural-numbers-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "\"5\"",
+      "expectedOutput": "\"15\""
+    },
+    {
+      "id": "sum-of-n-natural-numbers-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "\"10000000000\"",
+      "expectedOutput": "\"50000000005000000000\""
+    },
+    {
+      "id": "sum-of-n-natural-numbers-4",
+      "name": "Reject input: Invalid n",
+      "inputDescription": "\"-1\"",
+      "expectedOutput": "Throws: Invalid n",
+      "expectedError": "Invalid n"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use n(n+1)/2 rather than a loop when only the total is required."
+  ],
+  "alternativeApproaches": [
+    "Compute a closed integer range sum and avoid overflow-prone intermediate operations in fixed-width languages."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: n=0; n=1; ordinary n.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

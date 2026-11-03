@@ -1,0 +1,59 @@
+{
+  "id": "frontend-find-the-single-element-in-a-sorted-array",
+  "title": "Frontend: Find the Single Element in a Sorted Array",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Find the Single Element in a Sorted Array. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(values). A sorted odd-length nonempty array contains one singleton and pairs of every other value. Return the singleton in logarithmic time.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "find-the-single-element-in-a-sorted-array-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[1,1,2,3,3]",
+      "expectedOutput": "2"
+    },
+    {
+      "id": "find-the-single-element-in-a-sorted-array-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[7]",
+      "expectedOutput": "7"
+    },
+    {
+      "id": "find-the-single-element-in-a-sorted-array-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[0,1,1]",
+      "expectedOutput": "0"
+    },
+    {
+      "id": "find-the-single-element-in-a-sorted-array-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "[1,1,2]",
+      "expectedOutput": "2"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use binary search and align the midpoint to an even index."
+  ],
+  "alternativeApproaches": [
+    "Explain why the parity invariant fails if counts are not exactly two or the array is not sorted."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Singleton first/last; one-element array; ordinary middle.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

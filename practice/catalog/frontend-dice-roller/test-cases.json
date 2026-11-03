@@ -1,0 +1,20 @@
+[
+  {
+    "id": "dice-roller-1",
+    "name": "No roll",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"-\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "dice-roller-2",
+    "name": "Low endpoint",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "dice-roller-3",
+    "name": "High endpoint",
+    "inputDescription": "{\"props\":{\"draws\":[0.999],\"sides\":6},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"6\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

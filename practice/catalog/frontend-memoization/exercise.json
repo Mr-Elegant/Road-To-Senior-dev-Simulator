@@ -1,0 +1,53 @@
+{
+  "id": "frontend-memoization",
+  "title": "Frontend: Memoization",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Memoization. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(calls). Memoize the numeric two-argument function (a,b)=>a*b+a with exact ordered argument keys. Return {outputs,evaluations}; repeated calls reuse even a zero result.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "memoization-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[[0,3],[0,3],[2,3],[2,3]]",
+      "expectedOutput": "{\"outputs\":[0,0,8,8],\"evaluations\":2}"
+    },
+    {
+      "id": "memoization-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[[1,2],[2,1]]",
+      "expectedOutput": "{\"outputs\":[3,4],\"evaluations\":2}"
+    },
+    {
+      "id": "memoization-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[]",
+      "expectedOutput": "{\"outputs\":[],\"evaluations\":0}"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Choose keys that match the function’s semantics."
+  ],
+  "alternativeApproaches": [
+    "Combine memoization with LRU capacity and document whether concurrent callers share a pending promise."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Falsey result; multiple arguments; object identity.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

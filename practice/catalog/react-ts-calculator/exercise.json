@@ -1,0 +1,63 @@
+{
+  "id": "react-ts-calculator",
+  "title": "React + TypeScript: Calculator",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Calculator. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Parse a single binary arithmetic expression with finite signed decimal numbers and one of + - * /. Ignore outside/operator whitespace. Return the numeric result. Reject invalid grammar or division by zero with Invalid expression. Do not use eval. Render controlled labelled inputs with these exact names: Expression. A Calculate submit button computes the result. Render JSON.stringify(result) in [data-testid=\"result\"]. Validation failure clears result and shows the documented message in [data-testid=\"error\"].\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "calculator-1",
+      "name": "Input/derived output 1",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Expression\\\"]\",\"value\":\"2 + 3\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"5\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "calculator-2",
+      "name": "Input/derived output 2",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Expression\\\"]\",\"value\":\"-2 * 4\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"-8\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "calculator-3",
+      "name": "Input/derived output 3",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Expression\\\"]\",\"value\":\"3 / 0\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid expression\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "calculator-4",
+      "name": "Input/derived output 4",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Expression\\\"]\",\"value\":\"alert(1)\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid expression\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Tokenize a documented grammar and parse operator precedence with a stack or parser."
+  ],
+  "alternativeApproaches": [
+    "Add parentheses with a real grammar and separate numeric precision policy from input parsing."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Operator precedence; unary minus; decimal input.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

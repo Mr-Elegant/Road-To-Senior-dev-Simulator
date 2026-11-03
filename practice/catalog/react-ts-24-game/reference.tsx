@@ -1,0 +1,39 @@
+import type * as React from 'react';
+export interface AppProps {
+    numbers?: (number)[];
+}
+import { useState } from 'react';
+export default function App({ numbers = [1, 2, 3, 4] }: AppProps = {}): React.JSX.Element { const [value, setValue] = useState(''), [result, setResult] = useState(''); function check() { try {
+    const source = value.replace(/ /g, ''), tokens = source.match(/[0-9]+|[()+*/-]/g) || [];
+    if (!source || tokens.join('') !== source)
+        throw new Error('Invalid expression');
+    const used = tokens.filter(t => /^[0-9]+$/.test(t)).map(Number).sort((a, b) => a - b);
+    if (JSON.stringify(used) !== JSON.stringify([...numbers].sort((a, b) => a - b)))
+        throw new Error('Invalid numbers');
+    let i = 0;
+    function factor(): number { const token = tokens[i++]; if (token === '(') {
+        const n = expr();
+        if (tokens[i++] !== ')')
+            throw new Error('Invalid expression');
+        return n;
+    } if (!token || !/^[0-9]+$/.test(token))
+        throw new Error('Invalid expression'); return Number(token); }
+    function term(): number { let n = factor(); while (tokens[i] === '*' || tokens[i] === '/') {
+        const op = tokens[i++], right = factor();
+        if (op === '/' && right === 0)
+            throw new Error('Invalid expression');
+        n = op === '*' ? n * right : n / right;
+    } return n; }
+    function expr(): number { let n = term(); while (tokens[i] === '+' || tokens[i] === '-') {
+        const op = tokens[i++], right = term();
+        n = op === '+' ? n + right : n - right;
+    } return n; }
+    const answer = expr();
+    if (i !== tokens.length || !Number.isFinite(answer))
+        throw new Error('Invalid expression');
+    setResult(Math.abs(answer - 24) < 1e-9 ? 'Correct' : 'Not 24');
+}
+catch (error) {
+    setResult((error instanceof Error ? error.message : String(error)));
+} } return <section><label>Expression<input aria-label="Expression" value={value} onChange={e => setValue(e.target.value)}/></label><button onClick={check}>Check</button><output data-testid="result">{result}</output></section>; }
+

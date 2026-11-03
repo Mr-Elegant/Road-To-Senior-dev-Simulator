@@ -1,0 +1,53 @@
+{
+  "id": "frontend-modal-in-react",
+  "title": "Frontend: Modal In React",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Modal In React. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Open details[data-action=open] shows native dialog labelled Details. Close details[data-action=close] and Escape close it and restore trigger focus. [data-testid=closed] counts closes exactly once.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "modal-in-react-1",
+      "name": "Open",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"open\\\"]\"}],\"assertions\":[{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":1}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "modal-in-react-2",
+      "name": "Close",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"open\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"close\\\"]\"}],\"assertions\":[{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "modal-in-react-3",
+      "name": "Escape",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"open\\\"]\"},{\"type\":\"key\",\"selector\":\"dialog\",\"key\":\"Escape\"}],\"assertions\":[{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Centralize modal open state and use a native dialog or a proven accessible primitive."
+  ],
+  "alternativeApproaches": [
+    "Handle stacked dialogs with explicit ownership rather than independent global key handlers."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Escape; backdrop policy; initial focus.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

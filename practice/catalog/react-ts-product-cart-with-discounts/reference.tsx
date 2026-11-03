@@ -1,0 +1,11 @@
+import type * as React from 'react';
+export interface AppProps {
+    products?: ({
+        "id": string;
+        "name": string;
+        "price": number;
+    })[];
+}
+import { useState } from 'react';
+export default function App({ products = [{ id: 'a', name: 'Alpha', price: 100 }, { id: 'b', name: 'Beta', price: 250 }] }: AppProps = {}): React.JSX.Element { const [quantities, setQuantities] = useState<Record<string, number>>({}), [discount, setDiscount] = useState(0), [query, setQuery] = useState(''), store = false; const subtotal = products.reduce((sum, p) => sum + (quantities[p.id] || 0) * p.price, 0); return <section>{store && <label>Search<input aria-label="Search" value={query} onChange={e => setQuery(e.target.value)}/></label>}<ul>{products.filter(p => p.name.toLowerCase().includes(query.trim().toLowerCase())).map(p => <li key={p.id} data-product={p.id}>{p.name}<button data-add={p.id} onClick={() => setQuantities(old => ({ ...old, [p.id]: (old[p.id] || 0) + 1 }))}>Add</button><button data-remove={p.id} onClick={() => setQuantities(old => ({ ...old, [p.id]: Math.max(0, (old[p.id] || 0) - 1) }))}>Remove</button><output data-quantity={p.id}>{quantities[p.id] || 0}</output></li>)}</ul><label>Discount<select aria-label="Discount" value={discount} onChange={e => setDiscount(Number(e.target.value))}><option value="0">None</option><option value="10">Ten percent</option></select></label><output data-testid="total">{subtotal - Math.round(subtotal * discount / 100)}</output></section>; }
+

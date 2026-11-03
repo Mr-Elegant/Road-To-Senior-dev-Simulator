@@ -1,0 +1,10 @@
+import type * as React from 'react';
+export interface AppProps {
+}
+import { useRef, useState } from 'react';
+export default function App(): React.JSX.Element { const dialog = useRef<HTMLDialogElement>(null), trigger = useRef<HTMLButtonElement>(null), [closed, setClosed] = useState(0); function close() { if (!dialog.current?.open)
+    return; dialog.current?.close(); setClosed(n => n + 1); trigger.current?.focus(); } return <section><button data-action="open" ref={trigger} onClick={() => dialog.current?.showModal()}>Open details</button><dialog ref={dialog} aria-labelledby="details-title" onCancel={e => { e.preventDefault(); close(); }} onKeyDown={e => { if (e.key === 'Escape') {
+    e.preventDefault();
+    close();
+} }}><h2 id="details-title">Details</h2><button data-action="close" onClick={close}>Close details</button></dialog><output data-testid="closed">{closed}</output></section>; }
+

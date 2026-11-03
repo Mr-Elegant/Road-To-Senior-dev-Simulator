@@ -1,0 +1,28 @@
+[
+  {
+    "id": "create-task-scheduler-with-dependencies-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[{\"id\":\"b\",\"deps\":[\"a\"]},{\"id\":\"a\",\"deps\":[]},{\"id\":\"c\",\"deps\":[]}]",
+    "expectedOutput": "[[\"a\",\"c\"],[\"b\"]]"
+  },
+  {
+    "id": "create-task-scheduler-with-dependencies-2",
+    "name": "Reject input: Missing dependency",
+    "inputDescription": "[{\"id\":\"a\",\"deps\":[\"b\"]}]",
+    "expectedOutput": "Throws: Missing dependency",
+    "expectedError": "Missing dependency"
+  },
+  {
+    "id": "create-task-scheduler-with-dependencies-3",
+    "name": "Reject input: Cycle",
+    "inputDescription": "[{\"id\":\"a\",\"deps\":[\"b\"]},{\"id\":\"b\",\"deps\":[\"a\"]}]",
+    "expectedOutput": "Throws: Cycle",
+    "expectedError": "Cycle"
+  },
+  {
+    "id": "create-task-scheduler-with-dependencies-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[]",
+    "expectedOutput": "[]"
+  }
+]

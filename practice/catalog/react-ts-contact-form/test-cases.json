@@ -1,0 +1,26 @@
+[
+  {
+    "id": "contact-form-1",
+    "name": "Input/derived output 1",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Name\\\"]\",\"value\":\" Ada \"},{\"type\":\"input\",\"selector\":\"[name=\\\"Email\\\"]\",\"value\":\" A@B.com \"},{\"type\":\"input\",\"selector\":\"[name=\\\"Message\\\"]\",\"value\":\" Hello world! \"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"{\\\"name\\\":\\\"Ada\\\",\\\"email\\\":\\\"a@b.com\\\",\\\"message\\\":\\\"Hello world!\\\"}\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "contact-form-2",
+    "name": "Input/derived output 2",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Name\\\"]\",\"value\":\"\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Email\\\"]\",\"value\":\"a@b.com\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Message\\\"]\",\"value\":\"Hello world!\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid contact details\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "contact-form-3",
+    "name": "Input/derived output 3",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Name\\\"]\",\"value\":\"Ada\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Email\\\"]\",\"value\":\"wrong\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Message\\\"]\",\"value\":\"Hello world!\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid contact details\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "contact-form-4",
+    "name": "Input/derived output 4",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Name\\\"]\",\"value\":\"Ada\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Email\\\"]\",\"value\":\"a@b.com\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Message\\\"]\",\"value\":\"short\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid contact details\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

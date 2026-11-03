@@ -1,0 +1,26 @@
+[
+  {
+    "id": "image-gallery-1",
+    "name": "Initial content",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"slides\\\"] h2\",\"property\":\"text\",\"equals\":\"Alpha\"},{\"selector\":\"[data-testid=\\\"slides\\\"] article\",\"property\":\"count\",\"equals\":1}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "image-gallery-2",
+    "name": "Next",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"slides\\\"] h2\",\"property\":\"text\",\"equals\":\"Beta\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "image-gallery-3",
+    "name": "Empty",
+    "inputDescription": "{\"props\":{\"items\":[]},\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"No images\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "image-gallery-4",
+    "name": "Thumbnail viewer",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-thumbnail=\\\"2\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"viewer\\\"]\",\"property\":\"text\",\"equals\":\"Gamma\"},{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":1}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

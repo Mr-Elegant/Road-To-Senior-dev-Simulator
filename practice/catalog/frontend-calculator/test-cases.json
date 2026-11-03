@@ -1,0 +1,26 @@
+[
+  {
+    "id": "calculator-1",
+    "name": "Input/derived output 1",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Expression\\\"]\",\"value\":\"2 + 3\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"5\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "calculator-2",
+    "name": "Input/derived output 2",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Expression\\\"]\",\"value\":\"-2 * 4\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"-8\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "calculator-3",
+    "name": "Input/derived output 3",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Expression\\\"]\",\"value\":\"3 / 0\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid expression\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "calculator-4",
+    "name": "Input/derived output 4",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Expression\\\"]\",\"value\":\"alert(1)\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid expression\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "toggle-password-1",
+    "name": "Concealed",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"input\",\"property\":\"attribute\",\"attribute\":\"type\",\"equals\":\"password\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "toggle-password-2",
+    "name": "Reveal keeps text",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Demo42!\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"input\",\"property\":\"attribute\",\"attribute\":\"type\",\"equals\":\"text\"},{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"Demo42!\"},{\"selector\":\"button\",\"property\":\"text\",\"equals\":\"Hide password\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "toggle-password-3",
+    "name": "Conceal again",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"input\",\"property\":\"attribute\",\"attribute\":\"type\",\"equals\":\"password\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

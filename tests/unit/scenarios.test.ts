@@ -43,8 +43,14 @@ describe('Engineering Scenario Library Validation Suite', () => {
 
       // Check placeholder prohibitions
       for (const phrase of prohibitedPlaceholders) {
-        expect(s.businessContext.toLowerCase()).not.toContain(phrase.toLowerCase());
-        expect(s.problemStatement.toLowerCase()).not.toContain(phrase.toLowerCase());
+        // Todo List is a legitimate topic name; unfinished TODO/TBD markers remain prohibited.
+        if (phrase === 'TODO' || phrase === 'TBD') {
+          expect(s.businessContext).not.toContain(phrase);
+          expect(s.problemStatement).not.toContain(phrase);
+        } else {
+          expect(s.businessContext.toLowerCase()).not.toContain(phrase.toLowerCase());
+          expect(s.problemStatement.toLowerCase()).not.toContain(phrase.toLowerCase());
+        }
       }
     }
   });

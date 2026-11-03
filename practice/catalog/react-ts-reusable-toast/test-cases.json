@@ -1,0 +1,20 @@
+[
+  {
+    "id": "reusable-toast-1",
+    "name": "Add",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"notify\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"notify\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":2}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "reusable-toast-2",
+    "name": "Dismiss one",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"notify\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"notify\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-dismiss=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-toast=\\\"2\\\"]\",\"property\":\"count\",\"equals\":1}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "reusable-toast-3",
+    "name": "Deadline",
+    "inputDescription": "{\"props\":{\"autoCloseMs\":40},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"notify\\\"]\"},{\"type\":\"wait\",\"milliseconds\":120}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

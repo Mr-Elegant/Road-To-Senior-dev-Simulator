@@ -42,6 +42,7 @@ export default function ChallengePage({ params }: ChallengePageProps) {
 }
 
 function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
+  const behavioralExercise = Boolean(scenario.reactExercise || scenario.javascriptExercise);
   const incident = useIncidentSession(scenario);
   const [submissionMessage, setSubmissionMessage] = useState('');
 
@@ -106,7 +107,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
       reactRunController.current?.abort();
       const controller = new AbortController();
       reactRunController.current = controller;
-      const result = scenario.reactExercise ? await (await import('@/lib/reactPractice/runner')).runReactSuite(scenario, code, controller.signal) : await runClientSideTestSuite(
+      const result = scenario.reactExercise ? await (await import('@/lib/reactPractice/runner')).runReactSuite(scenario, code, controller.signal) : scenario.javascriptExercise ? await (await import('@/lib/frontendPractice/runner')).runFrontendFunctions(scenario, code, controller.signal) : await runClientSideTestSuite(
         code,
         scenario.testCases,
         scenario.codeLanguage || 'javascript'
@@ -158,8 +159,8 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
 
   // Submit and save attempt
   const handleSubmitAndEvaluate = () => {
-    if (scenario.reactExercise && (!testResult || testedCode !== code)) {
-      setSubmissionMessage('Run tests on the current code before submitting this React exercise.');
+    if (behavioralExercise && (!testResult || testedCode !== code)) {
+      setSubmissionMessage(scenario.reactExercise ? 'Run tests on the current code before submitting this React exercise.' : 'Run tests on the current code before submitting this JavaScript exercise.');
       return;
     }
     if (scenario.incidentSimulation && !getIncidentView(scenario.incidentSimulation, incident.run, scenario.incidentTelemetry!).completed) {
@@ -200,7 +201,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
       },
       interviewAnswers: scenario.incidentSimulation ? { ...incidentTranscript(scenario.incidentSimulation, incident.run), 'incident.evidence': evidence } : scenario.type === 'incident' ? { 'incident.evidence': evidence } : interviewAnswers,
       rubricScores,
-      totalScorePercentage: scenario.reactExercise && testResult ? Math.round(testResult.passedTests / testResult.totalTests * 100) : totalScorePercentage,
+      totalScorePercentage: behavioralExercise && testResult ? Math.round(testResult.passedTests / testResult.totalTests * 100) : totalScorePercentage,
       passedTestsCount: testResult?.passedTests || 0,
       totalTestsCount: testResult?.totalTests || (scenario.testCases?.length ?? 0),
       selfAssessmentCompleted: true,
@@ -252,7 +253,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
       />
 
       {submissionMessage && <p role="alert" className="bg-amber-500/10 text-amber-200 px-4 py-2 text-xs">{submissionMessage}</p>}
-      {scenario.reactExercise && testedCode !== null && testedCode !== code && <p role="status" className="px-4 py-1 text-xs text-amber-300 bg-zinc-900">Code changed. Run tests again to update the result.</p>}
+      {behavioralExercise && testedCode !== null && testedCode !== code && <p role="status" className="px-4 py-1 text-xs text-amber-300 bg-zinc-900">Code changed. Run tests again to update the result.</p>}
 
       {/* Main Workspace Body Split */}
       <div className={scenario.incidentSimulation ? 'flex flex-col xl:flex-row xl:flex-1 xl:min-h-0 xl:overflow-hidden' : 'min-h-0 flex-1 flex flex-col md:flex-row overflow-hidden'}>
@@ -281,7 +282,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
                   isRunningTests={isRunningTests}
                   hasTestCases={Boolean(scenario.testCases && scenario.testCases.length > 0)}
                   runButtonRef={runTestsButtonRef}
-                  readOnly={Boolean(scenario.reactExercise && isRunningTests)}
+                  readOnly={Boolean(behavioralExercise && isRunningTests)}
                   onPreview={scenario.reactExercise ? () => {
                     setIsTestPanelOpen(false);
                     setPreview(previous => ({ code, version: (previous?.version ?? 0) + 1 }));
@@ -290,7 +291,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
                 />
               </div>
 
-              {preview && <ReactPreviewPane key={preview.version} code={preview.code} sampleProps={previewProps} onClose={() => {
+              {preview && <ReactPreviewPane key={preview.version} code={preview.code} sampleProps={previewProps} typescript={scenario.reactTypescriptExercise} onClose={() => {
                 setPreview(null); previewButtonRef.current?.focus();
               }} />}
 
@@ -384,7 +385,7 @@ function ChallengeWorkspace({ scenario }: { scenario: Scenario }) {
         isOpen={isRubricModalOpen}
         onClose={() => setIsRubricModalOpen(false)}
         rubric={scenario.rubric}
-        recordedTestScore={scenario.reactExercise && testResult ? Math.round(testResult.passedTests / testResult.totalTests * 100) : undefined}
+        recordedTestScore={behavioralExercise && testResult ? Math.round(testResult.passedTests / testResult.totalTests * 100) : undefined}
         onSubmitScores={handleSaveRubricAttempt}
       />
 

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "bmi-calculator-1",
+    "name": "Input/derived output 1",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Weight\\\"]\",\"value\":\"70\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Height\\\"]\",\"value\":\"175\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\\\"22.86\\\"\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "bmi-calculator-2",
+    "name": "Input/derived output 2",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Weight\\\"]\",\"value\":\"60\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Height\\\"]\",\"value\":\"200\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\\\"15.00\\\"\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "bmi-calculator-3",
+    "name": "Input/derived output 3",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Weight\\\"]\",\"value\":\"70\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Height\\\"]\",\"value\":\"0\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid measurements\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

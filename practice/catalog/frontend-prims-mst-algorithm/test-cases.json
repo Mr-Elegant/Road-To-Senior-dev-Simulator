@@ -1,0 +1,27 @@
+[
+  {
+    "id": "prims-mst-algorithm-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"count\":3,\"edges\":[[0,1,3],[1,2,1],[0,2,8]]}",
+    "expectedOutput": "4"
+  },
+  {
+    "id": "prims-mst-algorithm-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"count\":2,\"edges\":[[0,1,-2],[0,1,5]]}",
+    "expectedOutput": "-2"
+  },
+  {
+    "id": "prims-mst-algorithm-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"count\":0,\"edges\":[]}",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "prims-mst-algorithm-4",
+    "name": "Reject input: Disconnected",
+    "inputDescription": "{\"count\":2,\"edges\":[]}",
+    "expectedOutput": "Throws: Disconnected",
+    "expectedError": "Disconnected"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "implement-lrucache-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"capacity\":2,\"commands\":[{\"type\":\"put\",\"key\":\"a\",\"value\":0},{\"type\":\"put\",\"key\":\"b\",\"value\":2},{\"type\":\"get\",\"key\":\"a\"},{\"type\":\"put\",\"key\":\"c\",\"value\":3},{\"type\":\"get\",\"key\":\"b\"},{\"type\":\"get\",\"key\":\"a\"}]}",
+    "expectedOutput": "[null,null,0,null,null,0]"
+  },
+  {
+    "id": "implement-lrucache-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"capacity\":0,\"commands\":[{\"type\":\"put\",\"key\":\"x\",\"value\":1},{\"type\":\"get\",\"key\":\"x\"}]}",
+    "expectedOutput": "[null,null]"
+  },
+  {
+    "id": "implement-lrucache-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"capacity\":1,\"commands\":[{\"type\":\"put\",\"key\":\"a\",\"value\":1},{\"type\":\"put\",\"key\":\"a\",\"value\":2},{\"type\":\"get\",\"key\":\"a\"}]}",
+    "expectedOutput": "[null,null,2]"
+  }
+]

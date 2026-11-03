@@ -29,6 +29,7 @@ export interface TestCase {
   expectedOutput: string;
   hidden?: boolean;
   explanation?: string;
+  expectedError?: string;
 }
 
 export interface RubricCriteria {
@@ -115,6 +116,10 @@ export interface Scenario {
   codeLanguage?: string;
   /** JSX component exercises use DOM journeys rather than function-return tests. */
   reactExercise?: true;
+  /** TSX components require semantic TypeScript checking before DOM execution. */
+  reactTypescriptExercise?: true;
+  /** Exact JSON/exception assertions in an opaque-origin per-case Worker. */
+  javascriptExercise?: true;
   testCases?: TestCase[];
   incidentTelemetry?: IncidentTelemetry;
   incidentSimulation?: IncidentSimulation;

@@ -1,0 +1,60 @@
+{
+  "id": "frontend-topological-sort-dfs",
+  "title": "Frontend: Topological Sort (DFS)",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Topological Sort (DFS). This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({count,edges}) for vertices 0..count-1, directed edges [from,to]. DFS vertices and neighbors in ascending order; return reversed completion order. A cycle throws Cycle.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "topological-sort-dfs-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"count\":3,\"edges\":[[0,1],[1,2]]}",
+      "expectedOutput": "[0,1,2]"
+    },
+    {
+      "id": "topological-sort-dfs-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"count\":3,\"edges\":[]}",
+      "expectedOutput": "[2,1,0]"
+    },
+    {
+      "id": "topological-sort-dfs-3",
+      "name": "Reject input: Cycle",
+      "inputDescription": "{\"count\":2,\"edges\":[[0,1],[1,0]]}",
+      "expectedOutput": "Throws: Cycle",
+      "expectedError": "Cycle"
+    },
+    {
+      "id": "topological-sort-dfs-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "{\"count\":0,\"edges\":[]}",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use three visitation states: unseen, active on the DFS path, and complete."
+  ],
+  "alternativeApproaches": [
+    "Return a cycle witness and distinguish an edge to an active node from an edge to an already completed node."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Disconnected vertices; self-loop; cycle.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

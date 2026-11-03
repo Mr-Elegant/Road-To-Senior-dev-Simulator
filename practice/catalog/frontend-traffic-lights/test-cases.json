@@ -1,0 +1,20 @@
+[
+  {
+    "id": "traffic-lights-1",
+    "name": "Initial",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"red\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "traffic-lights-2",
+    "name": "Cycle",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"red\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "traffic-lights-3",
+    "name": "Pause",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"pause\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"red\"},{\"selector\":\"[data-action=\\\"pause\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"true\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

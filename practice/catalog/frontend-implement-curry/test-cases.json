@@ -1,0 +1,26 @@
+[
+  {
+    "id": "implement-curry-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[[1],[2],[3]]",
+    "expectedOutput": "14"
+  },
+  {
+    "id": "implement-curry-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[[2,3],[4]]",
+    "expectedOutput": "20"
+  },
+  {
+    "id": "implement-curry-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[[0,0,0]]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "implement-curry-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[[],[1,2,3]]",
+    "expectedOutput": "14"
+  }
+]

@@ -1,0 +1,59 @@
+{
+  "id": "frontend-throttle",
+  "title": "Frontend: Throttle",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Throttle. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({wait,calls,end}). Deterministically model a leading+trailing throttle. calls are [time,value] in nondecreasing integer milliseconds; timers at a timestamp fire before calls there. Return [executionTime,value] events through inclusive end. A solitary leading call has no trailing duplicate. wait > 0.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "throttle-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"wait\":10,\"calls\":[[0,\"a\"],[3,\"b\"],[7,\"c\"]],\"end\":20}",
+      "expectedOutput": "[[0,\"a\"],[10,\"c\"]]"
+    },
+    {
+      "id": "throttle-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"wait\":10,\"calls\":[[0,\"a\"]],\"end\":20}",
+      "expectedOutput": "[[0,\"a\"]]"
+    },
+    {
+      "id": "throttle-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"wait\":10,\"calls\":[[0,\"a\"],[10,\"b\"]],\"end\":20}",
+      "expectedOutput": "[[0,\"a\"],[10,\"b\"]]"
+    },
+    {
+      "id": "throttle-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "{\"wait\":3,\"calls\":[],\"end\":10}",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Track the last invocation time, pending timer, and latest receiver/arguments."
+  ],
+  "alternativeApproaches": [
+    "Add flush and define whether it changes the next allowed invocation deadline."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Single call; burst; boundary time.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

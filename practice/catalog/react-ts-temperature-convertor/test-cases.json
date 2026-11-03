@@ -1,0 +1,26 @@
+[
+  {
+    "id": "temperature-convertor-1",
+    "name": "Input/derived output 1",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Celsius\\\"]\",\"value\":\"0\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\\\"32.00\\\"\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "temperature-convertor-2",
+    "name": "Input/derived output 2",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Celsius\\\"]\",\"value\":\"-40\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\\\"-40.00\\\"\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "temperature-convertor-3",
+    "name": "Input/derived output 3",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Celsius\\\"]\",\"value\":\"100\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\\\"212.00\\\"\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "temperature-convertor-4",
+    "name": "Input/derived output 4",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Celsius\\\"]\",\"value\":\"\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid temperature\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

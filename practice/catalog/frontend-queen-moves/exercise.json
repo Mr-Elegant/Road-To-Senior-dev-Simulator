@@ -1,0 +1,59 @@
+{
+  "id": "frontend-queen-moves",
+  "title": "Frontend: Queen Moves",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Queen Moves. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({start=[3,3],occupied=[]}) for an 8x8 geometric queen movement lab. Occupants are {row,col,side:own|opponent}. Render 64 buttons with data-cell=\"row,col\", data-allowed=true/false, and output the count in [data-testid=\"moves\"]. Clicking any square selects it. Own pieces block/exclude destinations, opponents can be captured but stop sliding rays. Pawns move upward, may advance twice only from row 6 through two empty cells, and capture opponents diagonally. King safety, castling, en-passant and promotion are excluded from this bounded geometry exercise.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "queen-moves-1",
+      "name": "Default destinations",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"27\"},{\"selector\":\"[data-cell]\",\"property\":\"count\",\"equals\":64}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "queen-moves-2",
+      "name": "Corner destinations",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0,0\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"21\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "queen-moves-3",
+      "name": "Selection changes",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"4,4\\\"]\"}],\"assertions\":[{\"selector\":\"[data-cell=\\\"4,4\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"true\"},{\"selector\":\"[data-cell=\\\"3,3\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"false\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "queen-moves-4",
+      "name": "Own blocker excluded",
+      "inputDescription": "{\"props\":{\"occupied\":[{\"row\":3,\"col\":4,\"side\":\"own\"}]},\"actions\":[],\"assertions\":[{\"selector\":\"[data-cell=\\\"3,4\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-allowed\",\"equals\":\"false\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Combine the four orthogonal and four diagonal directions."
+  ],
+  "alternativeApproaches": [
+    "Reuse a ray-generation helper for rook and bishop movement without mixing their distinct direction sets."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Corner rays; friendly blocker; opponent capture.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

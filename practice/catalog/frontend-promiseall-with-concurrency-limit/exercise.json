@@ -1,0 +1,60 @@
+{
+  "id": "frontend-promiseall-with-concurrency-limit",
+  "title": "Frontend: PromiseAll With Concurrency Limit",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind PromiseAll With Concurrency Limit. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement async solution({values,limit}). Run lazy promise-producing jobs at most limit concurrently, each job resolves its value after one asynchronous turn. Return {values: input-order results,peak}. Invalid limit throws Invalid limit. Use actual promises; active work must remain bounded.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "promiseall-with-concurrency-limit-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"values\":[3,1,2],\"limit\":2}",
+      "expectedOutput": "{\"values\":[3,1,2],\"peak\":2}"
+    },
+    {
+      "id": "promiseall-with-concurrency-limit-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"values\":[],\"limit\":3}",
+      "expectedOutput": "{\"values\":[],\"peak\":0}"
+    },
+    {
+      "id": "promiseall-with-concurrency-limit-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"values\":[1,2],\"limit\":1}",
+      "expectedOutput": "{\"values\":[1,2],\"peak\":1}"
+    },
+    {
+      "id": "promiseall-with-concurrency-limit-4",
+      "name": "Reject input: Invalid limit",
+      "inputDescription": "{\"values\":[1],\"limit\":0}",
+      "expectedOutput": "Throws: Invalid limit",
+      "expectedError": "Invalid limit"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Promises already created may already be running, so accept factories."
+  ],
+  "alternativeApproaches": [
+    "Propagate an AbortSignal and distinguish rejecting the aggregate promise from undoing work already sent to a server."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Empty tasks; limit one; limit above count.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

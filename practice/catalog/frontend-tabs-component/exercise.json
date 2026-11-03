@@ -1,0 +1,53 @@
+{
+  "id": "frontend-tabs-component",
+  "title": "Frontend: Tabs Component",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Tabs Component. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Tabs One and Two link to panels First and Second. Initially One selected. Use tablist, tab, tabpanel, aria-selected, roving tabindex and matching ids. ArrowRight/Left wrap, Home/End select boundary and move focus; activation is automatic. Render only active panel.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "tabs-component-1",
+      "name": "Initial",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[role=\\\"tabpanel\\\"]\",\"property\":\"text\",\"equals\":\"First\"},{\"selector\":\"#tab-0\",\"property\":\"attribute\",\"attribute\":\"aria-selected\",\"equals\":\"true\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "tabs-component-2",
+      "name": "Click",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"#tab-1\"}],\"assertions\":[{\"selector\":\"[role=\\\"tabpanel\\\"]\",\"property\":\"text\",\"equals\":\"Second\"},{\"selector\":\"#tab-1\",\"property\":\"attribute\",\"attribute\":\"tabindex\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "tabs-component-3",
+      "name": "Keyboard wrap",
+      "inputDescription": "{\"actions\":[{\"type\":\"key\",\"selector\":\"#tab-0\",\"key\":\"ArrowLeft\"}],\"assertions\":[{\"selector\":\"[role=\\\"tabpanel\\\"]\",\"property\":\"text\",\"equals\":\"Second\"},{\"selector\":\"#tab-0\",\"property\":\"attribute\",\"attribute\":\"tabindex\",\"equals\":\"-1\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Maintain active and focused tab IDs according to a chosen manual or automatic activation model."
+  ],
+  "alternativeApproaches": [
+    "Support vertical orientation and dynamic tab removal while preserving an understandable focus target."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Arrow wrapping; Home/End; disabled tab.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "color-code-game-1",
+    "name": "Incorrect",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-color=\\\"red\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Incorrect\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "color-code-game-2",
+    "name": "Correct locks",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-color=\\\"blue\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-color=\\\"red\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Correct\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "color-code-game-3",
+    "name": "Reset",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-color=\\\"blue\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"reset\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

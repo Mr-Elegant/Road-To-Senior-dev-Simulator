@@ -1,0 +1,53 @@
+{
+  "id": "frontend-objectassign",
+  "title": "Frontend: Object.assign()",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Object.assign(). This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({target,sources}) for JSON records. Return a shallow own-enumerable key merge with later sources overwriting earlier ones. Skip null sources. Treat __proto__ as an ordinary data key; do not invoke prototype setters.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "objectassign-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"target\":{\"a\":1},\"sources\":[{\"b\":2},{\"a\":3}]}",
+      "expectedOutput": "{\"a\":3,\"b\":2}"
+    },
+    {
+      "id": "objectassign-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"target\":{},\"sources\":[null,{\"a\":0}]}",
+      "expectedOutput": "{\"a\":0}"
+    },
+    {
+      "id": "objectassign-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"target\":{\"x\":{\"a\":1}},\"sources\":[{\"x\":{\"b\":2}}]}",
+      "expectedOutput": "{\"x\":{\"b\":2}}"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Convert a non-null target to an object and skip null/undefined sources."
+  ],
+  "alternativeApproaches": [
+    "Compare assignment semantics with descriptor copying and immutable object spread without claiming they are identical."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Multiple sources; symbol key; inherited key.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

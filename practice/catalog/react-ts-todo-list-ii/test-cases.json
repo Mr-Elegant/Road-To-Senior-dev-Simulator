@@ -1,0 +1,26 @@
+[
+  {
+    "id": "todo-list-ii-1",
+    "name": "Reject blank",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\"   \"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "todo-list-ii-2",
+    "name": "Add/complete",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\" Task \"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-toggle=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"[data-title]\",\"property\":\"text\",\"equals\":\"Task\"},{\"selector\":\"li\",\"property\":\"attribute\",\"attribute\":\"data-done\",\"equals\":\"true\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "todo-list-ii-3",
+    "name": "Delete",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\"Task\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-delete=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "todo-list-ii-4",
+    "name": "Edit and filter",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\"Old\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-edit=\\\"1\\\"]\"},{\"type\":\"input\",\"selector\":\"[aria-label=\\\"Edit title\\\"]\",\"value\":\"New\"},{\"type\":\"click\",\"selector\":\"[data-save=\\\"1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-toggle=\\\"1\\\"]\"},{\"type\":\"input\",\"selector\":\"select\",\"value\":\"active\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

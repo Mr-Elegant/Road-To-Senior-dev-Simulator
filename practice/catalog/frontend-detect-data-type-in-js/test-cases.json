@@ -1,0 +1,20 @@
+[
+  {
+    "id": "detect-data-type-in-js-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[\"null\",\"array\",\"nan\",\"number\"]",
+    "expectedOutput": "[\"null\",\"array\",\"nan\",\"number\"]"
+  },
+  {
+    "id": "detect-data-type-in-js-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[\"date\",\"map\",\"set\"]",
+    "expectedOutput": "[\"date\",\"map\",\"set\"]"
+  },
+  {
+    "id": "detect-data-type-in-js-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[\"string\",\"boolean\",\"function\",\"object\"]",
+    "expectedOutput": "[\"string\",\"boolean\",\"function\",\"object\"]"
+  }
+]

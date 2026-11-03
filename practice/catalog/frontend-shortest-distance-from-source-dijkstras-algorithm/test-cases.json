@@ -1,0 +1,21 @@
+[
+  {
+    "id": "shortest-distance-from-source-dijkstras-algorithm-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"count\":4,\"source\":0,\"edges\":[[0,1,5],[0,2,1],[2,1,1]]}",
+    "expectedOutput": "[0,2,1,null]"
+  },
+  {
+    "id": "shortest-distance-from-source-dijkstras-algorithm-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"count\":2,\"source\":0,\"edges\":[[0,1,0]]}",
+    "expectedOutput": "[0,0]"
+  },
+  {
+    "id": "shortest-distance-from-source-dijkstras-algorithm-3",
+    "name": "Reject input: Negative edge",
+    "inputDescription": "{\"count\":2,\"source\":0,\"edges\":[[0,1,-1]]}",
+    "expectedOutput": "Throws: Negative edge",
+    "expectedError": "Negative edge"
+  }
+]

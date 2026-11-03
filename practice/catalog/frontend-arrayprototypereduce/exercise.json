@@ -1,0 +1,60 @@
+{
+  "id": "frontend-arrayprototypereduce",
+  "title": "Frontend: Array.prototype.reduce",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Array.prototype.reduce. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({values,operation,initial?}). Reduce values by add or multiply. Without initial, use the first item; empty without initial throws Empty reduction. initial is present only when Object.hasOwn says so.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "arrayprototypereduce-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"values\":[1,2,3],\"operation\":\"add\"}",
+      "expectedOutput": "6"
+    },
+    {
+      "id": "arrayprototypereduce-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"values\":[],\"operation\":\"add\",\"initial\":0}",
+      "expectedOutput": "0"
+    },
+    {
+      "id": "arrayprototypereduce-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"values\":[2,3],\"operation\":\"multiply\",\"initial\":1}",
+      "expectedOutput": "6"
+    },
+    {
+      "id": "arrayprototypereduce-4",
+      "name": "Reject input: Empty reduction",
+      "inputDescription": "{\"values\":[],\"operation\":\"add\"}",
+      "expectedOutput": "Throws: Empty reduction",
+      "expectedError": "Empty reduction"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Distinguish an omitted initial argument from an explicitly supplied undefined using argument count."
+  ],
+  "alternativeApproaches": [
+    "Compare a focused array-only implementation with the complete specification requirements for generic receivers."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Empty without seed; explicit undefined seed; sparse array.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

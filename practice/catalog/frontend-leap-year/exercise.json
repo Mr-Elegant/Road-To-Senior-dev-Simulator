@@ -1,0 +1,59 @@
+{
+  "id": "frontend-leap-year",
+  "title": "Frontend: Leap year",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Leap year. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Inspect a Gregorian year integer 1..9999. Return a leap-year boolean using the 400/100/4 rule. Reject blank/invalid input with Invalid year. Render controlled labelled inputs with these exact names: Year. A Calculate submit button computes the result. Render JSON.stringify(result) in [data-testid=\"result\"]. Validation failure clears result and shows the documented message in [data-testid=\"error\"].",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "leap-year-1",
+      "name": "Input/derived output 1",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Year\\\"]\",\"value\":\"2000\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"true\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "leap-year-2",
+      "name": "Input/derived output 2",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Year\\\"]\",\"value\":\"1900\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"false\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "leap-year-3",
+      "name": "Input/derived output 3",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Year\\\"]\",\"value\":\"2024\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"true\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "leap-year-4",
+      "name": "Input/derived output 4",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Year\\\"]\",\"value\":\"\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid year\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Validate the raw input before coercion, then use the ordered divisibility rule: divisible by 400, or divisible by 4 but not by 100."
+  ],
+  "alternativeApproaches": [
+    "Add a calendar selection and explain why a historical date may require jurisdiction-specific rules."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: 2000; 1900; ordinary leap year.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

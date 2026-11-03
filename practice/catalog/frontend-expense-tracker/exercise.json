@@ -1,0 +1,53 @@
+{
+  "id": "frontend-expense-tracker",
+  "title": "Frontend: Expense Tracker",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Expense Tracker. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Controlled Description and Cents inputs create expenses with Add[data-action=add]. Trim Description; require positive integer cents, otherwise show Invalid expense and create nothing. li[data-expense=ID] use sequential IDs starting 1 with Delete[data-delete=ID]. Output total cents in [data-testid=total].",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "expense-tracker-1",
+      "name": "Add",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"description\\\"]\",\"value\":\" Lunch \"},{\"type\":\"input\",\"selector\":\"[name=\\\"cents\\\"]\",\"value\":\"125\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"125\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "expense-tracker-2",
+      "name": "Delete",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"description\\\"]\",\"value\":\"Lunch\"},{\"type\":\"input\",\"selector\":\"[name=\\\"cents\\\"]\",\"value\":\"100\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-delete=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"},{\"selector\":\"li\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "expense-tracker-3",
+      "name": "Invalid",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"description\\\"]\",\"value\":\"Lunch\"},{\"type\":\"input\",\"selector\":\"[name=\\\"cents\\\"]\",\"value\":\"-1\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Invalid expense\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Store immutable expense records with stable IDs and validated amounts."
+  ],
+  "alternativeApproaches": [
+    "Add multiple currencies with explicit conversion rates and avoid summing unlike monetary units."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Zero/negative policy; editing; deletion.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

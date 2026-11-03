@@ -1,0 +1,59 @@
+{
+  "id": "frontend-data-table",
+  "title": "Frontend: Data Table",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Data Table. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({rows=[{id:a,name:Ada,score:2},{id:b,name:Lin,score:1},{id:c,name:Zoe,score:3}]}). Search name case-insensitively, page size two, initial ascending score then ID. Sort[data-action=sort] toggles descending/ascending score; reset page on search/sort. Next/Previous clamp. Checkboxes[data-select=ID] retain selection across pages/filters; output[data-testid=selected] is count. Use semantic table and aria-sort on score header.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "data-table-1",
+      "name": "Initial sort",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-name]\",\"property\":\"text\",\"equals\":\"Lin\"},{\"selector\":\"tbody tr\",\"property\":\"count\",\"equals\":2}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "data-table-2",
+      "name": "Reverse",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"sort\\\"]\"}],\"assertions\":[{\"selector\":\"[data-name]\",\"property\":\"text\",\"equals\":\"Zoe\"},{\"selector\":\"th[aria-sort]\",\"property\":\"attribute\",\"attribute\":\"aria-sort\",\"equals\":\"descending\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "data-table-3",
+      "name": "Selection survives",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-select=\\\"b\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"previous\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"},{\"selector\":\"[data-row=\\\"b\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-selected\",\"equals\":\"true\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "data-table-4",
+      "name": "Filter",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"ada\"}],\"assertions\":[{\"selector\":\"tbody tr\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-name]\",\"property\":\"text\",\"equals\":\"Ada\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Keep query controls and selected row IDs separate from the dataset."
+  ],
+  "alternativeApproaches": [
+    "Support server-side select-all as a query plus exclusions rather than downloading every row ID."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Sort ties; selection across pages; empty result.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

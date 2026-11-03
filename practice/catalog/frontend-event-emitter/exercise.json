@@ -1,0 +1,53 @@
+{
+  "id": "frontend-event-emitter",
+  "title": "Frontend: Event Emitter",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Event Emitter. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(commands). Commands on{id,event,once?}, off{id}, emit{event,value}. Each subscribed listener logs [id,value]. Emission uses subscription order and a snapshot; once subscriptions are removed before invocation. Return the log. IDs are unique per live subscription.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "event-emitter-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[{\"type\":\"on\",\"id\":\"a\",\"event\":\"x\",\"once\":true},{\"type\":\"emit\",\"event\":\"x\",\"value\":1},{\"type\":\"emit\",\"event\":\"x\",\"value\":2}]",
+      "expectedOutput": "[[\"a\",1]]"
+    },
+    {
+      "id": "event-emitter-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[{\"type\":\"on\",\"id\":\"a\",\"event\":\"x\"},{\"type\":\"on\",\"id\":\"b\",\"event\":\"x\"},{\"type\":\"off\",\"id\":\"a\"},{\"type\":\"emit\",\"event\":\"x\",\"value\":0}]",
+      "expectedOutput": "[[\"b\",0]]"
+    },
+    {
+      "id": "event-emitter-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[{\"type\":\"emit\",\"event\":\"x\",\"value\":1}]",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Store listeners per event and return an idempotent unsubscribe function."
+  ],
+  "alternativeApproaches": [
+    "Add an async emit mode with a deliberate sequential versus parallel error policy."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Unsubscribe twice; add/remove during emit; reentrant emit.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

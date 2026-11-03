@@ -1,0 +1,20 @@
+[
+  {
+    "id": "confirmation-modal-1",
+    "name": "Cancel",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"delete\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"cancel\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"},{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "confirmation-modal-2",
+    "name": "Confirm",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"delete\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"confirm\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"},{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "confirmation-modal-3",
+    "name": "Escape",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"delete\\\"]\"},{\"type\":\"key\",\"selector\":\"dialog\",\"key\":\"Escape\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"},{\"selector\":\"dialog[open]\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "animated-loading-skeleton-1",
+    "name": "Loading",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"skeleton\\\"]\",\"property\":\"count\",\"equals\":1},{\"selector\":\"section\",\"property\":\"attribute\",\"attribute\":\"aria-busy\",\"equals\":\"true\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "animated-loading-skeleton-2",
+    "name": "Loaded",
+    "inputDescription": "{\"props\":{\"state\":\"success\",\"content\":\"Done\"},\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Done\"},{\"selector\":\"[data-testid=\\\"skeleton\\\"]\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "animated-loading-skeleton-3",
+    "name": "Failure",
+    "inputDescription": "{\"props\":{\"state\":\"error\"},\"actions\":[],\"assertions\":[{\"selector\":\"[role=\\\"alert\\\"]\",\"property\":\"text\",\"equals\":\"Unable to load\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

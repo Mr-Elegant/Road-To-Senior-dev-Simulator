@@ -1,0 +1,20 @@
+[
+  {
+    "id": "blog-post-1",
+    "name": "Missing",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Article unavailable\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "blog-post-2",
+    "name": "Article structure",
+    "inputDescription": "{\"props\":{\"post\":{\"title\":\"Notes\",\"author\":\"Ada\",\"date\":\"2026-01-01\",\"body\":\"Text\"}},\"actions\":[],\"assertions\":[{\"selector\":\"h1\",\"property\":\"text\",\"equals\":\"Notes\"},{\"selector\":\"[data-testid=\\\"author\\\"]\",\"property\":\"text\",\"equals\":\"Ada\"},{\"selector\":\"time\",\"property\":\"attribute\",\"attribute\":\"datetime\",\"equals\":\"2026-01-01\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "blog-post-3",
+    "name": "Plain content",
+    "inputDescription": "{\"props\":{\"post\":{\"title\":\"T\",\"date\":\"2026-01-02\",\"body\":\"<b>Text</b>\"}},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"body\\\"]\",\"property\":\"text\",\"equals\":\"<b>Text</b>\"},{\"selector\":\"b\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[data-testid=\\\"author\\\"]\",\"property\":\"text\",\"equals\":\"Unknown\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

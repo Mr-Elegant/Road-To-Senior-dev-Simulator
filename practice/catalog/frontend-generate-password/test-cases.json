@@ -1,0 +1,20 @@
+[
+  {
+    "id": "generate-password-1",
+    "name": "Seeded output",
+    "inputDescription": "{\"props\":{\"draws\":[0]},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"A0!aaaaa\"},{\"selector\":\"output\",\"property\":\"attribute\",\"attribute\":\"data-length\",\"equals\":\"8\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "generate-password-2",
+    "name": "Minimum",
+    "inputDescription": "{\"props\":{\"draws\":[0]},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"4\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"A0!a\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "generate-password-3",
+    "name": "Invalid",
+    "inputDescription": "{\"props\":{\"draws\":[0]},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"3\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"\"},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Invalid length\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-stickynotes-component",
+  "title": "React + TypeScript: StickyNotes Component",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind StickyNotes Component. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Add note[data-action=add] creates a note at x=20 with sequential data-note ID and controlled textarea. Move right[data-move=ID] nudges x by 10, clamped at 200; data-x reflects position. Delete[data-delete=ID] removes that note. Preserve text during movement. This exercise tests note editing/position state, not pointer physics or persistence.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "stickynotes-component-1",
+      "name": "Add",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"[data-note]\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-note=\\\"1\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-x\",\"equals\":\"20\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "stickynotes-component-2",
+      "name": "Edit/move",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"Remember\"},{\"type\":\"click\",\"selector\":\"[data-move=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"[data-note=\\\"1\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-x\",\"equals\":\"30\"},{\"selector\":\"textarea\",\"property\":\"value\",\"equals\":\"Remember\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "stickynotes-component-3",
+      "name": "Delete",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-delete=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"[data-note]\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Store stable note IDs, content, and logical positions."
+  ],
+  "alternativeApproaches": [
+    "Add shared-board synchronization with explicit conflict resolution for concurrent text and position edits."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Drag vs edit; pointer cancel; deleting active note.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

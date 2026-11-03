@@ -1,0 +1,27 @@
+[
+  {
+    "id": "compress-string-with-limited-repetition-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"text\":\"aaaaabb\",\"limit\":2}",
+    "expectedOutput": "[[\"a\",2],[\"a\",2],[\"a\",1],[\"b\",2]]"
+  },
+  {
+    "id": "compress-string-with-limited-repetition-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"text\":\"😀😀x\",\"limit\":3}",
+    "expectedOutput": "[[\"😀\",2],[\"x\",1]]"
+  },
+  {
+    "id": "compress-string-with-limited-repetition-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"text\":\"\",\"limit\":1}",
+    "expectedOutput": "[]"
+  },
+  {
+    "id": "compress-string-with-limited-repetition-4",
+    "name": "Reject input: Invalid limit",
+    "inputDescription": "{\"text\":\"a\",\"limit\":0}",
+    "expectedOutput": "Throws: Invalid limit",
+    "expectedError": "Invalid limit"
+  }
+]

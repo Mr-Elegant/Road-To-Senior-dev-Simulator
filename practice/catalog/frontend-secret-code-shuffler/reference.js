@@ -1,0 +1,1 @@
+const solution = (function solution({ text, shift }) { return text.replace(/[A-Za-z]/g, (c) => { const start = c >= 'a' && c <= 'z' ? 97 : 65; return String.fromCharCode(start + ((c.charCodeAt(0) - start + shift) % 26 + 26) % 26); }); });

@@ -1,0 +1,11 @@
+import type * as React from 'react';
+export interface AppProps {
+    items?: (string)[];
+}
+import { useState } from 'react';
+export default function App({ items = ['A', 'B', 'C'] }: AppProps = {}): React.JSX.Element { const [order, setOrder] = useState(items), [dragged, setDragged] = useState<string | null>(null); function move(from: string | null, to: string) { setOrder(old => { if (from === null)
+    return old; if (from === null)
+    return old; const a = old.indexOf(from), b = old.indexOf(to); if (a < 0 || b < 0 || a === b)
+    return old; const next = [...old]; next.splice(a, 1); next.splice(b, 0, from); return next; }); } return <section><ul>{order.map((id, i) => <li key={id} data-id={id} draggable onDragStart={() => setDragged(id)} onDragOver={e => e.preventDefault()} onDrop={e => { e.preventDefault(); move(dragged, id); setDragged(null); }}>{id}<button data-down={id} onClick={() => { if (i < order.length - 1)
+    move(id, order[i + 1]); }}>Move down {id}</button></li>)}</ul><output data-testid="order">{order.join(',')}</output></section>; }
+

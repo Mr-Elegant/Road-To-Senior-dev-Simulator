@@ -1,0 +1,20 @@
+[
+  {
+    "id": "dynamic-greeting-app-1",
+    "name": "Initial fallback",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"greeting\\\"]\",\"property\":\"text\",\"equals\":\"Good morning, friend!\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "dynamic-greeting-app-2",
+    "name": "Evening name",
+    "inputDescription": "{\"props\":{\"hour\":20},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"  Preet \"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"greeting\\\"]\",\"property\":\"text\",\"equals\":\"Good evening, Preet!\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "dynamic-greeting-app-3",
+    "name": "Noon boundary",
+    "inputDescription": "{\"props\":{\"hour\":12},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"greeting\\\"]\",\"property\":\"text\",\"equals\":\"Good afternoon, friend!\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "auto-save-form-1",
+    "name": "Initial",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Ready\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "auto-save-form-2",
+    "name": "Save draft",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"[name=\\\"body\\\"]\",\"value\":\"B\"},{\"type\":\"wait\",\"milliseconds\":120}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"{\\\"title\\\":\\\"A\\\",\\\"body\\\":\\\"B\\\"}\"},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Saved\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "auto-save-form-3",
+    "name": "Latest wins",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"Old\"},{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"New\"},{\"type\":\"wait\",\"milliseconds\":120}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"{\\\"title\\\":\\\"New\\\",\\\"body\\\":\\\"\\\"}\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

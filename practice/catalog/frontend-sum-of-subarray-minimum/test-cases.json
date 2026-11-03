@@ -1,0 +1,26 @@
+[
+  {
+    "id": "sum-of-subarray-minimum-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[3,1,2,4]",
+    "expectedOutput": "17"
+  },
+  {
+    "id": "sum-of-subarray-minimum-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[2,2]",
+    "expectedOutput": "6"
+  },
+  {
+    "id": "sum-of-subarray-minimum-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[-1,2]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "sum-of-subarray-minimum-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[]",
+    "expectedOutput": "0"
+  }
+]

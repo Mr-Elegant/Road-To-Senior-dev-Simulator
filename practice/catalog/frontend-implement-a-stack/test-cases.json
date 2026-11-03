@@ -1,0 +1,20 @@
+[
+  {
+    "id": "implement-a-stack-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[{\"type\":\"pop\"},{\"type\":\"push\",\"value\":0},{\"type\":\"peek\"},{\"type\":\"size\"},{\"type\":\"pop\"},{\"type\":\"pop\"}]",
+    "expectedOutput": "[null,1,0,1,0,null]"
+  },
+  {
+    "id": "implement-a-stack-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[]",
+    "expectedOutput": "[]"
+  },
+  {
+    "id": "implement-a-stack-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[{\"type\":\"push\",\"value\":\"a\"},{\"type\":\"push\",\"value\":\"b\"},{\"type\":\"pop\"}]",
+    "expectedOutput": "[1,2,\"b\"]"
+  }
+]

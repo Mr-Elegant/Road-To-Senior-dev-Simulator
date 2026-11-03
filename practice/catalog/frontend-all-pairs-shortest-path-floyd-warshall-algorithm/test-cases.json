@@ -1,0 +1,21 @@
+[
+  {
+    "id": "all-pairs-shortest-path-floyd-warshall-algorithm-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"count\":3,\"edges\":[[0,1,2],[1,2,-1],[0,2,9]]}",
+    "expectedOutput": "[[0,2,1],[null,0,-1],[null,null,0]]"
+  },
+  {
+    "id": "all-pairs-shortest-path-floyd-warshall-algorithm-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"count\":1,\"edges\":[]}",
+    "expectedOutput": "[[0]]"
+  },
+  {
+    "id": "all-pairs-shortest-path-floyd-warshall-algorithm-3",
+    "name": "Reject input: Negative cycle",
+    "inputDescription": "{\"count\":2,\"edges\":[[0,1,-1],[1,0,-1]]}",
+    "expectedOutput": "Throws: Negative cycle",
+    "expectedError": "Negative cycle"
+  }
+]

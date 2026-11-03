@@ -1,0 +1,59 @@
+{
+  "id": "frontend-list-format",
+  "title": "Frontend: List Format",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind List Format. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(items) for strings. Empty gives empty text, one item itself, two use A and B, three or more use comma-separated prefix followed by , and LAST. This is a narrow English formatting contract.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "list-format-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[]",
+      "expectedOutput": "\"\""
+    },
+    {
+      "id": "list-format-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[\"A\"]",
+      "expectedOutput": "\"A\""
+    },
+    {
+      "id": "list-format-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[\"A\",\"B\"]",
+      "expectedOutput": "\"A and B\""
+    },
+    {
+      "id": "list-format-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "[\"A\",\"B\",\"C\"]",
+      "expectedOutput": "\"A, B, and C\""
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "For a locale-aware product, use Intl.ListFormat with the intended style and type."
+  ],
+  "alternativeApproaches": [
+    "Offer a count-limited summary that reports remaining items without confusing formatting with truncation policy."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Empty; one; two.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

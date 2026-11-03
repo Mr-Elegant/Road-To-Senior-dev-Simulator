@@ -1,0 +1,20 @@
+[
+  {
+    "id": "implement-promise-race-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[{\"value\":\"a\",\"delay\":5},{\"value\":\"b\",\"delay\":0}]",
+    "expectedOutput": "{\"status\":\"fulfilled\",\"value\":\"b\"}"
+  },
+  {
+    "id": "implement-promise-race-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[{\"value\":\"bad\",\"delay\":0,\"reject\":true},{\"value\":\"ok\",\"delay\":10}]",
+    "expectedOutput": "{\"status\":\"rejected\",\"value\":\"bad\"}"
+  },
+  {
+    "id": "implement-promise-race-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[]",
+    "expectedOutput": "{\"status\":\"pending\"}"
+  }
+]

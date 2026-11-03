@@ -117,6 +117,8 @@ function LibraryContent() {
           Challenge Catalog ({allScenarios.length} Scenarios)
         </h1>
         <Link href="/library?topic=React" className="inline-flex mt-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">Explore React UI practice with preview and tests</Link>
+        <Link href="/frontend-practice" className="ml-0 sm:ml-4 inline-flex mt-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">All 203 frontend practice questions →</Link>
+        <Link href="/react-typescript" className="ml-0 sm:ml-4 inline-flex mt-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">React + TypeScript: 113 challenges →</Link>
         <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 max-w-3xl leading-relaxed">
           Production-grade scenarios covering JavaScript, TypeScript, React, Next.js, Node.js, PostgreSQL, Integrations, Engineering Operations, and System Design.
         </p>

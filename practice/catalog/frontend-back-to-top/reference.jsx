@@ -1,0 +1,1 @@
+import {useState} from 'react';export default function App({initialY=0,threshold=200}){const[y,setY]=useState(initialY);return <section><output data-testid="position">{y}</output>{y>threshold&&<button onClick={()=>setY(0)}>Back to top</button>}</section>;}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "back-to-top-1",
+    "name": "At threshold",
+    "inputDescription": "{\"props\":{\"initialY\":200},\"actions\":[],\"assertions\":[{\"selector\":\"button\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "back-to-top-2",
+    "name": "Beyond threshold",
+    "inputDescription": "{\"props\":{\"initialY\":201},\"actions\":[],\"assertions\":[{\"selector\":\"button\",\"property\":\"count\",\"equals\":1},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"201\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "back-to-top-3",
+    "name": "Return",
+    "inputDescription": "{\"props\":{\"initialY\":900},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"},{\"selector\":\"button\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "deep-omit-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"value\":{\"a\":1,\"n\":{\"a\":2,\"b\":3}},\"keys\":[\"a\"]}",
+    "expectedOutput": "{\"n\":{\"b\":3}}"
+  },
+  {
+    "id": "deep-omit-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"value\":[{\"secret\":1,\"x\":2},null],\"keys\":[\"secret\"]}",
+    "expectedOutput": "[{\"x\":2},null]"
+  },
+  {
+    "id": "deep-omit-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"value\":{\"a\":1},\"keys\":[]}",
+    "expectedOutput": "{\"a\":1}"
+  }
+]

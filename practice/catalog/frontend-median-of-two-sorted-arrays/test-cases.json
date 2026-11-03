@@ -1,0 +1,27 @@
+[
+  {
+    "id": "median-of-two-sorted-arrays-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"left\":[1,3],\"right\":[2]}",
+    "expectedOutput": "2"
+  },
+  {
+    "id": "median-of-two-sorted-arrays-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"left\":[1,2],\"right\":[3,4]}",
+    "expectedOutput": "2.5"
+  },
+  {
+    "id": "median-of-two-sorted-arrays-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"left\":[],\"right\":[5]}",
+    "expectedOutput": "5"
+  },
+  {
+    "id": "median-of-two-sorted-arrays-4",
+    "name": "Reject input: Empty arrays",
+    "inputDescription": "{\"left\":[],\"right\":[]}",
+    "expectedOutput": "Throws: Empty arrays",
+    "expectedError": "Empty arrays"
+  }
+]

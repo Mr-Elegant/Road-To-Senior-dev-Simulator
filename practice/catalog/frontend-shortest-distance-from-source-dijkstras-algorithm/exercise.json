@@ -1,0 +1,54 @@
+{
+  "id": "frontend-shortest-distance-from-source-dijkstras-algorithm",
+  "title": "Frontend: Shortest Distance from Source (Dijkstra's Algorithm)",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Shortest Distance from Source (Dijkstra's Algorithm). This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({count,edges,source}) for directed nonnegative weights. Return distances, null for unreachable. Use dense Dijkstra minimum-unvisited selection. Any negative edge throws Negative edge.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "shortest-distance-from-source-dijkstras-algorithm-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"count\":4,\"source\":0,\"edges\":[[0,1,5],[0,2,1],[2,1,1]]}",
+      "expectedOutput": "[0,2,1,null]"
+    },
+    {
+      "id": "shortest-distance-from-source-dijkstras-algorithm-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"count\":2,\"source\":0,\"edges\":[[0,1,0]]}",
+      "expectedOutput": "[0,0]"
+    },
+    {
+      "id": "shortest-distance-from-source-dijkstras-algorithm-3",
+      "name": "Reject input: Negative edge",
+      "inputDescription": "{\"count\":2,\"source\":0,\"edges\":[[0,1,-1]]}",
+      "expectedOutput": "Throws: Negative edge",
+      "expectedError": "Negative edge"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use a min-heap of candidate distances, initialize the source to zero, and relax outgoing edges from the smallest valid entry."
+  ],
+  "alternativeApproaches": [
+    "Add path reconstruction and compare with Bellman–Ford when negative weights are permitted."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Zero-weight edge; unreachable node; repeated improvements.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

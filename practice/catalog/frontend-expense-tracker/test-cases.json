@@ -1,0 +1,20 @@
+[
+  {
+    "id": "expense-tracker-1",
+    "name": "Add",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"description\\\"]\",\"value\":\" Lunch \"},{\"type\":\"input\",\"selector\":\"[name=\\\"cents\\\"]\",\"value\":\"125\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"125\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "expense-tracker-2",
+    "name": "Delete",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"description\\\"]\",\"value\":\"Lunch\"},{\"type\":\"input\",\"selector\":\"[name=\\\"cents\\\"]\",\"value\":\"100\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-delete=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"},{\"selector\":\"li\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "expense-tracker-3",
+    "name": "Invalid",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"description\\\"]\",\"value\":\"Lunch\"},{\"type\":\"input\",\"selector\":\"[name=\\\"cents\\\"]\",\"value\":\"-1\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Invalid expense\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

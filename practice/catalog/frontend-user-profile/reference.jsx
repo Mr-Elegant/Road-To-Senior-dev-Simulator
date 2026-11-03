@@ -1,0 +1,1 @@
+export default function App({profile}){if(!profile)return <p>Profile unavailable</p>;return <section><h1>{profile.name}</h1>{profile.avatar?<img src={profile.avatar} alt={profile.name}/>:<span data-testid="avatar-fallback">{Array.from(profile.name)[0]?.toUpperCase()||'?'}</span>}<p data-testid="bio">{profile.bio||'No biography'}</p></section>;}

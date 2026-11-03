@@ -1,0 +1,61 @@
+{
+  "id": "frontend-implement-garbage-collector",
+  "title": "Frontend: Implement Garbage Collector",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Implement Garbage Collector. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({objects,roots}). Objects are {id,refs}; IDs are unique strings. Mark reachable objects from roots and return sorted {survivors,collected}. Unknown roots throw Unknown root; references to unallocated IDs throw Dangling reference. Unreachable cycles must be collected. This is a heap graph simulation.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "implement-garbage-collector-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"objects\":[{\"id\":\"a\",\"refs\":[\"b\"]},{\"id\":\"b\",\"refs\":[\"a\"]},{\"id\":\"c\",\"refs\":[]}],\"roots\":[\"a\"]}",
+      "expectedOutput": "{\"survivors\":[\"a\",\"b\"],\"collected\":[\"c\"]}"
+    },
+    {
+      "id": "implement-garbage-collector-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"objects\":[{\"id\":\"a\",\"refs\":[\"b\"]},{\"id\":\"b\",\"refs\":[\"a\"]}],\"roots\":[]}",
+      "expectedOutput": "{\"survivors\":[],\"collected\":[\"a\",\"b\"]}"
+    },
+    {
+      "id": "implement-garbage-collector-3",
+      "name": "Reject input: Dangling reference",
+      "inputDescription": "{\"objects\":[{\"id\":\"a\",\"refs\":[\"x\"]}],\"roots\":[]}",
+      "expectedOutput": "Throws: Dangling reference",
+      "expectedError": "Dangling reference"
+    },
+    {
+      "id": "implement-garbage-collector-4",
+      "name": "Reject input: Unknown root",
+      "inputDescription": "{\"objects\":[],\"roots\":[\"x\"]}",
+      "expectedOutput": "Throws: Unknown root",
+      "expectedError": "Unknown root"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Represent heap objects as IDs with outgoing references and provide an explicit root set."
+  ],
+  "alternativeApproaches": [
+    "Add an incremental marking model and state the write-barrier invariant needed when the graph changes during marking."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Reachable cycle; unreachable cycle; no roots.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

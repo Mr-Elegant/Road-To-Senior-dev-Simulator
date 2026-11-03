@@ -1,0 +1,20 @@
+[
+  {
+    "id": "rock-paper-scissor-1",
+    "name": "Win",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-choice=\\\"paper\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"win\"},{\"selector\":\"[data-testid=\\\"wins\\\"]\",\"property\":\"text\",\"equals\":\"1\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "rock-paper-scissor-2",
+    "name": "Draw",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-choice=\\\"rock\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"draw\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "rock-paper-scissor-3",
+    "name": "Loss",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-choice=\\\"scissors\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"loss\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

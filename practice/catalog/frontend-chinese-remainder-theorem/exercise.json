@@ -1,0 +1,60 @@
+{
+  "id": "frontend-chinese-remainder-theorem",
+  "title": "Frontend: Chinese Remainder Theorem",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Chinese Remainder Theorem. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({residues,moduli}) using decimal integer strings. Moduli are >1 and must be pairwise coprime. Return {value,modulus} decimal strings for the least nonnegative solution modulo their product. Empty system returns {value:0,modulus:1}. Noncoprime moduli throw Not coprime.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "chinese-remainder-theorem-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"residues\":[\"2\",\"3\",\"2\"],\"moduli\":[\"3\",\"5\",\"7\"]}",
+      "expectedOutput": "{\"value\":\"23\",\"modulus\":\"105\"}"
+    },
+    {
+      "id": "chinese-remainder-theorem-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"residues\":[\"-1\"],\"moduli\":[\"5\"]}",
+      "expectedOutput": "{\"value\":\"4\",\"modulus\":\"5\"}"
+    },
+    {
+      "id": "chinese-remainder-theorem-3",
+      "name": "Reject input: Not coprime",
+      "inputDescription": "{\"residues\":[\"1\",\"1\"],\"moduli\":[\"4\",\"6\"]}",
+      "expectedOutput": "Throws: Not coprime",
+      "expectedError": "Not coprime"
+    },
+    {
+      "id": "chinese-remainder-theorem-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "{\"residues\":[],\"moduli\":[]}",
+      "expectedOutput": "{\"value\":\"0\",\"modulus\":\"1\"}"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Let M be the product of moduli and Mi=M/mi."
+  ],
+  "alternativeApproaches": [
+    "Implement generalized pairwise merging and return no solution when the residue difference is not divisible by the gcd."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Negative residue; modulus one policy; coprime system.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "frontend-markdown-editor",
+  "title": "Frontend: Markdown Editor",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Markdown Editor. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Controlled Markdown textarea previews a safe limited grammar: each line starting # becomes h1, ## becomes h2, all other lines become p. Strip the marker plus one optional following space. Render all remaining characters literally, not HTML. Wrap preview in [data-testid=\"preview\"].",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "markdown-editor-1",
+      "name": "Heading",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"# Hello\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"preview\\\"] h1\",\"property\":\"text\",\"equals\":\"Hello\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "markdown-editor-2",
+      "name": "Second level",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"## Small\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"preview\\\"] h2\",\"property\":\"text\",\"equals\":\"Small\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "markdown-editor-3",
+      "name": "Unsafe input stays text",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"<img src=x>\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"preview\\\"] p\",\"property\":\"text\",\"equals\":\"<img src=x>\"},{\"selector\":\"[data-testid=\\\"preview\\\"] img\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Keep raw Markdown as the editing source and debounce expensive parsing only when measurements justify it."
+  ],
+  "alternativeApproaches": [
+    "Add asynchronous preview computation with revision checks so stale parses cannot overwrite newer text."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Raw HTML; script-like links; code fences.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

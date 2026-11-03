@@ -1,0 +1,69 @@
+{
+  "id": "react-ts-accordion",
+  "title": "React + TypeScript: Accordion",
+  "businessContext": "A compact support panel should expose one answer at a time while remaining usable with native keyboard controls.",
+  "problemStatement": "Export App({ items = [] }). Each item has unique id, title, and body strings. Render a heading button per item, initially all collapsed. Activating a collapsed button opens its body and closes the previously open body; activating the same button collapses it. Each button needs aria-expanded and aria-controls=\"panel-ID\". An open body is a region with id=\"panel-ID\" and aria-labelledby referring to its button id=\"trigger-ID\". Only open regions exist in the DOM. An empty array shows No help articles in [data-testid=\"empty\"]. Use native buttons rather than clickable divs.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Item IDs are unique, nonempty, HTML-id-safe strings; titles and bodies are plain text.",
+    "Use stable item IDs for keys and open state, not array positions.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    items?: {\n        id: string;\n        title: string;\n        body: string;\n    }[];\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "help-empty",
+      "name": "Empty configuration has a useful state",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"empty\\\"]\",\"property\":\"text\",\"equals\":\"No help articles\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "help-collapsed",
+      "name": "All answers initially collapsed",
+      "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Delivery\",\"body\":\"Ships in two days\"}]},\"actions\":[],\"assertions\":[{\"selector\":\"#trigger-a\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"},{\"selector\":\"[role=\\\"region\\\"]\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "help-open",
+      "name": "Opening creates a labelled answer region",
+      "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Delivery\",\"body\":\"Ships in two days\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"#trigger-a\"}],\"assertions\":[{\"selector\":\"#trigger-a\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"true\"},{\"selector\":\"#panel-a\",\"property\":\"text\",\"equals\":\"Ships in two days\"},{\"selector\":\"#panel-a\",\"property\":\"attribute\",\"attribute\":\"aria-labelledby\",\"equals\":\"trigger-a\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "help-exclusive",
+      "name": "Opening another answer closes the first",
+      "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Delivery\",\"body\":\"Ships in two days\"},{\"id\":\"b\",\"title\":\"Returns\",\"body\":\"Contact support\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"#trigger-a\"},{\"type\":\"click\",\"selector\":\"#trigger-b\"}],\"assertions\":[{\"selector\":\"#panel-a\",\"property\":\"count\",\"equals\":0},{\"selector\":\"#panel-b\",\"property\":\"text\",\"equals\":\"Contact support\"},{\"selector\":\"#trigger-a\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "help-toggle",
+      "name": "Activating an open heading collapses it",
+      "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Delivery\",\"body\":\"Ships in two days\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"#trigger-a\"},{\"type\":\"click\",\"selector\":\"#trigger-a\"}],\"assertions\":[{\"selector\":\"[role=\\\"region\\\"]\",\"property\":\"count\",\"equals\":0},{\"selector\":\"#trigger-a\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "One open ID or null expresses the single-open invariant.",
+    "Derive aria-expanded from the same equality used to render the region."
+  ],
+  "commonMistakes": [
+    "Keeping an independent open flag on each row, violating single-open behavior.",
+    "Rendering a visually hidden panel that still violates the specified DOM contract."
+  ],
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 25,
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "candidateTasks": [
+    "Implement the default-exported App component and the documented DOM contract.",
+    "Run every interaction journey, explain edge cases, then compare your implementation with the reference.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "alternativeApproaches": [
+    "Extract a small pure helper for derived values; keep input state in the component. Extend with a custom hook only when behavior is reused."
+  ],
+  "reactTypescriptExercise": true
+}

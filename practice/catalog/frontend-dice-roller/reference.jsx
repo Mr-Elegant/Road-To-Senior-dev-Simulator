@@ -1,0 +1,1 @@
+import {useState,useRef} from 'react';export default function App({draws=[0],sides=6}){const[index,setIndex]=useState(0),[value,setValue]=useState(null);return <section><button onClick={()=>{setValue(Math.floor((draws[index]??0)*sides)+1);setIndex(i=>i+1);}}>Roll</button><output data-testid="roll">{value===null?'-':value}</output></section>;}

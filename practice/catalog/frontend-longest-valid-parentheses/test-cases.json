@@ -1,0 +1,32 @@
+[
+  {
+    "id": "longest-valid-parentheses-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "\")()())\"",
+    "expectedOutput": "4"
+  },
+  {
+    "id": "longest-valid-parentheses-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "\"(()\"",
+    "expectedOutput": "2"
+  },
+  {
+    "id": "longest-valid-parentheses-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "\"\"",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "longest-valid-parentheses-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "\"()(())\"",
+    "expectedOutput": "6"
+  },
+  {
+    "id": "longest-valid-parentheses-5",
+    "name": "Behavioral case 5",
+    "inputDescription": "\"(((\"",
+    "expectedOutput": "0"
+  }
+]

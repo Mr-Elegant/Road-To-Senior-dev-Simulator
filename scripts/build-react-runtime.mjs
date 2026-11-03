@@ -1,4 +1,5 @@
 import { build } from 'esbuild';
+import './build-react-typescript-runtime.mjs';
 
 // Self-host React + the JSX transformer. No external bundler or CDN is used by the preview.
 await build({

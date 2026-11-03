@@ -1,0 +1,20 @@
+[
+  {
+    "id": "kanban-board-1",
+    "name": "Initial columns",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"2,0,0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "kanban-board-2",
+    "name": "Advance",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-move=\\\"A\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1,1,0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "kanban-board-3",
+    "name": "Drag destination",
+    "inputDescription": "{\"actions\":[{\"type\":\"drag\",\"source\":\"[data-card=\\\"B\\\"]\",\"target\":\"[data-column=\\\"done\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1,0,1\"},{\"selector\":\"[data-card=\\\"B\\\"]\",\"property\":\"count\",\"equals\":1}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

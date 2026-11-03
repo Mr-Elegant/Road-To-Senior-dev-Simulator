@@ -1,0 +1,20 @@
+[
+  {
+    "id": "undo-redo-1",
+    "name": "Initial boundary",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-action=\\\"undo\\\"]\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "undo-redo-2",
+    "name": "Undo/redo",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"B\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"undo\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"redo\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"B\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "undo-redo-3",
+    "name": "Branch",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"B\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"undo\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"C\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"C\"},{\"selector\":\"[data-action=\\\"redo\\\"]\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

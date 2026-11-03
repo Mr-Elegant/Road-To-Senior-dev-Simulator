@@ -1,0 +1,26 @@
+[
+  {
+    "id": "queen-moves-1",
+    "name": "Default destinations",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"27\"},{\"selector\":\"[data-cell]\",\"property\":\"count\",\"equals\":64}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "queen-moves-2",
+    "name": "Corner destinations",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0,0\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"21\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "queen-moves-3",
+    "name": "Selection changes",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"4,4\\\"]\"}],\"assertions\":[{\"selector\":\"[data-cell=\\\"4,4\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"true\"},{\"selector\":\"[data-cell=\\\"3,3\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"false\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "queen-moves-4",
+    "name": "Own blocker excluded",
+    "inputDescription": "{\"props\":{\"occupied\":[{\"row\":3,\"col\":4,\"side\":\"own\"}]},\"actions\":[],\"assertions\":[{\"selector\":\"[data-cell=\\\"3,4\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-allowed\",\"equals\":\"false\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

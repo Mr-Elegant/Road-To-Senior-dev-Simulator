@@ -1,0 +1,53 @@
+{
+  "id": "frontend-animated-loading-skeleton",
+  "title": "Frontend: Animated Loading Skeleton",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Animated Loading Skeleton. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({state=\"loading\",content=\"Ready\"}). loading renders [data-testid=\"skeleton\"] aria-hidden=true and sets region aria-busy=true. success renders content, empty renders No results, error renders Unable to load. Only loading has a skeleton. No network request is required.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "animated-loading-skeleton-1",
+      "name": "Loading",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"skeleton\\\"]\",\"property\":\"count\",\"equals\":1},{\"selector\":\"section\",\"property\":\"attribute\",\"attribute\":\"aria-busy\",\"equals\":\"true\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "animated-loading-skeleton-2",
+      "name": "Loaded",
+      "inputDescription": "{\"props\":{\"state\":\"success\",\"content\":\"Done\"},\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Done\"},{\"selector\":\"[data-testid=\\\"skeleton\\\"]\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "animated-loading-skeleton-3",
+      "name": "Failure",
+      "inputDescription": "{\"props\":{\"state\":\"error\"},\"actions\":[],\"assertions\":[{\"selector\":\"[role=\\\"alert\\\"]\",\"property\":\"text\",\"equals\":\"Unable to load\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Keep loading state explicit and reserve approximately the final layout dimensions to reduce shifts."
+  ],
+  "alternativeApproaches": [
+    "Coordinate several regions so partial data can render without resetting already usable sections."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Loading to success; failure; empty response.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

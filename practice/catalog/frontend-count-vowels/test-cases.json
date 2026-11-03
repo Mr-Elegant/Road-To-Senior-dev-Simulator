@@ -1,0 +1,26 @@
+[
+  {
+    "id": "count-vowels-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "\"AEiou\"",
+    "expectedOutput": "5"
+  },
+  {
+    "id": "count-vowels-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "\"rhythm\"",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "count-vowels-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "\"\"",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "count-vowels-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "\"banana\"",
+    "expectedOutput": "3"
+  }
+]

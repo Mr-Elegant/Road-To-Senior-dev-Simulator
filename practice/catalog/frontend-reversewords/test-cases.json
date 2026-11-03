@@ -1,0 +1,26 @@
+[
+  {
+    "id": "reversewords-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "\"ab  cd\"",
+    "expectedOutput": "\"ba  dc\""
+  },
+  {
+    "id": "reversewords-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "\"😀a b\"",
+    "expectedOutput": "\"a😀 b\""
+  },
+  {
+    "id": "reversewords-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "\"\"",
+    "expectedOutput": "\"\""
+  },
+  {
+    "id": "reversewords-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "\"one\\ntwo\"",
+    "expectedOutput": "\"eno\\nowt\""
+  }
+]

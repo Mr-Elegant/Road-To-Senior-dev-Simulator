@@ -1,0 +1,60 @@
+{
+  "id": "frontend-map-async-limit",
+  "title": "Frontend: Map Async Limit",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Map Async Limit. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement async solution({values,limit}). Asynchronously double each number with at most limit active mappings; preserve order and return {values,peak}. limit must be a positive integer. Each mapping awaits one timer turn.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "map-async-limit-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"values\":[3,1,2],\"limit\":2}",
+      "expectedOutput": "{\"values\":[6,2,4],\"peak\":2}"
+    },
+    {
+      "id": "map-async-limit-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"values\":[],\"limit\":1}",
+      "expectedOutput": "{\"values\":[],\"peak\":0}"
+    },
+    {
+      "id": "map-async-limit-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"values\":[-1,0],\"limit\":1}",
+      "expectedOutput": "{\"values\":[-2,0],\"peak\":1}"
+    },
+    {
+      "id": "map-async-limit-4",
+      "name": "Reject input: Invalid limit",
+      "inputDescription": "{\"values\":[1],\"limit\":0}",
+      "expectedOutput": "Throws: Invalid limit",
+      "expectedError": "Invalid limit"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Assign each input a fixed result index and let a bounded worker pool claim the next index."
+  ],
+  "alternativeApproaches": [
+    "Return an async iterator for streaming output and compare input-order buffering with completion-order delivery."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Empty input; out-of-order completion; limit one.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

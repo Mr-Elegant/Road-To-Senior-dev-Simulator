@@ -1,0 +1,69 @@
+{
+  "id": "react-ts-password-strength",
+  "title": "React + TypeScript: Password Strength",
+  "businessContext": "A trial account form needs immediate, understandable feedback without sending draft passwords to a service.",
+  "problemStatement": "Export App. Render a controlled password input labelled Password. Four independent checks award one point each: at least 10 characters, both ASCII lowercase and uppercase letters, an ASCII digit, and a non-alphanumeric character. In [data-testid=\"feedback\"], show Start typing for empty input, Weak for 1–9 characters with at most one passed check (also for any nonempty score 0–1), Fair for scores 2–3, and Strong for score 4. Show the numeric score in [data-testid=\"passed-rules\"]. Recompute on every edit, including deletion.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Keep the input type=password and associate a visible label with it.",
+    "Do not store, log, or transmit the password. This meter is instructional feedback, not a password-security guarantee.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "pw-empty",
+      "name": "Empty input starts without feedback severity",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Start typing\"},{\"selector\":\"[data-testid=\\\"passed-rules\\\"]\",\"property\":\"text\",\"equals\":\"0\"},{\"selector\":\"input\",\"property\":\"attribute\",\"attribute\":\"type\",\"equals\":\"password\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "pw-weak",
+      "name": "Short lowercase text remains weak",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"small\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Weak\"},{\"selector\":\"[data-testid=\\\"passed-rules\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "pw-fair",
+      "name": "Two independent checks produce fair feedback",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Hello1\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Fair\"},{\"selector\":\"[data-testid=\\\"passed-rules\\\"]\",\"property\":\"text\",\"equals\":\"2\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "pw-strong",
+      "name": "All four checks produce strong feedback",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"LongPass42!\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Strong\"},{\"selector\":\"[data-testid=\\\"passed-rules\\\"]\",\"property\":\"text\",\"equals\":\"4\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "pw-reset",
+      "name": "Deleting the password resets the derived feedback",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"LongPass42!\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Start typing\"},{\"selector\":\"[data-testid=\\\"passed-rules\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Store the input string; compute the checks from it instead of maintaining a second score state.",
+    "Treat empty input separately from nonempty input with zero passed checks."
+  ],
+  "commonMistakes": [
+    "Saving derived score independently and forgetting to update it on deletion.",
+    "Logging or persisting a password while debugging."
+  ],
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 25,
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "candidateTasks": [
+    "Implement the default-exported App component and the documented DOM contract.",
+    "Run every interaction journey, explain edge cases, then compare your implementation with the reference.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "alternativeApproaches": [
+    "Extract a small pure helper for derived values; keep input state in the component. Extend with a custom hook only when behavior is reused."
+  ],
+  "reactTypescriptExercise": true
+}

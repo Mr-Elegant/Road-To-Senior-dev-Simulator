@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-image-carousel",
+  "title": "React + TypeScript: Image Carousel",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Image Carousel. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({items=[Alpha,Beta,Gamma]}), a image carousel using title strings and local one-pixel images with alt=title. slides container [data-testid=slides] contains one articles with h2 titles. Next/Previous use data-action=next/previous. Navigation wraps. Empty items renders No images.  This exercise focuses selection/window semantics rather than remote image loading.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    items?: (string)[];\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "image-carousel-1",
+      "name": "Initial content",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"slides\\\"] h2\",\"property\":\"text\",\"equals\":\"Alpha\"},{\"selector\":\"[data-testid=\\\"slides\\\"] article\",\"property\":\"count\",\"equals\":1}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "image-carousel-2",
+      "name": "Next",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"slides\\\"] h2\",\"property\":\"text\",\"equals\":\"Beta\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "image-carousel-3",
+      "name": "Empty",
+      "inputDescription": "{\"props\":{\"items\":[]},\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"No images\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Keep an active index and derive the current slide from the image list."
+  ],
+  "alternativeApproaches": [
+    "Pause autoplay on interaction/focus and resume only under an explicit user-controlled policy."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: No images; one image; endpoints.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

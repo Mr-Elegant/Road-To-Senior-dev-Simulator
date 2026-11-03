@@ -7,10 +7,10 @@ function expectedValue(value) {
   try { return JSON.parse(value); } catch { return value; }
 }
 
-async function javascriptCase(code, test, loan) {
+async function javascriptCase(code, test, loan, strict = false) {
   const timers = new Set();
   const immediates = new Set();
-  const context = { exports: {}, console: { log() {}, info() {}, warn() {}, error() {} },
+  const context = { exports: {}, structuredClone, console: { log() {}, info() {}, warn() {}, error() {} },
     setTimeout(fn, ms, ...args) { const timer = setTimeout(fn, ms, ...args); timers.add(timer); return timer; },
     clearTimeout,
     setImmediate(fn, ...args) { const timer = setImmediate(fn, ...args); immediates.add(timer); return timer; },
@@ -29,21 +29,30 @@ async function javascriptCase(code, test, loan) {
           Object.values(value).forEach(freeze); Object.freeze(value);
         }
       }
-      freeze(input);
+      ${strict ? '' : 'freeze(input);'}
       return (typeof solution === 'function' ? solution : typeof handler === 'function' ? handler : typeof solve === 'function' ? solve : typeof execute === 'function' ? execute : exports.solution)(input);
     })()`;
   }
   let deadline;
   try {
-    const result = vm.runInNewContext(`"use strict";\n${compiled}\n${expression}`, context, { timeout: 1500 });
-    const actual = await Promise.race([Promise.resolve(result), new Promise((_, reject) => {
-      deadline = setTimeout(() => reject(new Error('Case exceeded 1500 ms')), 1500);
-    })]);
+    let actual;
+    // Syntax errors are infrastructure failures, never a successful expected runtime error.
+    new vm.Script(compiled);
+    try {
+      const result = vm.runInNewContext(`"use strict";\n${compiled}\n${expression}`, context, { timeout: 1500 });
+      actual = await Promise.race([Promise.resolve(result), new Promise((_, reject) => {
+        deadline = setTimeout(() => reject(new Error('Case exceeded 1500 ms')), 1500);
+      })]);
+    } catch (error) {
+      if (strict && test.expectedError) { assert.equal(error.message, test.expectedError); return; }
+      throw error;
+    }
+    if (strict && test.expectedError) throw new Error(`Expected runtime error: ${test.expectedError}`);
     const normalized = actual === undefined ? undefined : JSON.parse(JSON.stringify(actual));
     let expected = loan ? test.expected : expectedValue(test.expectedOutput);
     // Legacy practice cases describe scalar outputs as untyped display strings.
     // Preserve exact text for string returns; objects/arrays still require every field.
-    if (!loan && typeof normalized === 'string' && (expected === null || typeof expected === 'number' || typeof expected === 'boolean')) expected = test.expectedOutput;
+    if (!strict && !loan && typeof normalized === 'string' && (expected === null || typeof expected === 'number' || typeof expected === 'boolean')) expected = test.expectedOutput;
     assert.deepEqual(normalized, expected);
   } finally {
     clearTimeout(deadline);
@@ -88,7 +97,7 @@ async function run(entry, code) {
   } else {
     for (const test of source.testCases ?? source.tests) {
       try {
-        await javascriptCase(code, test, entry.mode === 'loan' ? source : undefined);
+        await javascriptCase(code, test, entry.mode === 'loan' ? source : undefined, entry.mode === 'frontend-js');
         results.push({ name: test.name, passed: true });
       } catch (error) { results.push({ name: test.name, passed: false, error: error.message }); }
     }

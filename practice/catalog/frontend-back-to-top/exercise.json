@@ -1,0 +1,53 @@
+{
+  "id": "frontend-back-to-top",
+  "title": "Frontend: Back To Top",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Back To Top. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({initialY=0,threshold=200}). Model an injected viewport position in [data-testid=\"position\"]. Show Back to top only when position > threshold; activation resets position to zero and hides it. This bounded component tests the visibility/return policy using an injected initial position instead of global scrolling.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "back-to-top-1",
+      "name": "At threshold",
+      "inputDescription": "{\"props\":{\"initialY\":200},\"actions\":[],\"assertions\":[{\"selector\":\"button\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "back-to-top-2",
+      "name": "Beyond threshold",
+      "inputDescription": "{\"props\":{\"initialY\":201},\"actions\":[],\"assertions\":[{\"selector\":\"button\",\"property\":\"count\",\"equals\":1},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"201\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "back-to-top-3",
+      "name": "Return",
+      "inputDescription": "{\"props\":{\"initialY\":900},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"},{\"selector\":\"button\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Subscribe to scrolling once, use a passive listener, and coalesce measurement with requestAnimationFrame if needed."
+  ],
+  "alternativeApproaches": [
+    "Make the threshold relative to a scrollable container rather than the browser window."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Threshold boundary; initial deep scroll; click return.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

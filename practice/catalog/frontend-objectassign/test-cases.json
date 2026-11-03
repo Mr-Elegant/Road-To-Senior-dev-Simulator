@@ -1,0 +1,20 @@
+[
+  {
+    "id": "objectassign-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"target\":{\"a\":1},\"sources\":[{\"b\":2},{\"a\":3}]}",
+    "expectedOutput": "{\"a\":3,\"b\":2}"
+  },
+  {
+    "id": "objectassign-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"target\":{},\"sources\":[null,{\"a\":0}]}",
+    "expectedOutput": "{\"a\":0}"
+  },
+  {
+    "id": "objectassign-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"target\":{\"x\":{\"a\":1}},\"sources\":[{\"x\":{\"b\":2}}]}",
+    "expectedOutput": "{\"x\":{\"b\":2}}"
+  }
+]

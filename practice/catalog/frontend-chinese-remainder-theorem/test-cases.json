@@ -1,0 +1,27 @@
+[
+  {
+    "id": "chinese-remainder-theorem-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"residues\":[\"2\",\"3\",\"2\"],\"moduli\":[\"3\",\"5\",\"7\"]}",
+    "expectedOutput": "{\"value\":\"23\",\"modulus\":\"105\"}"
+  },
+  {
+    "id": "chinese-remainder-theorem-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"residues\":[\"-1\"],\"moduli\":[\"5\"]}",
+    "expectedOutput": "{\"value\":\"4\",\"modulus\":\"5\"}"
+  },
+  {
+    "id": "chinese-remainder-theorem-3",
+    "name": "Reject input: Not coprime",
+    "inputDescription": "{\"residues\":[\"1\",\"1\"],\"moduli\":[\"4\",\"6\"]}",
+    "expectedOutput": "Throws: Not coprime",
+    "expectedError": "Not coprime"
+  },
+  {
+    "id": "chinese-remainder-theorem-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "{\"residues\":[],\"moduli\":[]}",
+    "expectedOutput": "{\"value\":\"0\",\"modulus\":\"1\"}"
+  }
+]

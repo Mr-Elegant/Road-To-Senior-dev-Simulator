@@ -1,0 +1,53 @@
+{
+  "id": "frontend-useprevioushook",
+  "title": "Frontend: usePreviousHook",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind usePreviousHook. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({initial=0}). Implement usePrevious with a ref updated after commit. Show current in [data-testid=\"current\"] and previous committed value in [data-testid=\"previous\"], initially none. Increment updates current; unrelated renders are excluded from this bounded contract.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "useprevioushook-1",
+      "name": "First commit",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"previous\\\"]\",\"property\":\"text\",\"equals\":\"none\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "useprevioushook-2",
+      "name": "Previous value",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"current\\\"]\",\"property\":\"text\",\"equals\":\"1\"},{\"selector\":\"[data-testid=\\\"previous\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "useprevioushook-3",
+      "name": "Sequential commits",
+      "inputDescription": "{\"props\":{\"initial\":5},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"current\\\"]\",\"property\":\"text\",\"equals\":\"7\"},{\"selector\":\"[data-testid=\\\"previous\\\"]\",\"property\":\"text\",\"equals\":\"6\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use a ref to retain the prior value and update it in an effect after commit."
+  ],
+  "alternativeApproaches": [
+    "Implement previous-distinct-value semantics and explain how it differs from previous-render semantics."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: First render; changed value; unchanged value.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "frontend-get-result-by-path",
+  "title": "Frontend: Get Result By Path",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Get Result By Path. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({value,path,fallback}). path is an array of own-property string/index segments. Return fallback when any segment is absent. Never traverse inherited properties; null is a present value.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "get-result-by-path-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"value\":{\"a\":[{\"b\":2}]},\"path\":[\"a\",0,\"b\"]}",
+      "expectedOutput": "2"
+    },
+    {
+      "id": "get-result-by-path-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"value\":{\"a\":null},\"path\":[\"a\"]}",
+      "expectedOutput": "null"
+    },
+    {
+      "id": "get-result-by-path-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"value\":{},\"path\":[\"toString\"],\"fallback\":\"missing\"}",
+      "expectedOutput": "\"missing\""
+    },
+    {
+      "id": "get-result-by-path-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "{\"value\":{\"a.b\":3},\"path\":[\"a.b\"]}",
+      "expectedOutput": "3"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Prefer a path-segment array for an unambiguous contract."
+  ],
+  "alternativeApproaches": [
+    "Add a string-path parser that supports escaping and explicitly forbids unsafe prototype-related traversal."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Missing parent; array index; key containing a dot.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

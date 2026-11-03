@@ -1,0 +1,53 @@
+{
+  "id": "frontend-shortest-distance-from-source-bfs",
+  "title": "Frontend: Shortest Distance from Source (BFS)",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Shortest Distance from Source (BFS). This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({count,edges,source}). In a valid undirected unweighted graph, return edge-count distances or null for unreachable vertices. Use a queue with a head index.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "shortest-distance-from-source-bfs-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"count\":4,\"edges\":[[0,1],[1,2]],\"source\":0}",
+      "expectedOutput": "[0,1,2,null]"
+    },
+    {
+      "id": "shortest-distance-from-source-bfs-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"count\":1,\"edges\":[],\"source\":0}",
+      "expectedOutput": "[0]"
+    },
+    {
+      "id": "shortest-distance-from-source-bfs-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"count\":3,\"edges\":[[0,1],[1,2],[0,2]],\"source\":0}",
+      "expectedOutput": "[0,1,1]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use a queue, initialize the source distance to zero, and mark vertices when enqueued so each vertex enters once."
+  ],
+  "alternativeApproaches": [
+    "Return parent links for path reconstruction and define deterministic tie-breaking among equally short paths."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Disconnected node; self-loop; multiple equal paths.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

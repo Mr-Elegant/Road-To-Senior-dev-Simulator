@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-otp-input-component",
+  "title": "React + TypeScript: OTP Input Component",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind OTP Input Component. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Use one labelled Code input with numeric inputMode and one-time-code autocomplete, with six visual slots[data-slot=0..5]. Strip non-ASCII digits and clamp to six. Empty slots display •. Output [data-testid=complete] yes exactly for six digits. Clear resets. This component formats a code; server verification is excluded.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "otp-input-component-1",
+      "name": "Paste normalized",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"12ab345678\"}],\"assertions\":[{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"123456\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"yes\"},{\"selector\":\"[data-slot=\\\"5\\\"]\",\"property\":\"text\",\"equals\":\"6\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "otp-input-component-2",
+      "name": "Partial",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"12\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"no\"},{\"selector\":\"[data-slot=\\\"2\\\"]\",\"property\":\"text\",\"equals\":\"•\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "otp-input-component-3",
+      "name": "Clear",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"123456\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"no\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Decide whether to use one semantic input with visual slots or multiple coordinated inputs."
+  ],
+  "alternativeApproaches": [
+    "Add an expiry/resend flow that does not let an old code submission overwrite a newer challenge state."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Full paste; partial paste; Backspace on empty slot.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

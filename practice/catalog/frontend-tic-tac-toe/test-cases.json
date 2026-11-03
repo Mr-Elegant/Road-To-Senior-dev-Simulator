@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tic-tac-toe-1",
+    "name": "Occupied",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"}],\"assertions\":[{\"selector\":\"[data-cell=\\\"0\\\"]\",\"property\":\"text\",\"equals\":\"X\"},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Next: O\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tic-tac-toe-2",
+    "name": "Win locks",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"3\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"4\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"2\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"8\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Winner: X\"},{\"selector\":\"[data-cell=\\\"8\\\"]\",\"property\":\"text\",\"equals\":\"·\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tic-tac-toe-3",
+    "name": "Reset",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"reset\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Next: X\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "fibonacci-series-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "0",
+    "expectedOutput": "[]"
+  },
+  {
+    "id": "fibonacci-series-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "1",
+    "expectedOutput": "[\"0\"]"
+  },
+  {
+    "id": "fibonacci-series-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "6",
+    "expectedOutput": "[\"0\",\"1\",\"1\",\"2\",\"3\",\"5\"]"
+  },
+  {
+    "id": "fibonacci-series-4",
+    "name": "Reject input: Invalid n",
+    "inputDescription": "1.5",
+    "expectedOutput": "Throws: Invalid n",
+    "expectedError": "Invalid n"
+  }
+]

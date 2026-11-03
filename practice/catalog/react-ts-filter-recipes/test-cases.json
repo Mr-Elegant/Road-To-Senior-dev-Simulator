@@ -1,0 +1,32 @@
+[
+  {
+    "id": "recipe-empty",
+    "name": "An empty dataset renders a useful state",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"recipes\\\"] li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[data-testid=\\\"empty\\\"]\",\"property\":\"text\",\"equals\":\"No matching recipes\"},{\"selector\":\"[data-testid=\\\"selected-count\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "recipe-search",
+    "name": "Name search trims and ignores case",
+    "inputDescription": "{\"props\":{\"recipes\":[{\"id\":\"s\",\"name\":\"Tomato Soup\",\"category\":\"Lunch\"},{\"id\":\"p\",\"name\":\"Pancakes\",\"category\":\"Breakfast\"}]},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"  SOUP \"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"recipes\\\"] li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"select option\",\"property\":\"count\",\"equals\":3}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "recipe-category",
+    "name": "Category combines with name search",
+    "inputDescription": "{\"props\":{\"recipes\":[{\"id\":\"s\",\"name\":\"Soup\",\"category\":\"Lunch\"},{\"id\":\"p\",\"name\":\"Pancakes\",\"category\":\"Breakfast\"}]},\"actions\":[{\"type\":\"input\",\"selector\":\"select\",\"value\":\"Lunch\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"cake\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"recipes\\\"] li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[data-testid=\\\"empty\\\"]\",\"property\":\"text\",\"equals\":\"No matching recipes\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "recipe-selection",
+    "name": "Selection survives hiding and restoring a row",
+    "inputDescription": "{\"props\":{\"recipes\":[{\"id\":\"s\",\"name\":\"Soup\",\"category\":\"Lunch\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"[aria-label=\\\"Select Soup\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"unmatched\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"selected-count\\\"]\",\"property\":\"text\",\"equals\":\"1\"},{\"selector\":\"[aria-label=\\\"Deselect Soup\\\"]\",\"property\":\"count\",\"equals\":1}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "recipe-deselect",
+    "name": "Selecting a dish twice toggles it off",
+    "inputDescription": "{\"props\":{\"recipes\":[{\"id\":\"s\",\"name\":\"Soup\",\"category\":\"Lunch\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"[aria-label=\\\"Select Soup\\\"]\"},{\"type\":\"click\",\"selector\":\"[aria-label=\\\"Deselect Soup\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"selected-count\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

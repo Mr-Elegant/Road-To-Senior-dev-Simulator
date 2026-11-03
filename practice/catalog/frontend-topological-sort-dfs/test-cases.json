@@ -1,0 +1,27 @@
+[
+  {
+    "id": "topological-sort-dfs-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"count\":3,\"edges\":[[0,1],[1,2]]}",
+    "expectedOutput": "[0,1,2]"
+  },
+  {
+    "id": "topological-sort-dfs-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"count\":3,\"edges\":[]}",
+    "expectedOutput": "[2,1,0]"
+  },
+  {
+    "id": "topological-sort-dfs-3",
+    "name": "Reject input: Cycle",
+    "inputDescription": "{\"count\":2,\"edges\":[[0,1],[1,0]]}",
+    "expectedOutput": "Throws: Cycle",
+    "expectedError": "Cycle"
+  },
+  {
+    "id": "topological-sort-dfs-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "{\"count\":0,\"edges\":[]}",
+    "expectedOutput": "[]"
+  }
+]

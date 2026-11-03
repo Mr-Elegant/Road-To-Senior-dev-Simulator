@@ -1,0 +1,26 @@
+[
+  {
+    "id": "throttle-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"wait\":10,\"calls\":[[0,\"a\"],[3,\"b\"],[7,\"c\"]],\"end\":20}",
+    "expectedOutput": "[[0,\"a\"],[10,\"c\"]]"
+  },
+  {
+    "id": "throttle-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"wait\":10,\"calls\":[[0,\"a\"]],\"end\":20}",
+    "expectedOutput": "[[0,\"a\"]]"
+  },
+  {
+    "id": "throttle-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"wait\":10,\"calls\":[[0,\"a\"],[10,\"b\"]],\"end\":20}",
+    "expectedOutput": "[[0,\"a\"],[10,\"b\"]]"
+  },
+  {
+    "id": "throttle-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "{\"wait\":3,\"calls\":[],\"end\":10}",
+    "expectedOutput": "[]"
+  }
+]

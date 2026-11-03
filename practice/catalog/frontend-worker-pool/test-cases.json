@@ -1,0 +1,20 @@
+[
+  {
+    "id": "worker-pool-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"workers\":1,\"jobs\":[\"a\",\"b\"],\"events\":[{\"type\":\"done\",\"worker\":0}]}",
+    "expectedOutput": "{\"assignments\":[[0,\"a\"],[0,\"b\"]],\"completed\":[\"a\"],\"active\":[\"b\"],\"queued\":[]}"
+  },
+  {
+    "id": "worker-pool-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"workers\":1,\"jobs\":[\"a\"],\"events\":[{\"type\":\"crash\",\"worker\":0},{\"type\":\"done\",\"worker\":0}]}",
+    "expectedOutput": "{\"assignments\":[[0,\"a\"],[0,\"a\"]],\"completed\":[\"a\"],\"active\":[null],\"queued\":[]}"
+  },
+  {
+    "id": "worker-pool-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"workers\":2,\"jobs\":[],\"events\":[]}",
+    "expectedOutput": "{\"assignments\":[],\"completed\":[],\"active\":[null,null],\"queued\":[]}"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "list-format-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[]",
+    "expectedOutput": "\"\""
+  },
+  {
+    "id": "list-format-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[\"A\"]",
+    "expectedOutput": "\"A\""
+  },
+  {
+    "id": "list-format-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[\"A\",\"B\"]",
+    "expectedOutput": "\"A and B\""
+  },
+  {
+    "id": "list-format-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[\"A\",\"B\",\"C\"]",
+    "expectedOutput": "\"A, B, and C\""
+  }
+]

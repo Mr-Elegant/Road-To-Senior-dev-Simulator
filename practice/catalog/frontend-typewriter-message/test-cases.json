@@ -1,0 +1,20 @@
+[
+  {
+    "id": "typewriter-message-1",
+    "name": "Reveal code point",
+    "inputDescription": "{\"props\":{\"message\":\"😀a\"},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"😀\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "typewriter-message-2",
+    "name": "Full clamp",
+    "inputDescription": "{\"props\":{\"message\":\"Hi\"},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Hi\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "typewriter-message-3",
+    "name": "Pause",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"pause\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"advance\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

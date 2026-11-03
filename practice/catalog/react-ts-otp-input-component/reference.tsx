@@ -1,0 +1,6 @@
+import type * as React from 'react';
+export interface AppProps {
+}
+import { useState } from 'react';
+export default function App(): React.JSX.Element { const [code, setCode] = useState(''); return <section><label>Code<input aria-label="Code" inputMode="numeric" autoComplete="one-time-code" value={code} onChange={e => setCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}/></label><div aria-hidden="true">{Array.from({ length: 6 }, (_, i) => <span key={i} data-slot={i}>{code[i] || '•'}</span>)}</div><output data-testid="complete">{code.length === 6 ? 'yes' : 'no'}</output><button onClick={() => setCode('')}>Clear</button></section>; }
+

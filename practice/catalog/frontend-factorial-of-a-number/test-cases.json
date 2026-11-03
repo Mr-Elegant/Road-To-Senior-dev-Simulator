@@ -1,0 +1,27 @@
+[
+  {
+    "id": "factorial-of-a-number-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "0",
+    "expectedOutput": "\"1\""
+  },
+  {
+    "id": "factorial-of-a-number-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "5",
+    "expectedOutput": "\"120\""
+  },
+  {
+    "id": "factorial-of-a-number-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "20",
+    "expectedOutput": "\"2432902008176640000\""
+  },
+  {
+    "id": "factorial-of-a-number-4",
+    "name": "Reject input: Invalid n",
+    "inputDescription": "-1",
+    "expectedOutput": "Throws: Invalid n",
+    "expectedError": "Invalid n"
+  }
+]

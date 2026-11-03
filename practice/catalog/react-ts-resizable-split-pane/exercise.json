@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-resizable-split-pane",
+  "title": "React + TypeScript: Resizable Split Pane",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Resizable Split Pane. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. A range input labelled Left pane width stores integer percent 20..80, default 50. It controls [data-testid=\"left\"] and right pane widths and [data-testid=\"ratio\"] text N/100-N. Clamp all supplied changes. This native range is the pointer/keyboard resize handle.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "resizable-split-pane-1",
+      "name": "Balanced",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"50/50\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "resizable-split-pane-2",
+      "name": "Resize",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"70\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"70/30\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "resizable-split-pane-3",
+      "name": "Lower bound",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"20\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"20/80\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Track the split as one value and clamp it against the container’s measured size and minimum pane widths."
+  ],
+  "alternativeApproaches": [
+    "Persist the ratio rather than raw pixels and restore it safely on a narrower device."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Minimum/maximum sizes; pointer leaves handle; pointer cancellation.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "frequently-asked-questions-1",
+    "name": "Empty",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"No matching answers\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "frequently-asked-questions-2",
+    "name": "Search body",
+    "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Timing\",\"body\":\"Delivery tomorrow\"},{\"id\":\"b\",\"title\":\"Payment\",\"body\":\"Cash\"}]},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"DELIVERY\"}],\"assertions\":[{\"selector\":\"article\",\"property\":\"count\",\"equals\":1}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "frequently-asked-questions-3",
+    "name": "Expansion survives",
+    "inputDescription": "{\"props\":{\"items\":[{\"id\":\"a\",\"title\":\"Question\",\"body\":\"Answer\"}]},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"missing\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"\"}],\"assertions\":[{\"selector\":\"#answer-a\",\"property\":\"text\",\"equals\":\"Answer\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

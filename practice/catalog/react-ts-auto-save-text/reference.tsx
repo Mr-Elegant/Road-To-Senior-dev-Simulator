@@ -1,0 +1,7 @@
+import type * as React from 'react';
+export interface AppProps {
+}
+import { useState, useEffect, useRef } from 'react';
+export default function App(): React.JSX.Element { const [draft, setDraft] = useState(''), [saved, setSaved] = useState(''), [status, setStatus] = useState('Ready'), edited = useRef(false); useEffect(() => { if (!edited.current)
+    return; const timer = setTimeout(() => { setSaved(draft); setStatus('Saved'); }, 40); return () => clearTimeout(timer); }, [draft]); return <section><label>Draft<textarea aria-label="Draft" value={draft} onChange={e => { edited.current = true; setDraft(e.target.value); setStatus('Unsaved'); }}/></label><p data-testid="status">{status}</p><output data-testid="saved">{saved}</output></section>; }
+

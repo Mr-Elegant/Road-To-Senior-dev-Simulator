@@ -1,0 +1,20 @@
+[
+  {
+    "id": "match-pair-game-1",
+    "name": "Match",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-card=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-card=\\\"2\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"2\"},{\"selector\":\"[data-card=\\\"0\\\"]\",\"property\":\"text\",\"equals\":\"A\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "match-pair-game-2",
+    "name": "Mismatch locks",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-card=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-card=\\\"1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-card=\\\"2\\\"]\"}],\"assertions\":[{\"selector\":\"[data-card=\\\"2\\\"]\",\"property\":\"text\",\"equals\":\"?\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "match-pair-game-3",
+    "name": "Resolve mismatch",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-card=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-card=\\\"1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"resolve\\\"]\"}],\"assertions\":[{\"selector\":\"[data-card=\\\"0\\\"]\",\"property\":\"text\",\"equals\":\"?\"},{\"selector\":\"[data-card=\\\"1\\\"]\",\"property\":\"text\",\"equals\":\"?\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

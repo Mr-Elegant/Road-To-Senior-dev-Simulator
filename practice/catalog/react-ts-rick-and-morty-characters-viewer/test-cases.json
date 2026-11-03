@@ -1,0 +1,20 @@
+[
+  {
+    "id": "rick-and-morty-characters-viewer-1",
+    "name": "Next page",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"Lin\"},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Ready\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "rick-and-morty-characters-viewer-2",
+    "name": "Failure",
+    "inputDescription": "{\"props\":{\"failPage\":1},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Unable to load\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "rick-and-morty-characters-viewer-3",
+    "name": "Recover",
+    "inputDescription": "{\"props\":{\"failPage\":1},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"previous\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"Ada\"},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Ready\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

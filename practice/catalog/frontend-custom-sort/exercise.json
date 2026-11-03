@@ -1,0 +1,53 @@
+{
+  "id": "frontend-custom-sort",
+  "title": "Frontend: Custom Sort",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Custom Sort. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(records). Return a copied array sorted ascending by numeric priority, then lexicographically by ASCII id. Records have unique string ids and finite numeric priority.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "custom-sort-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[{\"id\":\"b\",\"priority\":1},{\"id\":\"a\",\"priority\":1},{\"id\":\"c\",\"priority\":0}]",
+      "expectedOutput": "[{\"id\":\"c\",\"priority\":0},{\"id\":\"a\",\"priority\":1},{\"id\":\"b\",\"priority\":1}]"
+    },
+    {
+      "id": "custom-sort-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[]",
+      "expectedOutput": "[]"
+    },
+    {
+      "id": "custom-sort-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[{\"id\":\"x\",\"priority\":-1}]",
+      "expectedOutput": "[{\"id\":\"x\",\"priority\":-1}]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Copy the array and use a comparator that compares priority numerically before applying the chosen secondary comparison."
+  ],
+  "alternativeApproaches": [
+    "Accept a list of sort descriptors and define explicit null placement and locale behavior."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Equal priorities; equal secondary keys; negative priority.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

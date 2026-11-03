@@ -1,0 +1,20 @@
+[
+  {
+    "id": "auto-save-text-1",
+    "name": "Initial",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Ready\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "auto-save-text-2",
+    "name": "Idle acknowledgement",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"hello\"},{\"type\":\"wait\",\"milliseconds\":100}],\"assertions\":[{\"selector\":\"[data-testid=\\\"saved\\\"]\",\"property\":\"text\",\"equals\":\"hello\"},{\"selector\":\"[data-testid=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Saved\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "auto-save-text-3",
+    "name": "Latest text wins",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"first\"},{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"latest\"},{\"type\":\"wait\",\"milliseconds\":100}],\"assertions\":[{\"selector\":\"[data-testid=\\\"saved\\\"]\",\"property\":\"text\",\"equals\":\"latest\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

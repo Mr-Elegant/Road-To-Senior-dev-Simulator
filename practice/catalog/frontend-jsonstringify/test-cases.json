@@ -1,0 +1,26 @@
+[
+  {
+    "id": "jsonstringify-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"a\":\"x\\n\\\"\",\"b\":[1,null,true]}",
+    "expectedOutput": "\"{\\\"a\\\":\\\"x\\\\n\\\\\\\"\\\",\\\"b\\\":[1,null,true]}\""
+  },
+  {
+    "id": "jsonstringify-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[]",
+    "expectedOutput": "\"[]\""
+  },
+  {
+    "id": "jsonstringify-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "\"a\\tb\"",
+    "expectedOutput": "\"\\\"a\\\\tb\\\"\""
+  },
+  {
+    "id": "jsonstringify-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "0",
+    "expectedOutput": "\"0\""
+  }
+]

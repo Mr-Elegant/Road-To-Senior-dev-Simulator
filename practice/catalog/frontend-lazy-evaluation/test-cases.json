@@ -1,0 +1,20 @@
+[
+  {
+    "id": "lazy-evaluation-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"values\":[1,2,3,4],\"take\":2,\"minimum\":2}",
+    "expectedOutput": "{\"values\":[4,6],\"visited\":3}"
+  },
+  {
+    "id": "lazy-evaluation-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"values\":[1,2],\"take\":0,\"minimum\":0}",
+    "expectedOutput": "{\"values\":[],\"visited\":0}"
+  },
+  {
+    "id": "lazy-evaluation-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"values\":[1,2],\"take\":5,\"minimum\":8}",
+    "expectedOutput": "{\"values\":[],\"visited\":2}"
+  }
+]

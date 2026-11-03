@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tooltip-1",
+    "name": "Initially closed",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[role=\\\"tooltip\\\"]\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tooltip-2",
+    "name": "Focus reveals",
+    "inputDescription": "{\"actions\":[{\"type\":\"key\",\"selector\":\"button\",\"key\":\"F2\"}],\"assertions\":[{\"selector\":\"[role=\\\"tooltip\\\"]\",\"property\":\"text\",\"equals\":\"Extra help\"},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-describedby\",\"equals\":\"help-tip\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tooltip-3",
+    "name": "Escape dismisses",
+    "inputDescription": "{\"actions\":[{\"type\":\"key\",\"selector\":\"button\",\"key\":\"F2\"},{\"type\":\"key\",\"selector\":\"button\",\"key\":\"Escape\"}],\"assertions\":[{\"selector\":\"[role=\\\"tooltip\\\"]\",\"property\":\"count\",\"equals\":0},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-describedby\",\"equals\":null}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

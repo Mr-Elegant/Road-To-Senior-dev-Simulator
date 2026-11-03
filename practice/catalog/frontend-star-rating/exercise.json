@@ -1,0 +1,59 @@
+{
+  "id": "frontend-star-rating",
+  "title": "Frontend: Star Rating",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Star Rating. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({initial=0,readOnly=false}). Render five radio buttons[data-rating=1..5] in a radiogroup, with aria-checked. Click commits rating; ArrowRight/Left clamps between 1 and 5. Output rating in [data-testid=rating]. Read-only mode ignores changes. No hover-only selection is committed.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "star-rating-1",
+      "name": "Unrated",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "star-rating-2",
+      "name": "Commit",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-rating=\\\"3\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"3\"},{\"selector\":\"[data-rating=\\\"3\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-checked\",\"equals\":\"true\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "star-rating-3",
+      "name": "Keyboard",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-rating=\\\"3\\\"]\"},{\"type\":\"key\",\"selector\":\"[data-rating=\\\"3\\\"]\",\"key\":\"ArrowRight\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"4\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "star-rating-4",
+      "name": "Read only",
+      "inputDescription": "{\"props\":{\"initial\":2,\"readOnly\":true},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-rating=\\\"5\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"2\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Store the committed rating and transient preview independently."
+  ],
+  "alternativeApproaches": [
+    "Support fractional display without pretending half-star selection follows automatically from integer radios."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Unrated; hover without commit; pointer leave.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

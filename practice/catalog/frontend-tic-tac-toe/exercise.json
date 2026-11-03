@@ -1,0 +1,53 @@
+{
+  "id": "frontend-tic-tac-toe",
+  "title": "Frontend: Tic Tac Toe",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Tic Tac Toe. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Nine buttons[data-cell=0..8] alternate X/O. Occupied cells and terminal games ignore clicks. [data-testid=status] is Next: X/O, Winner: X/O, or Draw. Reset[data-action=reset] clears. Detect all rows, columns and diagonals.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "tic-tac-toe-1",
+      "name": "Occupied",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"}],\"assertions\":[{\"selector\":\"[data-cell=\\\"0\\\"]\",\"property\":\"text\",\"equals\":\"X\"},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Next: O\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "tic-tac-toe-2",
+      "name": "Win locks",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"3\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"4\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"2\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"8\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Winner: X\"},{\"selector\":\"[data-cell=\\\"8\\\"]\",\"property\":\"text\",\"equals\":\"·\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "tic-tac-toe-3",
+      "name": "Reset",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"reset\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Next: X\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Store the board and next player, then derive winner/draw from the board."
+  ],
+  "alternativeApproaches": [
+    "Add time-travel history and discard future moves when a player branches from an older board."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Eight winning lines; draw; occupied square.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

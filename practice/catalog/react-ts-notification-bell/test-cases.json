@@ -1,0 +1,20 @@
+[
+  {
+    "id": "notification-bell-1",
+    "name": "Initial",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"2\"},{\"selector\":\"ul\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "notification-bell-2",
+    "name": "Open",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"bell\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"2\"},{\"selector\":\"li\",\"property\":\"count\",\"equals\":2}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "notification-bell-3",
+    "name": "Idempotent read",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"bell\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-read=\\\"a\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-read=\\\"a\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"},{\"selector\":\"[data-read=\\\"a\\\"]\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

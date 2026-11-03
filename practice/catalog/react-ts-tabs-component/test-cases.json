@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tabs-component-1",
+    "name": "Initial",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[role=\\\"tabpanel\\\"]\",\"property\":\"text\",\"equals\":\"First\"},{\"selector\":\"#tab-0\",\"property\":\"attribute\",\"attribute\":\"aria-selected\",\"equals\":\"true\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tabs-component-2",
+    "name": "Click",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"#tab-1\"}],\"assertions\":[{\"selector\":\"[role=\\\"tabpanel\\\"]\",\"property\":\"text\",\"equals\":\"Second\"},{\"selector\":\"#tab-1\",\"property\":\"attribute\",\"attribute\":\"tabindex\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tabs-component-3",
+    "name": "Keyboard wrap",
+    "inputDescription": "{\"actions\":[{\"type\":\"key\",\"selector\":\"#tab-0\",\"key\":\"ArrowLeft\"}],\"assertions\":[{\"selector\":\"[role=\\\"tabpanel\\\"]\",\"property\":\"text\",\"equals\":\"Second\"},{\"selector\":\"#tab-0\",\"property\":\"attribute\",\"attribute\":\"tabindex\",\"equals\":\"-1\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

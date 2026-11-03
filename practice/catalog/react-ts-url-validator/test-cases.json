@@ -1,0 +1,38 @@
+[
+  {
+    "id": "url-empty",
+    "name": "Whitespace is an empty address",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"   \"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Enter a web address\"},{\"selector\":\"[data-testid=\\\"normalized\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "url-valid",
+    "name": "Normalize an HTTPS address without navigation",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\" https://EXAMPLE.com/path \"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Valid web address\"},{\"selector\":\"[data-testid=\\\"normalized\\\"]\",\"property\":\"text\",\"equals\":\"https://example.com/path\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "url-relative",
+    "name": "A missing scheme is rejected",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"example.com\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Invalid web address\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "url-scheme",
+    "name": "Non-web schemes are rejected",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"javascript:alert(1)\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Invalid web address\"},{\"selector\":\"[data-testid=\\\"normalized\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "url-auth",
+    "name": "Embedded credentials are rejected",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"https://person:secret@example.com\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Invalid web address\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "url-local",
+    "name": "Localhost works with an explicit web scheme",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"http://localhost:8080\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Valid web address\"},{\"selector\":\"[data-testid=\\\"normalized\\\"]\",\"property\":\"text\",\"equals\":\"http://localhost:8080/\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

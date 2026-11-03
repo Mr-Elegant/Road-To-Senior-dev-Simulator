@@ -1,0 +1,59 @@
+{
+  "id": "frontend-sum-of-subarray-minimum",
+  "title": "Frontend: Sum of Subarray Minimum",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Sum of Subarray Minimum. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(values). Return the exact sum of minimums of all nonempty contiguous subarrays. Values and results fit safe integers; duplicates and negatives are supported. Use a monotonic contribution stack.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "sum-of-subarray-minimum-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[3,1,2,4]",
+      "expectedOutput": "17"
+    },
+    {
+      "id": "sum-of-subarray-minimum-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[2,2]",
+      "expectedOutput": "6"
+    },
+    {
+      "id": "sum-of-subarray-minimum-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[-1,2]",
+      "expectedOutput": "0"
+    },
+    {
+      "id": "sum-of-subarray-minimum-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "[]",
+      "expectedOutput": "0"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "For each position count how many subarrays choose that element as their representative minimum, using distances to appropriate smaller boundaries."
+  ],
+  "alternativeApproaches": [
+    "Return both minimum and maximum contribution totals and prove the asymmetric duplicate tie rule."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Equal values; increasing/decreasing sequence; one item.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

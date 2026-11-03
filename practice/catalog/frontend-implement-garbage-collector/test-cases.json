@@ -1,0 +1,28 @@
+[
+  {
+    "id": "implement-garbage-collector-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"objects\":[{\"id\":\"a\",\"refs\":[\"b\"]},{\"id\":\"b\",\"refs\":[\"a\"]},{\"id\":\"c\",\"refs\":[]}],\"roots\":[\"a\"]}",
+    "expectedOutput": "{\"survivors\":[\"a\",\"b\"],\"collected\":[\"c\"]}"
+  },
+  {
+    "id": "implement-garbage-collector-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"objects\":[{\"id\":\"a\",\"refs\":[\"b\"]},{\"id\":\"b\",\"refs\":[\"a\"]}],\"roots\":[]}",
+    "expectedOutput": "{\"survivors\":[],\"collected\":[\"a\",\"b\"]}"
+  },
+  {
+    "id": "implement-garbage-collector-3",
+    "name": "Reject input: Dangling reference",
+    "inputDescription": "{\"objects\":[{\"id\":\"a\",\"refs\":[\"x\"]}],\"roots\":[]}",
+    "expectedOutput": "Throws: Dangling reference",
+    "expectedError": "Dangling reference"
+  },
+  {
+    "id": "implement-garbage-collector-4",
+    "name": "Reject input: Unknown root",
+    "inputDescription": "{\"objects\":[],\"roots\":[\"x\"]}",
+    "expectedOutput": "Throws: Unknown root",
+    "expectedError": "Unknown root"
+  }
+]

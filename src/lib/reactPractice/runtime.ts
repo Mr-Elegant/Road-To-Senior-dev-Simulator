@@ -8,7 +8,7 @@ import type { ReactJourney } from '@/types/reactExercise';
 
 const pause = () => new Promise(resolve => setTimeout(resolve, 20));
 
-export async function execute(code: string, journey?: ReactJourney) {
+export async function execute(code: string, journey?: ReactJourney, typescript = false) {
   let renderError: unknown;
   const root = createRoot(document.getElementById('root')!, {
     onUncaughtError: error => { renderError = error; },
@@ -16,7 +16,7 @@ export async function execute(code: string, journey?: ReactJourney) {
   });
   const fail = (error: unknown) => ({ passed: false, error: String(error instanceof Error ? error.message : error).slice(0, 1000) });
   try {
-    const compiled = transform(code, { transforms: ['jsx', 'imports'], jsxRuntime: 'automatic', production: true }).code;
+    const compiled = transform(code, { transforms: typescript ? ['typescript', 'jsx', 'imports'] : ['jsx', 'imports'], jsxRuntime: 'automatic', production: true }).code;
     const modules: Record<string, unknown> = { react: React, 'react/jsx-runtime': JSXRuntime };
     const requireModule = (name: string) => {
       if (!Object.hasOwn(modules, name)) throw new Error('Only react and react/jsx-runtime imports are available.');
@@ -32,6 +32,17 @@ export async function execute(code: string, journey?: ReactJourney) {
     if (!journey) return { passed: true };
 
     for (const action of journey.actions) {
+      if (action.type === 'wait') { await new Promise(resolve => setTimeout(resolve, Math.max(0, Math.min(1000, action.milliseconds)))); if (renderError) throw renderError; continue; }
+      if (action.type === 'drag') {
+        const source = document.querySelector(action.source), target = document.querySelector(action.target);
+        if (!source || !target) throw new Error('Missing drag source or target.');
+        const transfer = new DataTransfer();
+        source.dispatchEvent(new DragEvent('dragstart', { bubbles: true, dataTransfer: transfer })); await pause();
+        target.dispatchEvent(new DragEvent('dragover', { bubbles: true, cancelable: true, dataTransfer: transfer }));
+        target.dispatchEvent(new DragEvent('drop', { bubbles: true, dataTransfer: transfer })); await pause();
+        source.dispatchEvent(new DragEvent('dragend', { bubbles: true, dataTransfer: transfer }));
+        if (renderError) throw renderError; continue;
+      }
       const element = document.querySelector<HTMLElement>(action.selector);
       if (!element) throw new Error(`Missing action target: ${action.selector}`);
       if (action.type === 'click') element.click();

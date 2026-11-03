@@ -1,0 +1,59 @@
+{
+  "id": "frontend-largest-number-formed",
+  "title": "Frontend: Largest number formed",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Largest number formed. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(values) for nonnegative integer strings. Arrange them to form the largest concatenation and return it as a string. An all-zero result becomes 0, empty input becomes an empty string.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "largest-number-formed-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[\"3\",\"30\",\"34\",\"5\",\"9\"]",
+      "expectedOutput": "\"9534330\""
+    },
+    {
+      "id": "largest-number-formed-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[\"0\",\"0\"]",
+      "expectedOutput": "\"0\""
+    },
+    {
+      "id": "largest-number-formed-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[]",
+      "expectedOutput": "\"\""
+    },
+    {
+      "id": "largest-number-formed-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "[\"12\",\"121\"]",
+      "expectedOutput": "\"12121\""
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Sort strings using the order of a+b versus b+a rather than ordinary numeric value or first digit alone."
+  ],
+  "alternativeApproaches": [
+    "Explain why the pairwise concatenation comparator establishes the required ordering and keep arithmetic precision out of the comparison."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: All zeros; 3 vs 30; common prefixes.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

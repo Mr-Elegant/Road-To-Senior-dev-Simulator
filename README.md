@@ -8,7 +8,7 @@ A full-stack learning platform for practicing the work behind senior engineering
 
 The project brings these experiences into one application with authenticated accounts, browser-based execution, persistent progress, and reproducible evaluation. Its engineering focus is **correctness under failure**: stale responses, failed optimistic updates, interrupted sessions, conflicting imports, and untrusted candidate code.
 
-**81 engineering scenarios · 4 enterprise projects · 120 SQL questions · 8 evolving incidents**
+**389 engineering scenarios · 203 frontend topics + 113 TSX copies · 4 enterprise projects · 120 SQL questions · 8 evolving incidents**
 
 **Live demo:** [engineering-interview-lab.vercel.app](https://engineering-interview-lab.vercel.app/)
 
@@ -16,7 +16,7 @@ The project brings these experiences into one application with authenticated acc
 
 The poster is a conceptual product visual from the earlier catalog, not a screenshot; current counts are listed above. Actual application screenshots appear below. This README is a self-contained product and engineering reference for reviewers and portfolio builders; implementation links provide deeper evidence.
 
-**Documentation reviewed against the repository: 3 November 2026.** Recorded test results below retain their original verification date; a documentation review does not rerun those checks or establish that the deployed build matches every local change.
+**Documentation reviewed against the repository: 4 November 2026.** Recorded test results below retain their original verification date; a documentation review does not rerun those checks or establish that the deployed build matches every local change.
 
 ## Project at a glance
 
@@ -25,23 +25,24 @@ The poster is a conceptual product visual from the earlier catalog, not a screen
 | Product | A full-stack engineering practice simulator with guided learning, editable exercises, incident response, and interview preparation. |
 | Audience | Developers building foundations and engineers preparing for senior/staff interviews. |
 | Architecture | Modular monolith: one Next.js application, PostgreSQL persistence, browser execution engines, and an optional external AI provider. |
-| Main catalog | 81 scenarios across 10 technical topics and six challenge formats, including eight beginner React UI exercises. |
+| Main catalog | 389 scenarios across 10 technical topics and six challenge formats, including all 203 frontend practice topics. |
 | Enterprise Labs | Four project overviews grouping 22 exercises: eight loan, six commerce/SaaS, and eight collaboration exercises. |
 | SQL track | 120 authored questions across four tiers, with executable, conceptual, and incident formats. |
 | Evolving incidents | Eight simulations, 24 timed developments, and 72 response choices. |
 | Executable business exercises | 41 loan-lab cases, 53 commerce/SaaS cases, and 61 collaboration cases. |
 | Persistence | Account-owned history in PostgreSQL; account-scoped device caches and local drafts. |
-| Current evidence | 282 unit tests across 21 suites; browser verification and qualifications recorded under [Verification](#verification). |
+| Current evidence | 491 unit tests across 24 suites; browser verification and qualifications recorded under [Verification](#verification). |
 
-These counts describe different collections and must not be summed into one challenge count. The eight evolving incidents, six commerce/SaaS challenges, eight collaboration challenges, and eight React UI exercises are included in the 81-scenario catalog. Enterprise Labs reuses those six commerce/SaaS challenges, eight collaboration scenarios, and the eight separate loan exercises.
+These counts describe different collections and must not be summed into one challenge count. The eight evolving incidents, six commerce/SaaS challenges, eight collaboration challenges, and 203 frontend topics are included in the 389-scenario catalog. The frontend bank reuses the original eight React UI exercise IDs and adds 195 scenarios; the separate React + TypeScript module adds 113 typed copies of those React topics. Enterprise Labs reuses those six commerce/SaaS challenges, eight collaboration scenarios, and the eight separate loan exercises.
 
 ## A five-minute product review
 
-After starting the application locally, these four paths show its core engineering depth:
+After starting the application locally, these paths show its core engineering depth:
 
 | Experience | What to try | What to inspect |
 |---|---|---|
 | **Enterprise Labs** — `/enterprise-labs` | Choose Loan Operations, Commerce Operations, or Multi-Tenant SaaS. Follow a project learning sequence and open its existing exercises. | A typed project registry, shared account-scoped progress, and clear dashboard versus challenge-collection capabilities. |
+| **Frontend coding practice** — `/frontend-practice` | Search all 203 topics, filter React/JavaScript and difficulty, then open a workspace. Run a broken starter, implement the contract, inspect cases, and compare the reference. | DOM journeys for React, exact JSON/errors in isolated JavaScript Workers, test-derived scores, and matching local IDE files. |
 | **Evolving incident response** — `/incidents` | Open the connection-storm scenario, choose a response, then advance the simulation. Compare the new briefing, telemetry, customer impact, and decision journal. | Pure state transitions, scheduled developments, consequence replay, and validated draft restoration. |
 | **Hands-on bug fixing** — `/challenges/loan-management` | Sign in, choose **Start bug-fixing lab**, run the broken starter, edit the function in Monaco, and submit the fix. | Real behavioral tests, worker termination, request ownership, immutable state, and account-scoped submissions. |
 | **SQL & PostgreSQL lab** — `/sql` | Execute a PostgreSQL-specific query in the playground, then compare the generic SQL engine. | PGlite WebAssembly execution, seeded datasets, result comparison, and explicit dialect boundaries. |
@@ -68,8 +69,9 @@ The loan lab is an editable exercise workspace. Each submission executes against
 
 | Area | Implemented behavior |
 |---|---|
-| **Scenario library** | 81 scenarios across JavaScript, TypeScript, React, Next.js, Node.js, databases, integrations, operations, system design, and security. Includes debugging, coding, incident response, code review, architecture, and interview exercises. |
-| **React UI practice** | Eight original beginner JSX component exercises with interactive previews, 43 DOM journeys, references, hints, and follow-up answers. On-demand closable panels, current-code test requirements, and test-derived submission scores. Self-hosted React/ReactDOM/Sucrase runtime in opaque-origin iframes. [Workflow and execution limits](docs/REACT_UI_PRACTICE.md). |
+| **Scenario library** | 389 scenarios across JavaScript, TypeScript, React, Next.js, Node.js, databases, integrations, operations, system design, and security. Includes debugging, coding, incident response, code review, architecture, and interview exercises. |
+| **Frontend practice** | All 203 researched topics at `/frontend-practice`: 113 React components with 379 DOM journeys and 90 JavaScript exercises with 333 exact-result/error cases. Search and track/difficulty filters link to full coding workspaces, independently authored contracts, complete references, hints, and follow-up answers. On-demand closable panels, current-code test requirements, and test-derived submission scores. Self-hosted React/ReactDOM/Sucrase runtime in opaque-origin iframes. [Workflow and execution limits](docs/REACT_UI_PRACTICE.md). |
+| **React + TypeScript** | A separate `/react-typescript` module with 113 typed copies: 39 easy, 60 medium, 14 hard. TSX starters and references, exported props contracts, strict compiler checking before tests/preview, 379 copied DOM journeys, independent progress and local IDE copies. Self-hosted TypeScript compiler Worker with cancellation/deadline and React declarations. [Workflow and boundaries](docs/REACT_TYPESCRIPT_PRACTICE.md). |
 | **E-commerce & SaaS** | Six editable challenges with 53 behavioral cases: inventory reservations, payment reconciliation, tenant authorization, subscription entitlements, resumable catalog imports, and safe audit history. [Learning sequence and model boundaries](docs/BUSINESS_CHALLENGES.md). |
 | **Enterprise Labs** | Four business-project overviews grouping 22 exercises. Skills, learning sequences, direct workspace links, and best saved progress share the existing challenge and loan-lab history. [Project structure and progress rules](docs/ENTERPRISE_LABS.md). |
 | **Real-Time Collaboration** | Eight editable challenges with 61 behavioral cases: message deduplication, reconnect cursors, read receipts, presence expiry, channel permissions, notification preferences, meeting signaling, and history pagination. [Contracts and production boundaries](docs/REAL_TIME_COLLABORATION.md). |
@@ -85,7 +87,7 @@ The loan lab is an editable exercise workspace. Each submission executes against
 | **Accounts & progress** | Email/password authentication, revocable database sessions, account-scoped history and drafts, bookmarks, notes, JSON import/export, and explicit anonymous-history import. |
 | **Responsive session loading** | Navigation and public login/signup forms remain available during session checks. Background rechecks preserve an open visitor workspace; account changes still isolate and remount personal content. Session reads and cloud-history initialization have bounded waits, with device-history fallback for failed cloud reads. |
 | **Analytics & usability** | Readiness estimates, topic breakdowns, activity/streak history, recommendations, dark/light themes, and responsive navigation. Scores are practice indicators. |
-| **Local IDE practice** | A separate 278-exercise workspace covering every authored collection, with editable starters/answers, references, terminal tests, save-to-rerun mode, and a generated index. 69 exercises have automated runners, including eight React components in local Chromium; 209 use guided review. Website features and cloud progress remain separate. [Local practice guide](practice/README.md). |
+| **Local IDE practice** | A separate 586-exercise workspace covering every authored collection, with editable starters/answers, references, terminal tests, save-to-rerun mode, and a generated index. 377 exercises have automated runners, including 226 React/TSX components in local Chromium; 209 use guided review. Website features and cloud progress remain separate. [Local practice guide](practice/README.md). |
 
 The eight evolving incidents cover connection storms, cache stampedes, migration locks, regional failover, ambiguous payments, poison-message backlogs, restart cascades, and tenant-data exposure.
 
@@ -129,7 +131,7 @@ flowchart LR
     UI["Browser<br/>React, Monaco, Redux"]
     APP["Next.js on Node.js<br/>Pages and Route Handlers"]
     CACHE["Device cache<br/>Account-scoped drafts"]
-    EXEC["Browser practice engines<br/>Loan Workers, PGlite, AlaSQL"]
+    EXEC["Browser practice engines<br/>Loan/JavaScript Workers, React DOM, PGlite, AlaSQL"]
     AUTH["Better Auth<br/>Sessions and ownership"]
     PROGRESS["Progress service<br/>Transactional merges"]
     MOCK["Synthetic loan store<br/>Account-scoped, process-local"]
@@ -256,13 +258,16 @@ Account ownership comes from the session, not a submitted `userId`. Attempts hav
 | Experience | Evidence produced | What it does not establish |
 |---|---|---|
 | Loan bug lab | Full-suite behavioral scores, failure details, hints/assistance attribution | A tamper-proof examination result or a hard browser heap quota |
+| Frontend practice | 203 runnable contracts; exact JavaScript values/errors or React DOM journeys; current-code test-derived scores | Complete production products, real external integrations, hostile-code isolation, or exhaustive correctness |
 | Commerce/SaaS challenges | Executable fixture results plus saved rubric assessment | Real payment delivery, concurrent database safety, or deployed tenant isolation |
 | Evolving incidents | Authored consequence replay and decision benchmark; written response | Real infrastructure control or measured production incident recovery |
 | Code review / system design | Candidate annotations, design artifacts, and transparent rubrics | Automated semantic correctness certification |
 | SQL practice | Dataset query results or conceptual/incident feedback, depending on question type | Execution against the account database or identical behavior between SQL dialects |
 | AI interview | Provider-generated feedback or explicit offline fallback | Hiring prediction, provider correctness, or a measured external-service SLA |
 
-Generic JavaScript/TypeScript practice uses older execution/comparison paths. It does not inherit the loan lab's iframe/Worker boundary; synchronous code can still block its page. Generic TypeScript support strips syntax rather than running a complete compiler. These distinctions matter when describing the product publicly.
+The 90 frontend JavaScript exercises use fresh Workers inside opaque-origin iframes, exact JSON/error comparisons, a 1500 ms case deadline, cancellation, and cleanup. React uses self-hosted React/ReactDOM/Sucrase in opaque-origin DOM iframes, including wait and drag actions; synchronous loops in those DOM frames cannot be reliably preempted. Local IDE copies reuse the same contracts and cases. [Contracts and runner limits](docs/REACT_UI_PRACTICE.md).
+
+Older generic JavaScript/TypeScript practice uses separate execution/comparison paths. It does not inherit the new frontend JavaScript or loan lab iframe/Worker boundary; synchronous code can still block its page. Generic TypeScript support strips syntax rather than running a complete compiler. These distinctions matter when describing the product publicly.
 
 ## Data model
 
@@ -482,7 +487,7 @@ For an existing database, follow the [baseline and migration procedure](docs/AUT
 
 ## Practice in VS Code or another local IDE
 
-Open [the practice index](practice/INDEX.md) to choose from all **278 authored exercises**: 81 catalog scenarios, eight loan labs, 120 SQL questions, 63 beginner questions, and six standalone coding problems. Enterprise project sequences link to the same exercises. The eight React UI exercises, eight evolving incidents, and six commerce/SaaS scenarios remain included in the catalog count.
+Open [the practice index](practice/INDEX.md) to choose from all **586 authored exercises**: 389 catalog scenarios, eight loan labs, 120 SQL questions, 63 beginner questions, and six standalone coding problems. Enterprise project sequences link to the same exercises. All 203 frontend topics, eight evolving incidents, and six commerce/SaaS scenarios remain included in the catalog count.
 
 ```sh
 npm ci
@@ -491,13 +496,13 @@ npm run practice:test -- catalog/commerce-inventory-reservations
 npm run practice:watch -- catalog/commerce-inventory-reservations
 ```
 
-Edit the exercise's `solution.*` file and record your reasoning in `answer.md`. Each folder includes instructions, full authored task data, cases, and separate reference material. Broken starters are expected to fail. The 69 executable exercises use JavaScript/TypeScript, loan harnesses, SQL engines, local Chromium for React UI, or the optional local Python interpreter. React tests require `npx playwright install chromium` and `npm run react:runtime`. The other 209 exercises include review, UI snippets, architecture, incidents, interviews, and foundational questions; use their answer files and reference rubrics rather than treating them as automated passes.
+Edit the exercise's `solution.*` file and record your reasoning in `answer.md`. Each folder includes instructions, full authored task data, cases, and separate reference material. Broken starters are expected to fail. The 377 executable exercises use JavaScript/TypeScript, loan harnesses, SQL engines, local Chromium for React UI, or the optional local Python interpreter. React tests require `npx playwright install chromium` and `npm run react:runtime`. The other 209 exercises include review, UI snippets, architecture, incidents, interviews, and foundational questions; use their answer files and reference rubrics rather than treating them as automated passes.
 
 The local workflow needs no Next.js server, account database, authentication, or AI credentials. It does not update website progress or patch app exercises. Practice code is excluded from the application's TypeScript build, so unfinished solutions remain independent. [The practice guide](practice/README.md) explains dialect differences, manual review, process limits, and regeneration that preserves candidate work.
 
 ## Verification
 
-**Latest recorded verification: 3 November 2026.** These are local verification results, not a CI badge or a claim about production traffic. Earlier browser journeys retain their recorded baseline; the React UI row records the latest targeted browser verification.
+**Latest recorded verification: 4 November 2026.** These are local verification results, not a CI badge or a claim about production traffic. Earlier browser journeys retain their recorded baseline.
 
 **Earlier local IDE workspace baseline: 3 November 2026.** Its independent suite passed **60 checks**, covering the original 262 exported exercises, preservation on refresh, the original 53 executable reference solutions, expected failures in the 14 business/loan starters, TypeScript/async execution, exact comparisons, and timeout behavior. The app unit suite passed **203 tests across 17 suites** at that stage. A recursive-category SQL fixture/reference was corrected with an explicit breadcrumb text cast after PostgreSQL execution exposed its type mismatch.
 
@@ -505,9 +510,13 @@ The local workflow needs no Next.js server, account database, authentication, or
 
 | Check | Recorded result |
 |---|---|
-| Unit tests | **282 passed across 21 suites** |
+| Unit tests | **491 passed across 24 suites**, including strict compilation of all 113 TSX references, starters and fixture-prop contracts. Final compiler-directive and optional secure-random adapter checks also passed in focused reruns. |
+| React + TypeScript module | **29 targeted Chromium journeys verified against the final production build:** 28 passed in the combined run; the desktop editor-layout check passed on a focused rerun with a 60-second startup budget after an initial cold editor-load timeout. All 113 TSX references passed all 379 original DOM cases, every starter failed its full suite, and compiler rejection, clean editor diagnostics, preview, independent scores, cancellation, native focus, responsive navigation and original JSX regressions passed. Module and workspace screenshots were inspected. |
+| Complete frontend bank | **34 targeted Chromium journeys passed** against the production build, including all 203 topic links, all 203 failing starters, all 90 JavaScript references, exact result/error comparisons, cancellation and Worker deadlines, medium/hard React previews, all eight original React references, saved test scores, current-code submission checks, session/history loading, enterprise project progress, and responsive editor layout. The 105 new React references separately passed all 336 DOM cases. Desktop and mobile library screenshots were inspected. TypeScript, ESLint, and the Turbopack production build passed. |
+| Complete local export (frontend baseline) | **271 checks passed**, covering all 473 exports, all 264 executable references (including every one of the 203 frontend topics and all 712 frontend cases), candidate-file preservation, and existing execution regressions. The strict frontend scalar/error/compilation assertions also passed in a focused tooling rerun. |
+| TSX local export update | **586 exports**, with 377 automated and 209 guided exercises. Three targeted TSX reference suites passed through strict checking and Chromium execution (progress, contact form and nested comments); strict CLI comparison regressions and both catalog/preservation checks passed. All 113 typed references/starters additionally passed the app's compiler unit checks. The isolated VS Code TSX project passed its TypeScript check, and both workspace checks passed again with its configuration. |
 | React UI update | **27 Chromium journeys verified against the updated production build:** 26 passed in the combined run; the remaining score-persistence journey passed on a focused rerun after correcting an ambiguous alert selector. Covers all eight failing starters/passing references, mobile preview, malformed code/import errors, host-DOM isolation, native form events with blocked navigation, current-code submission checks, saved test scores, authentication, editor layout, and enterprise projects. TypeScript, ESLint, and the production build passed. |
-| Local practice update | **76 checks passed**, covering all 278 exports, all 69 executable references (including 43 React DOM cases), candidate-file preservation, and existing execution regressions. |
+| Local practice update (earlier baseline) | **76 checks passed**, covering all 278 exports, all 69 executable references (including 43 React DOM cases), candidate-file preservation, and existing execution regressions. |
 | Session-loading update | **20 Chromium journeys passed against the updated production build**, including slow session/history requests, form/filter DOM preservation during refresh, rapid account changes, real authentication and API ownership, cloud progress, responsive navigation, and editor/results layout. TypeScript, ESLint, and the production build passed. |
 | Real-Time Collaboration update | **15 targeted Chromium journeys passed against the updated production build**, covering all eight collaboration starters/references, mobile discovery, four-project navigation, both themes at 320–1440 px, existing commerce/SaaS execution, and closable full-height editor results. |
 | Browser regression tests (previous full audit) | **34 Chromium journeys verified against the production build:** 33 passed in the full run; the remaining cloud-sync check passed in a focused rerun after correcting its save-completion wait. |
@@ -562,6 +571,8 @@ src/
     evaluation/         Rubrics, readiness, SQL evaluation, legacy practice execution
     incidents/          Deterministic incident transitions and replay
     loanLab/            Exercise harness, isolated runner, drafts, progress metadata
+    frontendPractice/   Exact-result JavaScript Worker runner and cancellation
+    reactPractice/      JSX compiler/runtime, isolated previews, DOM test journeys
     persistence/        Device cache, authenticated sync, merge rules
     redux/              Loan dashboard state and selectors
     gemini/             Provider adapter, prompts, and fallback responses

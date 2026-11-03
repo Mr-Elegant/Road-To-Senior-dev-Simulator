@@ -1,0 +1,20 @@
+[
+  {
+    "id": "billing-counter-1",
+    "name": "Input/derived output 1",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Quantity\\\"]\",\"value\":\"2\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Unit\\\"]\",\"value\":\"199\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Discount\\\"]\",\"value\":\"10\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"{\\\"subtotal\\\":398,\\\"discount\\\":40,\\\"total\\\":358}\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "billing-counter-2",
+    "name": "Input/derived output 2",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Quantity\\\"]\",\"value\":\"0\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Unit\\\"]\",\"value\":\"100\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Discount\\\"]\",\"value\":\"0\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"{\\\"subtotal\\\":0,\\\"discount\\\":0,\\\"total\\\":0}\"},{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "billing-counter-3",
+    "name": "Input/derived output 3",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"Quantity\\\"]\",\"value\":\"-1\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Unit\\\"]\",\"value\":\"100\"},{\"type\":\"input\",\"selector\":\"[name=\\\"Discount\\\"]\",\"value\":\"0\"},{\"type\":\"click\",\"selector\":\"button[type=\\\"submit\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"error\\\"]\",\"property\":\"text\",\"equals\":\"Invalid bill\"},{\"selector\":\"[data-testid=\\\"result\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

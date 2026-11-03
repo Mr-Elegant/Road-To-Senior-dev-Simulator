@@ -1,0 +1,53 @@
+{
+  "id": "frontend-sum",
+  "title": "Frontend: sum()",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind sum(). This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(groups). Build a reusable curried accumulator that accepts each numeric argument group and is terminated by an empty call. Return the final sum. An empty groups list returns zero.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "sum-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[[1],[2,3]]",
+      "expectedOutput": "6"
+    },
+    {
+      "id": "sum-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[]",
+      "expectedOutput": "0"
+    },
+    {
+      "id": "sum-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[[0],[-2],[4]]",
+      "expectedOutput": "2"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Return a function that captures the current total."
+  ],
+  "alternativeApproaches": [
+    "Support grouped arguments while keeping termination unambiguous and avoiding mutation shared by sibling chains."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: sum(1)(2)(); empty termination; zero.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

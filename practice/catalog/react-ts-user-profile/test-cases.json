@@ -1,0 +1,20 @@
+[
+  {
+    "id": "user-profile-1",
+    "name": "Missing",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Profile unavailable\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "user-profile-2",
+    "name": "Fallback avatar",
+    "inputDescription": "{\"props\":{\"profile\":{\"name\":\"ada\"}},\"actions\":[],\"assertions\":[{\"selector\":\"h1\",\"property\":\"text\",\"equals\":\"ada\"},{\"selector\":\"[data-testid=\\\"avatar-fallback\\\"]\",\"property\":\"text\",\"equals\":\"A\"},{\"selector\":\"[data-testid=\\\"bio\\\"]\",\"property\":\"text\",\"equals\":\"No biography\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "user-profile-3",
+    "name": "Biography",
+    "inputDescription": "{\"props\":{\"profile\":{\"name\":\"Lin\",\"bio\":\"Engineer\"}},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"bio\\\"]\",\"property\":\"text\",\"equals\":\"Engineer\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

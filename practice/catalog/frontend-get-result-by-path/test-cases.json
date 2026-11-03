@@ -1,0 +1,26 @@
+[
+  {
+    "id": "get-result-by-path-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"value\":{\"a\":[{\"b\":2}]},\"path\":[\"a\",0,\"b\"]}",
+    "expectedOutput": "2"
+  },
+  {
+    "id": "get-result-by-path-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"value\":{\"a\":null},\"path\":[\"a\"]}",
+    "expectedOutput": "null"
+  },
+  {
+    "id": "get-result-by-path-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"value\":{},\"path\":[\"toString\"],\"fallback\":\"missing\"}",
+    "expectedOutput": "\"missing\""
+  },
+  {
+    "id": "get-result-by-path-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "{\"value\":{\"a.b\":3},\"path\":[\"a.b\"]}",
+    "expectedOutput": "3"
+  }
+]

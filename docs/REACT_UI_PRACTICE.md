@@ -1,6 +1,8 @@
 # React UI practice
 
-Eight original beginner JSX component exercises are available in **Challenges**. Search **React UI:** and select **Beginner** difficulty. The existing production React scenarios and beginner theory track remain available.
+The separate [React + TypeScript module](REACT_TYPESCRIPT_PRACTICE.md) provides typed TSX copies of all 113 React topics at `/react-typescript`, with strict compiler checking and independent progress. The JSX workflow and restrictions below continue to describe the original React track.
+
+All **113 React topics** are runnable at `/frontend-practice` (39 easy, 60 medium, 14 hard), alongside 90 JavaScript topics. Choose React and a difficulty, search, and open a full coding workspace. The eight original beginner exercise IDs below are retained; the remaining 105 use `frontend-*` IDs. All React references share 379 executable DOM journeys. The existing production React scenarios and beginner theory track remain available.
 
 | Exercise | Route suffix under `/challenge/` | DOM journeys |
 | --- | --- | ---: |
@@ -17,7 +19,7 @@ Eight original beginner JSX component exercises are available in **Challenges**.
 
 Edit `solution.jsx`, keeping a default-exported `App`. JavaScript, JSX, hooks, and imports from `react` and `react/jsx-runtime` are supported. Other package imports, CSS imports, TypeScript syntax, and network integrations are outside this runner's contract.
 
-**Preview** mounts an interactive component with the first configured props fixture, or empty props when none exist. It runs a snapshot: edit and click Preview again to apply changes. **Run Tests** mounts a fresh iframe per journey, performs input/click/key actions, and checks exact DOM text, values, attributes, or counts. Text assertions collapse whitespace and trim boundaries. Preview and results are mutually exclusive, closable panels; the editor fills the available space when closed.
+**Preview** mounts an interactive component with the first configured props fixture, or empty props when none exist. It runs a snapshot: edit and click Preview again to apply changes. **Run Tests** mounts a fresh iframe per journey, performs input/click/key/wait/drag actions, and checks exact DOM text, values, attributes, or counts. Text assertions collapse whitespace and trim boundaries. Preview and results are mutually exclusive, closable panels; the editor fills the available space when closed.
 
 Run tests on current code before submitting. React exercise scores come from passed journeys; the existing rubric records reasoning and self-assessment. Bookmarks, account-scoped attempt history, hints, and reference review use existing app flows. Unsaved editor text is not persisted across reloads, as in the existing generic workspace. Use local IDE files for durable practice work.
 
@@ -46,10 +48,14 @@ Edit `practice/catalog/react-ui-tag-editor/solution.jsx`. Briefs, fixtures, refe
 
 The CLI reuses the runtime and journeys in fresh local Chromium pages. Next.js, PostgreSQL, app environment files, and an account are unnecessary. A React CLI suite has a 90-second process deadline and each DOM evaluation an eight-second response deadline. Results do not sync to website progress.
 
-## Expansion order
+## Coverage and contracts
 
-The [implementation plan](research/react-practice-implementation.md) records the confirmed order: easy React, medium/hard React, then JavaScript. This first delivery covers **8 of 39 easy React topic references**; the remaining 31 are planned.
+The [implementation plan](research/react-practice-implementation.md) records the confirmed order: easy React, medium/hard React, then JavaScript. All stages are implemented: **39 easy React, 60 medium React, 14 hard React, and 90 JavaScript topics**. Each has executable cases, a starter, a complete reference, and a local IDE export. Advanced subjects have explicit exercise boundaries: injected clocks, mock page adapters, calendar intervals, chess movement geometry, and dispatch models teach core behavior without claiming complete external services.
 
 Prompts, contracts, fixtures, and reference solutions are independently authored. The [research index](research/namastedev-challenge-index.md) supplies source links and topic references, without copying the source site's statements, solutions, or test fixtures.
 
 Implementation references: [React createRoot](https://react.dev/reference/react-dom/client/createRoot), [esbuild bundling](https://esbuild.github.io/api/#bundle), and the installed Sucrase transformer API/type definitions.
+
+## JavaScript execution
+
+The 90 frontend JavaScript topics define `solution(input)` with exact JSON-compatible outputs or exact validation errors. Each browser case runs in a fresh Blob Worker inside an opaque-origin iframe, with a 1500 ms Worker deadline, parent cancellation, and cleanup. The private MessageChannel and CSP block access to app DOM/session storage and external connections. Compilation errors cannot satisfy expected runtime errors. Test-derived submission scores require results for the current code, as with React. The local CLI uses fresh Node VM contexts and its existing subprocess deadline; it is for trusted local practice.

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "nested-checkbox-1",
+    "name": "Parent selects all",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-node=\\\"root\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"a,b\"},{\"selector\":\"[data-node=\\\"root\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-state\",\"equals\":\"checked\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "nested-checkbox-2",
+    "name": "Partial selection",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-node=\\\"a\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"a\"},{\"selector\":\"[data-node=\\\"root\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-state\",\"equals\":\"mixed\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "nested-checkbox-3",
+    "name": "Parent clears",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-node=\\\"root\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-node=\\\"root\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"\"},{\"selector\":\"[data-node=\\\"root\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-state\",\"equals\":\"unchecked\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

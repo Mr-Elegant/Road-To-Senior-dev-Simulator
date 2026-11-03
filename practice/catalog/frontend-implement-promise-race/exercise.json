@@ -1,0 +1,53 @@
+{
+  "id": "frontend-implement-promise-race",
+  "title": "Frontend: Implement Promise Race",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Implement Promise Race. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement async solution(entries). Each entry has {value,delay,reject?}; start all lazy timer tasks and return {status:fulfilled|rejected,value} for the first settlement. Delays are distinct nonnegative integers. Empty entries return {status:pending} as an observable model of an unsettled race.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "implement-promise-race-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[{\"value\":\"a\",\"delay\":5},{\"value\":\"b\",\"delay\":0}]",
+      "expectedOutput": "{\"status\":\"fulfilled\",\"value\":\"b\"}"
+    },
+    {
+      "id": "implement-promise-race-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[{\"value\":\"bad\",\"delay\":0,\"reject\":true},{\"value\":\"ok\",\"delay\":10}]",
+      "expectedOutput": "{\"status\":\"rejected\",\"value\":\"bad\"}"
+    },
+    {
+      "id": "implement-promise-race-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[]",
+      "expectedOutput": "{\"status\":\"pending\"}"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Return a promise and attach fulfillment/rejection handlers through Promise.resolve for each iterable item."
+  ],
+  "alternativeApproaches": [
+    "Contrast race with any and explain why winning a race does not cancel losing operations."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Immediate value; first rejection; empty iterable.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

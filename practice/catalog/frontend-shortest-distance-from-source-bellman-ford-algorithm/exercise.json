@@ -1,0 +1,54 @@
+{
+  "id": "frontend-shortest-distance-from-source-bellman-ford-algorithm",
+  "title": "Frontend: Shortest Distance from Source (Bellman-Ford Algorithm)",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Shortest Distance from Source (Bellman-Ford Algorithm). This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({count,edges,source}) for directed weighted edges, allowing negative weights. Return source distances with null for unreachable. Throw Negative cycle only when a negative cycle is reachable from source.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "shortest-distance-from-source-bellman-ford-algorithm-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"count\":3,\"source\":0,\"edges\":[[0,1,3],[1,2,-2]]}",
+      "expectedOutput": "[0,3,1]"
+    },
+    {
+      "id": "shortest-distance-from-source-bellman-ford-algorithm-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"count\":3,\"source\":0,\"edges\":[[1,2,-1],[2,1,-1]]}",
+      "expectedOutput": "[0,null,null]"
+    },
+    {
+      "id": "shortest-distance-from-source-bellman-ford-algorithm-3",
+      "name": "Reject input: Negative cycle",
+      "inputDescription": "{\"count\":2,\"source\":0,\"edges\":[[0,1,-1],[1,0,-1]]}",
+      "expectedOutput": "Throws: Negative cycle",
+      "expectedError": "Negative cycle"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Initialize the source to zero and other distances to infinity."
+  ],
+  "alternativeApproaches": [
+    "Propagate an unbounded marker to every vertex reachable from a detected negative cycle."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Negative edge; unreachable component; early stop.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

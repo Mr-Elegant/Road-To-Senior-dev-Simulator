@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-read-more",
+  "title": "React + TypeScript: Read More",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Read More. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({content=\"\",limit=3}). Collapse to the first limit whitespace-separated words joined by one space and append … only when truncated. Read more/Show less toggles full original content. Use [data-testid=\"content\"], and hide toggle when short.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    content?: string;\n    limit?: number;\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "read-more-1",
+      "name": "Short text",
+      "inputDescription": "{\"props\":{\"content\":\"One two\"},\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"One two\"},{\"selector\":\"button\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "read-more-2",
+      "name": "Expand",
+      "inputDescription": "{\"props\":{\"content\":\"One two three four\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"One two three four\"},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"true\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "read-more-3",
+      "name": "Collapse",
+      "inputDescription": "{\"props\":{\"content\":\"One two three four\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"One two three…\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Derive the excerpt from immutable full text and store only whether it is expanded."
+  ],
+  "alternativeApproaches": [
+    "Preserve a stable focus target and selection when switching between excerpt and full text."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Short text; exact limit; long text.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

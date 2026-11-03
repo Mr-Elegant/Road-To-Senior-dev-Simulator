@@ -1,0 +1,20 @@
+[
+  {
+    "id": "paginated-article-bookmark-viewer-1",
+    "name": "First page",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":2},{\"selector\":\"[data-testid=\\\"page\\\"]\",\"property\":\"text\",\"equals\":\"1\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "paginated-article-bookmark-viewer-2",
+    "name": "Persist bookmark",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-bookmark=\\\"A\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"saved\\\"]\",\"property\":\"text\",\"equals\":\"A\"},{\"selector\":\"[data-article=\\\"A\\\"]\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "paginated-article-bookmark-viewer-3",
+    "name": "Last page",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-testid=\\\"page\\\"]\",\"property\":\"text\",\"equals\":\"3\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

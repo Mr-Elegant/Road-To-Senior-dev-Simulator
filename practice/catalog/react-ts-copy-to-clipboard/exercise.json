@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-copy-to-clipboard",
+  "title": "React + TypeScript: Copy to Clipboard",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Copy to Clipboard. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({adapter=\"success\"}). Render controlled Text input and Copy button. The provided adapter mode simulates an async clipboard service: success resolves, reject rejects, missing is unavailable. On click await that adapter, show Copied or Copy unavailable in [data-testid=\"status\"], and on success echo the submitted text in [data-testid=\"copied\"]. This isolated exercise must not access the real system clipboard.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    adapter?: string;\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "copy-to-clipboard-1",
+      "name": "Successful adapter",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"hello\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Copied\"},{\"selector\":\"[data-testid=\\\"copied\\\"]\",\"property\":\"text\",\"equals\":\"hello\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "copy-to-clipboard-2",
+      "name": "Rejected adapter",
+      "inputDescription": "{\"props\":{\"adapter\":\"reject\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Copy unavailable\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "copy-to-clipboard-3",
+      "name": "Missing adapter",
+      "inputDescription": "{\"props\":{\"adapter\":\"missing\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Copy unavailable\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Invoke clipboard writing from a user gesture and await its promise."
+  ],
+  "alternativeApproaches": [
+    "Add a copyable code block whose feedback resets when its source changes."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Successful copy; rejected permission; unavailable API.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

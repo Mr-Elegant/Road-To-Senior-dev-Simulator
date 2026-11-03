@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-product-cart-with-discounts",
+  "title": "React + TypeScript: Product Cart with Discounts",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Product Cart with Discounts. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({products=[{id:a,name:Alpha,price:100},{id:b,name:Beta,price:250}]}). Add[data-add=ID] and Remove[data-remove=ID] change integer quantities, clamped to zero. Render quantity[data-quantity=ID]. Discount select is 0/10 percent; output[data-testid=total] is subtotal minus once-rounded percentage discount in cents. Render all products. Product prices are valid integer cents; this local pricing preview is not authoritative checkout.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    products?: ({\n        \"id\": string;\n        \"name\": string;\n        \"price\": number;\n    })[];\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "product-cart-with-discounts-1",
+      "name": "Quantity",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-add=\\\"a\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-add=\\\"a\\\"]\"}],\"assertions\":[{\"selector\":\"[data-quantity=\\\"a\\\"]\",\"property\":\"text\",\"equals\":\"2\"},{\"selector\":\"[data-testid=\\\"total\\\"]\",\"property\":\"text\",\"equals\":\"200\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "product-cart-with-discounts-2",
+      "name": "Discount",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-add=\\\"b\\\"]\"},{\"type\":\"input\",\"selector\":\"select\",\"value\":\"10\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"total\\\"]\",\"property\":\"text\",\"equals\":\"225\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "product-cart-with-discounts-3",
+      "name": "Zero floor",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-remove=\\\"a\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"total\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Normalize products and cart quantities by ID."
+  ],
+  "alternativeApproaches": [
+    "Design a server quote/version mechanism so payment uses the exact accepted pricing snapshot."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Expired coupon; stacked discounts; quantity changes.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tab-switcher-1",
+    "name": "Initial",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"panel\\\"]\",\"property\":\"text\",\"equals\":\"First\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tab-switcher-2",
+    "name": "Switch",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-id=\\\"two\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"panel\\\"]\",\"property\":\"text\",\"equals\":\"Second\"},{\"selector\":\"[data-id=\\\"two\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"true\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tab-switcher-3",
+    "name": "Empty",
+    "inputDescription": "{\"props\":{\"items\":[]},\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"No sections\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

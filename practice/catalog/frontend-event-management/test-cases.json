@@ -1,0 +1,20 @@
+[
+  {
+    "id": "event-management-1",
+    "name": "Valid",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"[name=\\\"start\\\"]\",\"value\":\"9\"},{\"type\":\"input\",\"selector\":\"[name=\\\"end\\\"]\",\"value\":\"10\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "event-management-2",
+    "name": "Overlap",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"[name=\\\"start\\\"]\",\"value\":\"9\"},{\"type\":\"input\",\"selector\":\"[name=\\\"end\\\"]\",\"value\":\"11\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"input\",\"selector\":\"[name=\\\"start\\\"]\",\"value\":\"10\"},{\"type\":\"input\",\"selector\":\"[name=\\\"end\\\"]\",\"value\":\"12\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Overlap\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "event-management-3",
+    "name": "Invalid interval",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"[name=\\\"start\\\"]\",\"value\":\"10\"},{\"type\":\"input\",\"selector\":\"[name=\\\"end\\\"]\",\"value\":\"9\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Invalid event\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

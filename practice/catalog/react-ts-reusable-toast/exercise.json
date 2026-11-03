@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-reusable-toast",
+  "title": "React + TypeScript: Reusable Toast",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Reusable Toast. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({autoCloseMs=0}). Notify[data-action=notify] adds sequential IDs li[data-toast=ID], capped to the latest four. Dismiss[data-dismiss=ID] removes only that toast. aria-live is polite. Positive autoCloseMs removes each at its own deadline; zero disables automatic removal. Clean up timers on unmount.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    autoCloseMs?: number;\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "reusable-toast-1",
+      "name": "Add",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"notify\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"notify\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":2}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "reusable-toast-2",
+      "name": "Dismiss one",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"notify\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"notify\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-dismiss=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-toast=\\\"2\\\"]\",\"property\":\"count\",\"equals\":1}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "reusable-toast-3",
+      "name": "Deadline",
+      "inputDescription": "{\"props\":{\"autoCloseMs\":40},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"notify\\\"]\"},{\"type\":\"wait\",\"milliseconds\":120}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Own the queue in one provider or local controller and assign each toast its own deadline."
+  ],
+  "alternativeApproaches": [
+    "Add action buttons whose focus and timeout policy do not remove content while a user is interacting."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Multiple toasts; manual dismissal; expiration.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

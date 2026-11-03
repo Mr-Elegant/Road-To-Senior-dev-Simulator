@@ -1,0 +1,26 @@
+[
+  {
+    "id": "word-search-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"board\":[[\"A\",\"B\"],[\"C\",\"D\"]],\"word\":\"ABD\"}",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "word-search-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"board\":[[\"A\",\"B\"]],\"word\":\"ABA\"}",
+    "expectedOutput": "false"
+  },
+  {
+    "id": "word-search-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"board\":[],\"word\":\"\"}",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "word-search-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "{\"board\":[[\"a\"]],\"word\":\"b\"}",
+    "expectedOutput": "false"
+  }
+]

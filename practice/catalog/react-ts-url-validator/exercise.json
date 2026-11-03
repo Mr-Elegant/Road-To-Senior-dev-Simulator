@@ -1,0 +1,75 @@
+{
+  "id": "react-ts-url-validator",
+  "title": "React + TypeScript: URL Validator",
+  "businessContext": "An integrations setup form needs to catch unusable website addresses before a user saves the configuration.",
+  "problemStatement": "Export App with a controlled input labelled Website. Trim its value for validation. An empty trimmed value shows Enter a web address. Otherwise accept only absolute URLs parsed by URL whose protocol is http: or https: and whose username and password are empty. Show Valid web address or Invalid web address in [data-testid=\"feedback\"]. Put URL.href in [data-testid=\"normalized\"] for accepted input and an empty string otherwise. Do not automatically add a scheme, navigate, or request the address.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Validation updates while typing and never throws for malformed input.",
+    "localhost is allowed if it has an explicit HTTP(S) scheme. This is a syntax check, not an SSRF or network-safety check.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "url-empty",
+      "name": "Whitespace is an empty address",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"   \"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Enter a web address\"},{\"selector\":\"[data-testid=\\\"normalized\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "url-valid",
+      "name": "Normalize an HTTPS address without navigation",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\" https://EXAMPLE.com/path \"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Valid web address\"},{\"selector\":\"[data-testid=\\\"normalized\\\"]\",\"property\":\"text\",\"equals\":\"https://example.com/path\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "url-relative",
+      "name": "A missing scheme is rejected",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"example.com\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Invalid web address\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "url-scheme",
+      "name": "Non-web schemes are rejected",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"javascript:alert(1)\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Invalid web address\"},{\"selector\":\"[data-testid=\\\"normalized\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "url-auth",
+      "name": "Embedded credentials are rejected",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"https://person:secret@example.com\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Invalid web address\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "url-local",
+      "name": "Localhost works with an explicit web scheme",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"http://localhost:8080\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Valid web address\"},{\"selector\":\"[data-testid=\\\"normalized\\\"]\",\"property\":\"text\",\"equals\":\"http://localhost:8080/\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Use new URL inside try/catch instead of a broad regular expression.",
+    "Clear the normalized output when input becomes invalid."
+  ],
+  "commonMistakes": [
+    "Accepting any parsed scheme.",
+    "Equating a syntactically valid URL with a safe server-side fetch target."
+  ],
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 25,
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "candidateTasks": [
+    "Implement the default-exported App component and the documented DOM contract.",
+    "Run every interaction journey, explain edge cases, then compare your implementation with the reference.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "alternativeApproaches": [
+    "Extract a small pure helper for derived values; keep input state in the component. Extend with a custom hook only when behavior is reused."
+  ],
+  "reactTypescriptExercise": true
+}

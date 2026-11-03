@@ -1,0 +1,20 @@
+[
+  {
+    "id": "design-autocomplete-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"entries\":[{\"word\":\"cat\",\"score\":1},{\"word\":\"car\",\"score\":2},{\"word\":\"dog\",\"score\":4}],\"prefix\":\"CA\",\"limit\":3}",
+    "expectedOutput": "[\"car\",\"cat\"]"
+  },
+  {
+    "id": "design-autocomplete-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"entries\":[{\"word\":\"b\",\"score\":1},{\"word\":\"a\",\"score\":1}],\"prefix\":\"\",\"limit\":1}",
+    "expectedOutput": "[\"a\"]"
+  },
+  {
+    "id": "design-autocomplete-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"entries\":[{\"word\":\"a\",\"score\":1}],\"prefix\":\"x\",\"limit\":5}",
+    "expectedOutput": "[]"
+  }
+]

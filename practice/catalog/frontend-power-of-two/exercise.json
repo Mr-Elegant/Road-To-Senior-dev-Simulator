@@ -1,0 +1,65 @@
+{
+  "id": "frontend-power-of-two",
+  "title": "Frontend: Power of Two",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Power of Two. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(n). Return whether a safe positive integer is an exact power of two. Invalid, fractional, zero, and negative values return false. Support powers beyond 32 bits.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "power-of-two-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "1",
+      "expectedOutput": "true"
+    },
+    {
+      "id": "power-of-two-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "1099511627776",
+      "expectedOutput": "true"
+    },
+    {
+      "id": "power-of-two-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "12",
+      "expectedOutput": "false"
+    },
+    {
+      "id": "power-of-two-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "0",
+      "expectedOutput": "false"
+    },
+    {
+      "id": "power-of-two-5",
+      "name": "Behavioral case 5",
+      "inputDescription": "2.5",
+      "expectedOutput": "false"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "For a safe-integer Number, reject nonpositive or noninteger values and divide by two while the remainder is zero; accept exactly when the final value is one."
+  ],
+  "alternativeApproaches": [
+    "Implement Number and BigInt variants with separate input contracts rather than mixing numeric types."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: 1; 0; negative value.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

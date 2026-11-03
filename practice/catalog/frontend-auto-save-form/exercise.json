@@ -1,0 +1,53 @@
+{
+  "id": "frontend-auto-save-form",
+  "title": "Frontend: Auto Save Form",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Auto Save Form. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Title and Body controlled inputs name=title/body update an in-memory draft. Acknowledge after 40 ms idle; show Ready initially, Unsaved on edits, Saved after acknowledgement in [data-testid=status]. [data-testid=saved] is latest acknowledged JSON {title,body}. Cancel superseded timers. No durable or cloud persistence is claimed.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "auto-save-form-1",
+      "name": "Initial",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Ready\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "auto-save-form-2",
+      "name": "Save draft",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"[name=\\\"body\\\"]\",\"value\":\"B\"},{\"type\":\"wait\",\"milliseconds\":120}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"{\\\"title\\\":\\\"A\\\",\\\"body\\\":\\\"B\\\"}\"},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Saved\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "auto-save-form-3",
+      "name": "Latest wins",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"Old\"},{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"New\"},{\"type\":\"wait\",\"milliseconds\":120}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"{\\\"title\\\":\\\"New\\\",\\\"body\\\":\\\"\\\"}\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Track a draft revision and the last acknowledged snapshot."
+  ],
+  "alternativeApproaches": [
+    "Use optimistic concurrency with a document version and an explicit user merge workflow."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Rapid edits; old response arrives last; failed save.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "frontend-capitalize-words",
+  "title": "Frontend: Capitalize Words",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Capitalize Words. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(text). For each whitespace-delimited token, uppercase its first Unicode code point and preserve the remainder and all original whitespace.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "capitalize-words-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "\"hello  world\"",
+      "expectedOutput": "\"Hello  World\""
+    },
+    {
+      "id": "capitalize-words-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "\"javaScript\"",
+      "expectedOutput": "\"JavaScript\""
+    },
+    {
+      "id": "capitalize-words-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "\"\"",
+      "expectedOutput": "\"\""
+    },
+    {
+      "id": "capitalize-words-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "\"a\\nb\"",
+      "expectedOutput": "\"A\\nB\""
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Choose whether the rest of each word is preserved or lowercased, then implement exactly that rule."
+  ],
+  "alternativeApproaches": [
+    "Preserve whitespace exactly using token-aware replacement rather than split-and-join."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Multiple spaces; empty text; apostrophes.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

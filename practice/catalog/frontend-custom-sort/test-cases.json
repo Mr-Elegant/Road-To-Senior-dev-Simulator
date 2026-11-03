@@ -1,0 +1,20 @@
+[
+  {
+    "id": "custom-sort-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[{\"id\":\"b\",\"priority\":1},{\"id\":\"a\",\"priority\":1},{\"id\":\"c\",\"priority\":0}]",
+    "expectedOutput": "[{\"id\":\"c\",\"priority\":0},{\"id\":\"a\",\"priority\":1},{\"id\":\"b\",\"priority\":1}]"
+  },
+  {
+    "id": "custom-sort-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[]",
+    "expectedOutput": "[]"
+  },
+  {
+    "id": "custom-sort-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[{\"id\":\"x\",\"priority\":-1}]",
+    "expectedOutput": "[{\"id\":\"x\",\"priority\":-1}]"
+  }
+]

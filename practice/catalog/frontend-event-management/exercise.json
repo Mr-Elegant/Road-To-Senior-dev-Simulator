@@ -1,0 +1,53 @@
+{
+  "id": "frontend-event-management",
+  "title": "Frontend: Event Management",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Event Management. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Inputs Title, Start, End name=title/start/end add daily events using integer hours 0..24 with start<end. Add[data-action=add] rejects invalid fields with Invalid event, or overlap with Overlap. Intervals are half-open; adjacent events allowed. Render li[data-event=ID], Delete[data-delete=ID], sequential IDs. This bounded daily interval model omits timezones/recurrence.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "event-management-1",
+      "name": "Valid",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"[name=\\\"start\\\"]\",\"value\":\"9\"},{\"type\":\"input\",\"selector\":\"[name=\\\"end\\\"]\",\"value\":\"10\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "event-management-2",
+      "name": "Overlap",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"[name=\\\"start\\\"]\",\"value\":\"9\"},{\"type\":\"input\",\"selector\":\"[name=\\\"end\\\"]\",\"value\":\"11\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"input\",\"selector\":\"[name=\\\"start\\\"]\",\"value\":\"10\"},{\"type\":\"input\",\"selector\":\"[name=\\\"end\\\"]\",\"value\":\"12\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Overlap\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "event-management-3",
+      "name": "Invalid interval",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"[name=\\\"start\\\"]\",\"value\":\"10\"},{\"type\":\"input\",\"selector\":\"[name=\\\"end\\\"]\",\"value\":\"9\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Invalid event\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Store stable event IDs and distinguish instants from local calendar entries."
+  ],
+  "alternativeApproaches": [
+    "Add recurrence with a timezone-aware rule model and define how exceptions and rescheduling are represented."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Adjacent events; exact overlap; invalid interval.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

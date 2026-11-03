@@ -1,0 +1,20 @@
+[
+  {
+    "id": "focus-input-1",
+    "name": "Not initially focused",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"no\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "focus-input-2",
+    "name": "Focus action",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"yes\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "focus-input-3",
+    "name": "Preserve input",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"hello\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"hello\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"yes\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

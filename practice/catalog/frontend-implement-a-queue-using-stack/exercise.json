@@ -1,0 +1,53 @@
+{
+  "id": "frontend-implement-a-queue-using-stack",
+  "title": "Frontend: Implement a Queue using Stack",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Implement a Queue using Stack. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(commands). Use two stacks for FIFO enqueue{value}, dequeue, peek, size. enqueue returns size; empty dequeue/peek return null. Transfer input to output only when output is empty.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "implement-a-queue-using-stack-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[{\"type\":\"enqueue\",\"value\":1},{\"type\":\"enqueue\",\"value\":2},{\"type\":\"dequeue\"},{\"type\":\"enqueue\",\"value\":3},{\"type\":\"dequeue\"},{\"type\":\"dequeue\"},{\"type\":\"dequeue\"}]",
+      "expectedOutput": "[1,2,1,2,2,3,null]"
+    },
+    {
+      "id": "implement-a-queue-using-stack-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[{\"type\":\"peek\"},{\"type\":\"size\"}]",
+      "expectedOutput": "[null,0]"
+    },
+    {
+      "id": "implement-a-queue-using-stack-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[{\"type\":\"enqueue\",\"value\":0},{\"type\":\"peek\"},{\"type\":\"peek\"}]",
+      "expectedOutput": "[1,0,0]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Push new values onto an incoming stack."
+  ],
+  "alternativeApproaches": [
+    "Explain amortized analysis using a potential function and contrast it with worst-case per-operation latency."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Interleaved operations; transfer boundary; empty queue.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

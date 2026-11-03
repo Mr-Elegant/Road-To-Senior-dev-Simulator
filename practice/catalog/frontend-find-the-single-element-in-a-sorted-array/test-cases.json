@@ -1,0 +1,26 @@
+[
+  {
+    "id": "find-the-single-element-in-a-sorted-array-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[1,1,2,3,3]",
+    "expectedOutput": "2"
+  },
+  {
+    "id": "find-the-single-element-in-a-sorted-array-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[7]",
+    "expectedOutput": "7"
+  },
+  {
+    "id": "find-the-single-element-in-a-sorted-array-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[0,1,1]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "find-the-single-element-in-a-sorted-array-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[1,1,2]",
+    "expectedOutput": "2"
+  }
+]

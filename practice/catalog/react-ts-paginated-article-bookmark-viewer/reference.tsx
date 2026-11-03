@@ -1,0 +1,8 @@
+import type * as React from 'react';
+export interface AppProps {
+    items?: (string)[];
+    pageSize?: number;
+}
+import { useState } from 'react';
+export default function App({ items = ['A', 'B', 'C', 'D', 'E'], pageSize = 2 }: AppProps = {}): React.JSX.Element { const [page, setPage] = useState(0), [saved, setSaved] = useState<string[]>([]), max = Math.max(0, Math.ceil(items.length / pageSize) - 1); return <section><ul>{items.slice(page * pageSize, page * pageSize + pageSize).map(id => <li key={id} data-article={id}>{id}<button data-bookmark={id} aria-pressed={saved.includes(id)} onClick={() => setSaved(old => old.includes(id) ? old.filter(v => v !== id) : [...old, id])}>Bookmark {id}</button></li>)}</ul><button data-action="previous" onClick={() => setPage(n => Math.max(0, n - 1))}>Previous</button><button data-action="next" onClick={() => setPage(n => Math.min(max, n + 1))}>Next</button><output data-testid="page">{items.length ? page + 1 : 0}</output><output data-testid="saved">{saved.join(',')}</output></section>; }
+

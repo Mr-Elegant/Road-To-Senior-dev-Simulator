@@ -1,0 +1,26 @@
+[
+  {
+    "id": "detect-cycle-in-an-undirected-connected-graph-dfs-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"count\":3,\"edges\":[[0,1],[1,2]]}",
+    "expectedOutput": "false"
+  },
+  {
+    "id": "detect-cycle-in-an-undirected-connected-graph-dfs-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"count\":3,\"edges\":[[0,1],[1,2],[2,0]]}",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "detect-cycle-in-an-undirected-connected-graph-dfs-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"count\":2,\"edges\":[[0,1],[0,1]]}",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "detect-cycle-in-an-undirected-connected-graph-dfs-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "{\"count\":2,\"edges\":[[1,1]]}",
+    "expectedOutput": "true"
+  }
+]

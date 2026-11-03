@@ -1,0 +1,20 @@
+[
+  {
+    "id": "price-range-slider-1",
+    "name": "Full range",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0-100\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "price-range-slider-2",
+    "name": "Set endpoints",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"min\\\"]\",\"value\":\"20\"},{\"type\":\"input\",\"selector\":\"[name=\\\"max\\\"]\",\"value\":\"80\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"20-80\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "price-range-slider-3",
+    "name": "No crossing",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"max\\\"]\",\"value\":\"40\"},{\"type\":\"input\",\"selector\":\"[name=\\\"min\\\"]\",\"value\":\"90\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"40-40\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

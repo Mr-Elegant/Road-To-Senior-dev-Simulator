@@ -1,0 +1,20 @@
+[
+  {
+    "id": "implement-a-queue-using-stack-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[{\"type\":\"enqueue\",\"value\":1},{\"type\":\"enqueue\",\"value\":2},{\"type\":\"dequeue\"},{\"type\":\"enqueue\",\"value\":3},{\"type\":\"dequeue\"},{\"type\":\"dequeue\"},{\"type\":\"dequeue\"}]",
+    "expectedOutput": "[1,2,1,2,2,3,null]"
+  },
+  {
+    "id": "implement-a-queue-using-stack-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[{\"type\":\"peek\"},{\"type\":\"size\"}]",
+    "expectedOutput": "[null,0]"
+  },
+  {
+    "id": "implement-a-queue-using-stack-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[{\"type\":\"enqueue\",\"value\":0},{\"type\":\"peek\"},{\"type\":\"peek\"}]",
+    "expectedOutput": "[1,0,0]"
+  }
+]

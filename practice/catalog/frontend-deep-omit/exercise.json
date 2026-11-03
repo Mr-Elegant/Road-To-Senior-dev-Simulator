@@ -1,0 +1,53 @@
+{
+  "id": "frontend-deep-omit",
+  "title": "Frontend: Deep Omit",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Deep Omit. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({value,keys}). Recursively omit matching own property names from JSON objects, keeping array positions and recursively processing their values. Return a new structure; no prototype traversal.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "deep-omit-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"value\":{\"a\":1,\"n\":{\"a\":2,\"b\":3}},\"keys\":[\"a\"]}",
+      "expectedOutput": "{\"n\":{\"b\":3}}"
+    },
+    {
+      "id": "deep-omit-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"value\":[{\"secret\":1,\"x\":2},null],\"keys\":[\"secret\"]}",
+      "expectedOutput": "[{\"x\":2},null]"
+    },
+    {
+      "id": "deep-omit-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"value\":{\"a\":1},\"keys\":[]}",
+      "expectedOutput": "{\"a\":1}"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Traverse supported containers and build new ones without changing the source."
+  ],
+  "alternativeApproaches": [
+    "Support path-pattern omission and explain how it differs from removing every key with the same name."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Nested key; array of objects; null.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

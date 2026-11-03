@@ -1,0 +1,20 @@
+[
+  {
+    "id": "holy-grail-1",
+    "name": "Main landmark",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"main\",\"property\":\"text\",\"equals\":\"Content\"},{\"selector\":\"main\",\"property\":\"count\",\"equals\":1}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "holy-grail-2",
+    "name": "Supporting regions",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"nav\",\"property\":\"text\",\"equals\":\"Navigation\"},{\"selector\":\"aside\",\"property\":\"text\",\"equals\":\"Related\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "holy-grail-3",
+    "name": "Page regions",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"header\",\"property\":\"text\",\"equals\":\"Header\"},{\"selector\":\"footer\",\"property\":\"text\",\"equals\":\"Footer\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

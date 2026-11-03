@@ -1,0 +1,18 @@
+import type * as React from 'react';
+export interface AppProps {
+    options?: (string)[];
+}
+import { useState } from 'react';
+export default function App({ options = ['Apple', 'Banana', 'Cherry'] }: AppProps = {}): React.JSX.Element { const [query, setQuery] = useState(''), [open, setOpen] = useState(false), [selected, setSelected] = useState<string[]>([]), [active, setActive] = useState(0); const multi = false, matches = options.filter(value => value.toLowerCase().includes(query.trim().toLowerCase())); function choose(value: string) { setSelected(old => multi ? (old.includes(value) ? old.filter(v => v !== value) : [...old, value]) : [value]); if (!multi) {
+    setQuery(value);
+    setOpen(false);
+} } return <section><label>Search options<input aria-label="Search options" role="combobox" aria-expanded={open} aria-controls="choices" aria-activedescendant={open && matches.length ? 'choice-' + Math.min(active, matches.length - 1) : undefined} value={query} onChange={e => { setQuery(e.target.value); setOpen(true); setActive(0); }} onKeyDown={e => { if (e.key === 'Escape')
+    setOpen(false); if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    setOpen(true);
+    setActive(n => Math.min(matches.length - 1, n + 1));
+} if (e.key === 'Enter' && open && matches.length) {
+    e.preventDefault();
+    choose(matches[Math.max(0, Math.min(active, matches.length - 1))]);
+} }}/></label>{open && <ul id="choices" role="listbox" aria-multiselectable={multi}>{matches.map((value, i) => <li key={value}><button id={'choice-' + i} role="option" aria-selected={selected.includes(value)} onClick={() => choose(value)}>{value}</button></li>)}{!matches.length && <li>No options</li>}</ul>}<output data-testid="selected">{selected.join(',')}</output></section>; }
+

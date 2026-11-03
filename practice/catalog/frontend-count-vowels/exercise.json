@@ -1,0 +1,59 @@
+{
+  "id": "frontend-count-vowels",
+  "title": "Frontend: Count Vowels",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Count Vowels. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(text). Count occurrences of ASCII a/e/i/o/u, ignoring case; accented vowels and y do not count.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "count-vowels-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "\"AEiou\"",
+      "expectedOutput": "5"
+    },
+    {
+      "id": "count-vowels-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "\"rhythm\"",
+      "expectedOutput": "0"
+    },
+    {
+      "id": "count-vowels-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "\"\"",
+      "expectedOutput": "0"
+    },
+    {
+      "id": "count-vowels-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "\"banana\"",
+      "expectedOutput": "3"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Scan characters once and test membership in a small vowel set after case normalization."
+  ],
+  "alternativeApproaches": [
+    "Return counts per vowel and compare Unicode decomposition with a language-specific definition."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: No vowels; all vowels; mixed case.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "promiseall-with-concurrency-limit-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"values\":[3,1,2],\"limit\":2}",
+    "expectedOutput": "{\"values\":[3,1,2],\"peak\":2}"
+  },
+  {
+    "id": "promiseall-with-concurrency-limit-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"values\":[],\"limit\":3}",
+    "expectedOutput": "{\"values\":[],\"peak\":0}"
+  },
+  {
+    "id": "promiseall-with-concurrency-limit-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"values\":[1,2],\"limit\":1}",
+    "expectedOutput": "{\"values\":[1,2],\"peak\":1}"
+  },
+  {
+    "id": "promiseall-with-concurrency-limit-4",
+    "name": "Reject input: Invalid limit",
+    "inputDescription": "{\"values\":[1],\"limit\":0}",
+    "expectedOutput": "Throws: Invalid limit",
+    "expectedError": "Invalid limit"
+  }
+]

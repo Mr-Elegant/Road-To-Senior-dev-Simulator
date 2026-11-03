@@ -1,0 +1,8 @@
+import type * as React from 'react';
+export interface AppProps {
+    current?: string;
+}
+import { useState } from 'react';
+export default function App({ current = 'home' }: AppProps = {}): React.JSX.Element { const [open, setOpen] = useState(false); return <header><button aria-controls="site-nav" aria-expanded={open} onClick={() => setOpen(v => !v)} onKeyDown={e => { if (e.key === 'Escape')
+    setOpen(false); }}>Menu</button>{open && <nav id="site-nav" aria-label="Site">{['home', 'about'].map(id => <a key={id} href={'#' + id} aria-current={current === id ? 'page' : undefined} onClick={() => setOpen(false)}>{id === 'home' ? 'Home' : 'About'}</a>)}</nav>}</header>; }
+

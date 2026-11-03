@@ -1,0 +1,20 @@
+[
+  {
+    "id": "nested-comments-1",
+    "name": "Reply",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-reply=\\\"1\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Child\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"[data-comment=\\\"1\\\"] [data-comment=\\\"2\\\"]\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-text=\\\"2\\\"]\",\"property\":\"text\",\"equals\":\"Child\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "nested-comments-2",
+    "name": "Tombstone retains reply",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-reply=\\\"1\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Child\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-delete=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"[data-text=\\\"1\\\"]\",\"property\":\"text\",\"equals\":\"[deleted]\"},{\"selector\":\"[data-comment=\\\"2\\\"]\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-reply=\\\"1\\\"]\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "nested-comments-3",
+    "name": "Blank",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\" \"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"[data-comment]\",\"property\":\"count\",\"equals\":1}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

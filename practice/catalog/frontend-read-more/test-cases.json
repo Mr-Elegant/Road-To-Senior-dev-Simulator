@@ -1,0 +1,20 @@
+[
+  {
+    "id": "read-more-1",
+    "name": "Short text",
+    "inputDescription": "{\"props\":{\"content\":\"One two\"},\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"One two\"},{\"selector\":\"button\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "read-more-2",
+    "name": "Expand",
+    "inputDescription": "{\"props\":{\"content\":\"One two three four\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"One two three four\"},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"true\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "read-more-3",
+    "name": "Collapse",
+    "inputDescription": "{\"props\":{\"content\":\"One two three four\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"One two three…\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

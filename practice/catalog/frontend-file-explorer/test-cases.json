@@ -1,0 +1,20 @@
+[
+  {
+    "id": "file-explorer-1",
+    "name": "Collapsed",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-node]\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-open=\\\"root\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "file-explorer-2",
+    "name": "Expand/select",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-open=\\\"root\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-select=\\\"a\\\"]\"}],\"assertions\":[{\"selector\":\"[data-node]\",\"property\":\"count\",\"equals\":2},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"a\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "file-explorer-3",
+    "name": "Create",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"Notes\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-open=\\\"root\\\"]\"}],\"assertions\":[{\"selector\":\"[data-node=\\\"new1\\\"]\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-select=\\\"new1\\\"]\",\"property\":\"text\",\"equals\":\"Notes\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

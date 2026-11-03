@@ -1,0 +1,53 @@
+{
+  "id": "frontend-count-negative",
+  "title": "Frontend: Count Negative",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Count Negative. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(values). Count entries strictly less than zero in a finite-number array. Negative zero is not negative under this contract.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "count-negative-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[]",
+      "expectedOutput": "0"
+    },
+    {
+      "id": "count-negative-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[-2,0,3,-1]",
+      "expectedOutput": "2"
+    },
+    {
+      "id": "count-negative-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[0,1]",
+      "expectedOutput": "0"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Scan once and increment the count only when the value is less than zero under a documented finite-number input contract."
+  ],
+  "alternativeApproaches": [
+    "Return counts for negative, zero, and positive buckets in one pass."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Empty array; all nonnegative; mixed signs.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

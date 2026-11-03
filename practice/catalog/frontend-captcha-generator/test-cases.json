@@ -1,0 +1,20 @@
+[
+  {
+    "id": "captcha-generator-1",
+    "name": "Match",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\" ab12 \"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"verify\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Correct\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "captcha-generator-2",
+    "name": "Reject",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"wrong\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"verify\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Incorrect\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "captcha-generator-3",
+    "name": "Old challenge",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"regenerate\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"AB12\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"verify\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"challenge\\\"]\",\"property\":\"text\",\"equals\":\"CD34\"},{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Incorrect\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

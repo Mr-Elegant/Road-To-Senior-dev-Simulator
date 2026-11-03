@@ -1,0 +1,20 @@
+[
+  {
+    "id": "product-rating-heatmap-1",
+    "name": "Relative levels",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-cell=\\\"0,1\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-level\",\"equals\":\"2\"},{\"selector\":\"[data-cell=\\\"1,0\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-level\",\"equals\":\"4\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "product-rating-heatmap-2",
+    "name": "All zero",
+    "inputDescription": "{\"props\":{\"values\":[[0,0]]},\"actions\":[],\"assertions\":[{\"selector\":\"td\",\"property\":\"attribute\",\"attribute\":\"data-level\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "product-rating-heatmap-3",
+    "name": "Missing",
+    "inputDescription": "{\"props\":{\"values\":[[null]]},\"actions\":[],\"assertions\":[{\"selector\":\"td\",\"property\":\"text\",\"equals\":\"-\"},{\"selector\":\"td\",\"property\":\"attribute\",\"attribute\":\"data-level\",\"equals\":\"missing\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

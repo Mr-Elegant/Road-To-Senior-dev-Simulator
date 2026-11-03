@@ -1,0 +1,53 @@
+{
+  "id": "frontend-combination-sum",
+  "title": "Frontend: Combination Sum",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Combination Sum. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({candidates,target}). Distinct positive integer candidates can be reused. Return unique nondecreasing combinations summing to target, in ascending lexicographic traversal order. target=0 returns [[]].",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "combination-sum-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"candidates\":[2,3,6,7],\"target\":7}",
+      "expectedOutput": "[[2,2,3],[7]]"
+    },
+    {
+      "id": "combination-sum-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"candidates\":[3],\"target\":2}",
+      "expectedOutput": "[]"
+    },
+    {
+      "id": "combination-sum-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"candidates\":[2],\"target\":0}",
+      "expectedOutput": "[[]]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Sort validated positive candidates and backtrack from a start index."
+  ],
+  "alternativeApproaches": [
+    "Implement a single-use variant and explain how advancing the recursive start index changes the search space."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Target zero; no solution; repeated use.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

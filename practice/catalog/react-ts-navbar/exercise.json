@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-navbar",
+  "title": "React + TypeScript: Navbar",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Navbar. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({current=\"home\"}). A Menu disclosure button controls nav#site-nav, initially hidden. Links Home and About have aria-current=page only for current. Clicking a link or Escape on the Menu button closes the nav. Use native links with local hashes.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    current?: string;\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "navbar-1",
+      "name": "Closed",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"nav\",\"property\":\"count\",\"equals\":0},{\"selector\":\"button\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "navbar-2",
+      "name": "Open/current",
+      "inputDescription": "{\"props\":{\"current\":\"about\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"nav a\",\"property\":\"count\",\"equals\":2},{\"selector\":\"a[href=\\\"#about\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-current\",\"equals\":\"page\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "navbar-3",
+      "name": "Escape",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"key\",\"selector\":\"button\",\"key\":\"Escape\"}],\"assertions\":[{\"selector\":\"nav\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use nav and ordinary links for page navigation."
+  ],
+  "alternativeApproaches": [
+    "Handle focus restoration when a mobile drawer closes after an in-app route change."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Current route; mobile open/close; Escape.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "24-game-1",
+    "name": "Correct",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"1*2*3*4\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"Correct\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "24-game-2",
+    "name": "Valid but not target",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"1+2+3+4\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"Not 24\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "24-game-3",
+    "name": "Cannot reuse/omit",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"24\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"Invalid numbers\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "24-game-4",
+    "name": "Zero division",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"4/(3-2-1)\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"Invalid expression\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

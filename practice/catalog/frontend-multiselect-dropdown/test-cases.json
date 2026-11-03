@@ -1,0 +1,26 @@
+[
+  {
+    "id": "multiselect-dropdown-1",
+    "name": "Search",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"ban\"}],\"assertions\":[{\"selector\":\"[role=\\\"option\\\"]\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[role=\\\"option\\\"]\",\"property\":\"text\",\"equals\":\"Banana\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "multiselect-dropdown-2",
+    "name": "Select",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"app\"},{\"type\":\"click\",\"selector\":\"[role=\\\"option\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"Apple\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "multiselect-dropdown-3",
+    "name": "No results",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"zzz\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"No options\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "multiselect-dropdown-4",
+    "name": "Selection retained",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"app\"},{\"type\":\"click\",\"selector\":\"[role=\\\"option\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"ban\"},{\"type\":\"click\",\"selector\":\"[role=\\\"option\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"Apple,Banana\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

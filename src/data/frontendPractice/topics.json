@@ -1,0 +1,3518 @@
+[
+  {
+    "slug": "find-missing-number",
+    "title": "Find Missing Number",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Find the one missing integer from an array containing distinct values from 0 through n.",
+    "answer": "The expected sum is n(n+1)/2; subtract the actual sum to obtain the missing value in linear time and constant extra space. In JavaScript ensure the sums remain within safe integer precision or use BigInt throughout. XOR is another linear method but ordinary bitwise operators coerce to signed 32-bit integers, so it is not a universal numeric replacement.",
+    "checks": [
+      "Missing 0",
+      "missing n",
+      "empty array",
+      "shuffled values",
+      "large safe-integer boundary."
+    ],
+    "followUp": "Reject duplicates/out-of-range values in a validation variant and explain the extra work needed to verify the precondition.",
+    "sourceUrl": "https://namastedev.com/practice/find-missing-number"
+  },
+  {
+    "slug": "max-subarray",
+    "title": "Max SubArray",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Return the maximum sum of a nonempty contiguous subarray, including all-negative inputs.",
+    "answer": "Maintain the best sum ending at the current element and the best sum seen anywhere. At each value choose between starting a new segment there and extending the previous segment. Initialize from the first element rather than zero, otherwise an all-negative array incorrectly returns an empty segment’s sum. This is O(n) time and O(1) auxiliary state.",
+    "checks": [
+      "All negative",
+      "one element",
+      "zeros",
+      "best segment at either edge",
+      "empty-input policy."
+    ],
+    "followUp": "Return segment indices and define a deterministic tie-breaker between equally good segments.",
+    "sourceUrl": "https://namastedev.com/practice/max-subarray"
+  },
+  {
+    "slug": "make-counter",
+    "title": "Make Counter",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Create independent closure-based counters with increment, decrement, and reset operations.",
+    "answer": "Capture the current count and initial value inside a factory invocation. Return methods that update that private binding; each factory call receives its own environment. State whether methods return the new value or the previous one and keep the API consistent. A closure encapsulates state from ordinary callers but does not create persistence or shared server coordination.",
+    "checks": [
+      "Independent instances",
+      "repeated reset",
+      "negative values",
+      "destructured methods",
+      "invalid initial value."
+    ],
+    "followUp": "Add a bounded variant that reports rejected transitions without letting count and error state diverge.",
+    "sourceUrl": "https://namastedev.com/practice/make-counter"
+  },
+  {
+    "slug": "power-of-two",
+    "title": "Power of Two",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Determine whether a positive integer is an exact power of two without misclassifying non-integers.",
+    "answer": "For a safe-integer Number, reject nonpositive or noninteger values and divide by two while the remainder is zero; accept exactly when the final value is one. This takes O(log n) time and avoids the 32-bit coercion of n & (n-1). A BigInt implementation can use that bit identity safely for arbitrary-width positive integers.",
+    "checks": [
+      "1",
+      "0",
+      "negative value",
+      "fractional value",
+      "large power beyond 32-bit range."
+    ],
+    "followUp": "Implement Number and BigInt variants with separate input contracts rather than mixing numeric types.",
+    "sourceUrl": "https://namastedev.com/practice/power-of-two"
+  },
+  {
+    "slug": "sum",
+    "title": "sum()",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Implement a curried accumulator whose chain is explicitly terminated by an empty call.",
+    "answer": "Return a function that captures the current total. A numeric argument produces another accumulator and an empty call returns the total. This avoids surprising implicit coercion through valueOf or toString. Define whether each call accepts one value or a batch and reject unsupported values. Use immutable closure state when chains must be safely reusable.",
+    "checks": [
+      "sum(1)(2)()",
+      "empty termination",
+      "zero",
+      "negative values",
+      "reuse of an earlier chain."
+    ],
+    "followUp": "Support grouped arguments while keeping termination unambiguous and avoiding mutation shared by sibling chains.",
+    "sourceUrl": "https://namastedev.com/practice/sum"
+  },
+  {
+    "slug": "password-strength",
+    "title": "Password Strength",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Build password feedback that recomputes independent checks after every edit, including deletion.",
+    "answer": "Keep only the password string in state and derive the check results while rendering. Treat empty input separately from a failed policy. Use a labelled password input and a live feedback region, and never persist or log the secret. A checklist measures compliance with the chosen rules, not entropy or resistance to credential attacks.",
+    "checks": [
+      "Empty input",
+      "individual rules",
+      "all rules",
+      "deleting a previously strong value."
+    ],
+    "followUp": "Add a policy configuration and explain how server validation remains authoritative.",
+    "sourceUrl": "https://namastedev.com/practice/password-strength",
+    "scenarioId": "react-ui-password-feedback"
+  },
+  {
+    "slug": "url-validator",
+    "title": "URL Validator",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Inspect a website address without navigating to it. Accept an explicit HTTP(S) scheme and reject embedded credentials.",
+    "answer": "Trim for validation, parse with URL inside try/catch, then apply a separate protocol and credential policy. Derive normalized output and feedback from the same input so invalid edits clear stale results. A valid URL is not necessarily safe for a server to fetch: destination restrictions and redirect handling belong on that server.",
+    "checks": [
+      "Whitespace",
+      "missing scheme",
+      "HTTPS",
+      "credentials",
+      "unsupported scheme",
+      "editing valid input to invalid."
+    ],
+    "followUp": "Add a domain allowlist and discuss DNS resolution and redirect checks separately from browser syntax validation.",
+    "sourceUrl": "https://namastedev.com/practice/url-validator",
+    "scenarioId": "react-ui-web-address"
+  },
+  {
+    "slug": "get-result-by-path",
+    "title": "Get Result By Path",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Read an own-property path from nested JSON-like data without evaluating code or traversing prototypes.",
+    "answer": "Prefer a path-segment array for an unambiguous contract. Walk one segment at a time, verify the current value can hold properties, and use Object.hasOwn before indexing. Return a documented fallback for a missing segment while distinguishing a present undefined value if required. Dot/bracket string parsing is a separate grammar; do not use eval to implement it.",
+    "checks": [
+      "Missing parent",
+      "array index",
+      "key containing a dot",
+      "present null",
+      "prototype property."
+    ],
+    "followUp": "Add a string-path parser that supports escaping and explicitly forbids unsafe prototype-related traversal.",
+    "sourceUrl": "https://namastedev.com/practice/get-result-by-path"
+  },
+  {
+    "slug": "find-smallest-number",
+    "title": "Find smallest number",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Return the minimum finite number in a nonempty array without sorting or mutating the input.",
+    "answer": "Initialize the minimum from the first accepted value and scan once, replacing it whenever a smaller value appears. This is O(n) time and O(1) extra space, compared with unnecessary O(n log n) sorting. Define empty and invalid-value behavior explicitly. Avoid spreading a very large array into Math.min, which can exceed function argument limits.",
+    "checks": [
+      "One item",
+      "all positive",
+      "all negative",
+      "repeated minimum",
+      "empty/invalid array."
+    ],
+    "followUp": "Return both minimum value and first index with a deterministic tie rule.",
+    "sourceUrl": "https://namastedev.com/practice/find-smallest-number"
+  },
+  {
+    "slug": "chips-input",
+    "title": "Chips Input",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create a keyboard-driven tag editor with trimmed labels, case-insensitive uniqueness, removal, and a configurable capacity.",
+    "answer": "Model draft, ordered tags, and feedback separately. On Enter normalize the draft, reject blanks, detect duplicates before capacity, and add immutably. Preserve display capitalization while comparing a normalized key. Remove by stable identity and support Backspace only on an empty draft; ignore command keys during IME composition in a production version.",
+    "checks": [
+      "Blank Enter",
+      "mixed-case duplicate",
+      "full capacity",
+      "remove then add",
+      "empty Backspace."
+    ],
+    "followUp": "Support pasted delimiters without treating a composing IME Enter as a completed tag.",
+    "sourceUrl": "https://namastedev.com/practice/chips-input",
+    "scenarioId": "react-ui-tag-editor"
+  },
+  {
+    "slug": "progress-bar",
+    "title": "Progress Bar",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Render a determinate completion meter from a numeric prop while keeping text, fill, and accessible values consistent.",
+    "answer": "Accept finite numbers, clamp into the documented range, and round once. Use the resulting value for every visual and semantic representation instead of copying props into independent state. A progressbar needs an accessible name and numeric bounds. Unknown total work should be represented as indeterminate rather than a fabricated percentage.",
+    "checks": [
+      "Zero",
+      "fractional value",
+      "negative value",
+      "above maximum",
+      "numeric string",
+      "prop update."
+    ],
+    "followUp": "Add an indeterminate mode with no aria-valuenow and respect reduced-motion preferences.",
+    "sourceUrl": "https://namastedev.com/practice/progress-bar",
+    "scenarioId": "react-ui-project-progress"
+  },
+  {
+    "slug": "mortgage-calculator",
+    "title": "Mortgage Calculator",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create an educational monthly-payment estimator with explicit invalid-input and zero-interest behavior.",
+    "answer": "Keep raw field strings until submission, reject blanks before numeric conversion, and validate finite values and the allowed term. Convert the annual percentage rate to a monthly decimal rate. Use principal divided by months at zero interest and the amortization formula otherwise. Clear a previous result when validation fails; format only the final amount.",
+    "checks": [
+      "Blank fields",
+      "zero interest",
+      "positive interest",
+      "fractional term",
+      "negative principal",
+      "invalid resubmission."
+    ],
+    "followUp": "Explain how lender-specific schedules, decimal arithmetic, fees, and rounding change a production calculation.",
+    "sourceUrl": "https://namastedev.com/practice/mortgage-calculator",
+    "scenarioId": "react-ui-loan-estimator"
+  },
+  {
+    "slug": "power-of-three",
+    "title": "Power of Three",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Check whether a positive integer is a power of three using exact integer operations.",
+    "answer": "Validate a positive integer, repeatedly divide by three while divisible, and accept only if the remainder value becomes one. Floating-point logarithm comparisons can be close to an integer without being exact and need additional proof or checks. Safe-integer limits still apply to Number input; use a separate BigInt contract for arbitrary-size integers.",
+    "checks": [
+      "1",
+      "3",
+      "neighboring non-power",
+      "0",
+      "negative",
+      "fraction."
+    ],
+    "followUp": "Find the exponent as well as the boolean result without relying on floating-point logarithms.",
+    "sourceUrl": "https://namastedev.com/practice/power-of-three"
+  },
+  {
+    "slug": "accordion",
+    "title": "Accordion",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Build a single-open answer list whose buttons and visible panels expose matching accessibility relationships.",
+    "answer": "A single open item ID or null encodes the invariant that at most one panel is expanded. Use native buttons, stable IDs, aria-expanded, and labelled regions. Derive both rendering and attributes from that ID. Decide explicitly whether closed panels unmount or remain hidden, since nested form state and focus behavior differ.",
+    "checks": [
+      "Initially closed",
+      "open one",
+      "open another",
+      "close the current panel",
+      "empty data."
+    ],
+    "followUp": "Preserve nested panel input state while keeping hidden controls out of the keyboard order.",
+    "sourceUrl": "https://namastedev.com/practice/accordion",
+    "scenarioId": "react-ui-help-panels"
+  },
+  {
+    "slug": "dark-mode",
+    "title": "Dark Mode",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create an appearance switch scoped to one embedded surface rather than modifying the host document.",
+    "answer": "Initialize a boolean once from the supported initial preference, toggle with a functional updater, and derive surface colors, text, and aria-pressed from that same value. Theme state belongs to the surface in this exercise. An application-wide theme instead needs a shared preference owner and a deliberate server-rendered initial value.",
+    "checks": [
+      "Default light",
+      "initial dark",
+      "unsupported initial value",
+      "repeated toggles",
+      "readable contrast."
+    ],
+    "followUp": "Extend to system appearance while keeping an explicit user choice higher priority.",
+    "sourceUrl": "https://namastedev.com/practice/dark-mode",
+    "scenarioId": "react-ui-theme-switch"
+  },
+  {
+    "slug": "count-negative",
+    "title": "Count Negative",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Count strictly negative numeric entries while distinguishing negative zero from values below zero.",
+    "answer": "Scan once and increment the count only when the value is less than zero under a documented finite-number input contract. JavaScript negative zero is not less than zero and should not be counted as a negative amount under this definition. If invalid entries are possible, decide whether to reject the array or skip them rather than relying on coercion.",
+    "checks": [
+      "Empty array",
+      "all nonnegative",
+      "mixed signs",
+      "-0",
+      "repeated negatives",
+      "invalid element policy."
+    ],
+    "followUp": "Return counts for negative, zero, and positive buckets in one pass.",
+    "sourceUrl": "https://namastedev.com/practice/count-negative"
+  },
+  {
+    "slug": "find-largest-number",
+    "title": "Find largest number",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Find the maximum finite value in a numeric sequence and state the empty-input contract.",
+    "answer": "Use a single pass with an initial value taken from the sequence rather than zero, which fails for all-negative data. Keep validation separate from comparison and avoid sorting solely to obtain an extremum. For streaming input, maintain the same accumulator incrementally. Time is O(n) and auxiliary space is O(1).",
+    "checks": [
+      "All negative",
+      "one item",
+      "repeated maximum",
+      "empty input",
+      "NaN rejection."
+    ],
+    "followUp": "Compute minimum and maximum together and report their stable first positions.",
+    "sourceUrl": "https://namastedev.com/practice/find-largest-number"
+  },
+  {
+    "slug": "loop-a-to-z",
+    "title": "Loop A to Z",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Generate the uppercase ASCII alphabet as a sequence without hard-coding every letter.",
+    "answer": "Iterate over the integer code points from A through Z and convert each with String.fromCharCode or String.fromCodePoint. This works because the chosen ASCII letters form a contiguous range. It is not a general method for producing every locale’s alphabet; scripts, digraphs, and collation orders need a different model.",
+    "checks": [
+      "First/last letter",
+      "exactly 26 entries",
+      "no lowercase",
+      "optional custom bounded range."
+    ],
+    "followUp": "Parameterize the range and reject surrogate or invalid Unicode code points deliberately.",
+    "sourceUrl": "https://namastedev.com/practice/loop-a-to-z"
+  },
+  {
+    "slug": "custom-sort",
+    "title": "Custom Sort",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Sort records by priority, then by a stable secondary key, without changing the input array.",
+    "answer": "Copy the array and use a comparator that compares priority numerically before applying the chosen secondary comparison. Return zero for a true tie and add an ID tie-breaker when deterministic total ordering is needed. The comparator must be consistent and transitive; it must not mutate records or use changing random values.",
+    "checks": [
+      "Equal priorities",
+      "equal secondary keys",
+      "negative priority",
+      "missing-value policy",
+      "unchanged input."
+    ],
+    "followUp": "Accept a list of sort descriptors and define explicit null placement and locale behavior.",
+    "sourceUrl": "https://namastedev.com/practice/custom-sort"
+  },
+  {
+    "slug": "implement-curry",
+    "title": "implement curry()",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Transform a fixed-arity function into a reusable argument-collecting function.",
+    "answer": "Capture collected arguments in a new closure for each call, and invoke the original once the declared arity is satisfied. Preserve the receiver according to an explicit policy, commonly the receiver of the final invocation. Function.length is only a default hint because optional and rest parameters change its meaning. An explicit arity makes the contract clearer.",
+    "checks": [
+      "One argument per call",
+      "grouped arguments",
+      "zero arity",
+      "reusable partial chain",
+      "this binding."
+    ],
+    "followUp": "Add placeholders and explain how filling argument holes changes the collection algorithm.",
+    "sourceUrl": "https://namastedev.com/practice/implement-curry"
+  },
+  {
+    "slug": "oncefn",
+    "title": "once(fn)",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Wrap a function so only its first successful evaluation is cached and reused.",
+    "answer": "Store a hasResult flag separately from the cached value so undefined, zero, and false can still be valid results. Invoke with apply to preserve the receiver. Decide whether a thrown error consumes the once opportunity; for this contract it does not. Async rejection requires another explicit policy because caching a promise shares both its pending result and rejection.",
+    "checks": [
+      "Returns undefined",
+      "returns zero",
+      "throws then succeeds",
+      "this binding",
+      "repeated invocation."
+    ],
+    "followUp": "Create an async once variant and choose whether rejected work is cached or retried.",
+    "sourceUrl": "https://namastedev.com/practice/oncefn"
+  },
+  {
+    "slug": "groupbyarr-key",
+    "title": "groupBy(arr, key)",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Group records by a selected key while preserving input order within each bucket.",
+    "answer": "Use a Map when keys may be objects or when arbitrary string keys must not collide with object prototypes. Scan once, create a bucket on the first occurrence, and append without mutating source records. Time is O(n) plus output storage. If returning a plain object is required, define key conversion and use a null-prototype object safely.",
+    "checks": [
+      "Empty array",
+      "missing key",
+      "__proto__ string",
+      "object keys",
+      "original order."
+    ],
+    "followUp": "Accept a key-selector function and compare Map identity semantics with serialized compound keys.",
+    "sourceUrl": "https://namastedev.com/practice/groupbyarr-key"
+  },
+  {
+    "slug": "filter-recipes",
+    "title": "Filter Recipes",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Filter kitchen cards by a name query and category while retaining selected recipe IDs when rows are hidden.",
+    "answer": "Store the query, category, and selected IDs; derive visible rows from immutable recipe props. Combine a trimmed case-insensitive name match with the exact category predicate. Keep selection independent of filtering so changing a view cannot delete a user decision. Generate category options once per dataset change in a documented order.",
+    "checks": [
+      "Empty dataset",
+      "case and whitespace",
+      "combined filters",
+      "selection across filtering",
+      "deselection."
+    ],
+    "followUp": "Define how a refreshed dataset distinguishes a hidden recipe from a deleted or unavailable selection.",
+    "sourceUrl": "https://namastedev.com/practice/filter-recipes",
+    "scenarioId": "react-ui-recipe-browser"
+  },
+  {
+    "slug": "remove-duplicates-from-array",
+    "title": "Remove Duplicates from Array",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Remove repeated primitive values while preserving the order of first occurrence.",
+    "answer": "Track seen values with a Set and append only the first encounter. Set uses SameValueZero semantics, so NaN values deduplicate and positive/negative zero share an identity. Object entries are compared by reference, not structural content. State that behavior instead of presenting a primitive deduplicator as deep equality.",
+    "checks": [
+      "Empty input",
+      "repeated NaN",
+      "-0/0",
+      "mixed primitive types",
+      "repeated object reference."
+    ],
+    "followUp": "Deduplicate objects by a supplied stable ID and define first-wins versus last-wins behavior.",
+    "sourceUrl": "https://namastedev.com/practice/remove-duplicates-from-array"
+  },
+  {
+    "slug": "voting-eligibility",
+    "title": "Voting Eligibility",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Implement a configurable minimum-age predicate without embedding legal assumptions in code.",
+    "answer": "Accept a validated integer age and a caller-supplied minimum age, then compare them directly. Reject invalid or negative ages according to the contract; do not use truthiness because zero is a valid numeric value. The exercise is a threshold model, not a complete jurisdictional eligibility determination, which may depend on additional current rules and verified identity.",
+    "checks": [
+      "Below, at, above threshold",
+      "negative",
+      "fraction",
+      "blank/coerced input."
+    ],
+    "followUp": "Accept a birth date and calculate completed calendar years before applying the supplied threshold.",
+    "sourceUrl": "https://namastedev.com/practice/voting-eligibility"
+  },
+  {
+    "slug": "validate-palindrome",
+    "title": "Validate Palindrome",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Check whether text is a palindrome under an explicit case and character-normalization policy.",
+    "answer": "Normalize the string according to the contract, then compare characters from both ends while moving inward. A two-pointer check is O(n) time and can avoid constructing a reversed copy after normalization. Specify whether punctuation, accents, and spaces are ignored. For code-point or grapheme semantics, tokenize before indexing rather than assuming UTF-16 units are characters.",
+    "checks": [
+      "Empty normalized text",
+      "punctuation",
+      "mixed case",
+      "odd/even lengths",
+      "emoji policy."
+    ],
+    "followUp": "Compare a strict literal palindrome checker with a locale-aware user-text variant.",
+    "sourceUrl": "https://namastedev.com/practice/validate-palindrome"
+  },
+  {
+    "slug": "implement-a-stack",
+    "title": "Implement a Stack",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Implement a last-in-first-out stack with push, pop, peek, and size.",
+    "answer": "Keep the backing array private and expose operations with documented empty behavior. Array push/pop provide amortized O(1) operations at the end; unshift/shift needlessly move entries. Return size from actual storage rather than maintaining an inconsistent second counter. If undefined can be a valid value, use an explicit result shape or size check to distinguish underflow.",
+    "checks": [
+      "Empty pop/peek",
+      "undefined value",
+      "repeated pushes/pops",
+      "size after every transition."
+    ],
+    "followUp": "Add a minimum-value operation using an auxiliary minimum stack with duplicate minima handled correctly.",
+    "sourceUrl": "https://namastedev.com/practice/implement-a-stack"
+  },
+  {
+    "slug": "power-of-four",
+    "title": "Power of Four",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Identify positive integers that are exact powers of four without relying on 32-bit masks.",
+    "answer": "Repeatedly divide a validated positive integer by four while divisible and accept only when the final value is one. An alternative is to identify a power of two and verify an even exponent, but bit masks in ordinary Number operators are restricted to 32-bit coercion. Define a separate BigInt version if wider integer support is needed.",
+    "checks": [
+      "1",
+      "4",
+      "8",
+      "16",
+      "0",
+      "negative",
+      "large exact power."
+    ],
+    "followUp": "Return the base-four exponent and test values beyond the signed 32-bit range.",
+    "sourceUrl": "https://namastedev.com/practice/power-of-four"
+  },
+  {
+    "slug": "count-even-numbers",
+    "title": "Count even numbers",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Count even integers in an array while rejecting unsupported numeric values.",
+    "answer": "For a validated integer array, scan once and count values whose remainder modulo two is zero. Zero and negative even integers qualify. Non-integers and unsafe integers require a documented validation policy because parity of an already-rounded Number may not match the original value. The algorithm is O(n) with constant auxiliary space.",
+    "checks": [
+      "Zero",
+      "negatives",
+      "no matches",
+      "all matches",
+      "fractional/unsafe input policy."
+    ],
+    "followUp": "Partition the input into even and odd collections while retaining original order.",
+    "sourceUrl": "https://namastedev.com/practice/count-even-numbers"
+  },
+  {
+    "slug": "back-to-top",
+    "title": "Back To Top",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Show a return-to-top control only after the reader passes a configured scroll threshold.",
+    "answer": "Subscribe to scrolling once, use a passive listener, and coalesce measurement with requestAnimationFrame if needed. Track only whether the threshold is crossed instead of rerendering for every pixel. Use a native button with a descriptive name and choose instant scrolling when reduced motion is requested. Remove the listener and cancel pending work on unmount.",
+    "checks": [
+      "Threshold boundary",
+      "initial deep scroll",
+      "click return",
+      "reduced motion",
+      "unmount cleanup."
+    ],
+    "followUp": "Make the threshold relative to a scrollable container rather than the browser window.",
+    "sourceUrl": "https://namastedev.com/practice/back-to-top"
+  },
+  {
+    "slug": "copy-to-clipboard",
+    "title": "Copy to Clipboard",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Copy a user-edited snippet and report success only after the clipboard operation succeeds.",
+    "answer": "Invoke clipboard writing from a user gesture and await its promise. Treat unsupported or rejected access as a real failure, with a selectable-text or legacy copy fallback where appropriate. Keep copied feedback separate from the input, clear its timer on unmount, and avoid announcing success before permission or browser restrictions are known.",
+    "checks": [
+      "Successful copy",
+      "rejected permission",
+      "unavailable API",
+      "repeated clicks",
+      "changed text."
+    ],
+    "followUp": "Add a copyable code block whose feedback resets when its source changes.",
+    "sourceUrl": "https://namastedev.com/practice/copy-to-clipboard"
+  },
+  {
+    "slug": "capitalize-words",
+    "title": "Capitalize Words",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Capitalize the first character of each whitespace-delimited word under a specified locale policy.",
+    "answer": "Choose whether the rest of each word is preserved or lowercased, then implement exactly that rule. Tokenization and reconstruction determine whether original spacing is retained. Uppercasing can expand a character into multiple code points, so do not assume a fixed output length. Treat this as formatting, not a general person-name normalization algorithm.",
+    "checks": [
+      "Multiple spaces",
+      "empty text",
+      "apostrophes",
+      "accented first character",
+      "existing uppercase."
+    ],
+    "followUp": "Preserve whitespace exactly using token-aware replacement rather than split-and-join.",
+    "sourceUrl": "https://namastedev.com/practice/capitalize-words"
+  },
+  {
+    "slug": "count-vowels",
+    "title": "Count Vowels",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Count ASCII vowel occurrences case-insensitively and make the scope explicit.",
+    "answer": "Scan characters once and test membership in a small vowel set after case normalization. Count occurrences, not distinct vowels. State that the exercise uses a/e/i/o/u and does not automatically model accented vowels or the linguistic role of y. A broader language-aware version needs a chosen normalization and alphabet policy.",
+    "checks": [
+      "No vowels",
+      "all vowels",
+      "mixed case",
+      "repeated vowels",
+      "accented letters under the declared policy."
+    ],
+    "followUp": "Return counts per vowel and compare Unicode decomposition with a language-specific definition.",
+    "sourceUrl": "https://namastedev.com/practice/count-vowels"
+  },
+  {
+    "slug": "contact-form",
+    "title": "Contact Form",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Build a contact form with visible labels, field-specific validation, and a guarded asynchronous submit state.",
+    "answer": "Keep raw fields in state and validate on a documented boundary such as blur or submit. Derive field errors from the current values, connect them with aria-describedby, and move focus to the first invalid field on submit. Prevent duplicate requests while pending. Keep client validation distinct from server validation and preserve typed input after a server failure.",
+    "checks": [
+      "Required fields",
+      "malformed email",
+      "whitespace-only message",
+      "pending submit",
+      "server rejection."
+    ],
+    "followUp": "Add server field errors without erasing newer edits made while a request was in flight.",
+    "sourceUrl": "https://namastedev.com/practice/contact-form"
+  },
+  {
+    "slug": "sum-of-all-numbers-in-an-array",
+    "title": "Sum of all numbers in an array",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Sum finite numeric entries using an explicit zero result for an empty array.",
+    "answer": "Use a linear accumulator or reduce with an initial zero so empty input is defined. Reject or explicitly handle NaN and infinities rather than allowing one invalid value to silently poison the total. Ordinary floating-point addition is order-sensitive; currency, huge integers, and high-accuracy measurements may require different representations or summation algorithms.",
+    "checks": [
+      "Empty array",
+      "negatives",
+      "mixed signs",
+      "nonfinite input",
+      "decimal precision."
+    ],
+    "followUp": "Implement compensated summation and compare it with integer-minor-unit arithmetic for money.",
+    "sourceUrl": "https://namastedev.com/practice/sum-of-all-numbers-in-an-array"
+  },
+  {
+    "slug": "array-to-zigzag-string-converter",
+    "title": "Array to Zigzag String Converter",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Convert a word list into alternating forward/reversed words, leaving the input array untouched.",
+    "answer": "First define what zigzag means: here even-indexed words remain unchanged and odd-indexed words reverse by Unicode code points; join with one space. Use map for a pure transformation and Array.from for code-point reversal. This contract intentionally differs from a matrix zigzag traversal. A UI should parse input and render the derived output without a second synchronized state variable.",
+    "checks": [
+      "Empty list",
+      "one word",
+      "odd/even list lengths",
+      "emoji code points",
+      "unchanged input."
+    ],
+    "followUp": "Extend reversal to user-perceived graphemes and state the required segmentation support.",
+    "sourceUrl": "https://namastedev.com/practice/array-to-zigzag-string-converter"
+  },
+  {
+    "slug": "auto-save-text",
+    "title": "Auto Save Text",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Auto-save a draft after an idle period and display saved, saving, and error states.",
+    "answer": "Keep the editable draft separate from the last acknowledged revision. Debounce writes with effect cleanup, and attach a revision to each save so a late response cannot mark newer text saved. Local storage writes can throw and remote writes can arrive out of order. Report saved only for the current acknowledged draft; do not equate a queued request with durable storage.",
+    "checks": [
+      "Rapid typing",
+      "idle save",
+      "storage failure",
+      "late acknowledgement",
+      "unmount before timeout."
+    ],
+    "followUp": "Retry failed saves and reconcile an external edit without silently overwriting either draft.",
+    "sourceUrl": "https://namastedev.com/practice/auto-save-text"
+  },
+  {
+    "slug": "counter-using-react",
+    "title": "Counter Using React",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create a bounded quantity counter with increment, decrement, and reset actions.",
+    "answer": "Represent the count in one state value and use functional updaters when the next value depends on the previous one. Clamp transitions at the documented bounds and disable controls whose action is unavailable. Reset to the initial configured count rather than an accidental hard-coded value. Prefer derived disabled states over additional booleans.",
+    "checks": [
+      "Lower/upper limits",
+      "reset",
+      "rapid activation",
+      "custom initial count",
+      "accessible button names."
+    ],
+    "followUp": "Support a changed step size without allowing updates to escape the valid range.",
+    "sourceUrl": "https://namastedev.com/practice/counter-using-react"
+  },
+  {
+    "slug": "anagram-checker",
+    "title": "Anagram Checker",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Check whether two strings have the same character multiplicities under a chosen normalization rule.",
+    "answer": "Normalize both strings consistently and compare frequency maps, decrementing counts as the second string is scanned. Reject a length mismatch after normalization. This is linear in text length, with space proportional to the alphabet encountered. Sorting is simpler in some contexts but usually costs O(n log n). Clarify code-point versus grapheme semantics.",
+    "checks": [
+      "Repeated letters",
+      "unequal lengths",
+      "mixed case",
+      "ignored spaces policy",
+      "Unicode normalization."
+    ],
+    "followUp": "Compare normalized canonical equivalents without accidentally discarding meaningful language distinctions.",
+    "sourceUrl": "https://namastedev.com/practice/anagram-checker"
+  },
+  {
+    "slug": "findmaxnumber",
+    "title": "findMaxNumber",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Return the largest value and its first occurrence in a stream of finite numbers.",
+    "answer": "Maintain the best value and index while scanning, replacing them only on a strict greater-than comparison to preserve the first tie. Initialize only after a first valid item; an empty stream needs a separate result. This extends the maximum-value exercise with a stable witness and works incrementally without storing the full stream.",
+    "checks": [
+      "All negatives",
+      "repeated maximum",
+      "empty stream",
+      "first/last witness",
+      "single item."
+    ],
+    "followUp": "Adapt the accumulator to an async iterable and propagate cancellation and source failures.",
+    "sourceUrl": "https://namastedev.com/practice/findmaxnumber"
+  },
+  {
+    "slug": "factorial-of-a-number",
+    "title": "Factorial of a number",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Compute factorial for a nonnegative integer using a representation that preserves the requested range.",
+    "answer": "Define 0! as one, validate an integer input, and multiply iteratively from two through n. Number quickly loses exact integer precision, so BigInt is appropriate for exact large factorials. Convert factors consistently instead of mixing Number and BigInt multiplication. Avoid recursion solely for this loop, since it adds stack depth without improving the model.",
+    "checks": [
+      "0",
+      "1",
+      "ordinary positive input",
+      "negative/fractional input",
+      "exact result beyond Number precision."
+    ],
+    "followUp": "Return the number of trailing decimal zeros using factors of five rather than constructing the entire factorial.",
+    "sourceUrl": "https://namastedev.com/practice/factorial-of-a-number"
+  },
+  {
+    "slug": "fibonacci-series",
+    "title": "Fibonacci Series",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Produce the first n Fibonacci values with F0=0 and F1=1.",
+    "answer": "Validate n as a nonnegative count, then iteratively update a pair of consecutive values and emit the requested count. This is O(n) additions and O(n) output storage; retaining only the nth value needs constant auxiliary storage. A naive recursive implementation repeats work exponentially. Use BigInt when exact values outgrow safe Number precision.",
+    "checks": [
+      "n=0",
+      "n=1",
+      "n=2",
+      "invalid n",
+      "larger exact values."
+    ],
+    "followUp": "Compute the nth term with fast doubling in logarithmic recursion depth.",
+    "sourceUrl": "https://namastedev.com/practice/fibonacci-series"
+  },
+  {
+    "slug": "secret-code-shuffler",
+    "title": "Secret Code Shuffler",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Create a reversible educational character shift over a declared alphabet.",
+    "answer": "Treat this original exercise as a Caesar-style shift, not encryption: normalize the shift modulo the alphabet size, map only supported letters, and preserve other characters according to the contract. The inverse subtracts the same normalized shift. Negative modulo in JavaScript needs normalization with ((x % m)+m)%m to keep indices nonnegative.",
+    "checks": [
+      "Shift zero",
+      "wrap at Z",
+      "negative shift",
+      "punctuation",
+      "inverse round trip."
+    ],
+    "followUp": "Distinguish this toy substitution from authenticated encryption and avoid presenting obfuscation as security.",
+    "sourceUrl": "https://namastedev.com/practice/secret-code-shuffler"
+  },
+  {
+    "slug": "tooltip",
+    "title": "Tooltip",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Show concise supplemental help on both pointer hover and keyboard focus.",
+    "answer": "Keep the trigger accessible without requiring the tooltip. Use an element with role=tooltip and associate it through aria-describedby. Open on hover or focus, close on Escape and the appropriate pointer/focus exit, and clean up delay timers. A tooltip should not contain interactive controls; use a popover or dialog when users must interact with its content.",
+    "checks": [
+      "Hover",
+      "focus",
+      "Escape",
+      "quick enter/leave",
+      "trigger moving near viewport edges."
+    ],
+    "followUp": "Position the help near viewport edges without clipping or creating an interactive hover trap.",
+    "sourceUrl": "https://namastedev.com/practice/tooltip"
+  },
+  {
+    "slug": "guess-the-number",
+    "title": "Guess the number",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Build a number-guessing game with a fixed secret per round, finite input validation, and restart.",
+    "answer": "Create the secret at round initialization rather than on every render. Store guesses and round status; derive high/low/correct feedback from a validated integer. Specify whether invalid guesses consume attempts and enforce that rule consistently. Disable guessing when a round ends and create a new secret only on restart. Inject randomness for deterministic tests.",
+    "checks": [
+      "Bounds",
+      "non-integer input",
+      "repeat guess",
+      "correct guess",
+      "exhaustion",
+      "restart."
+    ],
+    "followUp": "Add a reproducible seed and a history view without leaking the secret into normal UI state displays.",
+    "sourceUrl": "https://namastedev.com/practice/guess-the-number"
+  },
+  {
+    "slug": "toggle-button-with-custom-hook",
+    "title": "Toggle button with custom hook",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Extract reusable boolean state behavior into a useToggle hook without hiding the underlying React lifecycle.",
+    "answer": "Return the current boolean and stable operations for toggle, set true, and set false. Use a lazy initial value and a functional updater for inversion, so multiple queued toggles compose correctly. Reuse the hook only for identical behavior; it should not own unrelated rendering, network access, or global theme policy.",
+    "checks": [
+      "Default false",
+      "explicit true",
+      "two queued toggles",
+      "explicit setters",
+      "independent hook instances."
+    ],
+    "followUp": "Allow a controlled parent mode and define who owns state rather than mixing two authorities.",
+    "sourceUrl": "https://namastedev.com/practice/toggle-button-with-custom-hook"
+  },
+  {
+    "slug": "leap-year",
+    "title": "Leap year",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create a year inspector using Gregorian leap-year rules and reject non-integer input.",
+    "answer": "Validate the raw input before coercion, then use the ordered divisibility rule: divisible by 400, or divisible by 4 but not by 100. A century is the important counterexample to the naive divide-by-four shortcut. State the supported year range and calendar; do not silently apply contemporary Gregorian rules to historical calendars.",
+    "checks": [
+      "2000",
+      "1900",
+      "ordinary leap year",
+      "ordinary non-leap year",
+      "blank",
+      "decimal year."
+    ],
+    "followUp": "Add a calendar selection and explain why a historical date may require jurisdiction-specific rules.",
+    "sourceUrl": "https://namastedev.com/practice/leap-year"
+  },
+  {
+    "slug": "blog-post",
+    "title": "Blog Post",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Render a reusable article component with semantic structure, plain-text content, and an unavailable-image fallback.",
+    "answer": "Keep article data separate from presentation. Use article, an appropriate heading level, a time element with a machine-readable datetime, and useful image alt text. Render author/content as text unless rich HTML has a separate sanitization policy. Avoid redundant state for props and supply explicit empty or missing-field behavior.",
+    "checks": [
+      "Missing image",
+      "long title",
+      "multiline text",
+      "valid date",
+      "empty optional metadata."
+    ],
+    "followUp": "Support a sanitized rich-content format while keeping heading hierarchy and link semantics intact.",
+    "sourceUrl": "https://namastedev.com/practice/blog-post"
+  },
+  {
+    "slug": "flatten-nested-array",
+    "title": "Flatten Nested Array",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Flatten arbitrarily nested arrays while preserving left-to-right leaf order.",
+    "answer": "Walk each element: recurse or push explicit stack frames for arrays and append non-array leaves. An explicit stack avoids call-stack overflow for deep nesting. Specify hole behavior, depth limits, and whether cyclic arrays are rejected. Keep cycle detection on the active ancestry path if repeated shared arrays should be expanded at each occurrence.",
+    "checks": [
+      "Empty arrays",
+      "nested empties",
+      "non-array objects",
+      "deep nesting",
+      "repeated shared array",
+      "cycle."
+    ],
+    "followUp": "Support a maximum flattening depth and compare path-cycle detection with global deduplication.",
+    "sourceUrl": "https://namastedev.com/practice/flatten-nested-array"
+  },
+  {
+    "slug": "even-or-odd",
+    "title": "Even or odd",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create an integer parity inspector that distinguishes invalid input from even and odd values.",
+    "answer": "Reject blank and non-integer values before applying remainder. An integer is even when its remainder modulo two is zero, including negative even integers. Do not use truthiness to validate zero. If the contract must support values beyond Number safe-integer precision, parse and validate a BigInt input rather than classifying an already-rounded Number.",
+    "checks": [
+      "Zero",
+      "positive/negative integers",
+      "decimals",
+      "blank input",
+      "unsafe integers."
+    ],
+    "followUp": "Add a BigInt mode and keep its parsing error messages separate from ordinary numeric input.",
+    "sourceUrl": "https://namastedev.com/practice/even-or-odd"
+  },
+  {
+    "slug": "read-more",
+    "title": "Read More",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Build an excerpt that expands and collapses without losing the original article content.",
+    "answer": "Derive the excerpt from immutable full text and store only whether it is expanded. Hide the toggle for content that already fits. Define the truncation unit, such as words, so an arbitrary UTF-16 cut does not split text unexpectedly. Keep the button label and aria-expanded aligned with the same state.",
+    "checks": [
+      "Short text",
+      "exact limit",
+      "long text",
+      "expand/collapse",
+      "empty content."
+    ],
+    "followUp": "Preserve a stable focus target and selection when switching between excerpt and full text.",
+    "sourceUrl": "https://namastedev.com/practice/read-more"
+  },
+  {
+    "slug": "acronym-generator",
+    "title": "Acronym Generator",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create initials from a trimmed phrase and define a consistent separator policy.",
+    "answer": "Normalize leading/trailing whitespace, split on runs of whitespace, discard empty segments, and take the first code point of each remaining token. Uppercase the result with an explicit locale policy if needed. The result is derived from the phrase, not synchronized through an effect. State whether hyphenated words count as one token or multiple words.",
+    "checks": [
+      "Blank phrase",
+      "extra spaces",
+      "a single word",
+      "Unicode first character",
+      "punctuation."
+    ],
+    "followUp": "Offer a configurable stop-word list while retaining a clear preview of which words contributed initials.",
+    "sourceUrl": "https://namastedev.com/practice/acronym-generator"
+  },
+  {
+    "slug": "character-counter",
+    "title": "Character Counter",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Display a live text length and remaining budget using a declared counting unit.",
+    "answer": "Choose UTF-16 units, code points, or grapheme clusters explicitly because they produce different answers for emoji and combining marks. For a user-facing text budget, grapheme segmentation is often the desired model when supported. Derive count and remaining budget, and decide whether excess input is rejected or merely reported. Keep announcements restrained during typing.",
+    "checks": [
+      "Empty text",
+      "pasted long text",
+      "emoji",
+      "combining accent",
+      "budget boundary."
+    ],
+    "followUp": "Support separate user-visible grapheme counts and server byte limits without conflating the two.",
+    "sourceUrl": "https://namastedev.com/practice/character-counter"
+  },
+  {
+    "slug": "dynamic-greeting-app",
+    "title": "Dynamic Greeting App",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Render a greeting from a chosen display name and a deterministic time-of-day policy.",
+    "answer": "Keep the name editable, trim it for display, and use a fallback for blank names. Pass or inject the current time so tests are deterministic. If the greeting must change over time, own a timer with cleanup; reading the clock once does not create a live clock. Specify the timezone instead of assuming every user shares the server clock.",
+    "checks": [
+      "Blank name",
+      "whitespace",
+      "morning boundary",
+      "evening boundary",
+      "timezone choice."
+    ],
+    "followUp": "Show a user-selected timezone and handle the case where the device time changes.",
+    "sourceUrl": "https://namastedev.com/practice/dynamic-greeting-app"
+  },
+  {
+    "slug": "get-weekday",
+    "title": "Get Weekday",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Determine the weekday for a calendar-date input without a timezone-induced off-by-one error.",
+    "answer": "Treat YYYY-MM-DD as calendar fields rather than blindly parsing a timestamp. Validate that the reconstructed year/month/day matches the requested fields. Either compute consistently in UTC and format in UTC or intentionally use local calendar construction. Do not mix a UTC midnight parse with local weekday formatting.",
+    "checks": [
+      "Month boundary",
+      "leap day",
+      "invalid date",
+      "users west/east of UTC",
+      "blank input."
+    ],
+    "followUp": "Add locale-specific weekday labels while preserving the same calendar date.",
+    "sourceUrl": "https://namastedev.com/practice/get-weekday"
+  },
+  {
+    "slug": "focus-input",
+    "title": "Focus Input",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Move focus to an input from a separate action and optionally select its existing value.",
+    "answer": "Keep a DOM ref with useRef, attach it to the input, and call focus in the event handler. Refs store imperative handles without triggering rendering. Guard against an absent or disabled input, and do not steal focus automatically after every render. If autofocus is a requirement, perform it at a deliberate lifecycle boundary.",
+    "checks": [
+      "Focus button activation",
+      "input absent",
+      "disabled input",
+      "selection behavior",
+      "keyboard-only use."
+    ],
+    "followUp": "Focus the first invalid input after form submission without fighting a user’s current typing position.",
+    "sourceUrl": "https://namastedev.com/practice/focus-input"
+  },
+  {
+    "slug": "authentication",
+    "title": "Authentication",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Model a demo sign-in interface with explicit loading, authenticated, anonymous, and error states.",
+    "answer": "Separate the form from session state. A request can transition anonymous to loading and then authenticated or error; stale responses must not overwrite a newer sign-out or account choice. Client UI state is not authorization. A real protected API validates its session on the server, and secrets or pretend token strings should not be stored as a demonstration of security.",
+    "checks": [
+      "Pending login",
+      "rejection",
+      "sign-out during login",
+      "session refresh",
+      "private action after expiry."
+    ],
+    "followUp": "Keep a public screen usable during background session refresh while preserving account isolation.",
+    "sourceUrl": "https://namastedev.com/practice/authentication"
+  },
+  {
+    "slug": "shuffle",
+    "title": "shuffle()",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Return an unbiased permutation using Fisher–Yates and an injectable random source.",
+    "answer": "Copy the input, then for each position from the end choose a uniform integer between zero and that position inclusive and swap. Every permutation is equally likely only if the bounded choices are uniform. Sorting with a random comparator is neither a valid comparator nor an unbiased shuffle. Deterministic tests should inject controlled random outputs.",
+    "checks": [
+      "Empty/single item",
+      "unchanged input",
+      "deterministic swaps",
+      "all elements retained exactly once."
+    ],
+    "followUp": "Use rejection-sampled cryptographic integers for a stronger randomness requirement and explain why distribution tests are not a proof.",
+    "sourceUrl": "https://namastedev.com/practice/shuffle"
+  },
+  {
+    "slug": "navbar",
+    "title": "Navbar",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Build a responsive site navigation with a current-page indicator and a keyboard-usable mobile disclosure.",
+    "answer": "Use nav and ordinary links for page navigation. Use a button for the mobile disclosure, expose aria-expanded and aria-controls, and close it after navigation or Escape. Mark the current page with aria-current rather than relying only on color. Avoid role=menu unless implementing that complete keyboard interaction model.",
+    "checks": [
+      "Current route",
+      "mobile open/close",
+      "Escape",
+      "link activation",
+      "resize from mobile to desktop."
+    ],
+    "followUp": "Handle focus restoration when a mobile drawer closes after an in-app route change.",
+    "sourceUrl": "https://namastedev.com/practice/navbar"
+  },
+  {
+    "slug": "largest-number-formed",
+    "title": "Largest number formed",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Arrange nonnegative integer strings so their concatenation is lexicographically/numerically maximal.",
+    "answer": "Sort strings using the order of a+b versus b+a rather than ordinary numeric value or first digit alone. Concatenations have equal lengths for each pair, so lexicographic comparison is appropriate without converting huge strings to Number. Join the result and normalize an all-zero result to a single zero. State input validity and leading-zero policy.",
+    "checks": [
+      "All zeros",
+      "3 vs 30",
+      "common prefixes",
+      "very long strings",
+      "one element."
+    ],
+    "followUp": "Explain why the pairwise concatenation comparator establishes the required ordering and keep arithmetic precision out of the comparison.",
+    "sourceUrl": "https://namastedev.com/practice/largest-number-formed"
+  },
+  {
+    "slug": "color-explorer",
+    "title": "Color Explorer",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create a color preview from validated hexadecimal input and keep invalid drafts editable.",
+    "answer": "Store the draft independently from the last valid color. Accept a documented form, such as #RRGGBB, and derive a normalized valid value for CSS. Render validation feedback without replacing the user’s incomplete typing. Do not interpolate arbitrary input into a style string. Choose a readable foreground using computed contrast instead of guessing from a color name.",
+    "checks": [
+      "Partial input",
+      "short/long invalid form",
+      "uppercase hex",
+      "valid black/white",
+      "reset."
+    ],
+    "followUp": "Support RGB input with an explicit conversion and show contrast against candidate text colors.",
+    "sourceUrl": "https://namastedev.com/practice/color-explorer"
+  },
+  {
+    "slug": "confirmation-modal",
+    "title": "Confirmation Modal",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Ask for explicit confirmation before a destructive local action, with focus restored when the dialog closes.",
+    "answer": "Keep pending intent separate from the confirmed action. Prefer a native dialog opened with showModal so background content becomes inert. Provide a title, clear confirm/cancel names, Escape cancellation, and deliberate initial focus. Commit the action only on confirmation and restore focus to the original trigger after closing.",
+    "checks": [
+      "Cancel",
+      "Escape",
+      "confirm exactly once",
+      "focus trap",
+      "reopening",
+      "long content on a small screen."
+    ],
+    "followUp": "Represent asynchronous confirmation with a pending state and prevent accidental duplicate execution.",
+    "sourceUrl": "https://namastedev.com/practice/confirmation-modal"
+  },
+  {
+    "slug": "toggle-password",
+    "title": "Toggle password",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Add a show/hide control to a password input without changing its value or submitting the form.",
+    "answer": "Keep visibility as a boolean independent of the controlled password string. Switch type between password and text, use a button with type=button, and expose a clear Show password or Hide password action. Preserve focus/caret where the browser permits it. Do not duplicate, log, or persist the field merely to implement visibility.",
+    "checks": [
+      "Empty value",
+      "toggling after typing",
+      "form does not submit",
+      "keyboard activation",
+      "accessible name."
+    ],
+    "followUp": "Support press-and-hold reveal with pointer cancellation while retaining a keyboard-accessible alternative.",
+    "sourceUrl": "https://namastedev.com/practice/toggle-password"
+  },
+  {
+    "slug": "array-chunking",
+    "title": "Array Chunking",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Split an array into consecutive chunks of a positive integer size without modifying the input.",
+    "answer": "Validate the size before looping so zero or negative values cannot cause an infinite loop. Iterate start positions by size and slice each segment, allowing the final chunk to be shorter. This is O(n) copied output with O(n) total output storage. An iterator variant can yield chunks incrementally for a large source.",
+    "checks": [
+      "Empty array",
+      "size one",
+      "size larger than input",
+      "partial final chunk",
+      "zero/negative/fractional size."
+    ],
+    "followUp": "Implement lazy chunking over an iterable and define whether the final partial chunk is emitted.",
+    "sourceUrl": "https://namastedev.com/practice/array-chunking"
+  },
+  {
+    "slug": "tab-switcher",
+    "title": "Tab Switcher",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create simple content switching where one active section is selected by a stable key.",
+    "answer": "Model the active key, derive the visible content, and decide whether inactive content should remain mounted. When using the ARIA tabs pattern, pair tabs and panels and implement expected arrow-key navigation rather than adding roles cosmetically. Ordinary buttons are sufficient for a simpler section-switching contract that does not claim tabs semantics.",
+    "checks": [
+      "Initial key",
+      "selected tab",
+      "invalid key fallback",
+      "empty items",
+      "content state retention."
+    ],
+    "followUp": "Let URL state select a section and define how browser back/forward changes the active key.",
+    "sourceUrl": "https://namastedev.com/practice/tab-switcher"
+  },
+  {
+    "slug": "useprevioushook",
+    "title": "usePreviousHook",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Implement a hook that exposes a value from the previous committed render.",
+    "answer": "Use a ref to retain the prior value and update it in an effect after commit. During rendering return the existing ref value, which is undefined on the initial render. Do not assign the ref while rendering to pretend the current value is previous. Decide whether equality-based suppression belongs in a separate abstraction.",
+    "checks": [
+      "First render",
+      "changed value",
+      "unchanged value",
+      "object identity",
+      "abandoned render behavior."
+    ],
+    "followUp": "Implement previous-distinct-value semantics and explain how it differs from previous-render semantics.",
+    "sourceUrl": "https://namastedev.com/practice/useprevioushook"
+  },
+  {
+    "slug": "sum-of-n-natural-numbers",
+    "title": "Sum of n natural numbers",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Compute 1+2+…+n for a nonnegative integer and state numeric precision limits.",
+    "answer": "Use n(n+1)/2 rather than a loop when only the total is required. With BigInt, divide one even factor before or after multiplication using exact integer arithmetic. Number inputs need safe-integer validation for both the input and result; a small enough input type does not automatically guarantee the product remains exactly representable.",
+    "checks": [
+      "n=0",
+      "n=1",
+      "ordinary n",
+      "negative/fractional input",
+      "precision boundary."
+    ],
+    "followUp": "Compute a closed integer range sum and avoid overflow-prone intermediate operations in fixed-width languages.",
+    "sourceUrl": "https://namastedev.com/practice/sum-of-n-natural-numbers"
+  },
+  {
+    "slug": "holy-grail",
+    "title": "Holy Grail",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create a semantic header/sidebar/main/aside/footer layout that collapses into a readable single column.",
+    "answer": "Use CSS Grid to express the desktop areas and a minmax(0,1fr) content track to allow internal overflow. Preserve a sensible DOM reading order rather than visually rearranging essential content into a confusing tab order. At narrow widths stack the secondary regions or provide intentional disclosures. Avoid fixed content heights that clip long text.",
+    "checks": [
+      "320px viewport",
+      "long code block",
+      "missing aside",
+      "keyboard order",
+      "very long article."
+    ],
+    "followUp": "Make the main region independently scrollable without trapping browser navigation or hiding the footer.",
+    "sourceUrl": "https://namastedev.com/practice/holy-grail"
+  },
+  {
+    "slug": "user-profile",
+    "title": "User profile",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Render a profile summary with explicit missing-data, loading, and failure states.",
+    "answer": "Accept a profile object rather than mixing fetch logic into a presentational card. Show a useful fallback for a missing avatar or optional bio and use meaningful image alternative text. If fetching is required, keep pending/error/success states explicit and ignore stale account responses. Never infer authorization from a displayed profile ID.",
+    "checks": [
+      "Missing avatar",
+      "empty bio",
+      "long name",
+      "request failure",
+      "switching accounts."
+    ],
+    "followUp": "Separate public profile fields from account-private details using a server-defined response contract.",
+    "sourceUrl": "https://namastedev.com/practice/user-profile"
+  },
+  {
+    "slug": "age-calculator",
+    "title": "Age calculator",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Compute completed years of age from a valid birthday and an injected current date.",
+    "answer": "Validate date fields and reject future birthdays. Start with the difference in calendar years, then subtract one when the current month/day is before the birthday. Specify a February-29 birthday policy for non-leap years. Milliseconds divided by a fixed year length are not a reliable calendar-age calculation.",
+    "checks": [
+      "Birthday today",
+      "birthday tomorrow",
+      "year boundary",
+      "February 29",
+      "future date",
+      "invalid date."
+    ],
+    "followUp": "Show years/months/days with an explicit calendar borrowing policy rather than fixed-duration arithmetic.",
+    "sourceUrl": "https://namastedev.com/practice/age-calculator"
+  },
+  {
+    "slug": "frequently-asked-questions",
+    "title": "Frequently Asked Questions",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Build a searchable help index that preserves which answer the reader deliberately expanded.",
+    "answer": "Represent FAQ items by stable IDs and derive matches from normalized question/body text. Keep expansion separate from the filtered array, so hiding a row is not mistaken for deleting it. Use native heading buttons and associated answer regions. Specify whether multiple answers may remain expanded, and provide a useful no-results state.",
+    "checks": [
+      "Search body text",
+      "no matches",
+      "clear search",
+      "expanded row hidden then restored",
+      "duplicate titles."
+    ],
+    "followUp": "Group results by category while avoiding duplicate IDs in accessibility relationships.",
+    "sourceUrl": "https://namastedev.com/practice/frequently-asked-questions"
+  },
+  {
+    "slug": "asterisk-field-validation",
+    "title": "Asterisk Field Validation",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Mark required fields visually and semantically while providing actionable validation messages.",
+    "answer": "Use required attributes and visible labels; an asterisk alone does not explain a requirement. Include a form-level legend that defines the symbol and associate field errors with their controls. Validate normalized values so whitespace does not satisfy a required text field. Keep the server as the final authority and preserve user input on failure.",
+    "checks": [
+      "Whitespace-only value",
+      "missing required field",
+      "optional blank field",
+      "error association",
+      "corrected value."
+    ],
+    "followUp": "Support conditional requirements without leaving hidden fields invalid or unreachable.",
+    "sourceUrl": "https://namastedev.com/practice/asterisk-field-validation"
+  },
+  {
+    "slug": "arrayprototypereduce",
+    "title": "Array.prototype.reduce",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Reimplement reduction for array-like values with an optional initial accumulator and sparse-index semantics.",
+    "answer": "Distinguish an omitted initial argument from an explicitly supplied undefined using argument count. Without an initial value, find the first present element or throw for an empty/holey input. Visit only existing indices up to the captured initial length and call the reducer with accumulator, value, index, and source. Do not add a global prototype patch in a study demo.",
+    "checks": [
+      "Empty without seed",
+      "explicit undefined seed",
+      "sparse array",
+      "callback throws",
+      "length changes."
+    ],
+    "followUp": "Compare a focused array-only implementation with the complete specification requirements for generic receivers.",
+    "sourceUrl": "https://namastedev.com/practice/arrayprototypereduce"
+  },
+  {
+    "slug": "sidebar",
+    "title": "Sidebar",
+    "language": "React.js",
+    "difficulty": "Easy",
+    "question": "Create a collapsible navigation sidebar that remains useful with keyboard and screen-reader navigation.",
+    "answer": "Keep collapsed state separate from current-route state. Use a named nav landmark, native links, an explicit toggle button, and a visible focus indicator. If collapsed labels are hidden, preserve accessible link names. For a modal mobile drawer, make background interaction inert and restore focus when it closes; desktop navigation need not trap focus.",
+    "checks": [
+      "Collapse/expand",
+      "active route",
+      "mobile Escape",
+      "desktop resize",
+      "keyboard order",
+      "long labels."
+    ],
+    "followUp": "Persist only the layout preference and distinguish desktop collapse from mobile open state.",
+    "sourceUrl": "https://namastedev.com/practice/sidebar"
+  },
+  {
+    "slug": "reversewords",
+    "title": "ReverseWords",
+    "language": "JavaScript",
+    "difficulty": "Easy",
+    "question": "Reverse the characters within each whitespace-delimited word while preserving word order.",
+    "answer": "This contract intentionally differs from reversing the order of words. Tokenize text while preserving separator runs, reverse only word tokens by the chosen character unit, and reconstruct the original separators. Array.from handles code points but not full grapheme clusters. Keep the transformation pure so repeated calls do not mutate cached input data.",
+    "checks": [
+      "One word",
+      "multiple spaces",
+      "punctuation policy",
+      "emoji",
+      "empty input."
+    ],
+    "followUp": "Preserve user-perceived graphemes using segmentation and compare output with reversing word order.",
+    "sourceUrl": "https://namastedev.com/practice/reversewords"
+  },
+  {
+    "slug": "todo-list",
+    "title": "Todo List",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Build a task list with add, complete, and delete operations using stable task IDs.",
+    "answer": "Keep an array of task records and update it immutably. Trim titles before insertion and reject blanks. Generate IDs at creation, not during rendering, so editing or reordering does not attach state to a different row. Derive completed totals from records rather than synchronizing another counter. Specify whether deleting a task is immediately permanent or undoable.",
+    "checks": [
+      "Blank title",
+      "repeated title with different IDs",
+      "complete/uncomplete",
+      "delete middle row",
+      "empty list."
+    ],
+    "followUp": "Add filtered views while retaining selection and edit state by task ID.",
+    "sourceUrl": "https://namastedev.com/practice/todo-list"
+  },
+  {
+    "slug": "flatten-nested-objects",
+    "title": "Flatten Nested Objects",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Flatten plain nested objects into path/value entries while retaining arrays as leaf values.",
+    "answer": "Walk own enumerable keys, accumulate a path, and emit non-plain-object leaves. Define how empty objects and keys containing separators are represented; a segment-array path avoids dot-key ambiguity. Treat arrays as leaves for this contract rather than accidentally turning them into numeric object fields. Detect cycles along the active path and do not modify the input.",
+    "checks": [
+      "Empty object",
+      "array leaf",
+      "key containing a dot",
+      "null leaf",
+      "cycle",
+      "shared subobject."
+    ],
+    "followUp": "Add an inverse unflatten operation and demonstrate why ambiguous separator encoding prevents a reliable round trip.",
+    "sourceUrl": "https://namastedev.com/practice/flatten-nested-objects"
+  },
+  {
+    "slug": "flatten-deep-object",
+    "title": "Flatten Deep Object",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Flatten a JSON-like object/array graph into unambiguous segment-array paths and leaf values.",
+    "answer": "Use explicit node-type handling: arrays contribute index segments, objects contribute own key segments, and primitives become leaves. Store paths as arrays or use a reversible escaping scheme. Preserve empty containers with tagged entries if reconstructability is required. An iterative traversal avoids stack overflow, while ancestry tracking distinguishes cycles from harmless repeated references.",
+    "checks": [
+      "Array/object mixture",
+      "empty containers",
+      "numeric-looking keys",
+      "deep input",
+      "repeated reference",
+      "cycle."
+    ],
+    "followUp": "Preserve aliasing as reference records and explain why a tree-shaped path list otherwise loses graph identity.",
+    "sourceUrl": "https://namastedev.com/practice/flatten-deep-object"
+  },
+  {
+    "slug": "compress-string-with-limited-repetition",
+    "title": "Compress String with Limited Repetition",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Run-length encode text while limiting each emitted run to at most k equal characters.",
+    "answer": "Scan a maximal equal-character run, then split its count into chunks no larger than the positive integer cap. Emit a documented unambiguous token format rather than concatenating counts and arbitrary input characters without escaping. Keep character-unit semantics explicit and reject nonpositive caps before the loop. Work is linear in input plus emitted output.",
+    "checks": [
+      "Long run above cap",
+      "exact cap",
+      "alternating text",
+      "digit characters",
+      "empty input",
+      "cap one."
+    ],
+    "followUp": "Add a decoder and verify round trips for characters that resemble count delimiters.",
+    "sourceUrl": "https://namastedev.com/practice/compress-string-with-limited-repetition"
+  },
+  {
+    "slug": "todo-list-ii",
+    "title": "Todo List II",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Extend tasks with inline editing, status filters, and resilient local persistence.",
+    "answer": "Use task IDs for the collection and a separate editing ID/draft for an active edit. Commit or cancel deliberately instead of mutating the saved title on each keystroke. Persist a versioned data schema and recover gracefully from corrupt or unavailable storage. Read storage before enabling writes, otherwise the initial empty render can overwrite existing tasks.",
+    "checks": [
+      "Cancel edit",
+      "blank edited title",
+      "corrupt storage",
+      "reload",
+      "edit while a filter hides the row."
+    ],
+    "followUp": "Migrate an older storage schema and reconcile edits from two browser tabs.",
+    "sourceUrl": "https://namastedev.com/practice/todo-list-ii"
+  },
+  {
+    "slug": "billing-counter",
+    "title": "Billing Counter",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Build a checkout subtotal from item quantities, then apply a documented discount and tax order.",
+    "answer": "Store quantities and item IDs, derive line totals, and calculate the bill from authoritative unit amounts. Use integer minor currency units where the domain permits, and specify rounding boundaries and discount stacking. Clamp quantities and reject unknown products. Rendering an amount is not permission to charge it; a payment server recomputes the final payable amount.",
+    "checks": [
+      "Zero quantity",
+      "quantity limit",
+      "percentage rounding",
+      "removed product",
+      "conflicting discounts."
+    ],
+    "followUp": "Add tax-inclusive pricing and define whether rounding occurs per line or for the whole invoice.",
+    "sourceUrl": "https://namastedev.com/practice/billing-counter"
+  },
+  {
+    "slug": "resizable-split-pane",
+    "title": "Resizable Split Pane",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Create a two-pane workspace with a bounded draggable divider and a keyboard resizing alternative.",
+    "answer": "Track the split as one value and clamp it against the container’s measured size and minimum pane widths. Use pointer capture for a drag so leaving the divider does not lose the interaction. A focusable separator needs orientation and value attributes plus arrow-key controls. Clean up observers/listeners and recalculate bounds when the container resizes.",
+    "checks": [
+      "Minimum/maximum sizes",
+      "pointer leaves handle",
+      "pointer cancellation",
+      "keyboard resize",
+      "viewport change."
+    ],
+    "followUp": "Persist the ratio rather than raw pixels and restore it safely on a narrower device.",
+    "sourceUrl": "https://namastedev.com/practice/resizable-split-pane"
+  },
+  {
+    "slug": "kanban-board",
+    "title": "Kanban Board",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Move cards between named columns while preserving order and unique ownership.",
+    "answer": "Normalize cards by ID and store ordered ID lists per column, or use an equivalent explicit reducer. A move must remove the card from its source and insert it once into the target as one state transition. Keep drag presentation separate from committed order. Provide a keyboard or button-based move path instead of making drag the only interaction.",
+    "checks": [
+      "Same-column reorder",
+      "cross-column move",
+      "empty destination",
+      "cancelled drag",
+      "repeated move."
+    ],
+    "followUp": "Add optimistic server persistence with version conflicts and rollback that preserves newer actions.",
+    "sourceUrl": "https://namastedev.com/practice/kanban-board"
+  },
+  {
+    "slug": "tabs-component",
+    "title": "Tabs Component",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Implement the complete keyboard behavior of an accessible tab list with linked panels.",
+    "answer": "Maintain active and focused tab IDs according to a chosen manual or automatic activation model. Use roving tabindex, arrow-key movement, Home/End, aria-selected, and matching tab/panel IDs. Disabled tabs must be skipped consistently. Decide whether inactive panels retain state and ensure hidden panel controls are not reachable.",
+    "checks": [
+      "Arrow wrapping",
+      "Home/End",
+      "disabled tab",
+      "activation mode",
+      "focus after removing the active tab."
+    ],
+    "followUp": "Support vertical orientation and dynamic tab removal while preserving an understandable focus target.",
+    "sourceUrl": "https://namastedev.com/practice/tabs-component"
+  },
+  {
+    "slug": "drag-and-drop-ii",
+    "title": "Drag And Drop II",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Move multiple selected items between containers without losing their relative order.",
+    "answer": "Represent selection by IDs independently of DOM positions. Build the source and destination arrays from a single snapshot and commit them atomically, removing selected IDs only once. Preserve the selected group’s original order and define same-container drop semantics. Expose an accessible move action for users who cannot perform a pointer drag.",
+    "checks": [
+      "Multiple selection",
+      "empty target",
+      "same-container drop",
+      "cancelled move",
+      "duplicate destination IDs."
+    ],
+    "followUp": "Add reversible batch moves and a live announcement describing how many items moved.",
+    "sourceUrl": "https://namastedev.com/practice/drag-and-drop-ii"
+  },
+  {
+    "slug": "image-carousel",
+    "title": "Image Carousel",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Display one image at a time with next/previous controls and explicit endpoint behavior.",
+    "answer": "Keep an active index and derive the current slide from the image list. State whether navigation wraps or stops at the ends. Clamp or reconcile the index when data changes. Provide descriptive controls, meaningful alternative text, and a non-disruptive slide announcement. Optional autoplay requires cleanup, pause conditions, and reduced-motion support.",
+    "checks": [
+      "No images",
+      "one image",
+      "endpoints",
+      "changing data length",
+      "broken image",
+      "keyboard activation."
+    ],
+    "followUp": "Pause autoplay on interaction/focus and resume only under an explicit user-controlled policy.",
+    "sourceUrl": "https://namastedev.com/practice/image-carousel"
+  },
+  {
+    "slug": "rate-limiter",
+    "title": "Rate Limiter",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Implement a deterministic token-bucket model with injected time and explicit rejection behavior.",
+    "answer": "Keep capacity, refill rate, current tokens, and the last update instant. Before each acquisition, refill by elapsed time and clamp to capacity, then deduct only when enough tokens remain. Time should be monotonic; handle a backwards clock according to the contract. An in-memory instance limits one process only, not a fleet of application servers.",
+    "checks": [
+      "Initial burst",
+      "exact boundary",
+      "partial refill",
+      "long idle",
+      "backwards clock",
+      "invalid requested cost."
+    ],
+    "followUp": "Design an atomic shared-store update for multiple servers and state how fail-open versus fail-closed affects the product.",
+    "sourceUrl": "https://namastedev.com/practice/rate-limiter"
+  },
+  {
+    "slug": "jsonstringify",
+    "title": "JSON.stringify",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Serialize a documented JSON-compatible subset without pretending to implement every JSON.stringify feature.",
+    "answer": "Handle primitives, arrays, and own enumerable object keys recursively. Escape control characters, quotes, and backslashes in strings. In a compatible subset, undefined/function/symbol object properties are omitted while array positions become null; nonfinite numbers become null, and cycles or BigInt require explicit handling. Track active ancestors rather than rejecting every repeated reference.",
+    "checks": [
+      "Escaped string",
+      "unsupported value in object vs array",
+      "shared object",
+      "cycle",
+      "nonfinite number",
+      "BigInt."
+    ],
+    "followUp": "Add toJSON and replacer semantics only after documenting their ordering and error behavior.",
+    "sourceUrl": "https://namastedev.com/practice/jsonstringify"
+  },
+  {
+    "slug": "word-search",
+    "title": "Word Search",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Determine whether a word exists in a rectangular character grid using adjacent non-reused cells.",
+    "answer": "Start DFS/backtracking from each matching first character. At every step check bounds, character match, and current-path visitation; mark before exploring and unmark on return. Never reuse a cell within one candidate path, but allow it in a different starting search. For word length L, a coarse upper bound is O(rows*cols*4^L), with O(L) path depth.",
+    "checks": [
+      "Single character",
+      "repeated-letter path",
+      "reuse forbidden",
+      "no match",
+      "empty-word policy",
+      "nonrectangular input."
+    ],
+    "followUp": "Search many words with a trie to share prefixes and prune branches more effectively.",
+    "sourceUrl": "https://namastedev.com/practice/word-search"
+  },
+  {
+    "slug": "topological-sort-dfs",
+    "title": "Topological Sort (DFS)",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Return a topological order of a directed graph or report a cycle.",
+    "answer": "Use three visitation states: unseen, active on the DFS path, and complete. An edge to an active node proves a directed cycle. Append nodes when their descendants finish, then reverse the completion list. Visit every vertex so disconnected components are included. Time and space are O(V+E), while deep graphs may require an explicit DFS stack.",
+    "checks": [
+      "Disconnected vertices",
+      "self-loop",
+      "cycle",
+      "diamond dependency",
+      "empty graph."
+    ],
+    "followUp": "Return a cycle witness and distinguish an edge to an active node from an edge to an already completed node.",
+    "sourceUrl": "https://namastedev.com/practice/topological-sort-dfs"
+  },
+  {
+    "slug": "paginated-article-bookmark-viewer",
+    "title": "Paginated Article Bookmark Viewer",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Build an article browser whose bookmarks persist independently of pagination and search.",
+    "answer": "Store page/query controls and bookmarked article IDs separately. Apply the documented order of filtering, sorting, and paging, then clamp the page when the result count shrinks. A hidden article may remain bookmarked. Distinguish local bookmark intent from server acknowledgement, and never use a page-local array index as article identity.",
+    "checks": [
+      "Bookmark across pages",
+      "filter shrinks total",
+      "empty page",
+      "duplicate title",
+      "restored bookmarks."
+    ],
+    "followUp": "Add remote pagination with stale-response protection and explicit loading/error states.",
+    "sourceUrl": "https://namastedev.com/practice/paginated-article-bookmark-viewer"
+  },
+  {
+    "slug": "price-range-slider",
+    "title": "Price Range Slider",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Create minimum and maximum price controls that cannot cross and have equivalent numeric inputs.",
+    "answer": "Keep one valid range and normalize each change against bounds and the other endpoint. For native range controls provide distinct names and visible values. Mirror number fields carefully: an incomplete numeric draft is not automatically a valid committed endpoint. Keep filtering derived from the normalized range and document inclusive boundaries.",
+    "checks": [
+      "Equal endpoints",
+      "min above max",
+      "keyboard arrows",
+      "invalid numeric draft",
+      "changed overall bounds."
+    ],
+    "followUp": "Support currency-specific step sizes without floating-point drift in accepted prices.",
+    "sourceUrl": "https://namastedev.com/practice/price-range-slider"
+  },
+  {
+    "slug": "detect-cycle-in-an-undirected-connected-graph-dfs",
+    "title": "Detect Cycle in an Undirected Connected Graph (DFS)",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Detect a cycle in an undirected graph with a clearly declared simple-graph or multigraph model.",
+    "answer": "In a simple graph DFS, an already visited neighbor that is not the current node’s parent indicates a cycle. To support disconnected input, start a traversal from every unseen vertex. For parallel edges, track edge IDs and skip only the incoming edge, since skipping every edge to the parent hides a two-edge multigraph cycle.",
+    "checks": [
+      "Tree",
+      "triangle",
+      "self-loop",
+      "disconnected component",
+      "parallel-edge policy."
+    ],
+    "followUp": "Produce the actual cycle path and explain how edge identity changes multigraph detection.",
+    "sourceUrl": "https://namastedev.com/practice/detect-cycle-in-an-undirected-connected-graph-dfs"
+  },
+  {
+    "slug": "transfer-list",
+    "title": "Transfer List",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Move checked records between two lists while keeping checked state separate from list membership.",
+    "answer": "Use stable IDs and two membership collections, plus a set of checked IDs. A transfer moves only eligible checked records, preserves order, and clears or reconciles checks according to the contract. Derive select-all and indeterminate states from actual eligible membership. Disable moves that would do nothing.",
+    "checks": [
+      "No selection",
+      "move all",
+      "partial selection",
+      "filtered lists",
+      "duplicate labels",
+      "reverse transfer."
+    ],
+    "followUp": "Add per-list search while defining whether Select all affects visible or all eligible records.",
+    "sourceUrl": "https://namastedev.com/practice/transfer-list"
+  },
+  {
+    "slug": "star-rating",
+    "title": "Star Rating",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Build a keyboard-usable rating control with separate hover preview and committed rating.",
+    "answer": "Store the committed rating and transient preview independently. Render a radiogroup or an equivalent fully implemented interaction pattern, not decorative clickable icons alone. Pointer exit restores the committed view. Arrow keys should move through valid options and accessible labels must identify values. Decide whether zero/unrated is allowed.",
+    "checks": [
+      "Unrated",
+      "hover without commit",
+      "pointer leave",
+      "keyboard selection",
+      "read-only mode."
+    ],
+    "followUp": "Support fractional display without pretending half-star selection follows automatically from integer radios.",
+    "sourceUrl": "https://namastedev.com/practice/star-rating"
+  },
+  {
+    "slug": "expense-tracker",
+    "title": "Expense Tracker",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Track dated expenses by category and derive totals under an explicit currency policy.",
+    "answer": "Store immutable expense records with stable IDs and validated amounts. Prefer minor-unit integers for fixed-decimal currencies and derive category totals from the records. Keep edit drafts separate from committed entries. Specify how refunds or negative values behave rather than rejecting them accidentally. Date filtering should use a chosen calendar timezone.",
+    "checks": [
+      "Zero/negative policy",
+      "editing",
+      "deletion",
+      "category totals",
+      "month boundary",
+      "rounding."
+    ],
+    "followUp": "Add multiple currencies with explicit conversion rates and avoid summing unlike monetary units.",
+    "sourceUrl": "https://namastedev.com/practice/expense-tracker"
+  },
+  {
+    "slug": "social-share",
+    "title": "Social Share",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Offer sharing actions for a page URL with a usable fallback when native sharing is unavailable.",
+    "answer": "Invoke the Web Share API from a user gesture when supported and fall back to a copyable URL or explicit provider links. Encode URL parameters separately instead of concatenating unescaped text. Treat user cancellation differently from a platform error. New-window links need a deliberate relationship policy and all icon controls need accessible names.",
+    "checks": [
+      "Native support missing",
+      "user cancels",
+      "URL with reserved characters",
+      "clipboard denial",
+      "popup blocking."
+    ],
+    "followUp": "Add file sharing using capability checks without assuming every browser accepts the same file types.",
+    "sourceUrl": "https://namastedev.com/practice/social-share"
+  },
+  {
+    "slug": "sortable-list",
+    "title": "Sortable List",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Reorder a list while preserving item identity and exposing move-up/move-down controls.",
+    "answer": "Represent order as IDs or immutable records and compute a new array for each move. Keep dragged position transient until commitment, and use pointer capture or a mature drag abstraction when needed. Render focusable alternative controls and restore focus to the moved item. Do not use array positions as keys while reordering stateful rows.",
+    "checks": [
+      "First/last item",
+      "cancelled move",
+      "repeated reorder",
+      "focus after move",
+      "equal labels."
+    ],
+    "followUp": "Virtualize a large list while keeping keyboard announcements and drag hit targets consistent.",
+    "sourceUrl": "https://namastedev.com/practice/sortable-list"
+  },
+  {
+    "slug": "throttle",
+    "title": "Throttle",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Limit function invocation rate with explicit leading/trailing behavior and cancel support.",
+    "answer": "Track the last invocation time, pending timer, and latest receiver/arguments. A leading call may run immediately; a trailing call uses the newest suppressed arguments at the allowed boundary. Define the single-call behavior and cleanup semantics carefully so one interaction does not fire twice unexpectedly. Use an injected monotonic clock in tests instead of relying on wall-clock timing luck.",
+    "checks": [
+      "Single call",
+      "burst",
+      "boundary time",
+      "newest arguments",
+      "cancel",
+      "receiver",
+      "long idle."
+    ],
+    "followUp": "Add flush and define whether it changes the next allowed invocation deadline.",
+    "sourceUrl": "https://namastedev.com/practice/throttle"
+  },
+  {
+    "slug": "word-counter",
+    "title": "Word Counter",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Count words in editable text according to a declared segmentation policy.",
+    "answer": "For a whitespace-delimited exercise, trim, split on runs of whitespace, and return zero for blank text. Explain that this is not universal linguistic segmentation. For multilingual text, a locale-aware segmenter can identify word-like units more accurately. Derive counts from input and avoid running a costly parser multiple times per render.",
+    "checks": [
+      "Blank",
+      "repeated whitespace",
+      "newlines",
+      "punctuation-only input",
+      "languages without spaces."
+    ],
+    "followUp": "Display both a simple whitespace count and a locale-aware count with their definitions.",
+    "sourceUrl": "https://namastedev.com/practice/word-counter"
+  },
+  {
+    "slug": "dice-roller",
+    "title": "Dice Roller",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Roll a configurable number of dice and keep the result stable until the next roll.",
+    "answer": "Validate die count and sides, then generate each result once in the roll handler rather than during rendering. Store the outcomes and derive the total. Inject the random source for deterministic tests. Use integer mapping appropriate to the random source and avoid claiming that a decorative animation proves fairness.",
+    "checks": [
+      "Minimum sides",
+      "multiple dice",
+      "deterministic random source",
+      "rerender without reroll",
+      "invalid configuration."
+    ],
+    "followUp": "Replace pseudorandom rolls with a cryptographic uniform integer sampler and explain modulo bias.",
+    "sourceUrl": "https://namastedev.com/practice/dice-roller"
+  },
+  {
+    "slug": "promiseall-with-concurrency-limit",
+    "title": "PromiseAll With Concurrency Limit",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Run lazy async task factories with bounded concurrency and input-order results.",
+    "answer": "Promises already created may already be running, so accept factories. Maintain the next input index and a fixed number of worker loops. Each worker claims an index, awaits its factory, and writes the result into that index. On rejection, stop launching new work under a fail-fast contract; already running tasks need cooperative cancellation and may still finish.",
+    "checks": [
+      "Empty tasks",
+      "limit one",
+      "limit above count",
+      "out-of-order completion",
+      "synchronous throw",
+      "rejection."
+    ],
+    "followUp": "Propagate an AbortSignal and distinguish rejecting the aggregate promise from undoing work already sent to a server.",
+    "sourceUrl": "https://namastedev.com/practice/promiseall-with-concurrency-limit"
+  },
+  {
+    "slug": "draw-circles",
+    "title": "Draw Circles",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Create circles at pointer positions on a drawing surface with undo and clear behavior.",
+    "answer": "Convert client coordinates to local surface coordinates using its bounding rectangle, and account for scaling if logical and CSS sizes differ. Store immutable circle records with stable IDs. Pointer events support mouse, touch, and pen through one path. A click outside the drawable area must not create invalid geometry.",
+    "checks": [
+      "Scrolled page",
+      "scaled surface",
+      "boundary click",
+      "undo",
+      "clear",
+      "touch input."
+    ],
+    "followUp": "Add redo and a keyboard placement mode without coupling geometry to browser viewport coordinates.",
+    "sourceUrl": "https://namastedev.com/practice/draw-circles"
+  },
+  {
+    "slug": "grid-lights-ii",
+    "title": "Grid Lights II",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Record an activation order and replay deactivation at a fixed cadence after the grid is complete.",
+    "answer": "Keep activated cell IDs and an explicit replay state. Reject duplicate activation and ignore user changes while replay is active unless interruption is a documented feature. Own one timer sequence with cleanup and advance through recorded order deterministically. Do not schedule independent closures that all capture an outdated array.",
+    "checks": [
+      "Duplicate cell",
+      "full activation",
+      "replay order",
+      "unmount",
+      "rapid clicks at replay start."
+    ],
+    "followUp": "Support pause/resume and reverse replay using a single reducer-defined state machine.",
+    "sourceUrl": "https://namastedev.com/practice/grid-lights-ii"
+  },
+  {
+    "slug": "pin-items",
+    "title": "Pin Items",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Pin records above the ordinary list without losing their relative order or duplicating rows.",
+    "answer": "Store pinned IDs separately from the underlying records. Derive the pinned and unpinned partitions, then concatenate them according to a documented ordering policy. Pinning should not mutate source data or replace stable keys. If search hides a pinned record, keep its pin intent unless the product explicitly removes it.",
+    "checks": [
+      "Pin/unpin",
+      "repeated pin",
+      "filtered pinned item",
+      "deleted item",
+      "order preservation."
+    ],
+    "followUp": "Synchronize pin preferences across devices with versioned updates instead of index-based writes.",
+    "sourceUrl": "https://namastedev.com/practice/pin-items"
+  },
+  {
+    "slug": "priority-queue",
+    "title": "Priority Queue",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Implement a binary heap with push, peek, and pop under a comparator contract.",
+    "answer": "Use array indices for parent and children. Push by appending and sifting up; pop by replacing the root with the last item and sifting down. Peek is O(1), insertion/removal O(log n), and bottom-up heap construction O(n). Define comparator direction and add an insertion sequence when equal priorities require FIFO stability.",
+    "checks": [
+      "Empty pop",
+      "one item",
+      "equal priorities",
+      "reverse comparator",
+      "heap invariant after every operation."
+    ],
+    "followUp": "Support priority updates using an index map and explain why changing an item in place breaks the heap unless it is repaired.",
+    "sourceUrl": "https://namastedev.com/practice/priority-queue"
+  },
+  {
+    "slug": "memoization",
+    "title": "Memoization",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Cache results of a pure function under an explicit argument-identity and eviction policy.",
+    "answer": "Choose keys that match the function’s semantics. JSON.stringify is not a universal argument key because it loses values, can throw, and does not preserve object identity. A nested Map/WeakMap argument trie is one alternative. Cache presence separately from a falsey result, preserve the receiver if required, and bound long-lived caches. Async rejection needs an explicit cache-invalidation policy.",
+    "checks": [
+      "Falsey result",
+      "multiple arguments",
+      "object identity",
+      "thrown error",
+      "async rejection",
+      "eviction."
+    ],
+    "followUp": "Combine memoization with LRU capacity and document whether concurrent callers share a pending promise.",
+    "sourceUrl": "https://namastedev.com/practice/memoization"
+  },
+  {
+    "slug": "notification-bell",
+    "title": "Notification Bell",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Build a notification disclosure with unread counts and idempotent mark-as-read actions.",
+    "answer": "Keep notification identity and read state in records and derive unread count. Opening the panel and marking read are separate product choices; define them explicitly. Use a disclosure button with an accessible name that includes unread context, and preserve keyboard access inside the panel. Apply server events by stable IDs to avoid duplicated unread entries.",
+    "checks": [
+      "Empty panel",
+      "duplicate event",
+      "mark twice",
+      "new arrival while open",
+      "keyboard dismissal."
+    ],
+    "followUp": "Add server acknowledgements so delayed read updates cannot resurrect old unread states.",
+    "sourceUrl": "https://namastedev.com/practice/notification-bell"
+  },
+  {
+    "slug": "emoji-replacer",
+    "title": "Emoji Replacer",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Replace a documented set of textual tokens with emoji while preserving unmatched text.",
+    "answer": "Choose exact token boundaries and a deterministic mapping. Scan once or use an escaped alternation ordered to avoid partial overlapping matches. Keep input text as text, not injected HTML. If replacement is performed inside an editor, preserving selection and composition is a separate requirement; a derived preview is much simpler.",
+    "checks": [
+      "Adjacent tokens",
+      "unknown token",
+      "overlapping names",
+      "punctuation",
+      "composing text."
+    ],
+    "followUp": "Implement an editable rich-text version and explain caret mapping across replacements.",
+    "sourceUrl": "https://namastedev.com/practice/emoji-replacer"
+  },
+  {
+    "slug": "searchable-dropdown",
+    "title": "Searchable Dropdown",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Let users filter and select an option with keyboard navigation and an explicit empty state.",
+    "answer": "Separate input query, highlighted option, selected value, and popup visibility. Use stable option IDs and reconcile the highlight when matches change. Follow combobox/listbox semantics with aria-expanded, aria-controls, and aria-activedescendant as appropriate. Enter commits the highlighted eligible option, while Escape closes without an accidental value change.",
+    "checks": [
+      "No results",
+      "arrow navigation",
+      "disabled option",
+      "Escape",
+      "changing query",
+      "duplicate labels."
+    ],
+    "followUp": "Fetch suggestions asynchronously and prevent an older response from replacing newer matches.",
+    "sourceUrl": "https://namastedev.com/practice/searchable-dropdown"
+  },
+  {
+    "slug": "sum-of-consecutive-integers",
+    "title": "Sum of Consecutive Integers",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Count representations of a positive integer as a sum of one or more consecutive positive integers.",
+    "answer": "For a sequence length k, subtract k(k-1)/2 from the target and require the remainder to be a positive multiple of k. Iterate lengths while the smallest possible sum 1+…+k does not exceed the target. This is O(sqrt n) arithmetic steps. Be explicit that zero/negative starting values are excluded; allowing them changes the answer and bounds.",
+    "checks": [
+      "Target one",
+      "power of two",
+      "odd target",
+      "multiple representations",
+      "zero/invalid input."
+    ],
+    "followUp": "Return each starting value and length, and relate the count to odd divisors under the same positivity assumptions.",
+    "sourceUrl": "https://namastedev.com/practice/sum-of-consecutive-integers"
+  },
+  {
+    "slug": "deep-clone-object",
+    "title": "Deep Clone Object",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Clone a documented object graph while preserving cycles and repeated-reference relationships.",
+    "answer": "Use a source-to-clone map and register each clone before traversing children, so cycles terminate and shared references remain shared. Handle supported types explicitly; arrays and plain objects are not enough for Date, Map, Set, or typed buffers. Functions, DOM nodes, accessors, and custom prototypes require declared behavior. Consider structuredClone when its supported type set matches the contract.",
+    "checks": [
+      "Self-cycle",
+      "shared child",
+      "Date/Map policy",
+      "symbol keys policy",
+      "array holes",
+      "custom prototype."
+    ],
+    "followUp": "Preserve property descriptors and explain why copying getters can trigger side effects if implemented by reading values.",
+    "sourceUrl": "https://namastedev.com/practice/deep-clone-object"
+  },
+  {
+    "slug": "grid-lights",
+    "title": "Grid Lights",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Toggle cells in a configurable light grid and report the number currently active.",
+    "answer": "Represent active cells by stable coordinates or IDs and derive the count. Use native buttons with accessible names and pressed states instead of unlabeled colored squares. Toggle with an immutable set update. If cells have dependencies, encode that rule separately rather than mutating the DOM directly.",
+    "checks": [
+      "Toggle twice",
+      "all on/off",
+      "changing grid dimensions",
+      "keyboard activation",
+      "unique coordinates."
+    ],
+    "followUp": "Add a neighborhood-toggle puzzle and specify whether invalid cells or repeated events are ignored.",
+    "sourceUrl": "https://namastedev.com/practice/grid-lights"
+  },
+  {
+    "slug": "debounce",
+    "title": "Debounce",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Delay invocation until calls have been quiet for a fixed interval, retaining the latest receiver and arguments.",
+    "answer": "Keep a timer handle and clear/restart it on every call. At expiry invoke with the last receiver/arguments and clear retained references. Add cancel to discard pending work and define flush if included. Leading/trailing options require explicit semantics rather than bolting on an extra immediate call. Test using fake time to avoid flaky sleeps.",
+    "checks": [
+      "One call",
+      "burst",
+      "latest arguments",
+      "receiver",
+      "cancel",
+      "repeated use after expiry."
+    ],
+    "followUp": "Add leading/trailing options and prove that a single leading call does not accidentally trigger an unwanted trailing duplicate.",
+    "sourceUrl": "https://namastedev.com/practice/debounce"
+  },
+  {
+    "slug": "pawn-moves",
+    "title": "Pawn Moves",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Highlight educational pawn moves on a board using a declared orientation and occupancy model.",
+    "answer": "Represent squares as row/column coordinates and separate straight movement from diagonal captures. A pawn advances only into empty squares; a two-step start move requires both squares empty, and captures need an opposing piece. State that en passant, promotion, and king safety are excluded unless implemented explicitly.",
+    "checks": [
+      "Board edge",
+      "blocked forward square",
+      "blocked two-step path",
+      "own/opponent diagonal occupant."
+    ],
+    "followUp": "Add promotion and en passant with move-history requirements rather than position alone.",
+    "sourceUrl": "https://namastedev.com/practice/pawn-moves"
+  },
+  {
+    "slug": "cinema-hall",
+    "title": "Cinema Hall",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Select available cinema seats and compute a local total without allowing reserved seats to be toggled.",
+    "answer": "Use stable seat IDs and separate reserved inventory from local selection. Derive totals from selected available seats. A local selected state is only intent; a booking server must enforce availability atomically and expire holds. Render seat status through text/accessible labels as well as color, and provide predictable keyboard navigation for a large grid.",
+    "checks": [
+      "Reserved seat",
+      "toggle selection",
+      "pricing category",
+      "availability refresh",
+      "empty hall."
+    ],
+    "followUp": "Design timed reservation holds with server authority and explain the race between two clients selecting the same seat.",
+    "sourceUrl": "https://namastedev.com/practice/cinema-hall"
+  },
+  {
+    "slug": "reusable-toast",
+    "title": "Reusable Toast",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Create a notification queue with unique IDs, dismissal, and predictable auto-close behavior.",
+    "answer": "Own the queue in one provider or local controller and assign each toast its own deadline. Removing one toast must not clear unrelated timers. Use polite status announcements for ordinary messages and reserve urgent alerts for actual urgency. Pause timers if required by the product, preserve a dismiss button, and clean up timers when the controller unmounts.",
+    "checks": [
+      "Multiple toasts",
+      "manual dismissal",
+      "expiration",
+      "repeated messages",
+      "unmount cleanup."
+    ],
+    "followUp": "Add action buttons whose focus and timeout policy do not remove content while a user is interacting.",
+    "sourceUrl": "https://namastedev.com/practice/reusable-toast"
+  },
+  {
+    "slug": "product-rating-heatmap",
+    "title": "Product Rating Heatmap",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Display a product-by-rating intensity matrix with a legend and a readable empty-data state.",
+    "answer": "Normalize counts using a documented global or per-row scale, since the choice changes interpretation. Validate numeric values and distinguish missing from zero. Render row/column labels and text alternatives so color is not the only information channel. Memoize expensive aggregation only after measuring; the displayed color should be derived from counts.",
+    "checks": [
+      "All zeros",
+      "one extreme value",
+      "missing cells",
+      "negative invalid count",
+      "long product labels."
+    ],
+    "followUp": "Switch between absolute and relative scales and explain how each can mislead comparisons.",
+    "sourceUrl": "https://namastedev.com/practice/product-rating-heatmap"
+  },
+  {
+    "slug": "slugify-a-string",
+    "title": "Slugify a String",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Derive a predictable lowercase URL slug from editable text using an explicit character policy.",
+    "answer": "Choose Unicode preservation or transliteration deliberately. Normalize text, trim, fold case, replace allowed separator runs with a hyphen, and remove outer separators. Do not assume a slug is unique or use it as the sole stable database identity. Keep the raw title and generated preview separate when users may customize a slug.",
+    "checks": [
+      "Punctuation-only title",
+      "accents",
+      "repeated separators",
+      "emoji",
+      "empty output",
+      "collisions."
+    ],
+    "followUp": "Add reserved-word checks and server-side uniqueness without changing existing public URLs silently.",
+    "sourceUrl": "https://namastedev.com/practice/slugify-a-string"
+  },
+  {
+    "slug": "list-sorter",
+    "title": "List Sorter",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Sort a displayed collection by a selected field and direction without mutating its source.",
+    "answer": "Store only sort configuration and derive a copied sorted array. Compare strings with a declared locale/collation rule and numbers numerically. Define null/missing-value ordering and add a stable tie-breaker such as ID. Sort indicators and accessible labels should describe the active configuration rather than inferred array order.",
+    "checks": [
+      "Equal keys",
+      "numeric-looking strings",
+      "null values",
+      "direction reversal",
+      "unchanged source."
+    ],
+    "followUp": "Move sorting to a paginated server and keep its ordering and tie-breakers consistent with cursor pagination.",
+    "sourceUrl": "https://namastedev.com/practice/list-sorter"
+  },
+  {
+    "slug": "knight-moves",
+    "title": "Knight Moves",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Show legal geometric knight destinations from a selected board square.",
+    "answer": "Generate the eight relative L-shaped offsets, filter to board bounds, and exclude squares occupied by the same side. Unlike sliding pieces, intermediate occupancy does not block a knight. Keep the geometric movement exercise separate from full chess legality involving checks and king safety. Provide coordinate labels beyond visual highlights.",
+    "checks": [
+      "Corner",
+      "center",
+      "same-side target",
+      "opponent target",
+      "empty board",
+      "changed selection."
+    ],
+    "followUp": "Use BFS to compute the minimum knight moves between two squares on an arbitrary board.",
+    "sourceUrl": "https://namastedev.com/practice/knight-moves"
+  },
+  {
+    "slug": "spiral-matrix-pathfinder",
+    "title": "Spiral Matrix Pathfinder",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Return matrix cells in clockwise spiral order without revisiting a cell.",
+    "answer": "Maintain top, bottom, left, and right boundaries. Traverse the top row and right column, shrink those boundaries, then traverse the bottom row and left column only if a valid rectangle remains. These guard checks prevent duplication for a final single row or column. Time is O(rows*cols) and auxiliary boundary state is O(1), excluding output.",
+    "checks": [
+      "One row",
+      "one column",
+      "odd square",
+      "rectangle",
+      "empty matrix",
+      "no duplicate center."
+    ],
+    "followUp": "Return coordinates as well as values and define obstacle behavior as a separate pathfinding problem.",
+    "sourceUrl": "https://namastedev.com/practice/spiral-matrix-pathfinder"
+  },
+  {
+    "slug": "queen-moves",
+    "title": "Queen Moves",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Highlight queen rays until a blocker is reached on a coordinate board.",
+    "answer": "Combine the four orthogonal and four diagonal directions. Walk outward square by square, adding empty squares, optionally adding the first opposing occupant, and then stop. Never continue through a piece or include a same-side occupied destination. Treat full king-safety checks as a separate layer from this geometric model.",
+    "checks": [
+      "Corner rays",
+      "friendly blocker",
+      "opponent capture",
+      "adjacent blocker",
+      "no wrap across edges."
+    ],
+    "followUp": "Reuse a ray-generation helper for rook and bishop movement without mixing their distinct direction sets.",
+    "sourceUrl": "https://namastedev.com/practice/queen-moves"
+  },
+  {
+    "slug": "lazy-evaluation",
+    "title": "Lazy Evaluation",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Build a lazy transformation pipeline that performs work only when consumed.",
+    "answer": "Represent the pipeline as iterable adapters or generator functions for map/filter/take. Each consumer pull advances only enough upstream work to produce the next result. Do not materialize intermediate arrays if laziness is the goal. Define one-shot versus reusable sources and propagate iterator return/cleanup when a downstream consumer stops early.",
+    "checks": [
+      "No consumption",
+      "take zero",
+      "short-circuit",
+      "exhausted source",
+      "generator cleanup",
+      "source error."
+    ],
+    "followUp": "Add async iterables with cancellation and bounded prefetch rather than launching every task eagerly.",
+    "sourceUrl": "https://namastedev.com/practice/lazy-evaluation"
+  },
+  {
+    "slug": "bmi-calculator",
+    "title": "BMI Calculator",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Build an educational body-mass-index calculator with explicit unit conversion and invalid-input handling.",
+    "answer": "Validate finite positive height and mass, convert height to metres, and compute mass divided by height squared. Keep raw fields editable and clear stale output on invalid submission. State units beside fields and explain that a numerical BMI is a limited screening calculation, not an individualized assessment or diagnosis.",
+    "checks": [
+      "Zero height",
+      "negative mass",
+      "centimetre conversion",
+      "blank input",
+      "unit switching."
+    ],
+    "followUp": "Add unit-preserving conversions so switching units does not silently reinterpret the same raw number.",
+    "sourceUrl": "https://namastedev.com/practice/bmi-calculator"
+  },
+  {
+    "slug": "longest-substring-no-repeats",
+    "title": "Longest Substring No Repeats",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Find the longest contiguous substring containing no repeated symbols under a defined character unit.",
+    "answer": "Use a sliding window and a map of each symbol’s most recent position. On repetition, move the left boundary to max(currentLeft,lastSeen+1), never backwards. Update the best window as the right side advances. This is O(n) time and O(alphabet) space over the chosen token sequence; UTF-16 indices and code-point indices must not be mixed.",
+    "checks": [
+      "All unique",
+      "all same",
+      "repeated symbol outside current window",
+      "empty text",
+      "emoji unit policy."
+    ],
+    "followUp": "Return the actual substring while preserving correct offsets when iterating Unicode code points.",
+    "sourceUrl": "https://namastedev.com/practice/longest-substring-no-repeats"
+  },
+  {
+    "slug": "traffic-lights",
+    "title": "Traffic Lights",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Model a timed traffic-light demonstration as explicit states with one active timer.",
+    "answer": "Represent the active light and a transition table containing the next state and duration. Schedule one timeout for the current state and cancel it on pause, state change, or unmount. Use functional transitions or a reducer to avoid stale closures. Make color labels visible; this UI demonstration is not a physical traffic-control safety system.",
+    "checks": [
+      "Transition sequence",
+      "pause/resume policy",
+      "unmount",
+      "changed duration",
+      "repeated start."
+    ],
+    "followUp": "Introduce an all-red transition state and validate that no path activates conflicting lights.",
+    "sourceUrl": "https://namastedev.com/practice/traffic-lights"
+  },
+  {
+    "slug": "concurrency-limited-task-scheduler",
+    "title": "Concurrency Limited Task Scheduler",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Schedule tasks as they arrive while enforcing a maximum active count and an explicit cancellation contract.",
+    "answer": "Keep a queue and active count. Starting a task consumes one slot; completion, synchronous throw, or rejection releases it in a finally path before pumping more work. Associate each queued task with its own resolve/reject pair. Cancelling queued work removes/rejects it; cancelling active work needs cooperation from the task. Queue capacity is separate from active concurrency.",
+    "checks": [
+      "Queue while busy",
+      "rejection releases slot",
+      "synchronous throw",
+      "cancel queued",
+      "zero/invalid limit."
+    ],
+    "followUp": "Add backpressure and fairness priorities without starving old tasks indefinitely.",
+    "sourceUrl": "https://namastedev.com/practice/concurrency-limited-task-scheduler"
+  },
+  {
+    "slug": "find-the-single-element-in-a-sorted-array",
+    "title": "Find the Single Element in a Sorted Array",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Find the lone value in a sorted odd-length array where every other value occurs exactly twice.",
+    "answer": "Use binary search and align the midpoint to an even index. If nums[mid] equals nums[mid+1], intact pairs still occupy the left portion and the singleton lies to the right; otherwise it lies at or left of mid. Shrink until one index remains. This is O(log n) time and O(1) space under the exact sorted-pair precondition.",
+    "checks": [
+      "Singleton first/last",
+      "one-element array",
+      "ordinary middle",
+      "invalid precondition policy."
+    ],
+    "followUp": "Explain why the parity invariant fails if counts are not exactly two or the array is not sorted.",
+    "sourceUrl": "https://namastedev.com/practice/find-the-single-element-in-a-sorted-array"
+  },
+  {
+    "slug": "cards-carousel",
+    "title": "Cards Carousel",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Show a responsive window of cards with navigation that respects the number currently visible.",
+    "answer": "Track a start index and derive the visible slice from item count and measured cards-per-view. The maximum start is max(0,total-visible), not total-1. Reconcile the index when the viewport or data changes. Keep card identities stable and ensure offscreen interactive elements are not accidentally reachable if the chosen implementation hides them.",
+    "checks": [
+      "Fewer items than slots",
+      "final partial group",
+      "resize",
+      "removed card",
+      "repeated labels."
+    ],
+    "followUp": "Add virtualized card rendering and preserve focus when a previously visible card moves offscreen.",
+    "sourceUrl": "https://namastedev.com/practice/cards-carousel"
+  },
+  {
+    "slug": "event-emitter",
+    "title": "Event Emitter",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Implement subscription, emission, and unsubscription with defined mutation-during-emit semantics.",
+    "answer": "Store listeners per event and return an idempotent unsubscribe function. For emission, iterate a snapshot if listeners added or removed mid-emission should not change that emission. Decide whether one throwing listener stops later listeners or is collected/reported. A once listener should be removed before invocation to avoid reentrant double execution.",
+    "checks": [
+      "Unsubscribe twice",
+      "add/remove during emit",
+      "reentrant emit",
+      "once listener throws",
+      "duplicate subscriptions."
+    ],
+    "followUp": "Add an async emit mode with a deliberate sequential versus parallel error policy.",
+    "sourceUrl": "https://namastedev.com/practice/event-emitter"
+  },
+  {
+    "slug": "list-format",
+    "title": "List Format",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Format a list into a human-readable conjunction with explicit empty, two-item, and locale behavior.",
+    "answer": "For a locale-aware product, use Intl.ListFormat with the intended style and type. A teaching implementation can define a narrow English format: empty string for no items, the item for one, conjunction for two, and comma-separated prefix plus final conjunction for more. Do not claim that punctuation or word order generalizes across languages.",
+    "checks": [
+      "Empty",
+      "one",
+      "two",
+      "three",
+      "items containing commas",
+      "locale differences."
+    ],
+    "followUp": "Offer a count-limited summary that reports remaining items without confusing formatting with truncation policy.",
+    "sourceUrl": "https://namastedev.com/practice/list-format"
+  },
+  {
+    "slug": "map-async-limit",
+    "title": "Map Async Limit",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Apply an asynchronous mapper to inputs while preserving order and limiting in-flight mapper calls.",
+    "answer": "Assign each input a fixed result index and let a bounded worker pool claim the next index. Await each mapper before the worker takes another item. A mapper may throw synchronously or reject, and both must follow the aggregate error policy. Validate the limit before starting. This bounds active work, not necessarily output memory, which remains proportional to input.",
+    "checks": [
+      "Empty input",
+      "out-of-order completion",
+      "limit one",
+      "mapper throws",
+      "rejected promise",
+      "invalid limit."
+    ],
+    "followUp": "Return an async iterator for streaming output and compare input-order buffering with completion-order delivery.",
+    "sourceUrl": "https://namastedev.com/practice/map-async-limit"
+  },
+  {
+    "slug": "rock-paper-scissor",
+    "title": "Rock Paper Scissor",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Create a round-based hand game with reproducible opponent choices and explicit score updates.",
+    "answer": "Generate the opponent choice in the user-action handler, then derive win/draw/loss from a small outcome table. Update the score once per committed round and store history if needed. Keep round result separate from totals. Inject the random source for tests and reject unsupported choices rather than falling through to an accidental win.",
+    "checks": [
+      "All nine choice pairs",
+      "repeated rounds",
+      "draw",
+      "reset",
+      "invalid choice."
+    ],
+    "followUp": "Add best-of-N rounds with a terminal match state and an unambiguous restart action.",
+    "sourceUrl": "https://namastedev.com/practice/rock-paper-scissor"
+  },
+  {
+    "slug": "undo-redo",
+    "title": "Undo Redo",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Build editable state with undo/redo history and branch invalidation after a new edit.",
+    "answer": "Represent past, present, and future. A new committed action pushes the old present into past and clears future. Undo moves present to future and restores the last past entry; redo performs the inverse. Avoid recording transient pointer movement unless intended, and cap history or store patches when snapshots become expensive.",
+    "checks": [
+      "Undo at start",
+      "redo at end",
+      "undo then new edit",
+      "repeated identical state",
+      "history cap."
+    ],
+    "followUp": "Group a drag or typing burst into one undoable transaction rather than hundreds of snapshots.",
+    "sourceUrl": "https://namastedev.com/practice/undo-redo"
+  },
+  {
+    "slug": "color-code-game",
+    "title": "Color Code Game",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Create a color-matching round with one immutable target and a clear success/reset lifecycle.",
+    "answer": "Generate target/options once per round and keep the answer fixed while the user interacts. Ensure distractors are distinct if uniqueness is part of the contract. Store selected answer and round status; do not infer correctness from DOM color serialization, which browsers may normalize. Provide non-color labels and deterministic random fixtures for testing.",
+    "checks": [
+      "Correct/incorrect choice",
+      "duplicate distractor prevention",
+      "restart",
+      "rerender without regeneration."
+    ],
+    "followUp": "Offer an accessible non-color challenge mode and define how hints affect scoring.",
+    "sourceUrl": "https://namastedev.com/practice/color-code-game"
+  },
+  {
+    "slug": "stopwatch",
+    "title": "Stopwatch",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Implement a stopwatch whose display remains accurate when timer callbacks are delayed.",
+    "answer": "Use a monotonic clock for elapsed duration, storing accumulated time and the current run’s start timestamp. The interval requests redraws; it is not the source of elapsed truth. Pausing adds the difference to the accumulated duration, and resuming starts a new segment. Clean up the refresh interval and define reset behavior while running.",
+    "checks": [
+      "Start/pause/resume",
+      "reset",
+      "delayed interval",
+      "rapid start clicks",
+      "unmount."
+    ],
+    "followUp": "Add lap times and verify that background-tab throttling does not cause elapsed time to drift.",
+    "sourceUrl": "https://namastedev.com/practice/stopwatch"
+  },
+  {
+    "slug": "rook-moves",
+    "title": "Rook Moves",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Compute rook destinations using four bounded rays and occupancy rules.",
+    "answer": "Walk horizontally and vertically from the origin. Add empty squares until the first blocker; include an opposing blocker as a possible capture and exclude a friendly blocker. Stop that ray either way. Keep row/column bounds explicit to prevent linear-index wraparound. Castling and king safety require additional state beyond this movement exercise.",
+    "checks": [
+      "Corner",
+      "edge",
+      "friendly/opposing blockers",
+      "adjacent blocker",
+      "row wrap prevention."
+    ],
+    "followUp": "Separate geometric destinations from legal moves after filtering for an exposed king.",
+    "sourceUrl": "https://namastedev.com/practice/rook-moves"
+  },
+  {
+    "slug": "deep-omit",
+    "title": "Deep Omit",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Return a new JSON-like structure with chosen property names omitted at every object depth.",
+    "answer": "Traverse supported containers and build new ones without changing the source. Remove matching own keys on objects and recursively transform array elements rather than deleting array indices accidentally. Define whether key names or full paths are matched. Preserve repeated references/cycles only if graph support is part of the contract; otherwise reject cycles clearly.",
+    "checks": [
+      "Nested key",
+      "array of objects",
+      "null",
+      "matching array-looking key",
+      "unchanged source",
+      "cycle policy."
+    ],
+    "followUp": "Support path-pattern omission and explain how it differs from removing every key with the same name.",
+    "sourceUrl": "https://namastedev.com/practice/deep-omit"
+  },
+  {
+    "slug": "shortest-distance-from-source-bfs",
+    "title": "Shortest Distance from Source (BFS)",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Find shortest edge-count distances from one source in an unweighted graph.",
+    "answer": "Use a queue, initialize the source distance to zero, and mark vertices when enqueued so each vertex enters once. Each newly discovered neighbor has its parent distance plus one. Use a head index rather than repeated array shift to preserve linear queue behavior. BFS is O(V+E); it does not solve arbitrary weighted shortest paths.",
+    "checks": [
+      "Disconnected node",
+      "self-loop",
+      "multiple equal paths",
+      "invalid source",
+      "directed-edge policy."
+    ],
+    "followUp": "Return parent links for path reconstruction and define deterministic tie-breaking among equally short paths.",
+    "sourceUrl": "https://namastedev.com/practice/shortest-distance-from-source-bfs"
+  },
+  {
+    "slug": "topological-sort-bfs",
+    "title": "Topological Sort (BFS)",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Order a directed acyclic graph using indegrees and detect whether a cycle blocks completion.",
+    "answer": "Compute each vertex’s indegree, enqueue all zero-indegree vertices, and remove them one by one while decrementing outgoing neighbors. Enqueue a neighbor exactly when its indegree becomes zero. If fewer than V vertices are emitted, the graph contains a cycle. Multiple valid orders exist; use a priority queue if a lexicographic choice is required.",
+    "checks": [
+      "Independent nodes",
+      "diamond",
+      "cycle",
+      "self-loop",
+      "empty graph",
+      "parallel-edge accounting."
+    ],
+    "followUp": "Produce dependency layers for concurrent execution while preserving a separate cycle-reporting path.",
+    "sourceUrl": "https://namastedev.com/practice/topological-sort-bfs"
+  },
+  {
+    "slug": "sum-of-subarray-minimum",
+    "title": "Sum of Subarray Minimum",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Sum the minimum element of every contiguous subarray using contribution counting.",
+    "answer": "For each position count how many subarrays choose that element as their representative minimum, using distances to appropriate smaller boundaries. With duplicates, make one side strict and the other non-strict so equal minima are counted exactly once. Monotonic stacks find boundaries in O(n). If a modulus is required, preserve integer accuracy in multiplication and normalize negative remainders deliberately.",
+    "checks": [
+      "Equal values",
+      "increasing/decreasing sequence",
+      "one item",
+      "negative-value policy",
+      "large contributions."
+    ],
+    "followUp": "Return both minimum and maximum contribution totals and prove the asymmetric duplicate tie rule.",
+    "sourceUrl": "https://namastedev.com/practice/sum-of-subarray-minimum"
+  },
+  {
+    "slug": "modal-in-react",
+    "title": "Modal In React",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Create a reusable dialog that supports Escape, labelled content, and trigger focus restoration.",
+    "answer": "Centralize modal open state and use a native dialog or a proven accessible primitive. The title provides its accessible name, background content must be inert for modal behavior, and focus must remain within the active dialog. Restore focus after close. A portal changes DOM placement, not the responsibility to handle accessibility and cleanup.",
+    "checks": [
+      "Escape",
+      "backdrop policy",
+      "initial focus",
+      "nested trigger",
+      "scrollable content",
+      "unmount while open."
+    ],
+    "followUp": "Handle stacked dialogs with explicit ownership rather than independent global key handlers.",
+    "sourceUrl": "https://namastedev.com/practice/modal-in-react"
+  },
+  {
+    "slug": "image-gallery",
+    "title": "Image Gallery",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Build a thumbnail gallery with an accessible full-image viewer and broken-image handling.",
+    "answer": "Keep selected image ID separate from the underlying list. Use thumbnail buttons with names and open the large image in a labelled dialog if modal viewing is intended. Preserve alternative text and handle missing sources. Reconcile selection when images are removed, and defer large-image loading without shifting the layout unexpectedly.",
+    "checks": [
+      "Empty gallery",
+      "broken source",
+      "opening/closing",
+      "next/previous",
+      "removal of selected image."
+    ],
+    "followUp": "Add a predictable focus policy for keyboard navigation between thumbnails and the lightbox.",
+    "sourceUrl": "https://namastedev.com/practice/image-gallery"
+  },
+  {
+    "slug": "typewriter-message",
+    "title": "Typewriter Message",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Reveal text progressively while supporting restart, changed input, and reduced motion.",
+    "answer": "Track a visible boundary and derive the prefix from a pre-segmented character array. Own one timer and cancel it whenever the message, speed, run state, or component lifetime changes. Do not index by UTF-16 units if the contract promises whole graphemes. Avoid announcing every intermediate letter to screen readers; provide the full message appropriately.",
+    "checks": [
+      "Empty message",
+      "emoji",
+      "changed text mid-run",
+      "restart",
+      "unmount",
+      "reduced motion."
+    ],
+    "followUp": "Add pause/resume using a monotonic deadline rather than assuming each timer fires on time.",
+    "sourceUrl": "https://namastedev.com/practice/typewriter-message"
+  },
+  {
+    "slug": "generate-password",
+    "title": "Generate Password",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Generate a password from selected character classes and a validated length without using ordinary Math.random.",
+    "answer": "Use a cryptographic random source and unbiased bounded sampling. If each selected class must appear, satisfy that constraint explicitly and shuffle the final characters without bias. Reject impossible configurations, such as too few positions for required classes. Keep the generated secret local and avoid logging it; a generated password still needs safe user handling.",
+    "checks": [
+      "No classes",
+      "invalid length",
+      "class coverage",
+      "allowed characters only",
+      "clipboard rejection."
+    ],
+    "followUp": "Explain rejection sampling and why modulo reduction can bias a character distribution.",
+    "sourceUrl": "https://namastedev.com/practice/generate-password"
+  },
+  {
+    "slug": "tic-tac-toe",
+    "title": "Tic Tac Toe",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Implement a two-player board with legal turns, winner detection, draws, and restart.",
+    "answer": "Store the board and next player, then derive winner/draw from the board. Ignore moves into occupied squares or after a terminal state. Check the finite winning-line set after each move. Keep cells as accessible buttons with coordinate/status labels. If move history is added, derive the displayed board from the chosen history step.",
+    "checks": [
+      "Eight winning lines",
+      "draw",
+      "occupied square",
+      "move after win",
+      "reset",
+      "alternating turns."
+    ],
+    "followUp": "Add time-travel history and discard future moves when a player branches from an older board.",
+    "sourceUrl": "https://namastedev.com/practice/tic-tac-toe"
+  },
+  {
+    "slug": "temperature-convertor",
+    "title": "Temperature Convertor",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Create linked temperature fields with one canonical editing source and explicit blank/invalid behavior.",
+    "answer": "Store the most recently edited scale and raw value; derive the other scale through pure conversion. Two effects that write each other’s fields can cause loops and rounding drift. Preserve an incomplete draft instead of forcing every keystroke into a number. Specify formatting precision and never treat blank input as zero accidentally.",
+    "checks": [
+      "Freezing point",
+      "negative values",
+      "blank field",
+      "partial decimal",
+      "edit either scale."
+    ],
+    "followUp": "Add Kelvin with an explicit physical lower-bound policy and separate display rounding from stored precision.",
+    "sourceUrl": "https://namastedev.com/practice/temperature-convertor"
+  },
+  {
+    "slug": "multiselect-dropdown",
+    "title": "Multiselect dropdown",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Select multiple options from a searchable popup while retaining selected items outside the current results.",
+    "answer": "Store selection by option ID and keep query/highlight state separate. Expose a properly implemented multiselect listbox or checkbox-based popup with accessible names. Search changes the view, not the selection. Define clear-all, disabled-option, and maximum-selection rules, and provide keyboard ways to add and remove selections.",
+    "checks": [
+      "Hidden selected option",
+      "disabled option",
+      "maximum count",
+      "clear all",
+      "Escape",
+      "duplicate labels."
+    ],
+    "followUp": "Support remote option loading without discarding selected IDs that are absent from a particular response.",
+    "sourceUrl": "https://namastedev.com/practice/multiselect-dropdown"
+  },
+  {
+    "slug": "captcha-generator",
+    "title": "Captcha Generator",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Build an explicitly labelled demo challenge with regeneration and case-sensitivity rules.",
+    "answer": "Generate a new challenge only when requested and compare the answer using the declared normalization policy. Track attempts against the current challenge so old answers cannot satisfy a new one. Explain that client-generated CAPTCHA content is inspectable and cannot provide a real abuse boundary. A production defense requires server authority and accessible alternatives.",
+    "checks": [
+      "Regenerate",
+      "answer for old challenge",
+      "case policy",
+      "empty answer",
+      "attempt reset."
+    ],
+    "followUp": "Design an accessible server-validated alternative rather than obscuring text more aggressively.",
+    "sourceUrl": "https://namastedev.com/practice/captcha-generator"
+  },
+  {
+    "slug": "confetti-animation",
+    "title": "Confetti Animation",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Trigger a short celebratory effect with bounded particle count and reliable cleanup.",
+    "answer": "Create a finite particle set at the celebration boundary and animate transforms/opacity rather than layout properties. Stop and remove particles when the effect ends or the component unmounts. Cap simultaneous effects and avoid blocking the main thread with per-particle React state updates. Respect reduced-motion preferences with a simpler static acknowledgement.",
+    "checks": [
+      "Repeated trigger",
+      "unmount",
+      "zero particles",
+      "reduced motion",
+      "animation completion."
+    ],
+    "followUp": "Move a larger particle simulation to canvas while bounding frame work and lifetime.",
+    "sourceUrl": "https://namastedev.com/practice/confetti-animation"
+  },
+  {
+    "slug": "search-rotated-array",
+    "title": "Search Rotated Array",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Search a strictly increasing array that was rotated once, assuming no duplicate values.",
+    "answer": "Use binary search. At each step identify which half is sorted, then decide whether the target belongs inside that sorted interval; otherwise search the other half. Keep endpoint inclusivity consistent to avoid losing a target at mid or an edge. This remains O(log n) under the no-duplicates precondition; duplicates can make deciding the sorted side ambiguous.",
+    "checks": [
+      "No rotation",
+      "one item",
+      "target at pivot",
+      "absent target",
+      "first/last element."
+    ],
+    "followUp": "Support duplicates and explain why worst-case runtime can degrade to linear.",
+    "sourceUrl": "https://namastedev.com/practice/search-rotated-array"
+  },
+  {
+    "slug": "lucky-number",
+    "title": "Lucky Number",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Create an entertainment-only number picker with a stable result until an explicit reroll.",
+    "answer": "Define the range, validate any user seed inputs, and generate the result in the action handler. Keep display state deterministic between actions and inject randomness for tests. Present it as a game rather than a predictive claim. Reset result and feedback together so a previous round does not appear to describe a new input.",
+    "checks": [
+      "Range endpoints",
+      "rerender",
+      "repeated reroll",
+      "blank seed",
+      "reset."
+    ],
+    "followUp": "Offer a seeded reproducible mode and explain its predictability compared with random sampling.",
+    "sourceUrl": "https://namastedev.com/practice/lucky-number"
+  },
+  {
+    "slug": "calculator",
+    "title": "Calculator",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Implement a small arithmetic calculator without evaluating arbitrary input as JavaScript.",
+    "answer": "Tokenize a documented grammar and parse operator precedence with a stack or parser. Alternatively model button entry as an explicit accumulator/operator state machine for a simpler calculator. Define unary minus, decimal entry, division by zero, and repeated equals behavior. Arbitrary eval is not a parser and creates both correctness and injection problems.",
+    "checks": [
+      "Operator precedence",
+      "unary minus",
+      "decimal input",
+      "division by zero",
+      "clear",
+      "malformed expression."
+    ],
+    "followUp": "Add parentheses with a real grammar and separate numeric precision policy from input parsing.",
+    "sourceUrl": "https://namastedev.com/practice/calculator"
+  },
+  {
+    "slug": "combination-sum",
+    "title": "Combination Sum",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Return unique combinations of distinct positive candidates that sum to a target, allowing reuse.",
+    "answer": "Sort validated positive candidates and backtrack from a start index. Recurse with the same index to allow reuse, and move the loop index forward to avoid permutation duplicates. Stop when the remaining target is zero and prune candidates larger than it. Zero or negative candidates would invalidate this termination argument and need a different contract.",
+    "checks": [
+      "Target zero",
+      "no solution",
+      "repeated use",
+      "candidate above target",
+      "duplicate input policy."
+    ],
+    "followUp": "Implement a single-use variant and explain how advancing the recursive start index changes the search space.",
+    "sourceUrl": "https://namastedev.com/practice/combination-sum"
+  },
+  {
+    "slug": "markdown-editor",
+    "title": "Markdown Editor",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Show a Markdown preview while treating document content as untrusted input.",
+    "answer": "Keep raw Markdown as the editing source and debounce expensive parsing only when measurements justify it. Use a supported parser and a separate sanitization policy for HTML, dangerous URL schemes, and optional raw HTML. Never pass unsanitized user HTML into the page. Preserve editor selection and expose a text-only reading path where useful.",
+    "checks": [
+      "Raw HTML",
+      "script-like links",
+      "code fences",
+      "malformed Markdown",
+      "long input."
+    ],
+    "followUp": "Add asynchronous preview computation with revision checks so stale parses cannot overwrite newer text.",
+    "sourceUrl": "https://namastedev.com/practice/markdown-editor"
+  },
+  {
+    "slug": "animated-loading-skeleton",
+    "title": "Animated Loading Skeleton",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Represent a loading layout without treating loading placeholders as real content.",
+    "answer": "Keep loading state explicit and reserve approximately the final layout dimensions to reduce shifts. Mark the affected region busy and keep decorative skeleton shapes hidden from assistive technology. Stop looping motion under reduced motion and replace loading with error or empty states when appropriate; an endless shimmer must not hide a failed request.",
+    "checks": [
+      "Loading to success",
+      "failure",
+      "empty response",
+      "reduced motion",
+      "long load",
+      "layout stability."
+    ],
+    "followUp": "Coordinate several regions so partial data can render without resetting already usable sections.",
+    "sourceUrl": "https://namastedev.com/practice/animated-loading-skeleton"
+  },
+  {
+    "slug": "implement-promise-race",
+    "title": "Implement Promise Race",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Create an aggregate promise that adopts the first settlement from an iterable of values or promises.",
+    "answer": "Return a promise and attach fulfillment/rejection handlers through Promise.resolve for each iterable item. The first resolve/reject wins naturally through promise settlement rules; later settlements are ignored. An empty iterable leaves the result pending. Iteration errors must reject the aggregate. This is a focused implementation model, not a full recreation of subclass and species behavior.",
+    "checks": [
+      "Immediate value",
+      "first rejection",
+      "empty iterable",
+      "thenable",
+      "iteration throws",
+      "later settlement ignored."
+    ],
+    "followUp": "Contrast race with any and explain why winning a race does not cancel losing operations.",
+    "sourceUrl": "https://namastedev.com/practice/implement-promise-race"
+  },
+  {
+    "slug": "auto-save-form",
+    "title": "Auto Save Form",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Persist a multi-field form with debouncing, revision-aware acknowledgements, and conflict feedback.",
+    "answer": "Track a draft revision and the last acknowledged snapshot. Send only an intended snapshot, and ignore acknowledgements that refer to an older revision when displaying saved status. Cancel idle timers on edit/unmount, but do not assume cancelling a client request undoes a server write. Server version checks are needed to prevent late writes from overwriting newer persisted state.",
+    "checks": [
+      "Rapid edits",
+      "old response arrives last",
+      "failed save",
+      "reload",
+      "external version conflict."
+    ],
+    "followUp": "Use optimistic concurrency with a document version and an explicit user merge workflow.",
+    "sourceUrl": "https://namastedev.com/practice/auto-save-form"
+  },
+  {
+    "slug": "drag-and-drop",
+    "title": "Drag and Drop",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Reorder a small list through pointer dragging while retaining a non-drag alternative.",
+    "answer": "Separate the dragged item ID and hover target from the committed order. On drop compute one immutable reorder and clear transient state; on cancellation restore the original arrangement. Use stable keys and ensure event listeners or pointer capture are released. Provide move buttons or a complete keyboard drag model instead of assuming pointer input.",
+    "checks": [
+      "Cancelled drag",
+      "drop outside",
+      "adjacent move",
+      "same position",
+      "focus retention."
+    ],
+    "followUp": "Announce drag start, destination, and completion through a restrained live region.",
+    "sourceUrl": "https://namastedev.com/practice/drag-and-drop"
+  },
+  {
+    "slug": "progress-bar-ii",
+    "title": "Progress Bar II",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Run several queued progress tasks with explicit capacity and completion behavior.",
+    "answer": "Model each task as queued, running, completed, failed, or cancelled. Start no more than the allowed active count and release capacity on every terminal path. Derive progress from completed work or elapsed simulation time according to the contract. Keep timers/controllers keyed by task ID and clean them up when tasks disappear.",
+    "checks": [
+      "Capacity limit",
+      "completion frees slot",
+      "cancellation",
+      "failed task",
+      "adding while running."
+    ],
+    "followUp": "Replace simulated time with real byte/work acknowledgements and keep retry progress semantics explicit.",
+    "sourceUrl": "https://namastedev.com/practice/progress-bar-ii"
+  },
+  {
+    "slug": "json-formatter-and-validator",
+    "title": "JSON Formatter and Validator",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Validate JSON text and show formatted output without losing the original invalid draft.",
+    "answer": "Parse using JSON.parse inside try/catch and derive formatted output only after successful parsing. Show a useful error region and clear stale formatted output when the input becomes invalid. Bound input size for a UI utility and do not run large blocking work on every keystroke. JSON is a data format, not arbitrary JavaScript object syntax.",
+    "checks": [
+      "Empty input",
+      "trailing comma",
+      "primitive JSON",
+      "nested arrays",
+      "escaped strings",
+      "large document."
+    ],
+    "followUp": "Move large-document parsing to a Worker and discard stale parse results by revision.",
+    "sourceUrl": "https://namastedev.com/practice/json-formatter-and-validator"
+  },
+  {
+    "slug": "quiz-app",
+    "title": "Quiz App",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Build a question-by-question quiz whose answers, progress, and final score have one clear source of truth.",
+    "answer": "Use stable question IDs and store answers by ID. Derive answered count and score from those answers and the authored scoring rule. Prevent accidental double submission and define whether users may revise previous answers. Model in-progress and completed states explicitly, and make result feedback accessible without forcing unexpected focus changes.",
+    "checks": [
+      "Unanswered question",
+      "revision",
+      "last question",
+      "repeated submit",
+      "restart",
+      "shuffled order."
+    ],
+    "followUp": "Support multiple correct answers with a documented partial-credit policy and reproducible question order.",
+    "sourceUrl": "https://namastedev.com/practice/quiz-app"
+  },
+  {
+    "slug": "reverse-words-in-a-string",
+    "title": "Reverse Words in a String",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Reverse the order of whitespace-delimited words and normalize separators to single spaces.",
+    "answer": "Trim the input, split on runs of whitespace, reverse the token sequence, and join with one space. This contract intentionally normalizes spacing and leaves the letters inside each word unchanged. Guard empty input so it produces an empty string. A preserve-original-whitespace variant is a different specification and should not be inferred from the same function name.",
+    "checks": [
+      "Extra spaces",
+      "newline/tab",
+      "one word",
+      "empty text",
+      "punctuation inside a word."
+    ],
+    "followUp": "Implement a separator-preserving variant and define precisely which separator attaches to which word after reversal.",
+    "sourceUrl": "https://namastedev.com/practice/reverse-words-in-a-string"
+  },
+  {
+    "slug": "oranges-rotting",
+    "title": "Oranges Rotting",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Compute the minimum simultaneous spread steps in a grid or report unreachable fresh cells.",
+    "answer": "Start a multi-source BFS with every initially active source and count remaining susceptible cells. Each level represents one unit of time; mark cells when enqueued so they are not counted twice. If the queue empties with susceptible cells remaining, report failure. Keep the all-already-complete case at zero and decide whether the input grid may be mutated.",
+    "checks": [
+      "No fresh cells",
+      "no sources",
+      "isolated cell",
+      "multiple sources",
+      "final-level counting."
+    ],
+    "followUp": "Return the activation time of every cell and preserve the original grid by storing visitation separately.",
+    "sourceUrl": "https://namastedev.com/practice/oranges-rotting"
+  },
+  {
+    "slug": "objectassign",
+    "title": "Object.assign()",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Copy own enumerable string and symbol properties from sources into a target with explicit shallow-copy semantics.",
+    "answer": "Convert a non-null target to an object and skip null/undefined sources. Enumerate each source’s own enumerable keys, including symbols, and assign values in source order so later sources overwrite earlier ones. This reads getters and invokes target setters; it does not copy descriptors or recursively clone children. Throwing accessors can leave a partially changed target.",
+    "checks": [
+      "Multiple sources",
+      "symbol key",
+      "inherited key",
+      "nonenumerable key",
+      "null target",
+      "throwing getter."
+    ],
+    "followUp": "Compare assignment semantics with descriptor copying and immutable object spread without claiming they are identical.",
+    "sourceUrl": "https://namastedev.com/practice/objectassign"
+  },
+  {
+    "slug": "merge-array",
+    "title": "Merge Array",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Merge two sorted numeric arrays into a new sorted array in linear time.",
+    "answer": "Use one pointer per input and repeatedly append the smaller current value, then append either remainder. This is O(n+m) time and O(n+m) output space. Decide whether equal values are all retained; a merge is not automatically a deduplication operation. Do not sort the combined data when sorted inputs already provide the needed structure.",
+    "checks": [
+      "One input empty",
+      "equal values",
+      "negatives",
+      "all of one array precedes the other",
+      "unchanged inputs."
+    ],
+    "followUp": "Merge k sorted streams with a heap and discuss finite arrays versus unbounded iterators.",
+    "sourceUrl": "https://namastedev.com/practice/merge-array"
+  },
+  {
+    "slug": "pyramid-pattern",
+    "title": "pyramid pattern",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Produce a centered text pyramid for a validated nonnegative row count.",
+    "answer": "For row i starting at zero, emit height-i-1 leading spaces and 2*i+1 fill symbols under a one-column-symbol contract. Return joined lines rather than mixing generation with console output. The output itself has O(height squared) size, so that cost cannot be optimized away if the full pyramid is required. Define trailing-space and final-newline behavior explicitly.",
+    "checks": [
+      "Zero rows",
+      "one row",
+      "ordinary height",
+      "invalid height",
+      "exact whitespace."
+    ],
+    "followUp": "Support a hollow pyramid and define how multi-column Unicode symbols affect visual alignment.",
+    "sourceUrl": "https://namastedev.com/practice/pyramid-pattern"
+  },
+  {
+    "slug": "search-in-a-2d-sorted-matrix",
+    "title": "Search in a 2D Sorted Matrix",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Search a matrix whose rows and columns are nondecreasing, without assuming row ranges do not overlap.",
+    "answer": "Start at the top-right cell. If the target is smaller, move left; if larger, move down. Each comparison discards one row or column, yielding O(rows+cols) time and O(1) extra space. Flattened binary search is only valid under the stronger property that every row starts after the previous row ends.",
+    "checks": [
+      "One row/column",
+      "absent target",
+      "duplicate values",
+      "empty matrix",
+      "overlapping row ranges."
+    ],
+    "followUp": "Compare the staircase algorithm with flattened binary search and state their different preconditions.",
+    "sourceUrl": "https://namastedev.com/practice/search-in-a-2d-sorted-matrix"
+  },
+  {
+    "slug": "king-moves",
+    "title": "King Moves",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Highlight adjacent king destinations while distinguishing geometry from complete chess legality.",
+    "answer": "Generate the eight neighboring offsets and discard out-of-bounds or same-side occupied targets. These are geometric destinations only: a real king also cannot move into attack. Attack-map calculation, castling rights, and full board legality belong in a separate rule layer rather than being implied by the highlighted squares.",
+    "checks": [
+      "Corner",
+      "edge",
+      "friendly/opposing target",
+      "selected origin",
+      "attack-square extension."
+    ],
+    "followUp": "Add an opponent attack map and verify that king moves cannot enter check.",
+    "sourceUrl": "https://namastedev.com/practice/king-moves"
+  },
+  {
+    "slug": "detect-data-type-in-js",
+    "title": "Detect data type in JS",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "question": "Classify JavaScript values using a declared category model rather than assuming typeof is complete.",
+    "answer": "Use explicit checks for null and Array.isArray before typeof-based primitive handling. Add supported built-ins deliberately; Object.prototype.toString can help with cross-realm values but Symbol.toStringTag may spoof its label. Avoid instance-of-only checks across realms. A type inspector should report its confidence/contract rather than treating display labels as a security boundary.",
+    "checks": [
+      "null",
+      "array",
+      "NaN",
+      "function",
+      "Date",
+      "cross-realm value",
+      "custom toStringTag."
+    ],
+    "followUp": "Separate semantic validation of a value from a convenience diagnostic type label.",
+    "sourceUrl": "https://namastedev.com/practice/detect-data-type-in-js"
+  },
+  {
+    "slug": "bishop-moves",
+    "title": "Bishop Moves",
+    "language": "React.js",
+    "difficulty": "Medium",
+    "question": "Compute diagonal bishop rays that stop at the first occupied square.",
+    "answer": "Walk in the four diagonal directions with explicit row/column bounds. Empty squares are reachable; the first opposing occupant can be included as a capture, while a friendly occupant cannot. Stop after either type of blocker. Reuse traversal mechanics without confusing this geometric result with legal moves under king safety.",
+    "checks": [
+      "Corner",
+      "diagonal blocker",
+      "first opponent",
+      "friendly blocker",
+      "no coordinate wrapping."
+    ],
+    "followUp": "Integrate the ray model into an attack-map calculation that handles pinned pieces deliberately.",
+    "sourceUrl": "https://namastedev.com/practice/bishop-moves"
+  },
+  {
+    "slug": "pagination",
+    "title": "Pagination",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Design a data browser whose page, filters, sort, total count, and browser history remain consistent.",
+    "answer": "Choose offset or cursor semantics before building controls. For offset paging, apply filters/sort before slicing and clamp the current page after totals change. For cursor paging, preserve server cursors and avoid inventing random page access. Key requests by the complete query configuration and reject stale responses. Loading a new page should not erase already usable navigation unnecessarily.",
+    "checks": [
+      "Filter shrinks pages",
+      "request race",
+      "zero results",
+      "back/forward",
+      "last page",
+      "removed item."
+    ],
+    "followUp": "Compare offset and keyset pagination under concurrent inserts using a stable unique tie-breaker.",
+    "sourceUrl": "https://namastedev.com/practice/pagination"
+  },
+  {
+    "slug": "nested-checkbox",
+    "title": "Nested Checkbox",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Implement a hierarchy where a parent checkbox reflects all descendant leaf selections.",
+    "answer": "Store selected leaves or an equivalent normalized model. Derive a parent’s checked and indeterminate states from descendant coverage; indeterminate is a DOM property, not merely an attribute. Parent activation applies a documented action to all eligible descendants. Keep IDs unique and define disabled-subtree behavior explicitly. Avoid storing contradictory parent and child booleans independently.",
+    "checks": [
+      "All/none/some leaves",
+      "disabled descendant",
+      "empty branch",
+      "deep tree",
+      "parent toggle."
+    ],
+    "followUp": "Support lazy-loaded children without incorrectly declaring an incompletely known subtree fully selected.",
+    "sourceUrl": "https://namastedev.com/practice/nested-checkbox"
+  },
+  {
+    "slug": "file-explorer",
+    "title": "File Explorer",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Build a file tree with expand/collapse, selection, create, rename, and delete operations.",
+    "answer": "Use stable node IDs, parent relationships, and a separate ordered-child representation or an immutable nested reducer. Validate sibling names and prevent moving a directory into itself or a descendant. Keep expanded/selected/editing state outside display labels. Use either a fully implemented tree keyboard pattern or semantic nested disclosures. Reconcile selection and focus after deletion.",
+    "checks": [
+      "Duplicate sibling name",
+      "rename",
+      "delete selected node",
+      "move cycle",
+      "empty folder",
+      "deep tree."
+    ],
+    "followUp": "Add optimistic server operations with version conflicts and reversible mutations.",
+    "sourceUrl": "https://namastedev.com/practice/file-explorer"
+  },
+  {
+    "slug": "prims-mst-algorithm",
+    "title": "Prim's MST Algorithm",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Construct a minimum spanning tree for a connected, weighted, undirected graph.",
+    "answer": "Grow a visited set from one start vertex. Push boundary edges into a minimum heap, repeatedly choose the cheapest edge entering an unvisited vertex, and add that vertex’s outgoing edges. Skip edges whose destination is already visited. A lazy heap implementation is O(E log E), often expressed as O(E log V) for ordinary simple graphs. Negative edge weights are allowed; connectivity must be checked.",
+    "checks": [
+      "Single vertex",
+      "equal weights",
+      "negative weight",
+      "parallel edges",
+      "disconnected input."
+    ],
+    "followUp": "Return a minimum spanning forest for disconnected input and explain why directed graphs need a different problem formulation.",
+    "sourceUrl": "https://namastedev.com/practice/prims-mst-algorithm"
+  },
+  {
+    "slug": "longest-valid-parentheses",
+    "title": "Longest Valid Parentheses",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Find the longest contiguous balanced-parentheses substring in a parentheses-only string.",
+    "answer": "Use a stack of indices seeded with -1 as the boundary before a candidate segment. Push opening indices; on a closing symbol pop, then either reset the boundary if the stack is empty or measure the span from the current index to the stack top. This is O(n) time and O(n) worst-case stack space. The goal is a substring, not a subsequence.",
+    "checks": [
+      "All opens",
+      "all closes",
+      "nested valid block",
+      "invalid prefix",
+      "adjacent valid blocks",
+      "empty input."
+    ],
+    "followUp": "Compare the stack solution with a two-pass counter method and explain why both directions are needed there.",
+    "sourceUrl": "https://namastedev.com/practice/longest-valid-parentheses"
+  },
+  {
+    "slug": "stickynotes-component",
+    "title": "StickyNotes Component",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Create draggable notes with editable text, stacking order, deletion, and persisted positions.",
+    "answer": "Store stable note IDs, content, and logical positions. During pointer movement update presentation efficiently and commit a bounded position on release. Keep editing gestures separate from dragging, and define a z-order policy. Persist a versioned schema and recover corrupt storage. Provide a keyboard position alternative and account for container resize rather than restoring offscreen pixel coordinates blindly.",
+    "checks": [
+      "Drag vs edit",
+      "pointer cancel",
+      "deleting active note",
+      "reload",
+      "small viewport",
+      "focus order."
+    ],
+    "followUp": "Add shared-board synchronization with explicit conflict resolution for concurrent text and position edits.",
+    "sourceUrl": "https://namastedev.com/practice/stickynotes-component"
+  },
+  {
+    "slug": "chinese-remainder-theorem",
+    "title": "Chinese Remainder Theorem",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Solve simultaneous congruences with positive pairwise-coprime moduli using exact integer arithmetic.",
+    "answer": "Let M be the product of moduli and Mi=M/mi. Compute the modular inverse of Mi modulo mi using the extended Euclidean algorithm, then sum ai*Mi*inverse and normalize modulo M. Use BigInt so intermediate products remain exact. If moduli are not pairwise coprime, the inverse-based formula is invalid; a generalized merge must test residue compatibility modulo each gcd.",
+    "checks": [
+      "Negative residue",
+      "modulus one policy",
+      "coprime system",
+      "incompatible noncoprime input",
+      "large products."
+    ],
+    "followUp": "Implement generalized pairwise merging and return no solution when the residue difference is not divisible by the gcd.",
+    "sourceUrl": "https://namastedev.com/practice/chinese-remainder-theorem"
+  },
+  {
+    "slug": "24-game",
+    "title": "24 Game",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Build a puzzle where each of four supplied numbers is used exactly once to produce 24 with arithmetic operators.",
+    "answer": "For a solver, recursively choose two current values, combine them with each allowed operation, and recurse on the reduced multiset. Keep the expression tree alongside each result and avoid division by zero. Use rational arithmetic for exactness or a documented tolerance for floating-point comparison. The input UI needs its own grammar if users type expressions; do not use eval.",
+    "checks": [
+      "Repeated numbers",
+      "fractional intermediate values",
+      "zero denominator",
+      "unsolvable hand",
+      "number reuse."
+    ],
+    "followUp": "Use exact rational pairs and canonical-state memoization to avoid repeating symmetric search branches.",
+    "sourceUrl": "https://namastedev.com/practice/24-game"
+  },
+  {
+    "slug": "otp-input-component",
+    "title": "OTP Input Component",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Implement a multi-slot verification-code field with paste, editing, focus movement, and accessible labels.",
+    "answer": "Decide whether to use one semantic input with visual slots or multiple coordinated inputs. Keep one canonical code string, normalize permitted characters, and handle paste as a batch update. Define Backspace behavior and focus movement without fighting IME composition or assistive technology. Autofill support and error announcement require real browser testing. Verification and rate limiting remain server responsibilities.",
+    "checks": [
+      "Full paste",
+      "partial paste",
+      "Backspace on empty slot",
+      "invalid characters",
+      "autofill",
+      "resend."
+    ],
+    "followUp": "Add an expiry/resend flow that does not let an old code submission overwrite a newer challenge state.",
+    "sourceUrl": "https://namastedev.com/practice/otp-input-component"
+  },
+  {
+    "slug": "event-management",
+    "title": "Event Management",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Manage scheduled events with date/time editing, overlap rules, and a clearly chosen timezone.",
+    "answer": "Store stable event IDs and distinguish instants from local calendar entries. Define overlap boundaries, such as half-open intervals, before checking conflicts. Parse and validate user fields explicitly, including end after start. Keep editing drafts separate from saved events. Recurring events and daylight-saving transitions cannot be handled reliably by adding fixed milliseconds to local dates.",
+    "checks": [
+      "Adjacent events",
+      "exact overlap",
+      "invalid interval",
+      "DST transition",
+      "editing",
+      "deleted event."
+    ],
+    "followUp": "Add recurrence with a timezone-aware rule model and define how exceptions and rescheduling are represented.",
+    "sourceUrl": "https://namastedev.com/practice/event-management"
+  },
+  {
+    "slug": "tree-navigation",
+    "title": "Tree Navigation",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Create keyboard-navigable hierarchical content with a predictable active and focused node.",
+    "answer": "Separate expansion, selection, and keyboard focus. If implementing an ARIA tree, use roving tabindex and the expected arrow/Home/End rules, including moving to a parent or first child. Stable IDs let expansion survive reordering. For a simple document outline, ordinary nested links may be more appropriate than a tree widget. Lazy loading needs an explicit busy/error state.",
+    "checks": [
+      "Collapsed children",
+      "disabled node",
+      "Home/End",
+      "deleting focused node",
+      "lazy-load failure."
+    ],
+    "followUp": "Virtualize a large tree while keeping the visible keyboard order and accessibility relationships correct.",
+    "sourceUrl": "https://namastedev.com/practice/tree-navigation"
+  },
+  {
+    "slug": "product-cart-with-discounts",
+    "title": "Product Cart with Discounts",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Compute an editable cart total under an explicit discount stacking and rounding contract.",
+    "answer": "Normalize products and cart quantities by ID. Derive a pricing pipeline with a documented order for line discounts, order discounts, tax, and shipping. Use appropriate monetary arithmetic and ensure discounts cannot create negative payable amounts unless credits are part of the model. Client totals are estimates: the server validates prices, coupons, inventory, and final payable amounts.",
+    "checks": [
+      "Expired coupon",
+      "stacked discounts",
+      "quantity changes",
+      "rounding",
+      "removed product",
+      "zero subtotal."
+    ],
+    "followUp": "Design a server quote/version mechanism so payment uses the exact accepted pricing snapshot.",
+    "sourceUrl": "https://namastedev.com/practice/product-cart-with-discounts"
+  },
+  {
+    "slug": "data-table",
+    "title": "Data Table",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Build an accessible sortable/filterable table with selection, pagination, and stable row identity.",
+    "answer": "Keep query controls and selected row IDs separate from the dataset. Define whether transformations occur locally or on the server and apply a consistent ordering pipeline. Native table markup preserves row/column relationships; sortable headers expose aria-sort. Selection across pages must use stable IDs and an explicit select-all scope. Virtualization, editing, and grids add interaction complexity beyond a plain table.",
+    "checks": [
+      "Sort ties",
+      "selection across pages",
+      "empty result",
+      "stale fetch",
+      "long cell",
+      "keyboard use."
+    ],
+    "followUp": "Support server-side select-all as a query plus exclusions rather than downloading every row ID.",
+    "sourceUrl": "https://namastedev.com/practice/data-table"
+  },
+  {
+    "slug": "match-pair-game",
+    "title": "Match Pair Game",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Create a memory game that reveals two cards, locks during mismatch resolution, and supports restart.",
+    "answer": "Represent cards by stable pair IDs and card-instance IDs. Track revealed unmatched cards, permanently matched pairs, and an explicit resolving state. Ignore clicks on a matched/already revealed card and block a third reveal during the delay. Clear the mismatch timer on restart or unmount so an old round cannot modify the new board. Inject shuffle randomness for tests.",
+    "checks": [
+      "Same card twice",
+      "match",
+      "mismatch delay",
+      "third click",
+      "restart during delay",
+      "all pairs found."
+    ],
+    "followUp": "Add a reduced-motion mode and an accessible announcement strategy that preserves the puzzle’s rules.",
+    "sourceUrl": "https://namastedev.com/practice/match-pair-game"
+  },
+  {
+    "slug": "kruskals-mst-algorithm",
+    "title": "Kruskal's MST Algorithm",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Build a minimum spanning forest by selecting sorted edges that connect different components.",
+    "answer": "Sort undirected edges by weight, then use a disjoint-set union structure with path compression and union by rank/size. Accept an edge only if its endpoints have different representatives, then union those components. Sorting dominates at O(E log E); DSU operations are almost constant amortized. A connected graph’s result has V-1 edges; disconnected input produces a forest unless the contract rejects it.",
+    "checks": [
+      "Cycle edge rejected",
+      "disconnected graph",
+      "negative weights",
+      "self-loop",
+      "equal weights",
+      "parallel edges."
+    ],
+    "followUp": "Return component information and a deterministic tie-breaking policy without claiming the MST is unique.",
+    "sourceUrl": "https://namastedev.com/practice/kruskals-mst-algorithm"
+  },
+  {
+    "slug": "implement-lrucache",
+    "title": "Implement LRUCache",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Implement a fixed-capacity cache with O(1) average get/put and explicit recency updates.",
+    "answer": "Combine a key-to-node map with a doubly linked list, moving accessed/updated nodes to the most-recent end and evicting the least-recent node at capacity. A JavaScript Map can model insertion-order recency by delete-and-set under an average-time contract. Distinguish missing keys from cached undefined and define zero-capacity behavior. Updating an existing key must not increase size.",
+    "checks": [
+      "Read promotes key",
+      "overwrite promotes key",
+      "eviction",
+      "zero capacity",
+      "cached falsey value."
+    ],
+    "followUp": "Add TTL expiration and explain why recency, expiration, and capacity are independent policies.",
+    "sourceUrl": "https://namastedev.com/practice/implement-lrucache"
+  },
+  {
+    "slug": "nested-comments",
+    "title": "Nested Comments",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Build a threaded comment model with replies, editing, deletion, and stable nesting relationships.",
+    "answer": "Normalize comments by ID with parent IDs and ordered child lists, or use a carefully immutable tree. Keep editing drafts local to the chosen ID and avoid recursive index keys. Define deletion as subtree removal or a tombstone that preserves replies. Sanitize any supported rich content and derive displayed authors from trusted server records. Deep threads need bounded rendering and accessible reply context.",
+    "checks": [
+      "Reply to deleted comment",
+      "deep nesting",
+      "duplicate text",
+      "editing",
+      "tombstone",
+      "stale reply response."
+    ],
+    "followUp": "Add optimistic replies with temporary IDs and reconcile server acknowledgements without duplicating the thread.",
+    "sourceUrl": "https://namastedev.com/practice/nested-comments"
+  },
+  {
+    "slug": "implement-a-queue-using-stack",
+    "title": "Implement a Queue using Stack",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Provide FIFO enqueue/dequeue/peek using two LIFO stacks.",
+    "answer": "Push new values onto an incoming stack. When the outgoing stack is empty, transfer every incoming value to it, reversing order once; then pop or peek outgoing. Each item moves at most once between stacks, giving amortized O(1) operations although one transfer costs O(n). Define underflow separately from a stored undefined value.",
+    "checks": [
+      "Interleaved operations",
+      "transfer boundary",
+      "empty queue",
+      "undefined entry",
+      "repeated peek."
+    ],
+    "followUp": "Explain amortized analysis using a potential function and contrast it with worst-case per-operation latency.",
+    "sourceUrl": "https://namastedev.com/practice/implement-a-queue-using-stack"
+  },
+  {
+    "slug": "median-of-two-sorted-arrays",
+    "title": "Median of Two Sorted Arrays",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Find the median of two sorted arrays without merging their full contents.",
+    "answer": "Binary-search a partition in the smaller array and derive the corresponding partition in the other so the left side contains half the combined elements. A valid partition has both left maxima no greater than the opposite right minima. The median is the left maximum for odd total length, or the average of the two central values for even length. Use sentinels at empty sides and reject two empty inputs.",
+    "checks": [
+      "One empty array",
+      "odd/even total",
+      "duplicates",
+      "very unequal sizes",
+      "partition at boundary."
+    ],
+    "followUp": "Return the kth element through a related partition argument and address overflow-safe averaging in fixed-width arithmetic.",
+    "sourceUrl": "https://namastedev.com/practice/median-of-two-sorted-arrays"
+  },
+  {
+    "slug": "rick-and-morty-characters-viewer",
+    "title": "Rick And Morty Characters Viewer",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Create a character-directory UI with query filters, paginated fetching, and resilient request state.",
+    "answer": "Treat the external API as a replaceable data source with a documented response adapter. Key requests by search/filter/page, cancel or ignore stale responses, and distinguish loading, no matches, unavailable service, and malformed data. Do not assume a sample API is always online or that page totals stay stable. Preserve user controls and give errors a retry action.",
+    "checks": [
+      "No matches",
+      "fetch failure",
+      "out-of-order response",
+      "invalid image",
+      "filter resets page",
+      "retry."
+    ],
+    "followUp": "Add a cache with explicit freshness rules and avoid replaying cached data from a different query.",
+    "sourceUrl": "https://namastedev.com/practice/rick-and-morty-characters-viewer"
+  },
+  {
+    "slug": "product-store",
+    "title": "Product Store",
+    "language": "React.js",
+    "difficulty": "Hard",
+    "question": "Build a store browsing flow with catalog queries, product details, cart intent, and resilient navigation.",
+    "answer": "Separate remote product data from local query and cart state. Use stable product IDs and validate stale or missing products. Keep prices authoritative on the server and treat local cart totals as previews. A complete commerce system also needs checkout, stock reservation, idempotent payment, and recovery; browsing components alone do not provide those guarantees.",
+    "checks": [
+      "Missing product",
+      "stale price",
+      "empty catalog",
+      "failed query",
+      "cart across navigation",
+      "duplicate add."
+    ],
+    "followUp": "Trace a checkout across quote creation, inventory hold, payment confirmation, and retry-safe order creation.",
+    "sourceUrl": "https://namastedev.com/practice/product-store"
+  },
+  {
+    "slug": "create-task-scheduler-with-dependencies",
+    "title": "Create Task Scheduler With Dependencies",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Execute a dependency DAG with bounded concurrency and explicit failure propagation.",
+    "answer": "Validate task IDs and dependency references, compute indegrees, and queue initially ready tasks. Completion releases dependents by decrementing their unresolved dependency count. Define whether a failed task blocks descendants, triggers cancellation, or allows a compensating policy. Detect cycles independently so an empty ready queue is not mistaken for successful completion. Concurrency slots must be released on every settlement.",
+    "checks": [
+      "Cycle",
+      "missing dependency",
+      "independent task failure",
+      "dependent blocked",
+      "concurrency bound",
+      "abort."
+    ],
+    "followUp": "Persist task states for restart recovery and distinguish at-least-once execution from idempotent task effects.",
+    "sourceUrl": "https://namastedev.com/practice/create-task-scheduler-with-dependencies"
+  },
+  {
+    "slug": "all-pairs-shortest-path-floyd-warshall-algorithm",
+    "title": "All Pairs Shortest Path (Floyd-Warshall Algorithm)",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Compute weighted shortest distances between every vertex pair and detect negative cycles.",
+    "answer": "Initialize diagonal distances to zero and each direct edge to the minimum parallel-edge weight. For each intermediate vertex k, relax every i,j through k, keeping k as the outer loop. Skip unreachable additions. Runtime is O(V cubed) and storage O(V squared). A negative diagonal indicates a negative cycle; pairs that can route through it do not have a finite shortest distance.",
+    "checks": [
+      "Disconnected pair",
+      "parallel edge",
+      "negative edge",
+      "negative cycle",
+      "diagonal initialization."
+    ],
+    "followUp": "Maintain a next-hop matrix for path reconstruction and mark pairs whose result is unbounded by a reachable negative cycle.",
+    "sourceUrl": "https://namastedev.com/practice/all-pairs-shortest-path-floyd-warshall-algorithm"
+  },
+  {
+    "slug": "shortest-distance-from-source-bellman-ford-algorithm",
+    "title": "Shortest Distance from Source (Bellman-Ford Algorithm)",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Find single-source shortest paths with negative edges and identify reachable negative cycles.",
+    "answer": "Initialize the source to zero and other distances to infinity. Relax all edges up to V-1 passes, stopping early if no distance changes. An additional successful relaxation from a reachable vertex proves a reachable negative cycle. A negative cycle in an unreachable component does not invalidate source distances. Runtime is O(VE), with O(V) distance storage.",
+    "checks": [
+      "Negative edge",
+      "unreachable component",
+      "early stop",
+      "reachable negative cycle",
+      "unreachable negative cycle."
+    ],
+    "followUp": "Propagate an unbounded marker to every vertex reachable from a detected negative cycle.",
+    "sourceUrl": "https://namastedev.com/practice/shortest-distance-from-source-bellman-ford-algorithm"
+  },
+  {
+    "slug": "sliding-window-maximum",
+    "title": "Sliding Window Maximum",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Return the maximum for each fixed-width contiguous window in linear time.",
+    "answer": "Maintain a deque of candidate indices in decreasing value order. Remove indices that have left the window from the front and dominated candidates from the back before adding the new index. The front is the current maximum. Each index enters and leaves at most once, yielding O(n) time and O(k) auxiliary space. Use a head pointer or real deque rather than repeated shift.",
+    "checks": [
+      "k=1",
+      "k=n",
+      "duplicates",
+      "increasing/decreasing data",
+      "invalid k."
+    ],
+    "followUp": "Return maximum positions with a documented oldest-versus-newest tie policy for equal values.",
+    "sourceUrl": "https://namastedev.com/practice/sliding-window-maximum"
+  },
+  {
+    "slug": "worker-pool",
+    "title": "Worker Pool",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Distribute CPU tasks across a bounded pool of actual Workers with task IDs and failure handling.",
+    "answer": "A promise concurrency loop does not create CPU parallelism. Create a limited number of Workers, send serializable tasks, and correlate results by unique IDs. Release or replace a worker on success, failure, or timeout and settle each task exactly once. Structured cloning and transferables affect cost and ownership. Cancellation may require terminating a worker and rebuilding its state.",
+    "checks": [
+      "Worker crash",
+      "timeout",
+      "out-of-order results",
+      "shutdown with queued work",
+      "transfer ownership."
+    ],
+    "followUp": "Add backpressure, per-task deadlines, and worker replacement without leaking unsettled promises.",
+    "sourceUrl": "https://namastedev.com/practice/worker-pool"
+  },
+  {
+    "slug": "first-missing-positive",
+    "title": "First Missing Positive",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Find the smallest absent positive integer in O(n) time and O(1) auxiliary space when mutation is allowed.",
+    "answer": "For length n, the answer lies between 1 and n+1. Repeatedly place each in-range integer x into position x-1, stopping when it is already in the right place or a duplicate would make swapping loop. Then scan for the first index whose value is not index+1. State that this mutates the input; a nonmutating Set version has a different space contract.",
+    "checks": [
+      "Duplicates",
+      "zero/negatives",
+      "all 1..n present",
+      "large out-of-range values",
+      "empty input."
+    ],
+    "followUp": "Prove that each successful placement makes progress and contrast the mutation contract with a pure implementation.",
+    "sourceUrl": "https://namastedev.com/practice/first-missing-positive"
+  },
+  {
+    "slug": "design-autocomplete",
+    "title": "Design Autocomplete",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Design prefix suggestions with ranking, bounded results, updates, and explicit query semantics.",
+    "answer": "For a static prefix dictionary, a trie or sorted-array prefix range can locate candidates. Ranking may require cached top-k entries per prefix or a separate scoring index. Define case/Unicode normalization, ties, and update behavior before selecting a structure. Client debouncing does not solve server ranking, authorization, privacy, or cache freshness; protect against stale suggestion responses separately.",
+    "checks": [
+      "Empty prefix",
+      "no match",
+      "equal rank",
+      "changed score",
+      "Unicode normalization",
+      "stale response."
+    ],
+    "followUp": "Compare trie top-k caches with a search index when ranking depends on user context and rapidly changing popularity.",
+    "sourceUrl": "https://namastedev.com/practice/design-autocomplete"
+  },
+  {
+    "slug": "shortest-distance-from-source-dijkstras-algorithm",
+    "title": "Shortest Distance from Source (Dijkstra's Algorithm)",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Compute shortest paths from one source in a graph with nonnegative edge weights.",
+    "answer": "Use a min-heap of candidate distances, initialize the source to zero, and relax outgoing edges from the smallest valid entry. With a lazy heap, skip entries whose recorded distance is stale. Reject negative weights because the settled-distance argument no longer holds. Complexity with a binary heap is typically O((V+E) log V), with implementation-dependent lazy-heap bounds.",
+    "checks": [
+      "Zero-weight edge",
+      "unreachable node",
+      "repeated improvements",
+      "stale heap entry",
+      "negative edge rejected."
+    ],
+    "followUp": "Add path reconstruction and compare with Bellman–Ford when negative weights are permitted.",
+    "sourceUrl": "https://namastedev.com/practice/shortest-distance-from-source-dijkstras-algorithm"
+  },
+  {
+    "slug": "fibonacci-modulo-pisano-period",
+    "title": "Fibonacci Modulo (Pisano Period)",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Compute a very large Fibonacci index modulo m using a clearly bounded number-theory strategy.",
+    "answer": "A Pisano period is the repetition length of the pair (F_n mod m,F_(n+1) mod m). For small moduli, detect the return to (0,1), reduce n by the period, and compute the reduced term. Handle m=1 separately. Period discovery may be too expensive for large moduli; fast doubling computes F_n mod m in O(log n) arithmetic steps without discovering a period.",
+    "checks": [
+      "m=1",
+      "n=0",
+      "small known cycle",
+      "huge BigInt index",
+      "invalid modulus."
+    ],
+    "followUp": "Use fast doubling as the general method and explain when explicit period discovery is useful or wasteful.",
+    "sourceUrl": "https://namastedev.com/practice/fibonacci-modulo-pisano-period"
+  },
+  {
+    "slug": "implement-garbage-collector",
+    "title": "Implement Garbage Collector",
+    "language": "JavaScript",
+    "difficulty": "Hard",
+    "question": "Simulate mark-and-sweep collection on an explicit heap graph rather than attempting to control JavaScript memory.",
+    "answer": "Represent heap objects as IDs with outgoing references and provide an explicit root set. Mark every reachable object using a visited traversal, then sweep only unmarked allocated objects. Unreachable cycles are collected because reachability is defined from roots, not incoming-reference count alone. This model excludes real engine barriers, generations, moving collectors, finalizers, and concurrent mutation.",
+    "checks": [
+      "Reachable cycle",
+      "unreachable cycle",
+      "no roots",
+      "shared child",
+      "dangling-reference policy."
+    ],
+    "followUp": "Add an incremental marking model and state the write-barrier invariant needed when the graph changes during marking.",
+    "sourceUrl": "https://namastedev.com/practice/implement-garbage-collector"
+  }
+]

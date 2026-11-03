@@ -1,0 +1,20 @@
+[
+  {
+    "id": "drag-and-drop-ii-1",
+    "name": "No checked rows",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"right\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"left-order\\\"]\",\"property\":\"text\",\"equals\":\"A,B,C\"},{\"selector\":\"[data-testid=\\\"right-order\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "drag-and-drop-ii-2",
+    "name": "Transfer group",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-check=\\\"A\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-check=\\\"C\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"right\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"left-order\\\"]\",\"property\":\"text\",\"equals\":\"B\"},{\"selector\":\"[data-testid=\\\"right-order\\\"]\",\"property\":\"text\",\"equals\":\"A,C\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "drag-and-drop-ii-3",
+    "name": "Return",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-check=\\\"A\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"right\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-check=\\\"A\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"left\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"left-order\\\"]\",\"property\":\"text\",\"equals\":\"B,C,A\"},{\"selector\":\"[data-testid=\\\"right-order\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

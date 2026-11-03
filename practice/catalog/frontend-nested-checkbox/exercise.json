@@ -1,0 +1,53 @@
+{
+  "id": "frontend-nested-checkbox",
+  "title": "Frontend: Nested Checkbox",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Nested Checkbox. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({tree={id:root,label:All,children:[{id:a,label:A},{id:b,label:B}]}}). Render a checkbox[data-node=ID] for every tree node. Leaves own selection. A parent toggles all descendant leaves; derive checked/mixed/unchecked in data-state and set actual indeterminate property for mixed state. Empty branches are treated as leaves. [data-testid=selected] is sorted selected leaf IDs comma-joined.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "nested-checkbox-1",
+      "name": "Parent selects all",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-node=\\\"root\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"a,b\"},{\"selector\":\"[data-node=\\\"root\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-state\",\"equals\":\"checked\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "nested-checkbox-2",
+      "name": "Partial selection",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-node=\\\"a\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"a\"},{\"selector\":\"[data-node=\\\"root\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-state\",\"equals\":\"mixed\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "nested-checkbox-3",
+      "name": "Parent clears",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-node=\\\"root\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-node=\\\"root\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"\"},{\"selector\":\"[data-node=\\\"root\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-state\",\"equals\":\"unchecked\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Store selected leaves or an equivalent normalized model."
+  ],
+  "alternativeApproaches": [
+    "Support lazy-loaded children without incorrectly declaring an incompletely known subtree fully selected."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: All/none/some leaves; disabled descendant; empty branch.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "find-missing-number-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "find-missing-number-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[3,0,1]",
+    "expectedOutput": "2"
+  },
+  {
+    "id": "find-missing-number-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[0,1]",
+    "expectedOutput": "2"
+  },
+  {
+    "id": "find-missing-number-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[1,2,3]",
+    "expectedOutput": "0"
+  }
+]

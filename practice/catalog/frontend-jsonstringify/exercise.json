@@ -1,0 +1,59 @@
+{
+  "id": "frontend-jsonstringify",
+  "title": "Frontend: JSON.stringify",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind JSON.stringify. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(value) without JSON.stringify. Serialize finite JSON primitives, arrays and objects in Object.keys order. Escape quotes, backslashes and control characters. Inputs are valid acyclic JSON.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "jsonstringify-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"a\":\"x\\n\\\"\",\"b\":[1,null,true]}",
+      "expectedOutput": "\"{\\\"a\\\":\\\"x\\\\n\\\\\\\"\\\",\\\"b\\\":[1,null,true]}\""
+    },
+    {
+      "id": "jsonstringify-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[]",
+      "expectedOutput": "\"[]\""
+    },
+    {
+      "id": "jsonstringify-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "\"a\\tb\"",
+      "expectedOutput": "\"\\\"a\\\\tb\\\"\""
+    },
+    {
+      "id": "jsonstringify-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "0",
+      "expectedOutput": "\"0\""
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Handle primitives, arrays, and own enumerable object keys recursively."
+  ],
+  "alternativeApproaches": [
+    "Add toJSON and replacer semantics only after documenting their ordering and error behavior."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Escaped string; unsupported value in object vs array; shared object.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

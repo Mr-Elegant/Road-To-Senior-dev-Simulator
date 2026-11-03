@@ -1,0 +1,20 @@
+[
+  {
+    "id": "rate-limiter-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"capacity\":2,\"refillPerSecond\":1,\"events\":[{\"time\":0,\"cost\":2},{\"time\":0,\"cost\":1},{\"time\":1000,\"cost\":1}]}",
+    "expectedOutput": "[true,false,true]"
+  },
+  {
+    "id": "rate-limiter-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"capacity\":1,\"refillPerSecond\":2,\"events\":[{\"time\":0,\"cost\":1},{\"time\":250,\"cost\":1},{\"time\":500,\"cost\":1}]}",
+    "expectedOutput": "[true,false,true]"
+  },
+  {
+    "id": "rate-limiter-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"capacity\":3,\"refillPerSecond\":1,\"events\":[]}",
+    "expectedOutput": "[]"
+  }
+]

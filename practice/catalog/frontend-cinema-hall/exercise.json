@@ -1,0 +1,53 @@
+{
+  "id": "frontend-cinema-hall",
+  "title": "Frontend: Cinema Hall",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Cinema Hall. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({reserved=[A2]}). Seats A1..A4 are buttons[data-seat=ID]; reserved seats are disabled. Other clicks toggle aria-pressed selection. Output [data-testid=total] is integer cents at 1000 per selected seat. Local selection does not reserve real inventory.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "cinema-hall-1",
+      "name": "Reserved disabled",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-seat=\\\"A2\\\"]\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "cinema-hall-2",
+      "name": "Select two",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-seat=\\\"A1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-seat=\\\"A3\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"2000\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "cinema-hall-3",
+      "name": "Deselect",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-seat=\\\"A1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-seat=\\\"A1\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use stable seat IDs and separate reserved inventory from local selection."
+  ],
+  "alternativeApproaches": [
+    "Design timed reservation holds with server authority and explain the race between two clients selecting the same seat."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Reserved seat; toggle selection; pricing category.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

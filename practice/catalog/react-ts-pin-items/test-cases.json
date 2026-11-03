@@ -1,0 +1,20 @@
+[
+  {
+    "id": "pin-items-1",
+    "name": "Original",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"A,B,C\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "pin-items-2",
+    "name": "Pin",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-pin=\\\"B\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"B,A,C\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "pin-items-3",
+    "name": "Unpin",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-pin=\\\"B\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-pin=\\\"B\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"A,B,C\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

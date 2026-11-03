@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-user-profile",
+  "title": "React + TypeScript: User profile",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind User profile. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({profile}). Missing profile renders Profile unavailable. Otherwise render name as h1, bio in [data-testid=\"bio\"] default No biography, and either img with alt=name or [data-testid=\"avatar-fallback\"] containing uppercase first name character. Do not fetch remotely.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    profile?: {\n        name: string;\n        email?: string;\n        bio?: string;\n        avatar?: string;\n    };\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "user-profile-1",
+      "name": "Missing",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Profile unavailable\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "user-profile-2",
+      "name": "Fallback avatar",
+      "inputDescription": "{\"props\":{\"profile\":{\"name\":\"ada\"}},\"actions\":[],\"assertions\":[{\"selector\":\"h1\",\"property\":\"text\",\"equals\":\"ada\"},{\"selector\":\"[data-testid=\\\"avatar-fallback\\\"]\",\"property\":\"text\",\"equals\":\"A\"},{\"selector\":\"[data-testid=\\\"bio\\\"]\",\"property\":\"text\",\"equals\":\"No biography\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "user-profile-3",
+      "name": "Biography",
+      "inputDescription": "{\"props\":{\"profile\":{\"name\":\"Lin\",\"bio\":\"Engineer\"}},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"bio\\\"]\",\"property\":\"text\",\"equals\":\"Engineer\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Accept a profile object rather than mixing fetch logic into a presentational card."
+  ],
+  "alternativeApproaches": [
+    "Separate public profile fields from account-private details using a server-defined response contract."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Missing avatar; empty bio; long name.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

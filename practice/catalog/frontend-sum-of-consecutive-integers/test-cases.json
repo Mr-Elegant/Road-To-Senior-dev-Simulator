@@ -1,0 +1,33 @@
+[
+  {
+    "id": "sum-of-consecutive-integers-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "1",
+    "expectedOutput": "1"
+  },
+  {
+    "id": "sum-of-consecutive-integers-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "9",
+    "expectedOutput": "3"
+  },
+  {
+    "id": "sum-of-consecutive-integers-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "15",
+    "expectedOutput": "4"
+  },
+  {
+    "id": "sum-of-consecutive-integers-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "8",
+    "expectedOutput": "1"
+  },
+  {
+    "id": "sum-of-consecutive-integers-5",
+    "name": "Reject input: Invalid n",
+    "inputDescription": "0",
+    "expectedOutput": "Throws: Invalid n",
+    "expectedError": "Invalid n"
+  }
+]

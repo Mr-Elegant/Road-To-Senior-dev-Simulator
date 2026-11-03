@@ -1,0 +1,20 @@
+[
+  {
+    "id": "confetti-animation-1",
+    "name": "Celebrate",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"celebrate\\\"]\"}],\"assertions\":[{\"selector\":\"[data-particle]\",\"property\":\"count\",\"equals\":8},{\"selector\":\"[role=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Celebration complete\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "confetti-animation-2",
+    "name": "Reduced motion",
+    "inputDescription": "{\"props\":{\"reducedMotion\":true},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"celebrate\\\"]\"}],\"assertions\":[{\"selector\":\"[data-particle]\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "confetti-animation-3",
+    "name": "Clear",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"celebrate\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"clear\\\"]\"}],\"assertions\":[{\"selector\":\"[data-particle]\",\"property\":\"count\",\"equals\":0},{\"selector\":\"[role=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

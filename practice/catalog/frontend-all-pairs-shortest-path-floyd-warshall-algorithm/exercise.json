@@ -1,0 +1,54 @@
+{
+  "id": "frontend-all-pairs-shortest-path-floyd-warshall-algorithm",
+  "title": "Frontend: All Pairs Shortest Path (Floyd-Warshall Algorithm)",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind All Pairs Shortest Path (Floyd-Warshall Algorithm). This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({count,edges}) for directed weighted edges [from,to,weight]. Return all-pairs distance matrix, null for unreachable. Diagonals start at zero; keep smallest parallel edge. Any negative cycle throws Negative cycle.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "all-pairs-shortest-path-floyd-warshall-algorithm-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"count\":3,\"edges\":[[0,1,2],[1,2,-1],[0,2,9]]}",
+      "expectedOutput": "[[0,2,1],[null,0,-1],[null,null,0]]"
+    },
+    {
+      "id": "all-pairs-shortest-path-floyd-warshall-algorithm-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"count\":1,\"edges\":[]}",
+      "expectedOutput": "[[0]]"
+    },
+    {
+      "id": "all-pairs-shortest-path-floyd-warshall-algorithm-3",
+      "name": "Reject input: Negative cycle",
+      "inputDescription": "{\"count\":2,\"edges\":[[0,1,-1],[1,0,-1]]}",
+      "expectedOutput": "Throws: Negative cycle",
+      "expectedError": "Negative cycle"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Initialize diagonal distances to zero and each direct edge to the minimum parallel-edge weight."
+  ],
+  "alternativeApproaches": [
+    "Maintain a next-hop matrix for path reconstruction and mark pairs whose result is unbounded by a reachable negative cycle."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Disconnected pair; parallel edge; negative edge.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

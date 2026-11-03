@@ -1,0 +1,53 @@
+{
+  "id": "frontend-implement-lrucache",
+  "title": "Frontend: Implement LRUCache",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Implement LRUCache. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({capacity,commands}) for an LRU cache. put{key,value} returns null; get{key} returns cached JSON value or null and promotes recency. Updating a key promotes it. capacity is a nonnegative integer. Return outputs; capacity=0 stores nothing.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "implement-lrucache-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"capacity\":2,\"commands\":[{\"type\":\"put\",\"key\":\"a\",\"value\":0},{\"type\":\"put\",\"key\":\"b\",\"value\":2},{\"type\":\"get\",\"key\":\"a\"},{\"type\":\"put\",\"key\":\"c\",\"value\":3},{\"type\":\"get\",\"key\":\"b\"},{\"type\":\"get\",\"key\":\"a\"}]}",
+      "expectedOutput": "[null,null,0,null,null,0]"
+    },
+    {
+      "id": "implement-lrucache-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"capacity\":0,\"commands\":[{\"type\":\"put\",\"key\":\"x\",\"value\":1},{\"type\":\"get\",\"key\":\"x\"}]}",
+      "expectedOutput": "[null,null]"
+    },
+    {
+      "id": "implement-lrucache-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"capacity\":1,\"commands\":[{\"type\":\"put\",\"key\":\"a\",\"value\":1},{\"type\":\"put\",\"key\":\"a\",\"value\":2},{\"type\":\"get\",\"key\":\"a\"}]}",
+      "expectedOutput": "[null,null,2]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Combine a key-to-node map with a doubly linked list, moving accessed/updated nodes to the most-recent end and evicting the least-recent node at capacity."
+  ],
+  "alternativeApproaches": [
+    "Add TTL expiration and explain why recency, expiration, and capacity are independent policies."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Read promotes key; overwrite promotes key; eviction.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

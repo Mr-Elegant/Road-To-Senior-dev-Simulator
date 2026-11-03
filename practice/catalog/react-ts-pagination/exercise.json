@@ -1,0 +1,63 @@
+{
+  "id": "react-ts-pagination",
+  "title": "React + TypeScript: Pagination",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Pagination. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({items=[Alpha,Beta,Gamma,Delta,Epsilon],pageSize=2}). Search input filters case-insensitive substrings and resets to first page. Sort button toggles ascending/descending ASCII order and resets page. Next/Previous clamp. Render li names and [data-testid=page] current/total, 0/0 when empty. Apply filter, sort, then slice.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    items?: (string)[];\n    pageSize?: number;\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "pagination-1",
+      "name": "Initial slice",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"Alpha\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1/3\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "pagination-2",
+      "name": "Filter resets",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"beta\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"Beta\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1/1\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "pagination-3",
+      "name": "No matches",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"none\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0/0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "pagination-4",
+      "name": "Reverse sort",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"sort\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"Gamma\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Choose offset or cursor semantics before building controls."
+  ],
+  "alternativeApproaches": [
+    "Compare offset and keyset pagination under concurrent inserts using a stable unique tie-breaker."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Filter shrinks pages; request race; zero results.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

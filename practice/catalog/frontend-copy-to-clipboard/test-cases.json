@@ -1,0 +1,20 @@
+[
+  {
+    "id": "copy-to-clipboard-1",
+    "name": "Successful adapter",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"hello\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Copied\"},{\"selector\":\"[data-testid=\\\"copied\\\"]\",\"property\":\"text\",\"equals\":\"hello\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "copy-to-clipboard-2",
+    "name": "Rejected adapter",
+    "inputDescription": "{\"props\":{\"adapter\":\"reject\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Copy unavailable\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "copy-to-clipboard-3",
+    "name": "Missing adapter",
+    "inputDescription": "{\"props\":{\"adapter\":\"missing\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Copy unavailable\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

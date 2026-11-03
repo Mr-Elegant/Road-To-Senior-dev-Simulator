@@ -1,0 +1,38 @@
+[
+  {
+    "id": "progress-zero",
+    "name": "Default progress is zero",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"percentage\\\"]\",\"property\":\"text\",\"equals\":\"0%\"},{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-valuenow\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "progress-round",
+    "name": "Fractional progress rounds consistently",
+    "inputDescription": "{\"props\":{\"value\":52.6},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"percentage\\\"]\",\"property\":\"text\",\"equals\":\"53%\"},{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-valuenow\",\"equals\":\"53\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "progress-high",
+    "name": "Progress above one hundred is clamped",
+    "inputDescription": "{\"props\":{\"value\":142},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"percentage\\\"]\",\"property\":\"text\",\"equals\":\"100%\"},{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-valuenow\",\"equals\":\"100\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "progress-low",
+    "name": "Negative progress is clamped",
+    "inputDescription": "{\"props\":{\"value\":-8},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"percentage\\\"]\",\"property\":\"text\",\"equals\":\"0%\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "progress-string",
+    "name": "Numeric strings are not accepted",
+    "inputDescription": "{\"props\":{\"value\":\"45\"},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"percentage\\\"]\",\"property\":\"text\",\"equals\":\"0%\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "progress-aria",
+    "name": "The range and accessible label are explicit",
+    "inputDescription": "{\"props\":{\"value\":100},\"actions\":[],\"assertions\":[{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-valuemin\",\"equals\":\"0\"},{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-valuemax\",\"equals\":\"100\"},{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-label\",\"equals\":\"Project completion\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "count-negative-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "count-negative-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[-2,0,3,-1]",
+    "expectedOutput": "2"
+  },
+  {
+    "id": "count-negative-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[0,1]",
+    "expectedOutput": "0"
+  }
+]

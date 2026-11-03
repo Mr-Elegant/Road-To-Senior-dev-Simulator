@@ -1,0 +1,20 @@
+[
+  {
+    "id": "flatten-deep-object-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"a.b\":[1,null]}",
+    "expectedOutput": "[{\"path\":[\"a.b\",0],\"value\":1},{\"path\":[\"a.b\",1],\"value\":null}]"
+  },
+  {
+    "id": "flatten-deep-object-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{}",
+    "expectedOutput": "[{\"path\":[],\"value\":{}}]"
+  },
+  {
+    "id": "flatten-deep-object-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"a\":[]}",
+    "expectedOutput": "[{\"path\":[\"a\"],\"value\":[]}]"
+  }
+]

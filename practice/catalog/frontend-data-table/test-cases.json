@@ -1,0 +1,26 @@
+[
+  {
+    "id": "data-table-1",
+    "name": "Initial sort",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-name]\",\"property\":\"text\",\"equals\":\"Lin\"},{\"selector\":\"tbody tr\",\"property\":\"count\",\"equals\":2}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "data-table-2",
+    "name": "Reverse",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"sort\\\"]\"}],\"assertions\":[{\"selector\":\"[data-name]\",\"property\":\"text\",\"equals\":\"Zoe\"},{\"selector\":\"th[aria-sort]\",\"property\":\"attribute\",\"attribute\":\"aria-sort\",\"equals\":\"descending\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "data-table-3",
+    "name": "Selection survives",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-select=\\\"b\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"previous\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"},{\"selector\":\"[data-row=\\\"b\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-selected\",\"equals\":\"true\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "data-table-4",
+    "name": "Filter",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"ada\"}],\"assertions\":[{\"selector\":\"tbody tr\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-name]\",\"property\":\"text\",\"equals\":\"Ada\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

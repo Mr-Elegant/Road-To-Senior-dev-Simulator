@@ -1,0 +1,27 @@
+[
+  {
+    "id": "pyramid-pattern-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "3",
+    "expectedOutput": "[\"  *\",\" ***\",\"*****\"]"
+  },
+  {
+    "id": "pyramid-pattern-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "1",
+    "expectedOutput": "[\"*\"]"
+  },
+  {
+    "id": "pyramid-pattern-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "0",
+    "expectedOutput": "[]"
+  },
+  {
+    "id": "pyramid-pattern-4",
+    "name": "Reject input: Invalid height",
+    "inputDescription": "-1",
+    "expectedOutput": "Throws: Invalid height",
+    "expectedError": "Invalid height"
+  }
+]

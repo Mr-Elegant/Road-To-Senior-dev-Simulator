@@ -1,0 +1,53 @@
+{
+  "id": "frontend-groupbyarr-key",
+  "title": "Frontend: groupBy(arr, key)",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind groupBy(arr, key). This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({records,key}). Group records by String(record[key]) and return ordered [key,records] pairs, preserving first-seen bucket order and record order. Missing keys become undefined. Prototype-looking keys must work.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "groupbyarr-key-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"records\":[{\"k\":\"a\",\"v\":1},{\"k\":\"b\",\"v\":2},{\"k\":\"a\",\"v\":3}],\"key\":\"k\"}",
+      "expectedOutput": "[[\"a\",[{\"k\":\"a\",\"v\":1},{\"k\":\"a\",\"v\":3}]],[\"b\",[{\"k\":\"b\",\"v\":2}]]]"
+    },
+    {
+      "id": "groupbyarr-key-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"records\":[{\"k\":\"__proto__\"}],\"key\":\"k\"}",
+      "expectedOutput": "[[\"__proto__\",[{\"k\":\"__proto__\"}]]]"
+    },
+    {
+      "id": "groupbyarr-key-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"records\":[],\"key\":\"k\"}",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use a Map when keys may be objects or when arbitrary string keys must not collide with object prototypes."
+  ],
+  "alternativeApproaches": [
+    "Accept a key-selector function and compare Map identity semantics with serialized compound keys."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Empty array; missing key; __proto__ string.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

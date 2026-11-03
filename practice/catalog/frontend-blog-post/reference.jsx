@@ -1,0 +1,1 @@
+export default function App({post}){if(!post)return <p>Article unavailable</p>;return <article><h1>{post.title}</h1><p data-testid="author">{post.author||'Unknown'}</p><time dateTime={post.date}>{post.date}</time><p data-testid="body">{post.body}</p></article>;}

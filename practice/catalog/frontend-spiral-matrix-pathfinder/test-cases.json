@@ -1,0 +1,26 @@
+[
+  {
+    "id": "spiral-matrix-pathfinder-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[[1,2,3],[4,5,6],[7,8,9]]",
+    "expectedOutput": "[1,2,3,6,9,8,7,4,5]"
+  },
+  {
+    "id": "spiral-matrix-pathfinder-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[[1,2,3]]",
+    "expectedOutput": "[1,2,3]"
+  },
+  {
+    "id": "spiral-matrix-pathfinder-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[[1],[2],[3]]",
+    "expectedOutput": "[1,2,3]"
+  },
+  {
+    "id": "spiral-matrix-pathfinder-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[]",
+    "expectedOutput": "[]"
+  }
+]

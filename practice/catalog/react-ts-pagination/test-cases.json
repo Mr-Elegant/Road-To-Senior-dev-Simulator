@@ -1,0 +1,26 @@
+[
+  {
+    "id": "pagination-1",
+    "name": "Initial slice",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"Alpha\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1/3\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "pagination-2",
+    "name": "Filter resets",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"beta\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":1},{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"Beta\"},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1/1\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "pagination-3",
+    "name": "No matches",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"none\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0/0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "pagination-4",
+    "name": "Reverse sort",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"sort\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"Gamma\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "id": "frontend-kanban-board",
+  "title": "Frontend: Kanban Board",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Kanban Board. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Cards A and B start in todo, with doing and done columns. Render column containers[data-column=todo|doing|done], each with cards[data-card=ID]. A Move button[data-move=ID] advances one column, clamped at done. Dragging a card onto a column moves it there exactly once. Render count of cards per column in [data-testid=counts] as todo,doing,done.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "kanban-board-1",
+      "name": "Initial columns",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"2,0,0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "kanban-board-2",
+      "name": "Advance",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-move=\\\"A\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1,1,0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "kanban-board-3",
+      "name": "Drag destination",
+      "inputDescription": "{\"actions\":[{\"type\":\"drag\",\"source\":\"[data-card=\\\"B\\\"]\",\"target\":\"[data-column=\\\"done\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1,0,1\"},{\"selector\":\"[data-card=\\\"B\\\"]\",\"property\":\"count\",\"equals\":1}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Normalize cards by ID and store ordered ID lists per column, or use an equivalent explicit reducer."
+  ],
+  "alternativeApproaches": [
+    "Add optimistic server persistence with version conflicts and rollback that preserves newer actions."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Same-column reorder; cross-column move; empty destination.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

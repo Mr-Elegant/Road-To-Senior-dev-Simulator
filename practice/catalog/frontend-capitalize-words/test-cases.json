@@ -1,0 +1,26 @@
+[
+  {
+    "id": "capitalize-words-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "\"hello  world\"",
+    "expectedOutput": "\"Hello  World\""
+  },
+  {
+    "id": "capitalize-words-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "\"javaScript\"",
+    "expectedOutput": "\"JavaScript\""
+  },
+  {
+    "id": "capitalize-words-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "\"\"",
+    "expectedOutput": "\"\""
+  },
+  {
+    "id": "capitalize-words-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "\"a\\nb\"",
+    "expectedOutput": "\"A\\nB\""
+  }
+]

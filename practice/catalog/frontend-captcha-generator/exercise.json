@@ -1,0 +1,53 @@
+{
+  "id": "frontend-captcha-generator",
+  "title": "Frontend: Captcha Generator",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Captcha Generator. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({challenges=[AB12,CD34]}). Show current [data-testid=challenge]. Answer input plus Verify[data-action=verify] reports Correct/Incorrect in [data-testid=feedback], trimming and uppercasing. Regenerate cycles and clears input/feedback; an old challenge answer must fail. This client demo is inspectable and not an abuse boundary.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "captcha-generator-1",
+      "name": "Match",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\" ab12 \"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"verify\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Correct\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "captcha-generator-2",
+      "name": "Reject",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"wrong\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"verify\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Incorrect\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "captcha-generator-3",
+      "name": "Old challenge",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"regenerate\\\"]\"},{\"type\":\"input\",\"selector\":\"input\",\"value\":\"AB12\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"verify\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"challenge\\\"]\",\"property\":\"text\",\"equals\":\"CD34\"},{\"selector\":\"[data-testid=\\\"feedback\\\"]\",\"property\":\"text\",\"equals\":\"Incorrect\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Generate a new challenge only when requested and compare the answer using the declared normalization policy."
+  ],
+  "alternativeApproaches": [
+    "Design an accessible server-validated alternative rather than obscuring text more aggressively."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Regenerate; answer for old challenge; case policy.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

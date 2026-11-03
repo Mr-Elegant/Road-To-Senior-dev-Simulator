@@ -1,0 +1,63 @@
+{
+  "id": "react-ts-todo-list-ii",
+  "title": "React + TypeScript: Todo List II",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Todo List II. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. A New task input name=draft and Add button data-action=add create trimmed nonblank tasks with sequential string IDs starting 1. Render li data-id and data-done, title span[data-title], Complete[data-toggle=ID], Delete[data-delete=ID]. Complete toggles done, Delete removes, output[data-testid=total] counts all tasks. Also provide Filter select all/active/done, Edit[data-edit=ID], Edit title input, and Save[data-save=ID] that commits a nonblank trimmed title. Filtering must not delete records.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\ninterface Task {\n    id: string;\n    title: string;\n    done: boolean;\n}\nexport interface AppProps {\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "todo-list-ii-1",
+      "name": "Reject blank",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\"   \"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "todo-list-ii-2",
+      "name": "Add/complete",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\" Task \"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-toggle=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"[data-title]\",\"property\":\"text\",\"equals\":\"Task\"},{\"selector\":\"li\",\"property\":\"attribute\",\"attribute\":\"data-done\",\"equals\":\"true\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "todo-list-ii-3",
+      "name": "Delete",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\"Task\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-delete=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "todo-list-ii-4",
+      "name": "Edit and filter",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\"Old\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-edit=\\\"1\\\"]\"},{\"type\":\"input\",\"selector\":\"[aria-label=\\\"Edit title\\\"]\",\"value\":\"New\"},{\"type\":\"click\",\"selector\":\"[data-save=\\\"1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-toggle=\\\"1\\\"]\"},{\"type\":\"input\",\"selector\":\"select\",\"value\":\"active\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use task IDs for the collection and a separate editing ID/draft for an active edit."
+  ],
+  "alternativeApproaches": [
+    "Migrate an older storage schema and reconcile edits from two browser tabs."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Cancel edit; blank edited title; corrupt storage.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

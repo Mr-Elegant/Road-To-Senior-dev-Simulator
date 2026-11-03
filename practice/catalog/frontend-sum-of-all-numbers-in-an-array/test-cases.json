@@ -1,0 +1,27 @@
+[
+  {
+    "id": "sum-of-all-numbers-in-an-array-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "sum-of-all-numbers-in-an-array-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[1,-2,3]",
+    "expectedOutput": "2"
+  },
+  {
+    "id": "sum-of-all-numbers-in-an-array-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[0,0]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "sum-of-all-numbers-in-an-array-4",
+    "name": "Reject input: Invalid number",
+    "inputDescription": "[1,\"2\"]",
+    "expectedOutput": "Throws: Invalid number",
+    "expectedError": "Invalid number"
+  }
+]

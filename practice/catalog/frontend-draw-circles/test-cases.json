@@ -1,0 +1,20 @@
+[
+  {
+    "id": "draw-circles-1",
+    "name": "Add geometry",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"x\\\"]\",\"value\":\"20\"},{\"type\":\"input\",\"selector\":\"[name=\\\"y\\\"]\",\"value\":\"30\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"circle\",\"property\":\"count\",\"equals\":1},{\"selector\":\"circle\",\"property\":\"attribute\",\"attribute\":\"cx\",\"equals\":\"20\"},{\"selector\":\"circle\",\"property\":\"attribute\",\"attribute\":\"cy\",\"equals\":\"30\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "draw-circles-2",
+    "name": "Undo",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"x\\\"]\",\"value\":\"20\"},{\"type\":\"input\",\"selector\":\"[name=\\\"y\\\"]\",\"value\":\"30\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"undo\\\"]\"}],\"assertions\":[{\"selector\":\"circle\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "draw-circles-3",
+    "name": "Invalid",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"x\\\"]\",\"value\":\"-1\"},{\"type\":\"input\",\"selector\":\"[name=\\\"y\\\"]\",\"value\":\"10\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"circle\",\"property\":\"count\",\"equals\":0},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Invalid position\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

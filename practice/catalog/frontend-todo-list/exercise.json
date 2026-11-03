@@ -1,0 +1,53 @@
+{
+  "id": "frontend-todo-list",
+  "title": "Frontend: Todo List",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Todo List. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. A New task input name=draft and Add button data-action=add create trimmed nonblank tasks with sequential string IDs starting 1. Render li data-id and data-done, title span[data-title], Complete[data-toggle=ID], Delete[data-delete=ID]. Complete toggles done, Delete removes, output[data-testid=total] counts all tasks. Keep state immutable and IDs stable.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "todo-list-1",
+      "name": "Reject blank",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\"   \"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "todo-list-2",
+      "name": "Add/complete",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\" Task \"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-toggle=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"[data-title]\",\"property\":\"text\",\"equals\":\"Task\"},{\"selector\":\"li\",\"property\":\"attribute\",\"attribute\":\"data-done\",\"equals\":\"true\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "todo-list-3",
+      "name": "Delete",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"draft\\\"]\",\"value\":\"Task\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-delete=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Keep an array of task records and update it immutably."
+  ],
+  "alternativeApproaches": [
+    "Add filtered views while retaining selection and edit state by task ID."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Blank title; repeated title with different IDs; complete/uncomplete.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

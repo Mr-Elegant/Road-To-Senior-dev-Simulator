@@ -1,0 +1,27 @@
+[
+  {
+    "id": "loop-a-to-z-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"from\":\"X\",\"to\":\"Z\"}",
+    "expectedOutput": "[\"X\",\"Y\",\"Z\"]"
+  },
+  {
+    "id": "loop-a-to-z-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"from\":\"A\",\"to\":\"A\"}",
+    "expectedOutput": "[\"A\"]"
+  },
+  {
+    "id": "loop-a-to-z-3",
+    "name": "Reject input: Invalid range",
+    "inputDescription": "{\"from\":\"Z\",\"to\":\"A\"}",
+    "expectedOutput": "Throws: Invalid range",
+    "expectedError": "Invalid range"
+  },
+  {
+    "id": "loop-a-to-z-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "{\"from\":\"B\",\"to\":\"D\"}",
+    "expectedOutput": "[\"B\",\"C\",\"D\"]"
+  }
+]

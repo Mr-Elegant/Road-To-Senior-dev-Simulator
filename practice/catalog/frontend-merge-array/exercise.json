@@ -1,0 +1,53 @@
+{
+  "id": "frontend-merge-array",
+  "title": "Frontend: Merge Array",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Merge Array. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({left,right}), merging two sorted numeric arrays into a new sorted array in O(n+m), retaining duplicates.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "merge-array-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"left\":[-1,2,2],\"right\":[0,2,5]}",
+      "expectedOutput": "[-1,0,2,2,2,5]"
+    },
+    {
+      "id": "merge-array-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"left\":[],\"right\":[1]}",
+      "expectedOutput": "[1]"
+    },
+    {
+      "id": "merge-array-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"left\":[],\"right\":[]}",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Use one pointer per input and repeatedly append the smaller current value, then append either remainder."
+  ],
+  "alternativeApproaches": [
+    "Merge k sorted streams with a heap and discuss finite arrays versus unbounded iterators."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: One input empty; equal values; negatives.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

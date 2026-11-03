@@ -1,0 +1,26 @@
+[
+  {
+    "id": "search-in-a-2d-sorted-matrix-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"matrix\":[[1,4,7],[2,5,9],[3,6,10]],\"target\":6}",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "search-in-a-2d-sorted-matrix-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"matrix\":[[1,3],[2,4]],\"target\":5}",
+    "expectedOutput": "false"
+  },
+  {
+    "id": "search-in-a-2d-sorted-matrix-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"matrix\":[],\"target\":1}",
+    "expectedOutput": "false"
+  },
+  {
+    "id": "search-in-a-2d-sorted-matrix-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "{\"matrix\":[[1],[2]],\"target\":2}",
+    "expectedOutput": "true"
+  }
+]

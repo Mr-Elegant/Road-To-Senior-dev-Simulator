@@ -1,0 +1,53 @@
+{
+  "id": "frontend-design-autocomplete",
+  "title": "Frontend: Design Autocomplete",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Design Autocomplete. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution({entries,prefix,limit}). Entries have unique lowercase ASCII word and numeric score. Build a prefix index, query case-insensitively, rank matches by descending score then ascending word, return at most nonnegative limit words. Empty prefix matches all. This bounded prefix/ranking core excludes remote personalization.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "design-autocomplete-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "{\"entries\":[{\"word\":\"cat\",\"score\":1},{\"word\":\"car\",\"score\":2},{\"word\":\"dog\",\"score\":4}],\"prefix\":\"CA\",\"limit\":3}",
+      "expectedOutput": "[\"car\",\"cat\"]"
+    },
+    {
+      "id": "design-autocomplete-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "{\"entries\":[{\"word\":\"b\",\"score\":1},{\"word\":\"a\",\"score\":1}],\"prefix\":\"\",\"limit\":1}",
+      "expectedOutput": "[\"a\"]"
+    },
+    {
+      "id": "design-autocomplete-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "{\"entries\":[{\"word\":\"a\",\"score\":1}],\"prefix\":\"x\",\"limit\":5}",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "For a static prefix dictionary, a trie or sorted-array prefix range can locate candidates."
+  ],
+  "alternativeApproaches": [
+    "Compare trie top-k caches with a search index when ranking depends on user context and rapidly changing popularity."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Empty prefix; no match; equal rank.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

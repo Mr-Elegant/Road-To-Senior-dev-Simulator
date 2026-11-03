@@ -1,0 +1,20 @@
+[
+  {
+    "id": "grid-lights-ii-1",
+    "name": "Initially clear",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"count\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "grid-lights-ii-2",
+    "name": "Activate",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"count\\\"]\",\"property\":\"text\",\"equals\":\"1\"},{\"selector\":\"[data-cell=\\\"0\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"true\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "grid-lights-ii-3",
+    "name": "Replay one step",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"2\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"3\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"step\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"count\\\"]\",\"property\":\"text\",\"equals\":\"3\"},{\"selector\":\"[data-testid=\\\"phase\\\"]\",\"property\":\"text\",\"equals\":\"replay\"},{\"selector\":\"[data-cell=\\\"3\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"false\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "drag-and-drop-1",
+    "name": "Original order",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"A,B,C\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "drag-and-drop-2",
+    "name": "Keyboard alternative",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-down=\\\"A\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"B,A,C\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "drag-and-drop-3",
+    "name": "Drag interaction",
+    "inputDescription": "{\"actions\":[{\"type\":\"drag\",\"source\":\"[data-id=\\\"C\\\"]\",\"target\":\"[data-id=\\\"A\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"C,A,B\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

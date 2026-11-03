@@ -729,6 +729,2778 @@
     "filename": "solution.jsx"
   },
   {
+    "key": "catalog/frontend-find-missing-number",
+    "group": "catalog",
+    "id": "frontend-find-missing-number",
+    "title": "Frontend: Find Missing Number",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-max-subarray",
+    "group": "catalog",
+    "id": "frontend-max-subarray",
+    "title": "Frontend: Max SubArray",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-make-counter",
+    "group": "catalog",
+    "id": "frontend-make-counter",
+    "title": "Frontend: Make Counter",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-power-of-two",
+    "group": "catalog",
+    "id": "frontend-power-of-two",
+    "title": "Frontend: Power of Two",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-sum",
+    "group": "catalog",
+    "id": "frontend-sum",
+    "title": "Frontend: sum()",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-get-result-by-path",
+    "group": "catalog",
+    "id": "frontend-get-result-by-path",
+    "title": "Frontend: Get Result By Path",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-find-smallest-number",
+    "group": "catalog",
+    "id": "frontend-find-smallest-number",
+    "title": "Frontend: Find smallest number",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-power-of-three",
+    "group": "catalog",
+    "id": "frontend-power-of-three",
+    "title": "Frontend: Power of Three",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-count-negative",
+    "group": "catalog",
+    "id": "frontend-count-negative",
+    "title": "Frontend: Count Negative",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-find-largest-number",
+    "group": "catalog",
+    "id": "frontend-find-largest-number",
+    "title": "Frontend: Find largest number",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-loop-a-to-z",
+    "group": "catalog",
+    "id": "frontend-loop-a-to-z",
+    "title": "Frontend: Loop A to Z",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-custom-sort",
+    "group": "catalog",
+    "id": "frontend-custom-sort",
+    "title": "Frontend: Custom Sort",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-implement-curry",
+    "group": "catalog",
+    "id": "frontend-implement-curry",
+    "title": "Frontend: implement curry()",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-oncefn",
+    "group": "catalog",
+    "id": "frontend-oncefn",
+    "title": "Frontend: once(fn)",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-groupbyarr-key",
+    "group": "catalog",
+    "id": "frontend-groupbyarr-key",
+    "title": "Frontend: groupBy(arr, key)",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-remove-duplicates-from-array",
+    "group": "catalog",
+    "id": "frontend-remove-duplicates-from-array",
+    "title": "Frontend: Remove Duplicates from Array",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-voting-eligibility",
+    "group": "catalog",
+    "id": "frontend-voting-eligibility",
+    "title": "Frontend: Voting Eligibility",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-validate-palindrome",
+    "group": "catalog",
+    "id": "frontend-validate-palindrome",
+    "title": "Frontend: Validate Palindrome",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-implement-a-stack",
+    "group": "catalog",
+    "id": "frontend-implement-a-stack",
+    "title": "Frontend: Implement a Stack",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-power-of-four",
+    "group": "catalog",
+    "id": "frontend-power-of-four",
+    "title": "Frontend: Power of Four",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-count-even-numbers",
+    "group": "catalog",
+    "id": "frontend-count-even-numbers",
+    "title": "Frontend: Count even numbers",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-back-to-top",
+    "group": "catalog",
+    "id": "frontend-back-to-top",
+    "title": "Frontend: Back To Top",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-copy-to-clipboard",
+    "group": "catalog",
+    "id": "frontend-copy-to-clipboard",
+    "title": "Frontend: Copy to Clipboard",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-capitalize-words",
+    "group": "catalog",
+    "id": "frontend-capitalize-words",
+    "title": "Frontend: Capitalize Words",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-count-vowels",
+    "group": "catalog",
+    "id": "frontend-count-vowels",
+    "title": "Frontend: Count Vowels",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-contact-form",
+    "group": "catalog",
+    "id": "frontend-contact-form",
+    "title": "Frontend: Contact Form",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-sum-of-all-numbers-in-an-array",
+    "group": "catalog",
+    "id": "frontend-sum-of-all-numbers-in-an-array",
+    "title": "Frontend: Sum of all numbers in an array",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-array-to-zigzag-string-converter",
+    "group": "catalog",
+    "id": "frontend-array-to-zigzag-string-converter",
+    "title": "Frontend: Array to Zigzag String Converter",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-auto-save-text",
+    "group": "catalog",
+    "id": "frontend-auto-save-text",
+    "title": "Frontend: Auto Save Text",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-counter-using-react",
+    "group": "catalog",
+    "id": "frontend-counter-using-react",
+    "title": "Frontend: Counter Using React",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-anagram-checker",
+    "group": "catalog",
+    "id": "frontend-anagram-checker",
+    "title": "Frontend: Anagram Checker",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-findmaxnumber",
+    "group": "catalog",
+    "id": "frontend-findmaxnumber",
+    "title": "Frontend: findMaxNumber",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-factorial-of-a-number",
+    "group": "catalog",
+    "id": "frontend-factorial-of-a-number",
+    "title": "Frontend: Factorial of a number",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-fibonacci-series",
+    "group": "catalog",
+    "id": "frontend-fibonacci-series",
+    "title": "Frontend: Fibonacci Series",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-secret-code-shuffler",
+    "group": "catalog",
+    "id": "frontend-secret-code-shuffler",
+    "title": "Frontend: Secret Code Shuffler",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-tooltip",
+    "group": "catalog",
+    "id": "frontend-tooltip",
+    "title": "Frontend: Tooltip",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-guess-the-number",
+    "group": "catalog",
+    "id": "frontend-guess-the-number",
+    "title": "Frontend: Guess the number",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-toggle-button-with-custom-hook",
+    "group": "catalog",
+    "id": "frontend-toggle-button-with-custom-hook",
+    "title": "Frontend: Toggle button with custom hook",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-leap-year",
+    "group": "catalog",
+    "id": "frontend-leap-year",
+    "title": "Frontend: Leap year",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-blog-post",
+    "group": "catalog",
+    "id": "frontend-blog-post",
+    "title": "Frontend: Blog Post",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-flatten-nested-array",
+    "group": "catalog",
+    "id": "frontend-flatten-nested-array",
+    "title": "Frontend: Flatten Nested Array",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-even-or-odd",
+    "group": "catalog",
+    "id": "frontend-even-or-odd",
+    "title": "Frontend: Even or odd",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-read-more",
+    "group": "catalog",
+    "id": "frontend-read-more",
+    "title": "Frontend: Read More",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-acronym-generator",
+    "group": "catalog",
+    "id": "frontend-acronym-generator",
+    "title": "Frontend: Acronym Generator",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-character-counter",
+    "group": "catalog",
+    "id": "frontend-character-counter",
+    "title": "Frontend: Character Counter",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-dynamic-greeting-app",
+    "group": "catalog",
+    "id": "frontend-dynamic-greeting-app",
+    "title": "Frontend: Dynamic Greeting App",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-get-weekday",
+    "group": "catalog",
+    "id": "frontend-get-weekday",
+    "title": "Frontend: Get Weekday",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-focus-input",
+    "group": "catalog",
+    "id": "frontend-focus-input",
+    "title": "Frontend: Focus Input",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-authentication",
+    "group": "catalog",
+    "id": "frontend-authentication",
+    "title": "Frontend: Authentication",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-shuffle",
+    "group": "catalog",
+    "id": "frontend-shuffle",
+    "title": "Frontend: shuffle()",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-navbar",
+    "group": "catalog",
+    "id": "frontend-navbar",
+    "title": "Frontend: Navbar",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-largest-number-formed",
+    "group": "catalog",
+    "id": "frontend-largest-number-formed",
+    "title": "Frontend: Largest number formed",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-color-explorer",
+    "group": "catalog",
+    "id": "frontend-color-explorer",
+    "title": "Frontend: Color Explorer",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-confirmation-modal",
+    "group": "catalog",
+    "id": "frontend-confirmation-modal",
+    "title": "Frontend: Confirmation Modal",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-toggle-password",
+    "group": "catalog",
+    "id": "frontend-toggle-password",
+    "title": "Frontend: Toggle password",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-array-chunking",
+    "group": "catalog",
+    "id": "frontend-array-chunking",
+    "title": "Frontend: Array Chunking",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-tab-switcher",
+    "group": "catalog",
+    "id": "frontend-tab-switcher",
+    "title": "Frontend: Tab Switcher",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-useprevioushook",
+    "group": "catalog",
+    "id": "frontend-useprevioushook",
+    "title": "Frontend: usePreviousHook",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-sum-of-n-natural-numbers",
+    "group": "catalog",
+    "id": "frontend-sum-of-n-natural-numbers",
+    "title": "Frontend: Sum of n natural numbers",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-holy-grail",
+    "group": "catalog",
+    "id": "frontend-holy-grail",
+    "title": "Frontend: Holy Grail",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-user-profile",
+    "group": "catalog",
+    "id": "frontend-user-profile",
+    "title": "Frontend: User profile",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-age-calculator",
+    "group": "catalog",
+    "id": "frontend-age-calculator",
+    "title": "Frontend: Age calculator",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-frequently-asked-questions",
+    "group": "catalog",
+    "id": "frontend-frequently-asked-questions",
+    "title": "Frontend: Frequently Asked Questions",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-asterisk-field-validation",
+    "group": "catalog",
+    "id": "frontend-asterisk-field-validation",
+    "title": "Frontend: Asterisk Field Validation",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-arrayprototypereduce",
+    "group": "catalog",
+    "id": "frontend-arrayprototypereduce",
+    "title": "Frontend: Array.prototype.reduce",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-sidebar",
+    "group": "catalog",
+    "id": "frontend-sidebar",
+    "title": "Frontend: Sidebar",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-reversewords",
+    "group": "catalog",
+    "id": "frontend-reversewords",
+    "title": "Frontend: ReverseWords",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-todo-list",
+    "group": "catalog",
+    "id": "frontend-todo-list",
+    "title": "Frontend: Todo List",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-flatten-nested-objects",
+    "group": "catalog",
+    "id": "frontend-flatten-nested-objects",
+    "title": "Frontend: Flatten Nested Objects",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-flatten-deep-object",
+    "group": "catalog",
+    "id": "frontend-flatten-deep-object",
+    "title": "Frontend: Flatten Deep Object",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-compress-string-with-limited-repetition",
+    "group": "catalog",
+    "id": "frontend-compress-string-with-limited-repetition",
+    "title": "Frontend: Compress String with Limited Repetition",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-todo-list-ii",
+    "group": "catalog",
+    "id": "frontend-todo-list-ii",
+    "title": "Frontend: Todo List II",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-billing-counter",
+    "group": "catalog",
+    "id": "frontend-billing-counter",
+    "title": "Frontend: Billing Counter",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-resizable-split-pane",
+    "group": "catalog",
+    "id": "frontend-resizable-split-pane",
+    "title": "Frontend: Resizable Split Pane",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-kanban-board",
+    "group": "catalog",
+    "id": "frontend-kanban-board",
+    "title": "Frontend: Kanban Board",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-tabs-component",
+    "group": "catalog",
+    "id": "frontend-tabs-component",
+    "title": "Frontend: Tabs Component",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-drag-and-drop-ii",
+    "group": "catalog",
+    "id": "frontend-drag-and-drop-ii",
+    "title": "Frontend: Drag And Drop II",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-image-carousel",
+    "group": "catalog",
+    "id": "frontend-image-carousel",
+    "title": "Frontend: Image Carousel",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-rate-limiter",
+    "group": "catalog",
+    "id": "frontend-rate-limiter",
+    "title": "Frontend: Rate Limiter",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-jsonstringify",
+    "group": "catalog",
+    "id": "frontend-jsonstringify",
+    "title": "Frontend: JSON.stringify",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-word-search",
+    "group": "catalog",
+    "id": "frontend-word-search",
+    "title": "Frontend: Word Search",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-topological-sort-dfs",
+    "group": "catalog",
+    "id": "frontend-topological-sort-dfs",
+    "title": "Frontend: Topological Sort (DFS)",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-paginated-article-bookmark-viewer",
+    "group": "catalog",
+    "id": "frontend-paginated-article-bookmark-viewer",
+    "title": "Frontend: Paginated Article Bookmark Viewer",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-price-range-slider",
+    "group": "catalog",
+    "id": "frontend-price-range-slider",
+    "title": "Frontend: Price Range Slider",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-detect-cycle-in-an-undirected-connected-graph-dfs",
+    "group": "catalog",
+    "id": "frontend-detect-cycle-in-an-undirected-connected-graph-dfs",
+    "title": "Frontend: Detect Cycle in an Undirected Connected Graph (DFS)",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-transfer-list",
+    "group": "catalog",
+    "id": "frontend-transfer-list",
+    "title": "Frontend: Transfer List",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-star-rating",
+    "group": "catalog",
+    "id": "frontend-star-rating",
+    "title": "Frontend: Star Rating",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-expense-tracker",
+    "group": "catalog",
+    "id": "frontend-expense-tracker",
+    "title": "Frontend: Expense Tracker",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-social-share",
+    "group": "catalog",
+    "id": "frontend-social-share",
+    "title": "Frontend: Social Share",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-sortable-list",
+    "group": "catalog",
+    "id": "frontend-sortable-list",
+    "title": "Frontend: Sortable List",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-throttle",
+    "group": "catalog",
+    "id": "frontend-throttle",
+    "title": "Frontend: Throttle",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-word-counter",
+    "group": "catalog",
+    "id": "frontend-word-counter",
+    "title": "Frontend: Word Counter",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-dice-roller",
+    "group": "catalog",
+    "id": "frontend-dice-roller",
+    "title": "Frontend: Dice Roller",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-promiseall-with-concurrency-limit",
+    "group": "catalog",
+    "id": "frontend-promiseall-with-concurrency-limit",
+    "title": "Frontend: PromiseAll With Concurrency Limit",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-draw-circles",
+    "group": "catalog",
+    "id": "frontend-draw-circles",
+    "title": "Frontend: Draw Circles",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-grid-lights-ii",
+    "group": "catalog",
+    "id": "frontend-grid-lights-ii",
+    "title": "Frontend: Grid Lights II",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-pin-items",
+    "group": "catalog",
+    "id": "frontend-pin-items",
+    "title": "Frontend: Pin Items",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-priority-queue",
+    "group": "catalog",
+    "id": "frontend-priority-queue",
+    "title": "Frontend: Priority Queue",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-memoization",
+    "group": "catalog",
+    "id": "frontend-memoization",
+    "title": "Frontend: Memoization",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-notification-bell",
+    "group": "catalog",
+    "id": "frontend-notification-bell",
+    "title": "Frontend: Notification Bell",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-emoji-replacer",
+    "group": "catalog",
+    "id": "frontend-emoji-replacer",
+    "title": "Frontend: Emoji Replacer",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-searchable-dropdown",
+    "group": "catalog",
+    "id": "frontend-searchable-dropdown",
+    "title": "Frontend: Searchable Dropdown",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-sum-of-consecutive-integers",
+    "group": "catalog",
+    "id": "frontend-sum-of-consecutive-integers",
+    "title": "Frontend: Sum of Consecutive Integers",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-deep-clone-object",
+    "group": "catalog",
+    "id": "frontend-deep-clone-object",
+    "title": "Frontend: Deep Clone Object",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-grid-lights",
+    "group": "catalog",
+    "id": "frontend-grid-lights",
+    "title": "Frontend: Grid Lights",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-debounce",
+    "group": "catalog",
+    "id": "frontend-debounce",
+    "title": "Frontend: Debounce",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-pawn-moves",
+    "group": "catalog",
+    "id": "frontend-pawn-moves",
+    "title": "Frontend: Pawn Moves",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-cinema-hall",
+    "group": "catalog",
+    "id": "frontend-cinema-hall",
+    "title": "Frontend: Cinema Hall",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-reusable-toast",
+    "group": "catalog",
+    "id": "frontend-reusable-toast",
+    "title": "Frontend: Reusable Toast",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-product-rating-heatmap",
+    "group": "catalog",
+    "id": "frontend-product-rating-heatmap",
+    "title": "Frontend: Product Rating Heatmap",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-slugify-a-string",
+    "group": "catalog",
+    "id": "frontend-slugify-a-string",
+    "title": "Frontend: Slugify a String",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-list-sorter",
+    "group": "catalog",
+    "id": "frontend-list-sorter",
+    "title": "Frontend: List Sorter",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-knight-moves",
+    "group": "catalog",
+    "id": "frontend-knight-moves",
+    "title": "Frontend: Knight Moves",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-spiral-matrix-pathfinder",
+    "group": "catalog",
+    "id": "frontend-spiral-matrix-pathfinder",
+    "title": "Frontend: Spiral Matrix Pathfinder",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-queen-moves",
+    "group": "catalog",
+    "id": "frontend-queen-moves",
+    "title": "Frontend: Queen Moves",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-lazy-evaluation",
+    "group": "catalog",
+    "id": "frontend-lazy-evaluation",
+    "title": "Frontend: Lazy Evaluation",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-bmi-calculator",
+    "group": "catalog",
+    "id": "frontend-bmi-calculator",
+    "title": "Frontend: BMI Calculator",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-longest-substring-no-repeats",
+    "group": "catalog",
+    "id": "frontend-longest-substring-no-repeats",
+    "title": "Frontend: Longest Substring No Repeats",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-traffic-lights",
+    "group": "catalog",
+    "id": "frontend-traffic-lights",
+    "title": "Frontend: Traffic Lights",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-concurrency-limited-task-scheduler",
+    "group": "catalog",
+    "id": "frontend-concurrency-limited-task-scheduler",
+    "title": "Frontend: Concurrency Limited Task Scheduler",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-find-the-single-element-in-a-sorted-array",
+    "group": "catalog",
+    "id": "frontend-find-the-single-element-in-a-sorted-array",
+    "title": "Frontend: Find the Single Element in a Sorted Array",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-cards-carousel",
+    "group": "catalog",
+    "id": "frontend-cards-carousel",
+    "title": "Frontend: Cards Carousel",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-event-emitter",
+    "group": "catalog",
+    "id": "frontend-event-emitter",
+    "title": "Frontend: Event Emitter",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-list-format",
+    "group": "catalog",
+    "id": "frontend-list-format",
+    "title": "Frontend: List Format",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-map-async-limit",
+    "group": "catalog",
+    "id": "frontend-map-async-limit",
+    "title": "Frontend: Map Async Limit",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-rock-paper-scissor",
+    "group": "catalog",
+    "id": "frontend-rock-paper-scissor",
+    "title": "Frontend: Rock Paper Scissor",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-undo-redo",
+    "group": "catalog",
+    "id": "frontend-undo-redo",
+    "title": "Frontend: Undo Redo",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-color-code-game",
+    "group": "catalog",
+    "id": "frontend-color-code-game",
+    "title": "Frontend: Color Code Game",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-stopwatch",
+    "group": "catalog",
+    "id": "frontend-stopwatch",
+    "title": "Frontend: Stopwatch",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-rook-moves",
+    "group": "catalog",
+    "id": "frontend-rook-moves",
+    "title": "Frontend: Rook Moves",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-deep-omit",
+    "group": "catalog",
+    "id": "frontend-deep-omit",
+    "title": "Frontend: Deep Omit",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-shortest-distance-from-source-bfs",
+    "group": "catalog",
+    "id": "frontend-shortest-distance-from-source-bfs",
+    "title": "Frontend: Shortest Distance from Source (BFS)",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-topological-sort-bfs",
+    "group": "catalog",
+    "id": "frontend-topological-sort-bfs",
+    "title": "Frontend: Topological Sort (BFS)",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-sum-of-subarray-minimum",
+    "group": "catalog",
+    "id": "frontend-sum-of-subarray-minimum",
+    "title": "Frontend: Sum of Subarray Minimum",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-modal-in-react",
+    "group": "catalog",
+    "id": "frontend-modal-in-react",
+    "title": "Frontend: Modal In React",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-image-gallery",
+    "group": "catalog",
+    "id": "frontend-image-gallery",
+    "title": "Frontend: Image Gallery",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-typewriter-message",
+    "group": "catalog",
+    "id": "frontend-typewriter-message",
+    "title": "Frontend: Typewriter Message",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-generate-password",
+    "group": "catalog",
+    "id": "frontend-generate-password",
+    "title": "Frontend: Generate Password",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-tic-tac-toe",
+    "group": "catalog",
+    "id": "frontend-tic-tac-toe",
+    "title": "Frontend: Tic Tac Toe",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-temperature-convertor",
+    "group": "catalog",
+    "id": "frontend-temperature-convertor",
+    "title": "Frontend: Temperature Convertor",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-multiselect-dropdown",
+    "group": "catalog",
+    "id": "frontend-multiselect-dropdown",
+    "title": "Frontend: Multiselect dropdown",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-captcha-generator",
+    "group": "catalog",
+    "id": "frontend-captcha-generator",
+    "title": "Frontend: Captcha Generator",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-confetti-animation",
+    "group": "catalog",
+    "id": "frontend-confetti-animation",
+    "title": "Frontend: Confetti Animation",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-search-rotated-array",
+    "group": "catalog",
+    "id": "frontend-search-rotated-array",
+    "title": "Frontend: Search Rotated Array",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-lucky-number",
+    "group": "catalog",
+    "id": "frontend-lucky-number",
+    "title": "Frontend: Lucky Number",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-calculator",
+    "group": "catalog",
+    "id": "frontend-calculator",
+    "title": "Frontend: Calculator",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-combination-sum",
+    "group": "catalog",
+    "id": "frontend-combination-sum",
+    "title": "Frontend: Combination Sum",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-markdown-editor",
+    "group": "catalog",
+    "id": "frontend-markdown-editor",
+    "title": "Frontend: Markdown Editor",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-animated-loading-skeleton",
+    "group": "catalog",
+    "id": "frontend-animated-loading-skeleton",
+    "title": "Frontend: Animated Loading Skeleton",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-implement-promise-race",
+    "group": "catalog",
+    "id": "frontend-implement-promise-race",
+    "title": "Frontend: Implement Promise Race",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-auto-save-form",
+    "group": "catalog",
+    "id": "frontend-auto-save-form",
+    "title": "Frontend: Auto Save Form",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-drag-and-drop",
+    "group": "catalog",
+    "id": "frontend-drag-and-drop",
+    "title": "Frontend: Drag and Drop",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-progress-bar-ii",
+    "group": "catalog",
+    "id": "frontend-progress-bar-ii",
+    "title": "Frontend: Progress Bar II",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-json-formatter-and-validator",
+    "group": "catalog",
+    "id": "frontend-json-formatter-and-validator",
+    "title": "Frontend: JSON Formatter and Validator",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-quiz-app",
+    "group": "catalog",
+    "id": "frontend-quiz-app",
+    "title": "Frontend: Quiz App",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-reverse-words-in-a-string",
+    "group": "catalog",
+    "id": "frontend-reverse-words-in-a-string",
+    "title": "Frontend: Reverse Words in a String",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-oranges-rotting",
+    "group": "catalog",
+    "id": "frontend-oranges-rotting",
+    "title": "Frontend: Oranges Rotting",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-objectassign",
+    "group": "catalog",
+    "id": "frontend-objectassign",
+    "title": "Frontend: Object.assign()",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-merge-array",
+    "group": "catalog",
+    "id": "frontend-merge-array",
+    "title": "Frontend: Merge Array",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-pyramid-pattern",
+    "group": "catalog",
+    "id": "frontend-pyramid-pattern",
+    "title": "Frontend: pyramid pattern",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-search-in-a-2d-sorted-matrix",
+    "group": "catalog",
+    "id": "frontend-search-in-a-2d-sorted-matrix",
+    "title": "Frontend: Search in a 2D Sorted Matrix",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-king-moves",
+    "group": "catalog",
+    "id": "frontend-king-moves",
+    "title": "Frontend: King Moves",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-detect-data-type-in-js",
+    "group": "catalog",
+    "id": "frontend-detect-data-type-in-js",
+    "title": "Frontend: Detect data type in JS",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-bishop-moves",
+    "group": "catalog",
+    "id": "frontend-bishop-moves",
+    "title": "Frontend: Bishop Moves",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-pagination",
+    "group": "catalog",
+    "id": "frontend-pagination",
+    "title": "Frontend: Pagination",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-nested-checkbox",
+    "group": "catalog",
+    "id": "frontend-nested-checkbox",
+    "title": "Frontend: Nested Checkbox",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-file-explorer",
+    "group": "catalog",
+    "id": "frontend-file-explorer",
+    "title": "Frontend: File Explorer",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-prims-mst-algorithm",
+    "group": "catalog",
+    "id": "frontend-prims-mst-algorithm",
+    "title": "Frontend: Prim's MST Algorithm",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-longest-valid-parentheses",
+    "group": "catalog",
+    "id": "frontend-longest-valid-parentheses",
+    "title": "Frontend: Longest Valid Parentheses",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-stickynotes-component",
+    "group": "catalog",
+    "id": "frontend-stickynotes-component",
+    "title": "Frontend: StickyNotes Component",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-chinese-remainder-theorem",
+    "group": "catalog",
+    "id": "frontend-chinese-remainder-theorem",
+    "title": "Frontend: Chinese Remainder Theorem",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-24-game",
+    "group": "catalog",
+    "id": "frontend-24-game",
+    "title": "Frontend: 24 Game",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-otp-input-component",
+    "group": "catalog",
+    "id": "frontend-otp-input-component",
+    "title": "Frontend: OTP Input Component",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-event-management",
+    "group": "catalog",
+    "id": "frontend-event-management",
+    "title": "Frontend: Event Management",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-tree-navigation",
+    "group": "catalog",
+    "id": "frontend-tree-navigation",
+    "title": "Frontend: Tree Navigation",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-product-cart-with-discounts",
+    "group": "catalog",
+    "id": "frontend-product-cart-with-discounts",
+    "title": "Frontend: Product Cart with Discounts",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-data-table",
+    "group": "catalog",
+    "id": "frontend-data-table",
+    "title": "Frontend: Data Table",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-match-pair-game",
+    "group": "catalog",
+    "id": "frontend-match-pair-game",
+    "title": "Frontend: Match Pair Game",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-kruskals-mst-algorithm",
+    "group": "catalog",
+    "id": "frontend-kruskals-mst-algorithm",
+    "title": "Frontend: Kruskal's MST Algorithm",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-implement-lrucache",
+    "group": "catalog",
+    "id": "frontend-implement-lrucache",
+    "title": "Frontend: Implement LRUCache",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-nested-comments",
+    "group": "catalog",
+    "id": "frontend-nested-comments",
+    "title": "Frontend: Nested Comments",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-implement-a-queue-using-stack",
+    "group": "catalog",
+    "id": "frontend-implement-a-queue-using-stack",
+    "title": "Frontend: Implement a Queue using Stack",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-median-of-two-sorted-arrays",
+    "group": "catalog",
+    "id": "frontend-median-of-two-sorted-arrays",
+    "title": "Frontend: Median of Two Sorted Arrays",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-rick-and-morty-characters-viewer",
+    "group": "catalog",
+    "id": "frontend-rick-and-morty-characters-viewer",
+    "title": "Frontend: Rick And Morty Characters Viewer",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-product-store",
+    "group": "catalog",
+    "id": "frontend-product-store",
+    "title": "Frontend: Product Store",
+    "language": "jsx",
+    "mode": "react",
+    "filename": "solution.jsx"
+  },
+  {
+    "key": "catalog/frontend-create-task-scheduler-with-dependencies",
+    "group": "catalog",
+    "id": "frontend-create-task-scheduler-with-dependencies",
+    "title": "Frontend: Create Task Scheduler With Dependencies",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-all-pairs-shortest-path-floyd-warshall-algorithm",
+    "group": "catalog",
+    "id": "frontend-all-pairs-shortest-path-floyd-warshall-algorithm",
+    "title": "Frontend: All Pairs Shortest Path (Floyd-Warshall Algorithm)",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-shortest-distance-from-source-bellman-ford-algorithm",
+    "group": "catalog",
+    "id": "frontend-shortest-distance-from-source-bellman-ford-algorithm",
+    "title": "Frontend: Shortest Distance from Source (Bellman-Ford Algorithm)",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-sliding-window-maximum",
+    "group": "catalog",
+    "id": "frontend-sliding-window-maximum",
+    "title": "Frontend: Sliding Window Maximum",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-worker-pool",
+    "group": "catalog",
+    "id": "frontend-worker-pool",
+    "title": "Frontend: Worker Pool",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-first-missing-positive",
+    "group": "catalog",
+    "id": "frontend-first-missing-positive",
+    "title": "Frontend: First Missing Positive",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-design-autocomplete",
+    "group": "catalog",
+    "id": "frontend-design-autocomplete",
+    "title": "Frontend: Design Autocomplete",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-shortest-distance-from-source-dijkstras-algorithm",
+    "group": "catalog",
+    "id": "frontend-shortest-distance-from-source-dijkstras-algorithm",
+    "title": "Frontend: Shortest Distance from Source (Dijkstra's Algorithm)",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-fibonacci-modulo-pisano-period",
+    "group": "catalog",
+    "id": "frontend-fibonacci-modulo-pisano-period",
+    "title": "Frontend: Fibonacci Modulo (Pisano Period)",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/frontend-implement-garbage-collector",
+    "group": "catalog",
+    "id": "frontend-implement-garbage-collector",
+    "title": "Frontend: Implement Garbage Collector",
+    "language": "javascript",
+    "mode": "frontend-js",
+    "filename": "solution.js"
+  },
+  {
+    "key": "catalog/react-ts-password-strength",
+    "group": "catalog",
+    "id": "react-ts-password-strength",
+    "title": "React + TypeScript: Password Strength",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-url-validator",
+    "group": "catalog",
+    "id": "react-ts-url-validator",
+    "title": "React + TypeScript: URL Validator",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-chips-input",
+    "group": "catalog",
+    "id": "react-ts-chips-input",
+    "title": "React + TypeScript: Chips Input",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-progress-bar",
+    "group": "catalog",
+    "id": "react-ts-progress-bar",
+    "title": "React + TypeScript: Progress Bar",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-mortgage-calculator",
+    "group": "catalog",
+    "id": "react-ts-mortgage-calculator",
+    "title": "React + TypeScript: Mortgage Calculator",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-accordion",
+    "group": "catalog",
+    "id": "react-ts-accordion",
+    "title": "React + TypeScript: Accordion",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-dark-mode",
+    "group": "catalog",
+    "id": "react-ts-dark-mode",
+    "title": "React + TypeScript: Dark Mode",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-filter-recipes",
+    "group": "catalog",
+    "id": "react-ts-filter-recipes",
+    "title": "React + TypeScript: Filter Recipes",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-back-to-top",
+    "group": "catalog",
+    "id": "react-ts-back-to-top",
+    "title": "React + TypeScript: Back To Top",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-copy-to-clipboard",
+    "group": "catalog",
+    "id": "react-ts-copy-to-clipboard",
+    "title": "React + TypeScript: Copy to Clipboard",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-contact-form",
+    "group": "catalog",
+    "id": "react-ts-contact-form",
+    "title": "React + TypeScript: Contact Form",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-array-to-zigzag-string-converter",
+    "group": "catalog",
+    "id": "react-ts-array-to-zigzag-string-converter",
+    "title": "React + TypeScript: Array to Zigzag String Converter",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-auto-save-text",
+    "group": "catalog",
+    "id": "react-ts-auto-save-text",
+    "title": "React + TypeScript: Auto Save Text",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-counter-using-react",
+    "group": "catalog",
+    "id": "react-ts-counter-using-react",
+    "title": "React + TypeScript: Counter Using React",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-tooltip",
+    "group": "catalog",
+    "id": "react-ts-tooltip",
+    "title": "React + TypeScript: Tooltip",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-guess-the-number",
+    "group": "catalog",
+    "id": "react-ts-guess-the-number",
+    "title": "React + TypeScript: Guess the number",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-toggle-button-with-custom-hook",
+    "group": "catalog",
+    "id": "react-ts-toggle-button-with-custom-hook",
+    "title": "React + TypeScript: Toggle button with custom hook",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-leap-year",
+    "group": "catalog",
+    "id": "react-ts-leap-year",
+    "title": "React + TypeScript: Leap year",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-blog-post",
+    "group": "catalog",
+    "id": "react-ts-blog-post",
+    "title": "React + TypeScript: Blog Post",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-even-or-odd",
+    "group": "catalog",
+    "id": "react-ts-even-or-odd",
+    "title": "React + TypeScript: Even or odd",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-read-more",
+    "group": "catalog",
+    "id": "react-ts-read-more",
+    "title": "React + TypeScript: Read More",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-acronym-generator",
+    "group": "catalog",
+    "id": "react-ts-acronym-generator",
+    "title": "React + TypeScript: Acronym Generator",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-character-counter",
+    "group": "catalog",
+    "id": "react-ts-character-counter",
+    "title": "React + TypeScript: Character Counter",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-dynamic-greeting-app",
+    "group": "catalog",
+    "id": "react-ts-dynamic-greeting-app",
+    "title": "React + TypeScript: Dynamic Greeting App",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-get-weekday",
+    "group": "catalog",
+    "id": "react-ts-get-weekday",
+    "title": "React + TypeScript: Get Weekday",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-focus-input",
+    "group": "catalog",
+    "id": "react-ts-focus-input",
+    "title": "React + TypeScript: Focus Input",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-authentication",
+    "group": "catalog",
+    "id": "react-ts-authentication",
+    "title": "React + TypeScript: Authentication",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-navbar",
+    "group": "catalog",
+    "id": "react-ts-navbar",
+    "title": "React + TypeScript: Navbar",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-color-explorer",
+    "group": "catalog",
+    "id": "react-ts-color-explorer",
+    "title": "React + TypeScript: Color Explorer",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-confirmation-modal",
+    "group": "catalog",
+    "id": "react-ts-confirmation-modal",
+    "title": "React + TypeScript: Confirmation Modal",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-toggle-password",
+    "group": "catalog",
+    "id": "react-ts-toggle-password",
+    "title": "React + TypeScript: Toggle password",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-tab-switcher",
+    "group": "catalog",
+    "id": "react-ts-tab-switcher",
+    "title": "React + TypeScript: Tab Switcher",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-useprevioushook",
+    "group": "catalog",
+    "id": "react-ts-useprevioushook",
+    "title": "React + TypeScript: usePreviousHook",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-holy-grail",
+    "group": "catalog",
+    "id": "react-ts-holy-grail",
+    "title": "React + TypeScript: Holy Grail",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-user-profile",
+    "group": "catalog",
+    "id": "react-ts-user-profile",
+    "title": "React + TypeScript: User profile",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-age-calculator",
+    "group": "catalog",
+    "id": "react-ts-age-calculator",
+    "title": "React + TypeScript: Age calculator",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-frequently-asked-questions",
+    "group": "catalog",
+    "id": "react-ts-frequently-asked-questions",
+    "title": "React + TypeScript: Frequently Asked Questions",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-asterisk-field-validation",
+    "group": "catalog",
+    "id": "react-ts-asterisk-field-validation",
+    "title": "React + TypeScript: Asterisk Field Validation",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-sidebar",
+    "group": "catalog",
+    "id": "react-ts-sidebar",
+    "title": "React + TypeScript: Sidebar",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-todo-list",
+    "group": "catalog",
+    "id": "react-ts-todo-list",
+    "title": "React + TypeScript: Todo List",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-todo-list-ii",
+    "group": "catalog",
+    "id": "react-ts-todo-list-ii",
+    "title": "React + TypeScript: Todo List II",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-billing-counter",
+    "group": "catalog",
+    "id": "react-ts-billing-counter",
+    "title": "React + TypeScript: Billing Counter",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-resizable-split-pane",
+    "group": "catalog",
+    "id": "react-ts-resizable-split-pane",
+    "title": "React + TypeScript: Resizable Split Pane",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-kanban-board",
+    "group": "catalog",
+    "id": "react-ts-kanban-board",
+    "title": "React + TypeScript: Kanban Board",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-tabs-component",
+    "group": "catalog",
+    "id": "react-ts-tabs-component",
+    "title": "React + TypeScript: Tabs Component",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-drag-and-drop-ii",
+    "group": "catalog",
+    "id": "react-ts-drag-and-drop-ii",
+    "title": "React + TypeScript: Drag And Drop II",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-image-carousel",
+    "group": "catalog",
+    "id": "react-ts-image-carousel",
+    "title": "React + TypeScript: Image Carousel",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-paginated-article-bookmark-viewer",
+    "group": "catalog",
+    "id": "react-ts-paginated-article-bookmark-viewer",
+    "title": "React + TypeScript: Paginated Article Bookmark Viewer",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-price-range-slider",
+    "group": "catalog",
+    "id": "react-ts-price-range-slider",
+    "title": "React + TypeScript: Price Range Slider",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-transfer-list",
+    "group": "catalog",
+    "id": "react-ts-transfer-list",
+    "title": "React + TypeScript: Transfer List",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-star-rating",
+    "group": "catalog",
+    "id": "react-ts-star-rating",
+    "title": "React + TypeScript: Star Rating",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-expense-tracker",
+    "group": "catalog",
+    "id": "react-ts-expense-tracker",
+    "title": "React + TypeScript: Expense Tracker",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-social-share",
+    "group": "catalog",
+    "id": "react-ts-social-share",
+    "title": "React + TypeScript: Social Share",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-sortable-list",
+    "group": "catalog",
+    "id": "react-ts-sortable-list",
+    "title": "React + TypeScript: Sortable List",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-word-counter",
+    "group": "catalog",
+    "id": "react-ts-word-counter",
+    "title": "React + TypeScript: Word Counter",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-dice-roller",
+    "group": "catalog",
+    "id": "react-ts-dice-roller",
+    "title": "React + TypeScript: Dice Roller",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-draw-circles",
+    "group": "catalog",
+    "id": "react-ts-draw-circles",
+    "title": "React + TypeScript: Draw Circles",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-grid-lights-ii",
+    "group": "catalog",
+    "id": "react-ts-grid-lights-ii",
+    "title": "React + TypeScript: Grid Lights II",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-pin-items",
+    "group": "catalog",
+    "id": "react-ts-pin-items",
+    "title": "React + TypeScript: Pin Items",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-notification-bell",
+    "group": "catalog",
+    "id": "react-ts-notification-bell",
+    "title": "React + TypeScript: Notification Bell",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-emoji-replacer",
+    "group": "catalog",
+    "id": "react-ts-emoji-replacer",
+    "title": "React + TypeScript: Emoji Replacer",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-searchable-dropdown",
+    "group": "catalog",
+    "id": "react-ts-searchable-dropdown",
+    "title": "React + TypeScript: Searchable Dropdown",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-grid-lights",
+    "group": "catalog",
+    "id": "react-ts-grid-lights",
+    "title": "React + TypeScript: Grid Lights",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-pawn-moves",
+    "group": "catalog",
+    "id": "react-ts-pawn-moves",
+    "title": "React + TypeScript: Pawn Moves",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-cinema-hall",
+    "group": "catalog",
+    "id": "react-ts-cinema-hall",
+    "title": "React + TypeScript: Cinema Hall",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-reusable-toast",
+    "group": "catalog",
+    "id": "react-ts-reusable-toast",
+    "title": "React + TypeScript: Reusable Toast",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-product-rating-heatmap",
+    "group": "catalog",
+    "id": "react-ts-product-rating-heatmap",
+    "title": "React + TypeScript: Product Rating Heatmap",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-slugify-a-string",
+    "group": "catalog",
+    "id": "react-ts-slugify-a-string",
+    "title": "React + TypeScript: Slugify a String",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-list-sorter",
+    "group": "catalog",
+    "id": "react-ts-list-sorter",
+    "title": "React + TypeScript: List Sorter",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-knight-moves",
+    "group": "catalog",
+    "id": "react-ts-knight-moves",
+    "title": "React + TypeScript: Knight Moves",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-queen-moves",
+    "group": "catalog",
+    "id": "react-ts-queen-moves",
+    "title": "React + TypeScript: Queen Moves",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-bmi-calculator",
+    "group": "catalog",
+    "id": "react-ts-bmi-calculator",
+    "title": "React + TypeScript: BMI Calculator",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-traffic-lights",
+    "group": "catalog",
+    "id": "react-ts-traffic-lights",
+    "title": "React + TypeScript: Traffic Lights",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-cards-carousel",
+    "group": "catalog",
+    "id": "react-ts-cards-carousel",
+    "title": "React + TypeScript: Cards Carousel",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-rock-paper-scissor",
+    "group": "catalog",
+    "id": "react-ts-rock-paper-scissor",
+    "title": "React + TypeScript: Rock Paper Scissor",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-undo-redo",
+    "group": "catalog",
+    "id": "react-ts-undo-redo",
+    "title": "React + TypeScript: Undo Redo",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-color-code-game",
+    "group": "catalog",
+    "id": "react-ts-color-code-game",
+    "title": "React + TypeScript: Color Code Game",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-stopwatch",
+    "group": "catalog",
+    "id": "react-ts-stopwatch",
+    "title": "React + TypeScript: Stopwatch",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-rook-moves",
+    "group": "catalog",
+    "id": "react-ts-rook-moves",
+    "title": "React + TypeScript: Rook Moves",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-modal-in-react",
+    "group": "catalog",
+    "id": "react-ts-modal-in-react",
+    "title": "React + TypeScript: Modal In React",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-image-gallery",
+    "group": "catalog",
+    "id": "react-ts-image-gallery",
+    "title": "React + TypeScript: Image Gallery",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-typewriter-message",
+    "group": "catalog",
+    "id": "react-ts-typewriter-message",
+    "title": "React + TypeScript: Typewriter Message",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-generate-password",
+    "group": "catalog",
+    "id": "react-ts-generate-password",
+    "title": "React + TypeScript: Generate Password",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-tic-tac-toe",
+    "group": "catalog",
+    "id": "react-ts-tic-tac-toe",
+    "title": "React + TypeScript: Tic Tac Toe",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-temperature-convertor",
+    "group": "catalog",
+    "id": "react-ts-temperature-convertor",
+    "title": "React + TypeScript: Temperature Convertor",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-multiselect-dropdown",
+    "group": "catalog",
+    "id": "react-ts-multiselect-dropdown",
+    "title": "React + TypeScript: Multiselect dropdown",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-captcha-generator",
+    "group": "catalog",
+    "id": "react-ts-captcha-generator",
+    "title": "React + TypeScript: Captcha Generator",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-confetti-animation",
+    "group": "catalog",
+    "id": "react-ts-confetti-animation",
+    "title": "React + TypeScript: Confetti Animation",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-lucky-number",
+    "group": "catalog",
+    "id": "react-ts-lucky-number",
+    "title": "React + TypeScript: Lucky Number",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-calculator",
+    "group": "catalog",
+    "id": "react-ts-calculator",
+    "title": "React + TypeScript: Calculator",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-markdown-editor",
+    "group": "catalog",
+    "id": "react-ts-markdown-editor",
+    "title": "React + TypeScript: Markdown Editor",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-animated-loading-skeleton",
+    "group": "catalog",
+    "id": "react-ts-animated-loading-skeleton",
+    "title": "React + TypeScript: Animated Loading Skeleton",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-auto-save-form",
+    "group": "catalog",
+    "id": "react-ts-auto-save-form",
+    "title": "React + TypeScript: Auto Save Form",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-drag-and-drop",
+    "group": "catalog",
+    "id": "react-ts-drag-and-drop",
+    "title": "React + TypeScript: Drag and Drop",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-progress-bar-ii",
+    "group": "catalog",
+    "id": "react-ts-progress-bar-ii",
+    "title": "React + TypeScript: Progress Bar II",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-json-formatter-and-validator",
+    "group": "catalog",
+    "id": "react-ts-json-formatter-and-validator",
+    "title": "React + TypeScript: JSON Formatter and Validator",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-quiz-app",
+    "group": "catalog",
+    "id": "react-ts-quiz-app",
+    "title": "React + TypeScript: Quiz App",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-king-moves",
+    "group": "catalog",
+    "id": "react-ts-king-moves",
+    "title": "React + TypeScript: King Moves",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-bishop-moves",
+    "group": "catalog",
+    "id": "react-ts-bishop-moves",
+    "title": "React + TypeScript: Bishop Moves",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-pagination",
+    "group": "catalog",
+    "id": "react-ts-pagination",
+    "title": "React + TypeScript: Pagination",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-nested-checkbox",
+    "group": "catalog",
+    "id": "react-ts-nested-checkbox",
+    "title": "React + TypeScript: Nested Checkbox",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-file-explorer",
+    "group": "catalog",
+    "id": "react-ts-file-explorer",
+    "title": "React + TypeScript: File Explorer",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-stickynotes-component",
+    "group": "catalog",
+    "id": "react-ts-stickynotes-component",
+    "title": "React + TypeScript: StickyNotes Component",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-24-game",
+    "group": "catalog",
+    "id": "react-ts-24-game",
+    "title": "React + TypeScript: 24 Game",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-otp-input-component",
+    "group": "catalog",
+    "id": "react-ts-otp-input-component",
+    "title": "React + TypeScript: OTP Input Component",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-event-management",
+    "group": "catalog",
+    "id": "react-ts-event-management",
+    "title": "React + TypeScript: Event Management",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-tree-navigation",
+    "group": "catalog",
+    "id": "react-ts-tree-navigation",
+    "title": "React + TypeScript: Tree Navigation",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-product-cart-with-discounts",
+    "group": "catalog",
+    "id": "react-ts-product-cart-with-discounts",
+    "title": "React + TypeScript: Product Cart with Discounts",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-data-table",
+    "group": "catalog",
+    "id": "react-ts-data-table",
+    "title": "React + TypeScript: Data Table",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-match-pair-game",
+    "group": "catalog",
+    "id": "react-ts-match-pair-game",
+    "title": "React + TypeScript: Match Pair Game",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-nested-comments",
+    "group": "catalog",
+    "id": "react-ts-nested-comments",
+    "title": "React + TypeScript: Nested Comments",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-rick-and-morty-characters-viewer",
+    "group": "catalog",
+    "id": "react-ts-rick-and-morty-characters-viewer",
+    "title": "React + TypeScript: Rick And Morty Characters Viewer",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
+    "key": "catalog/react-ts-product-store",
+    "group": "catalog",
+    "id": "react-ts-product-store",
+    "title": "React + TypeScript: Product Store",
+    "language": "tsx",
+    "mode": "react",
+    "filename": "solution.tsx"
+  },
+  {
     "key": "loan/bug-1-race-condition",
     "group": "loan",
     "id": "bug-1-race-condition",

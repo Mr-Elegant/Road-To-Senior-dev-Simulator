@@ -1,0 +1,59 @@
+{
+  "id": "frontend-guess-the-number",
+  "title": "Frontend: Guess the number",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Guess the number. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({secret=42}). Controlled Guess input accepts integers 1..100. Guess button reports Too low, Too high, Correct, or Invalid guess in [data-testid=\"feedback\"]. A correct round ignores later guesses until Restart, which clears input/feedback. Secret is injected for deterministic tests.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "guess-the-number-1",
+      "name": "Low",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"10\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"guess\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Too low\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "guess-the-number-2",
+      "name": "Correct then restart",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"42\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"guess\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"restart\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"\"},{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "guess-the-number-3",
+      "name": "Invalid",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"1.5\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"guess\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Invalid guess\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "guess-the-number-4",
+      "name": "High",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"90\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"guess\\\"]\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Too high\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Create the secret at round initialization rather than on every render."
+  ],
+  "alternativeApproaches": [
+    "Add a reproducible seed and a history view without leaking the secret into normal UI state displays."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Bounds; non-integer input; repeat guess.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

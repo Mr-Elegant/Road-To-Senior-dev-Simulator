@@ -1,0 +1,59 @@
+{
+  "id": "frontend-anagram-checker",
+  "title": "Frontend: Anagram Checker",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Anagram Checker. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution([a,b]). Normalize to lowercase ASCII letters/digits and compare character multiplicities; ignore other characters.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "anagram-checker-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[\"listen\",\"silent\"]",
+      "expectedOutput": "true"
+    },
+    {
+      "id": "anagram-checker-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[\"aab\",\"abb\"]",
+      "expectedOutput": "false"
+    },
+    {
+      "id": "anagram-checker-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[\"A b!\",\"ba\"]",
+      "expectedOutput": "true"
+    },
+    {
+      "id": "anagram-checker-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "[\"\",\"\"]",
+      "expectedOutput": "true"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Normalize both strings consistently and compare frequency maps, decrementing counts as the second string is scanned."
+  ],
+  "alternativeApproaches": [
+    "Compare normalized canonical equivalents without accidentally discarding meaningful language distinctions."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Repeated letters; unequal lengths; mixed case.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

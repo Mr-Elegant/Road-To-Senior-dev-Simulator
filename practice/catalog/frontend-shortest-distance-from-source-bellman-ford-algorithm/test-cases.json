@@ -1,0 +1,21 @@
+[
+  {
+    "id": "shortest-distance-from-source-bellman-ford-algorithm-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"count\":3,\"source\":0,\"edges\":[[0,1,3],[1,2,-2]]}",
+    "expectedOutput": "[0,3,1]"
+  },
+  {
+    "id": "shortest-distance-from-source-bellman-ford-algorithm-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"count\":3,\"source\":0,\"edges\":[[1,2,-1],[2,1,-1]]}",
+    "expectedOutput": "[0,null,null]"
+  },
+  {
+    "id": "shortest-distance-from-source-bellman-ford-algorithm-3",
+    "name": "Reject input: Negative cycle",
+    "inputDescription": "{\"count\":2,\"source\":0,\"edges\":[[0,1,-1],[1,0,-1]]}",
+    "expectedOutput": "Throws: Negative cycle",
+    "expectedError": "Negative cycle"
+  }
+]

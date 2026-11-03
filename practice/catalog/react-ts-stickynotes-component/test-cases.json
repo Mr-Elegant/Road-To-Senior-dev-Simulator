@@ -1,0 +1,20 @@
+[
+  {
+    "id": "stickynotes-component-1",
+    "name": "Add",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"}],\"assertions\":[{\"selector\":\"[data-note]\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-note=\\\"1\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-x\",\"equals\":\"20\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "stickynotes-component-2",
+    "name": "Edit/move",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"Remember\"},{\"type\":\"click\",\"selector\":\"[data-move=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"[data-note=\\\"1\\\"]\",\"property\":\"attribute\",\"attribute\":\"data-x\",\"equals\":\"30\"},{\"selector\":\"textarea\",\"property\":\"value\",\"equals\":\"Remember\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "stickynotes-component-3",
+    "name": "Delete",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"add\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-delete=\\\"1\\\"]\"}],\"assertions\":[{\"selector\":\"[data-note]\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

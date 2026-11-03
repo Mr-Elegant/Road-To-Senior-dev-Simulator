@@ -1,0 +1,75 @@
+{
+  "id": "react-ts-progress-bar",
+  "title": "React + TypeScript: Progress Bar",
+  "businessContext": "A project dashboard receives progress values from multiple importers, including values outside the display range.",
+  "problemStatement": "Export App({ value = 0 }). Accept only finite JavaScript numbers; all other values display zero. Clamp the number to 0–100, then round to the nearest integer. Render an element with role=progressbar, aria-label=\"Project completion\", aria-valuemin=\"0\", aria-valuemax=\"100\", and aria-valuenow equal to the display integer. Show the same integer followed by % in [data-testid=\"percentage\"]. The displayed value must be derived from props rather than copied into mount-only state.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Numeric strings are invalid and must not be coerced.",
+    "The visual fill and accessible numeric value must agree. No animation is required.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    value?: string | number;\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "progress-zero",
+      "name": "Default progress is zero",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"percentage\\\"]\",\"property\":\"text\",\"equals\":\"0%\"},{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-valuenow\",\"equals\":\"0\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "progress-round",
+      "name": "Fractional progress rounds consistently",
+      "inputDescription": "{\"props\":{\"value\":52.6},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"percentage\\\"]\",\"property\":\"text\",\"equals\":\"53%\"},{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-valuenow\",\"equals\":\"53\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "progress-high",
+      "name": "Progress above one hundred is clamped",
+      "inputDescription": "{\"props\":{\"value\":142},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"percentage\\\"]\",\"property\":\"text\",\"equals\":\"100%\"},{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-valuenow\",\"equals\":\"100\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "progress-low",
+      "name": "Negative progress is clamped",
+      "inputDescription": "{\"props\":{\"value\":-8},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"percentage\\\"]\",\"property\":\"text\",\"equals\":\"0%\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "progress-string",
+      "name": "Numeric strings are not accepted",
+      "inputDescription": "{\"props\":{\"value\":\"45\"},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"percentage\\\"]\",\"property\":\"text\",\"equals\":\"0%\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "progress-aria",
+      "name": "The range and accessible label are explicit",
+      "inputDescription": "{\"props\":{\"value\":100},\"actions\":[],\"assertions\":[{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-valuemin\",\"equals\":\"0\"},{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-valuemax\",\"equals\":\"100\"},{\"selector\":\"[role=\\\"progressbar\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-label\",\"equals\":\"Project completion\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Check typeof and Number.isFinite before applying Math.min and Math.max.",
+    "Use one normalized value for the fill, text, and ARIA attributes."
+  ],
+  "commonMistakes": [
+    "Coercing numeric strings even though the input contract forbids them.",
+    "Updating the text but leaving an inconsistent aria-valuenow."
+  ],
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 25,
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "candidateTasks": [
+    "Implement the default-exported App component and the documented DOM contract.",
+    "Run every interaction journey, explain edge cases, then compare your implementation with the reference.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "alternativeApproaches": [
+    "Extract a small pure helper for derived values; keep input state in the component. Extend with a custom hook only when behavior is reused."
+  ],
+  "reactTypescriptExercise": true
+}

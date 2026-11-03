@@ -1,0 +1,27 @@
+[
+  {
+    "id": "array-chunking-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"values\":[1,2,3,4,5],\"size\":2}",
+    "expectedOutput": "[[1,2],[3,4],[5]]"
+  },
+  {
+    "id": "array-chunking-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"values\":[],\"size\":2}",
+    "expectedOutput": "[]"
+  },
+  {
+    "id": "array-chunking-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"values\":[1],\"size\":8}",
+    "expectedOutput": "[[1]]"
+  },
+  {
+    "id": "array-chunking-4",
+    "name": "Reject input: Invalid size",
+    "inputDescription": "{\"values\":[1],\"size\":0}",
+    "expectedOutput": "Throws: Invalid size",
+    "expectedError": "Invalid size"
+  }
+]

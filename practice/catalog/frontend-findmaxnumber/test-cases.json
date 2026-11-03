@@ -1,0 +1,26 @@
+[
+  {
+    "id": "findmaxnumber-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[-3,-1,-1]",
+    "expectedOutput": "{\"value\":-1,\"index\":1}"
+  },
+  {
+    "id": "findmaxnumber-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[]",
+    "expectedOutput": "null"
+  },
+  {
+    "id": "findmaxnumber-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[4]",
+    "expectedOutput": "{\"value\":4,\"index\":0}"
+  },
+  {
+    "id": "findmaxnumber-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[0,1,2]",
+    "expectedOutput": "{\"value\":2,\"index\":2}"
+  }
+]

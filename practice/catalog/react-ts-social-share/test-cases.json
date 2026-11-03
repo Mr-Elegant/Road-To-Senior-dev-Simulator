@@ -1,0 +1,20 @@
+[
+  {
+    "id": "social-share-1",
+    "name": "Success",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Shared\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "social-share-2",
+    "name": "Cancelled",
+    "inputDescription": "{\"props\":{\"adapter\":\"cancel\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Cancelled\"},{\"selector\":\"input\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "social-share-3",
+    "name": "Fallback",
+    "inputDescription": "{\"props\":{\"adapter\":\"missing\"},\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Copy link instead\"},{\"selector\":\"input\",\"property\":\"value\",\"equals\":\"https://example.test/article\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

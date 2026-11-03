@@ -1,0 +1,26 @@
+[
+  {
+    "id": "largest-number-formed-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[\"3\",\"30\",\"34\",\"5\",\"9\"]",
+    "expectedOutput": "\"9534330\""
+  },
+  {
+    "id": "largest-number-formed-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[\"0\",\"0\"]",
+    "expectedOutput": "\"0\""
+  },
+  {
+    "id": "largest-number-formed-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[]",
+    "expectedOutput": "\"\""
+  },
+  {
+    "id": "largest-number-formed-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[\"12\",\"121\"]",
+    "expectedOutput": "\"12121\""
+  }
+]

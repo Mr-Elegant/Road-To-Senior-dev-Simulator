@@ -1,0 +1,26 @@
+[
+  {
+    "id": "oranges-rotting-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[[2,1,1],[1,1,0],[0,1,1]]",
+    "expectedOutput": "4"
+  },
+  {
+    "id": "oranges-rotting-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[[1]]",
+    "expectedOutput": "-1"
+  },
+  {
+    "id": "oranges-rotting-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[[0,2]]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "oranges-rotting-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[]",
+    "expectedOutput": "0"
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "id": "frontend-create-task-scheduler-with-dependencies",
+  "title": "Frontend: Create Task Scheduler With Dependencies",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Create Task Scheduler With Dependencies. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(tasks). Each task {id,deps} has unique string id and dependency IDs. Return deterministic concurrent-ready layers: all currently ready tasks in lexicographic ID order per layer. Missing deps throw Missing dependency; cycles throw Cycle. This models dependency scheduling without executing remote side effects.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "create-task-scheduler-with-dependencies-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[{\"id\":\"b\",\"deps\":[\"a\"]},{\"id\":\"a\",\"deps\":[]},{\"id\":\"c\",\"deps\":[]}]",
+      "expectedOutput": "[[\"a\",\"c\"],[\"b\"]]"
+    },
+    {
+      "id": "create-task-scheduler-with-dependencies-2",
+      "name": "Reject input: Missing dependency",
+      "inputDescription": "[{\"id\":\"a\",\"deps\":[\"b\"]}]",
+      "expectedOutput": "Throws: Missing dependency",
+      "expectedError": "Missing dependency"
+    },
+    {
+      "id": "create-task-scheduler-with-dependencies-3",
+      "name": "Reject input: Cycle",
+      "inputDescription": "[{\"id\":\"a\",\"deps\":[\"b\"]},{\"id\":\"b\",\"deps\":[\"a\"]}]",
+      "expectedOutput": "Throws: Cycle",
+      "expectedError": "Cycle"
+    },
+    {
+      "id": "create-task-scheduler-with-dependencies-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "[]",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Validate task IDs and dependency references, compute indegrees, and queue initially ready tasks."
+  ],
+  "alternativeApproaches": [
+    "Persist task states for restart recovery and distinguish at-least-once execution from idempotent task effects."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Cycle; missing dependency; independent task failure.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

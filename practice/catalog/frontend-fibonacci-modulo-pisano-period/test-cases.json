@@ -1,0 +1,33 @@
+[
+  {
+    "id": "fibonacci-modulo-pisano-period-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"n\":\"10\",\"modulus\":3}",
+    "expectedOutput": "1"
+  },
+  {
+    "id": "fibonacci-modulo-pisano-period-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"n\":\"0\",\"modulus\":2}",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "fibonacci-modulo-pisano-period-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "{\"n\":\"999999999999999999999\",\"modulus\":1}",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "fibonacci-modulo-pisano-period-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "{\"n\":\"100\",\"modulus\":10}",
+    "expectedOutput": "5"
+  },
+  {
+    "id": "fibonacci-modulo-pisano-period-5",
+    "name": "Reject input: Invalid input",
+    "inputDescription": "{\"n\":\"-1\",\"modulus\":5}",
+    "expectedOutput": "Throws: Invalid input",
+    "expectedError": "Invalid input"
+  }
+]

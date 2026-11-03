@@ -1,0 +1,6 @@
+import type * as React from 'react';
+export interface AppProps {
+}
+import { useState } from 'react';
+export default function App(): React.JSX.Element { const [value, setValue] = useState(''); return <section><label>Markdown<textarea aria-label="Markdown" value={value} onChange={e => setValue(e.target.value)}/></label><div data-testid="preview">{value.split('\n').map((line, i) => line.startsWith('##') ? <h2 key={i}>{line.slice(2).replace(/^ /, '')}</h2> : line.startsWith('#') ? <h1 key={i}>{line.slice(1).replace(/^ /, '')}</h1> : <p key={i}>{line}</p>)}</div></section>; }
+

@@ -73,6 +73,10 @@ desktop.ini
 
 # Rebuilt from source before dev/build/local React tests
 /public/react-practice-runtime.js
+/public/react-typescript-worker.js
+/public/react-typescript-libs.json
+/public/react-typescript-build.json
+/public/react-typescript-licenses.txt
 
 # Personal frontend study guide and its authoring/verification files
 /docs/guides/

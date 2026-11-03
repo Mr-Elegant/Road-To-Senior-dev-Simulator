@@ -1,0 +1,27 @@
+[
+  {
+    "id": "max-subarray-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[-3,-1,-8]",
+    "expectedOutput": "-1"
+  },
+  {
+    "id": "max-subarray-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[4,-1,2,1,-5]",
+    "expectedOutput": "6"
+  },
+  {
+    "id": "max-subarray-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[0]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "max-subarray-4",
+    "name": "Reject input: Empty array",
+    "inputDescription": "[]",
+    "expectedOutput": "Throws: Empty array",
+    "expectedError": "Empty array"
+  }
+]

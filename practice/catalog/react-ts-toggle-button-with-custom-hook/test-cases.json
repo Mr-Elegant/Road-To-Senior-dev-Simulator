@@ -1,0 +1,20 @@
+[
+  {
+    "id": "toggle-button-with-custom-hook-1",
+    "name": "Default",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"off\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "toggle-button-with-custom-hook-2",
+    "name": "Toggle twice",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button:first-of-type\"},{\"type\":\"click\",\"selector\":\"button:first-of-type\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"off\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "toggle-button-with-custom-hook-3",
+    "name": "Set explicitly",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button:nth-of-type(2)\"},{\"type\":\"click\",\"selector\":\"button:nth-of-type(2)\"},{\"type\":\"click\",\"selector\":\"button:nth-of-type(3)\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"off\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

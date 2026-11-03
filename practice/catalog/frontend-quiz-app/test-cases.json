@@ -1,0 +1,20 @@
+[
+  {
+    "id": "quiz-app-1",
+    "name": "Unanswered",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-action=\\\"next\\\"]\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "quiz-app-2",
+    "name": "Correct",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-option=\\\"1\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"1/1\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "quiz-app-3",
+    "name": "Restart",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-option=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"restart\\\"]\"}],\"assertions\":[{\"selector\":\"h2\",\"property\":\"text\",\"equals\":\"2+2\"},{\"selector\":\"[data-action=\\\"next\\\"]\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

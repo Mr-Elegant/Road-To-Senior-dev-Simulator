@@ -1,0 +1,53 @@
+{
+  "id": "frontend-rick-and-morty-characters-viewer",
+  "title": "Frontend: Rick And Morty Characters Viewer",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Senior",
+  "estimatedMinutes": 45,
+  "businessContext": "Build and verify the core behavior behind Rick And Morty Characters Viewer. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({pages=[[Ada],[Lin]],failPage=-1}). A character-directory exercise uses injected page arrays of names instead of a live external API. Initial page 0 is rendered as li. Next/Previous[data-action=next/previous] await an async adapter, clamp page, show Ready or Unable to load in [data-testid=status]. Failed page clears rows; navigating back recovers. Disable boundary buttons.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "rick-and-morty-characters-viewer-1",
+      "name": "Next page",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"Lin\"},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Ready\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "rick-and-morty-characters-viewer-2",
+      "name": "Failure",
+      "inputDescription": "{\"props\":{\"failPage\":1},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"count\",\"equals\":0},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Unable to load\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "rick-and-morty-characters-viewer-3",
+      "name": "Recover",
+      "inputDescription": "{\"props\":{\"failPage\":1},\"actions\":[{\"type\":\"click\",\"selector\":\"[data-action=\\\"next\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-action=\\\"previous\\\"]\"}],\"assertions\":[{\"selector\":\"li\",\"property\":\"text\",\"equals\":\"Ada\"},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Ready\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Treat the external API as a replaceable data source with a documented response adapter."
+  ],
+  "alternativeApproaches": [
+    "Add a cache with explicit freshness rules and avoid replaying cached data from a different query."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: No matches; fetch failure; out-of-order response.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

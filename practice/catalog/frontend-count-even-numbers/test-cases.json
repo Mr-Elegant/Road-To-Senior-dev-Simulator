@@ -1,0 +1,26 @@
+[
+  {
+    "id": "count-even-numbers-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[0,-2,-1,3,4]",
+    "expectedOutput": "3"
+  },
+  {
+    "id": "count-even-numbers-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "count-even-numbers-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[1,3,5]",
+    "expectedOutput": "0"
+  },
+  {
+    "id": "count-even-numbers-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "[2,2]",
+    "expectedOutput": "2"
+  }
+]

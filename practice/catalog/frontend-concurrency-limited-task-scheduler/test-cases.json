@@ -1,0 +1,21 @@
+[
+  {
+    "id": "concurrency-limited-task-scheduler-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "{\"limit\":1,\"commands\":[{\"type\":\"enqueue\",\"id\":\"a\"},{\"type\":\"enqueue\",\"id\":\"b\"},{\"type\":\"complete\",\"id\":\"a\"}]}",
+    "expectedOutput": "{\"active\":[\"b\"],\"queued\":[],\"completed\":[\"a\"],\"cancelled\":[]}"
+  },
+  {
+    "id": "concurrency-limited-task-scheduler-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "{\"limit\":1,\"commands\":[{\"type\":\"enqueue\",\"id\":\"a\"},{\"type\":\"enqueue\",\"id\":\"b\"},{\"type\":\"cancel\",\"id\":\"a\"}]}",
+    "expectedOutput": "{\"active\":[\"b\"],\"queued\":[],\"completed\":[],\"cancelled\":[\"a\"]}"
+  },
+  {
+    "id": "concurrency-limited-task-scheduler-3",
+    "name": "Reject input: Invalid limit",
+    "inputDescription": "{\"limit\":0,\"commands\":[]}",
+    "expectedOutput": "Throws: Invalid limit",
+    "expectedError": "Invalid limit"
+  }
+]

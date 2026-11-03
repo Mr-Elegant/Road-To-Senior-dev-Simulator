@@ -1,0 +1,20 @@
+[
+  {
+    "id": "markdown-editor-1",
+    "name": "Heading",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"# Hello\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"preview\\\"] h1\",\"property\":\"text\",\"equals\":\"Hello\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "markdown-editor-2",
+    "name": "Second level",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"## Small\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"preview\\\"] h2\",\"property\":\"text\",\"equals\":\"Small\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "markdown-editor-3",
+    "name": "Unsafe input stays text",
+    "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"<img src=x>\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"preview\\\"] p\",\"property\":\"text\",\"equals\":\"<img src=x>\"},{\"selector\":\"[data-testid=\\\"preview\\\"] img\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

@@ -1,0 +1,7 @@
+import type * as React from 'react';
+export interface AppProps {
+    initial?: number;
+}
+import { useState } from 'react';
+export default function App({ initial = 0 }: AppProps = {}): React.JSX.Element { const [n, setN] = useState(initial); return <section><output data-testid="count">{n}</output><button onClick={() => setN(v => Math.min(5, v + 1))} disabled={n === 5}>Increment</button><button onClick={() => setN(v => Math.max(0, v - 1))} disabled={n === 0}>Decrement</button><button onClick={() => setN(initial)}>Reset</button></section>; }
+

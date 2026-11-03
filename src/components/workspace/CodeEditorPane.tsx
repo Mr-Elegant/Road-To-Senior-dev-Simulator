@@ -57,7 +57,7 @@ export function CodeEditorPane({
         <div className="flex items-center gap-2">
           <Code2 className="w-4 h-4 text-blue-400" />
           <span className="text-xs font-mono font-medium text-zinc-300">
-            solution.{language === 'jsx' ? 'jsx' : language === 'typescript' ? 'ts' : 'js'}
+            solution.{language === 'tsx' ? 'tsx' : language === 'jsx' ? 'jsx' : language === 'typescript' ? 'ts' : 'js'}
           </span>
           <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-400 uppercase">
             {language}
@@ -108,8 +108,19 @@ export function CodeEditorPane({
       <div className="min-h-0 flex-1 w-full relative">
         <MonacoEditor
           height="100%"
-          language={language.toLowerCase() === 'typescript' ? 'typescript' : 'javascript'}
+          path={`solution.${language === 'tsx' ? 'tsx' : language === 'jsx' ? 'jsx' : language === 'typescript' ? 'ts' : 'js'}`}
+          language={['typescript', 'tsx'].includes(language.toLowerCase()) ? 'typescript' : 'javascript'}
           value={code}
+          beforeMount={monaco => {
+            if (language !== 'tsx') return;
+            const defaults = monaco.languages.typescript.typescriptDefaults;
+            defaults.setCompilerOptions({ ...defaults.getCompilerOptions(), jsx: 4, moduleResolution: 2, esModuleInterop: true,
+              baseUrl: 'file:///', paths: { react: ['node_modules/@types/react/index.d.ts'], 'react/jsx-runtime': ['node_modules/@types/react/jsx-runtime.d.ts'], csstype: ['node_modules/csstype/index.d.ts'] } });
+            fetch('/react-typescript-libs.json').then(response => { if (!response.ok) throw new Error('Declarations unavailable'); return response.json(); })
+              .then((files: Record<string, string>) => {
+                for (const [path, text] of Object.entries(files)) if (path.startsWith('/node_modules/')) defaults.addExtraLib(text, `file://${path}`);
+              }).catch(() => { /* Run Tests reports compiler asset failures explicitly. */ });
+          }}
           onChange={(val) => onChange(val || '')}
           theme={resolvedTheme === 'dark' ? 'vs-dark' : 'light'}
           options={{

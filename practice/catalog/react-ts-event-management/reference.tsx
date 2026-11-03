@@ -1,0 +1,17 @@
+import type * as React from 'react';
+export interface AppProps {
+}
+import { useState, useRef } from 'react';
+export default function App(): React.JSX.Element { const [fields, setFields] = useState<Record<string, string>>({ title: '', start: '', end: '' }), [events, setEvents] = useState<{
+    id: string;
+    title: string;
+    start: number;
+    end: number;
+}[]>([]), [error, setError] = useState(''), next = useRef(1); function add() { const start = Number(fields.start), end = Number(fields.end); if (!fields.title.trim() || !fields.start.trim() || !fields.end.trim() || !Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end > 24 || start >= end) {
+    setError('Invalid event');
+    return;
+} if (events.some(e => start < e.end && end > e.start)) {
+    setError('Overlap');
+    return;
+} const id = String(next.current++); setEvents(old => [...old, { id, title: fields.title.trim(), start, end }]); setError(''); } return <section>{['title', 'start', 'end'].map(name => <label key={name}>{name}<input name={name} value={fields[name]} onChange={e => setFields(old => ({ ...old, [name]: e.target.value }))}/></label>)}<button data-action="add" onClick={add}>Add</button><ul>{events.map(event => <li key={event.id} data-event={event.id}>{event.title + ':' + event.start + '-' + event.end}<button data-delete={event.id} onClick={() => setEvents(old => old.filter(e => e.id !== event.id))}>Delete</button></li>)}</ul><p role="alert">{error}</p></section>; }
+

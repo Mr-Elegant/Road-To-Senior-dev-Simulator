@@ -1,0 +1,20 @@
+[
+  {
+    "id": "grid-lights-1",
+    "name": "Initially clear",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"count\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "grid-lights-2",
+    "name": "Activate",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"count\\\"]\",\"property\":\"text\",\"equals\":\"1\"},{\"selector\":\"[data-cell=\\\"0\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-pressed\",\"equals\":\"true\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "grid-lights-3",
+    "name": "Toggle off",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-cell=\\\"0\\\"]\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"count\\\"]\",\"property\":\"text\",\"equals\":\"0\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

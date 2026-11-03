@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-auto-save-form",
+  "title": "React + TypeScript: Auto Save Form",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Auto Save Form. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. Title and Body controlled inputs name=title/body update an in-memory draft. Acknowledge after 40 ms idle; show Ready initially, Unsaved on edits, Saved after acknowledgement in [data-testid=status]. [data-testid=saved] is latest acknowledged JSON {title,body}. Cancel superseded timers. No durable or cloud persistence is claimed.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "auto-save-form-1",
+      "name": "Initial",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Ready\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "auto-save-form-2",
+      "name": "Save draft",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"A\"},{\"type\":\"input\",\"selector\":\"[name=\\\"body\\\"]\",\"value\":\"B\"},{\"type\":\"wait\",\"milliseconds\":120}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"{\\\"title\\\":\\\"A\\\",\\\"body\\\":\\\"B\\\"}\"},{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Saved\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "auto-save-form-3",
+      "name": "Latest wins",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"Old\"},{\"type\":\"input\",\"selector\":\"[name=\\\"title\\\"]\",\"value\":\"New\"},{\"type\":\"wait\",\"milliseconds\":120}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"{\\\"title\\\":\\\"New\\\",\\\"body\\\":\\\"\\\"}\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Track a draft revision and the last acknowledged snapshot."
+  ],
+  "alternativeApproaches": [
+    "Use optimistic concurrency with a document version and an explicit user merge workflow."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Rapid edits; old response arrives last; failed save.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

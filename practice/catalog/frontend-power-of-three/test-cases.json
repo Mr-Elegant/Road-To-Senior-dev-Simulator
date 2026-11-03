@@ -1,0 +1,32 @@
+[
+  {
+    "id": "power-of-three-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "1",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "power-of-three-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "27",
+    "expectedOutput": "true"
+  },
+  {
+    "id": "power-of-three-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "28",
+    "expectedOutput": "false"
+  },
+  {
+    "id": "power-of-three-4",
+    "name": "Behavioral case 4",
+    "inputDescription": "-3",
+    "expectedOutput": "false"
+  },
+  {
+    "id": "power-of-three-5",
+    "name": "Behavioral case 5",
+    "inputDescription": "0",
+    "expectedOutput": "false"
+  }
+]

@@ -1,0 +1,53 @@
+{
+  "id": "frontend-authentication",
+  "title": "Frontend: Authentication",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Authentication. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({accept=true}). Model a demo sign-in state using an injected async acceptance flag, not the host app auth. Labelled Email input and Sign in button await Promise resolution, then show Signed in: trimmed email or Sign in failed in [data-testid=\"session\"]. Empty email shows Email required. Signed-in state exposes Sign out and clears session on activation. No tokens, cookies or network.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "authentication-1",
+      "name": "Empty identity",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Email required\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "authentication-2",
+      "name": "Sign in/out",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\" ada@example.com \"},{\"type\":\"click\",\"selector\":\"button\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Signed out\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "authentication-3",
+      "name": "Rejected",
+      "inputDescription": "{\"props\":{\"accept\":false},\"actions\":[{\"type\":\"input\",\"selector\":\"input\",\"value\":\"ada@example.com\"},{\"type\":\"click\",\"selector\":\"button\"}],\"assertions\":[{\"selector\":\"p\",\"property\":\"text\",\"equals\":\"Sign in failed\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Separate the form from session state."
+  ],
+  "alternativeApproaches": [
+    "Keep a public screen usable during background session refresh while preserving account isolation."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Pending login; rejection; sign-out during login.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "frontend-find-smallest-number",
+  "title": "Frontend: Find smallest number",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Find smallest number. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(values), returning the minimum finite numeric value without sorting or mutation. Reject empty input with Empty array.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "find-smallest-number-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[3,-2,7]",
+      "expectedOutput": "-2"
+    },
+    {
+      "id": "find-smallest-number-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[-9,-1]",
+      "expectedOutput": "-9"
+    },
+    {
+      "id": "find-smallest-number-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[4]",
+      "expectedOutput": "4"
+    },
+    {
+      "id": "find-smallest-number-4",
+      "name": "Reject input: Empty array",
+      "inputDescription": "[]",
+      "expectedOutput": "Throws: Empty array",
+      "expectedError": "Empty array"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Initialize the minimum from the first accepted value and scan once, replacing it whenever a smaller value appears."
+  ],
+  "alternativeApproaches": [
+    "Return both minimum value and first index with a deterministic tie rule."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: One item; all positive; all negative.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

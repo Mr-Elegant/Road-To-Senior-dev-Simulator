@@ -1,5 +1,7 @@
 /** Public, deterministic UI journeys. Each case starts with a fresh component. */
 export type ReactAction =
+  | { type: 'wait'; milliseconds: number }
+  | { type: 'drag'; source: string; target: string }
   | { type: 'input'; selector: string; value: string }
   | { type: 'click'; selector: string }
   | { type: 'key'; selector: string; key: string };

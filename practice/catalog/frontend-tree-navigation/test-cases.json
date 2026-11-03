@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tree-navigation-1",
+    "name": "Collapsed",
+    "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-node]\",\"property\":\"count\",\"equals\":1},{\"selector\":\"[data-open=\\\"root\\\"]\",\"property\":\"attribute\",\"attribute\":\"aria-expanded\",\"equals\":\"false\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tree-navigation-2",
+    "name": "Expand/select",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-open=\\\"root\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-select=\\\"a\\\"]\"}],\"assertions\":[{\"selector\":\"[data-node]\",\"property\":\"count\",\"equals\":2},{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"a\"}]}",
+    "expectedOutput": "All DOM assertions passed"
+  },
+  {
+    "id": "tree-navigation-3",
+    "name": "Collapse",
+    "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-open=\\\"root\\\"]\"},{\"type\":\"click\",\"selector\":\"[data-open=\\\"root\\\"]\"}],\"assertions\":[{\"selector\":\"[data-node=\\\"a\\\"]\",\"property\":\"count\",\"equals\":0}]}",
+    "expectedOutput": "All DOM assertions passed"
+  }
+]

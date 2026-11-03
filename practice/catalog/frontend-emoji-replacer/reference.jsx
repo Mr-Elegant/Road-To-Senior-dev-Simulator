@@ -1,0 +1,1 @@
+import {useState} from 'react';export default function App(){const[value,setValue]=useState('');const map={':smile:':'😀',':heart:':'❤️',':fire:':'🔥'};return <section><label>Message<textarea aria-label="Message" value={value} onChange={e=>setValue(e.target.value)}/></label><p data-testid="preview">{value.replace(/:smile:|:heart:|:fire:/g,token=>map[token])}</p></section>;}

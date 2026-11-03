@@ -1,0 +1,20 @@
+[
+  {
+    "id": "event-emitter-1",
+    "name": "Behavioral case 1",
+    "inputDescription": "[{\"type\":\"on\",\"id\":\"a\",\"event\":\"x\",\"once\":true},{\"type\":\"emit\",\"event\":\"x\",\"value\":1},{\"type\":\"emit\",\"event\":\"x\",\"value\":2}]",
+    "expectedOutput": "[[\"a\",1]]"
+  },
+  {
+    "id": "event-emitter-2",
+    "name": "Behavioral case 2",
+    "inputDescription": "[{\"type\":\"on\",\"id\":\"a\",\"event\":\"x\"},{\"type\":\"on\",\"id\":\"b\",\"event\":\"x\"},{\"type\":\"off\",\"id\":\"a\"},{\"type\":\"emit\",\"event\":\"x\",\"value\":0}]",
+    "expectedOutput": "[[\"b\",0]]"
+  },
+  {
+    "id": "event-emitter-3",
+    "name": "Behavioral case 3",
+    "inputDescription": "[{\"type\":\"emit\",\"event\":\"x\",\"value\":1}]",
+    "expectedOutput": "[]"
+  }
+]

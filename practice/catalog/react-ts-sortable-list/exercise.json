@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-sortable-list",
+  "title": "React + TypeScript: Sortable List",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Mid-Level",
+  "estimatedMinutes": 30,
+  "businessContext": "Build and verify the core behavior behind Sortable List. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({items=[A,B,C]}). Render ordered li[data-id=LABEL], draggable with drag/drop reordering, and Move down buttons[data-down=LABEL]. Dropping one row on another inserts at the target original index. Move down swaps with the next row and clamps at the end. Output comma-joined order in [data-testid=order]. Labels are unique. Preserve immutable identity.\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    items?: (string)[];\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "sortable-list-1",
+      "name": "Original order",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"A,B,C\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "sortable-list-2",
+      "name": "Keyboard alternative",
+      "inputDescription": "{\"actions\":[{\"type\":\"click\",\"selector\":\"[data-down=\\\"A\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"B,A,C\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "sortable-list-3",
+      "name": "Drag interaction",
+      "inputDescription": "{\"actions\":[{\"type\":\"drag\",\"source\":\"[data-id=\\\"C\\\"]\",\"target\":\"[data-id=\\\"A\\\"]\"}],\"assertions\":[{\"selector\":\"output\",\"property\":\"text\",\"equals\":\"C,A,B\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Represent order as IDs or immutable records and compute a new array for each move."
+  ],
+  "alternativeApproaches": [
+    "Virtualize a large list while keeping keyboard announcements and drag hit targets consistent."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: First/last item; cancelled move; repeated reorder.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

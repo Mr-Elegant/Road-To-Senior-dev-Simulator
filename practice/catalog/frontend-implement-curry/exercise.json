@@ -1,0 +1,59 @@
+{
+  "id": "frontend-implement-curry",
+  "title": "Frontend: implement curry()",
+  "type": "coding",
+  "topic": "JavaScript",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind implement curry(). This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Implement solution(groups). Define a reusable curry of a three-argument function (a,b,c)=>a+2*b+3*c. Feed the argument groups in order and return its result. Inputs supply exactly three arguments overall.",
+  "constraints": [
+    "Define solution(input) in plain JavaScript. Return the documented JSON-compatible value or throw the documented validation error. Each case receives a fresh input.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented contract.\n  return null;\n}",
+  "testCases": [
+    {
+      "id": "implement-curry-1",
+      "name": "Behavioral case 1",
+      "inputDescription": "[[1],[2],[3]]",
+      "expectedOutput": "14"
+    },
+    {
+      "id": "implement-curry-2",
+      "name": "Behavioral case 2",
+      "inputDescription": "[[2,3],[4]]",
+      "expectedOutput": "20"
+    },
+    {
+      "id": "implement-curry-3",
+      "name": "Behavioral case 3",
+      "inputDescription": "[[0,0,0]]",
+      "expectedOutput": "0"
+    },
+    {
+      "id": "implement-curry-4",
+      "name": "Behavioral case 4",
+      "inputDescription": "[[],[1,2,3]]",
+      "expectedOutput": "14"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Capture collected arguments in a new closure for each call, and invoke the original once the declared arity is satisfied."
+  ],
+  "alternativeApproaches": [
+    "Add placeholders and explain how filling argument holes changes the collection algorithm."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: One argument per call; grouped arguments; zero arity.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

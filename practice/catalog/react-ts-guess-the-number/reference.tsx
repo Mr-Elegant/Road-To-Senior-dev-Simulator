@@ -1,0 +1,12 @@
+import type * as React from 'react';
+export interface AppProps {
+    secret?: number;
+}
+import { useState } from 'react';
+export default function App({ secret = 42 }: AppProps = {}): React.JSX.Element { const [value, setValue] = useState(''), [feedback, setFeedback] = useState(''), [won, setWon] = useState(false); function guess() { if (won)
+    return; const n = Number(value); if (!value.trim() || !Number.isInteger(n) || n < 1 || n > 100) {
+    setFeedback('Invalid guess');
+    return;
+} setFeedback(n === secret ? 'Correct' : n < secret ? 'Too low' : 'Too high'); if (n === secret)
+    setWon(true); } return <section><label>Guess<input aria-label="Guess" value={value} onChange={e => setValue(e.target.value)}/></label><button data-action="guess" onClick={guess}>Guess</button><button data-action="restart" onClick={() => { setValue(''); setFeedback(''); setWon(false); }}>Restart</button><p data-testid="feedback">{feedback}</p></section>; }
+

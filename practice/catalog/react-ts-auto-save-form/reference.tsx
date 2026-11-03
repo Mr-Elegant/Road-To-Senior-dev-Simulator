@@ -1,0 +1,7 @@
+import type * as React from 'react';
+export interface AppProps {
+}
+import { useState, useEffect, useRef } from 'react';
+export default function App(): React.JSX.Element { const [draft, setDraft] = useState({ title: '', body: '' }), [saved, setSaved] = useState(''), [status, setStatus] = useState('Ready'), edited = useRef(false); useEffect(() => { if (!edited.current)
+    return; const timer = setTimeout(() => { setSaved(JSON.stringify(draft)); setStatus('Saved'); }, 40); return () => clearTimeout(timer); }, [draft]); function edit(name: string, value: string) { edited.current = true; setDraft(old => ({ ...old, [name]: value })); setStatus('Unsaved'); } return <section><label>Title<input name="title" value={draft.title} onChange={e => edit('title', e.target.value)}/></label><label>Body<input name="body" value={draft.body} onChange={e => edit('body', e.target.value)}/></label><p data-testid="status">{status}</p><output data-testid="saved">{saved}</output></section>; }
+

@@ -1,0 +1,8 @@
+import type * as React from 'react';
+export interface AppProps {
+    content?: string;
+    limit?: number;
+}
+import { useState } from 'react';
+export default function App({ content = '', limit = 3 }: AppProps = {}): React.JSX.Element { const [open, setOpen] = useState(false), words = content.trim() ? content.trim().split(/\s+/) : [], long = words.length > limit; return <section><p data-testid="content">{open || !long ? content : words.slice(0, limit).join(' ') + '…'}</p>{long && <button aria-expanded={open} onClick={() => setOpen(v => !v)}>{open ? 'Show less' : 'Read more'}</button>}</section>; }
+

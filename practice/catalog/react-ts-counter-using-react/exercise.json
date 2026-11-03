@@ -1,0 +1,57 @@
+{
+  "id": "react-ts-counter-using-react",
+  "title": "React + TypeScript: Counter Using React",
+  "type": "coding",
+  "topic": "TypeScript",
+  "subtopic": "React + TypeScript Practice",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Counter Using React. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App({initial=0}). A counter clamped to 0..5 has Increment, Decrement and Reset buttons. Render count in [data-testid=\"count\"]. Disable unavailable increment/decrement, and reset to initial (initial is valid).\n\nTypeScript contract: export default App and export AppProps. Use strict TSX with typed props, state, event handlers, refs and domain records. The compiler rejects implicit/explicit any and suppression directives before DOM tests or preview. Only react and react/jsx-runtime imports are supported.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern.",
+    "Keep the supplied AppProps contract and type-safe state transitions. A passing submission must type-check and pass the original DOM journeys."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation.",
+    "Model the component data and narrow nullable refs and unknown errors without disabling type checking."
+  ],
+  "codeLanguage": "tsx",
+  "reactExercise": true,
+  "starterCode": "import type * as React from 'react';\n\nexport interface AppProps {\n    initial?: number;\n}\n\nexport default function App(_props: AppProps): React.JSX.Element {\n  // Implement the typed component contract.\n  return <section><p>Build the documented component here.</p></section>;\n}\n",
+  "testCases": [
+    {
+      "id": "counter-using-react-1",
+      "name": "Lower bound",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"count\\\"]\",\"property\":\"text\",\"equals\":\"0\"},{\"selector\":\"button:nth-of-type(2)\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "counter-using-react-2",
+      "name": "Increment/reset",
+      "inputDescription": "{\"props\":{\"initial\":2},\"actions\":[{\"type\":\"click\",\"selector\":\"button:nth-of-type(1)\"},{\"type\":\"click\",\"selector\":\"button:nth-of-type(1)\"},{\"type\":\"click\",\"selector\":\"button:nth-of-type(3)\"}],\"assertions\":[{\"selector\":\"[data-testid=\\\"count\\\"]\",\"property\":\"text\",\"equals\":\"2\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "counter-using-react-3",
+      "name": "Upper bound",
+      "inputDescription": "{\"props\":{\"initial\":5},\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"count\\\"]\",\"property\":\"text\",\"equals\":\"5\"},{\"selector\":\"button:first-of-type\",\"property\":\"attribute\",\"attribute\":\"disabled\",\"equals\":\"\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Inspect AppProps and the inferred state type first. Fix the first compiler diagnostic before running the DOM journey.",
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Represent the count in one state value and use functional updaters when the next value depends on the previous one."
+  ],
+  "alternativeApproaches": [
+    "Support a changed step size without allowing updates to escape the valid range."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Lower/upper limits; reset; rapid activation.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ],
+  "reactTypescriptExercise": true
+}

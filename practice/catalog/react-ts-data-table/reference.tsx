@@ -1,0 +1,11 @@
+import type * as React from 'react';
+export interface AppProps {
+    rows?: ({
+        "id": string;
+        "name": string;
+        "score": number;
+    })[];
+}
+import { useState } from 'react';
+export default function App({ rows = [{ id: 'a', name: 'Ada', score: 2 }, { id: 'b', name: 'Lin', score: 1 }, { id: 'c', name: 'Zoe', score: 3 }] }: AppProps = {}): React.JSX.Element { const [query, setQuery] = useState(''), [descending, setDescending] = useState(false), [page, setPage] = useState(0), [selected, setSelected] = useState<string[]>([]); const matches = rows.filter(r => r.name.toLowerCase().includes(query.toLowerCase())).sort((a, b) => (a.score - b.score) * (descending ? -1 : 1) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)), max = Math.max(0, Math.ceil(matches.length / 2) - 1); return <section><label>Search<input aria-label="Search" value={query} onChange={e => { setQuery(e.target.value); setPage(0); }}/></label><table><caption>Records</caption><thead><tr><th scope="col">Select</th><th scope="col">Name</th><th scope="col" aria-sort={descending ? 'descending' : 'ascending'}><button data-action="sort" onClick={() => { setDescending(v => !v); setPage(0); }}>Score</button></th></tr></thead><tbody>{matches.slice(page * 2, page * 2 + 2).map(row => <tr key={row.id} data-row={row.id} data-selected={selected.includes(row.id)}><td><input type="checkbox" data-select={row.id} aria-label={'Select ' + row.name} checked={selected.includes(row.id)} onChange={() => setSelected(old => old.includes(row.id) ? old.filter(id => id !== row.id) : [...old, row.id])}/></td><td data-name>{row.name}</td><td>{row.score}</td></tr>)}</tbody></table><button data-action="previous" onClick={() => setPage(n => Math.max(0, n - 1))}>Previous</button><button data-action="next" onClick={() => setPage(n => Math.min(max, n + 1))}>Next</button><output data-testid="selected">{selected.length}</output></section>; }
+

@@ -15,6 +15,8 @@ import { commerceScenarios } from './scenarios/commerce';
 import { saasScenarios } from './scenarios/saas';
 import { collaborationScenarios } from './scenarios/collaboration';
 import { reactPracticeScenarios } from './scenarios/reactPractice';
+import { frontendCodingScenarios } from './scenarios/frontendPractice';
+import { reactTypescriptScenarios } from './reactTypescript';
 
 export const allScenarios: Scenario[] = [
   ...javascriptScenarios,
@@ -33,6 +35,8 @@ export const allScenarios: Scenario[] = [
   ...saasScenarios,
   ...collaborationScenarios,
   ...reactPracticeScenarios,
+  ...frontendCodingScenarios,
+  ...reactTypescriptScenarios,
 ];
 
 export const scenarioMap = new Map<string, Scenario>();

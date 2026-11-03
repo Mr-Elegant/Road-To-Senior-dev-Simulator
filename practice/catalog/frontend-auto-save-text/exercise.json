@@ -1,0 +1,53 @@
+{
+  "id": "frontend-auto-save-text",
+  "title": "Frontend: Auto Save Text",
+  "type": "coding",
+  "topic": "React",
+  "subtopic": "Frontend Practice · 203-topic bank",
+  "difficulty": "Beginner",
+  "estimatedMinutes": 20,
+  "businessContext": "Build and verify the core behavior behind Auto Save Text. This independently authored exercise has a bounded, explicit contract. Injected clock, network, random, or worker models are identified in the contract; they do not claim production service guarantees.",
+  "problemStatement": "Export App. A controlled Draft textarea debounces acknowledgement by 40 ms after the latest change. Initial status is Ready. Edits show Unsaved immediately; after idle display Saved and echo acknowledged text in [data-testid=\"saved\"]. Clean up the timer on changes/unmount. This uses an in-memory acknowledgement, not durable/cloud storage.",
+  "constraints": [
+    "Export default App. Only react and react/jsx-runtime imports are supported. The DOM contract and supplied props define the exercise.",
+    "Preserve identity, ordering, boundary behavior, and error messages stated in the contract. Passing fixtures verifies this contract, not every production concern."
+  ],
+  "candidateTasks": [
+    "Implement the documented behavior without hard-coding fixture answers.",
+    "Run the full suite, investigate boundary failures, and explain the follow-up variation."
+  ],
+  "codeLanguage": "jsx",
+  "reactExercise": true,
+  "starterCode": "export default function App(props) {\n  return <section><p>Build the documented component here.</p></section>;\n}",
+  "testCases": [
+    {
+      "id": "auto-save-text-1",
+      "name": "Initial",
+      "inputDescription": "{\"actions\":[],\"assertions\":[{\"selector\":\"[data-testid=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Ready\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "auto-save-text-2",
+      "name": "Idle acknowledgement",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"hello\"},{\"type\":\"wait\",\"milliseconds\":100}],\"assertions\":[{\"selector\":\"[data-testid=\\\"saved\\\"]\",\"property\":\"text\",\"equals\":\"hello\"},{\"selector\":\"[data-testid=\\\"status\\\"]\",\"property\":\"text\",\"equals\":\"Saved\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    },
+    {
+      "id": "auto-save-text-3",
+      "name": "Latest text wins",
+      "inputDescription": "{\"actions\":[{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"first\"},{\"type\":\"input\",\"selector\":\"textarea\",\"value\":\"latest\"},{\"type\":\"wait\",\"milliseconds\":100}],\"assertions\":[{\"selector\":\"[data-testid=\\\"saved\\\"]\",\"property\":\"text\",\"equals\":\"latest\"}]}",
+      "expectedOutput": "All DOM assertions passed"
+    }
+  ],
+  "hints": [
+    "Write down the state or algorithmic invariant, and trace the smallest boundary case before coding.",
+    "Keep the editable draft separate from the last acknowledged revision."
+  ],
+  "alternativeApproaches": [
+    "Retry failed saves and reconcile an external edit without silently overwriting either draft."
+  ],
+  "commonMistakes": [
+    "Ignoring contract boundaries such as: Rapid typing; idle save; storage failure.",
+    "Treating a local deterministic model as proof of durable storage, authorization, distributed coordination, or physical-world guarantees."
+  ]
+}

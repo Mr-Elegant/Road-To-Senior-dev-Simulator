@@ -1,0 +1,8 @@
+import type * as React from 'react';
+export interface AppProps {
+    items?: (string)[];
+}
+import { useState, useRef } from 'react';
+export default function App({ items = ['Alpha', 'Beta', 'Gamma'] }: AppProps = {}): React.JSX.Element { const [index, setIndex] = useState(0), dialog = useRef<HTMLDialogElement>(null); let kind: string = "cards", slots = kind === 'cards' ? 2 : 1, max = Math.max(0, items.length - slots); if (!items.length)
+    return <p>No images</p>; const position = Math.min(index, max); function move(delta: number) { setIndex(i => kind === 'image' ? (i + delta + items.length) % items.length : Math.max(0, Math.min(max, i + delta))); } return <section>{kind === 'gallery' && items.map((title, i) => <button key={i} data-thumbnail={i} onClick={() => { setIndex(i); dialog.current?.showModal(); }}>{title}</button>)}<div data-testid="slides">{items.slice(position, position + slots).map(title => <article key={title}><img alt={title} src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="/><h2>{title}</h2></article>)}</div><button data-action="previous" onClick={() => move(-1)}>Previous</button><button data-action="next" onClick={() => move(1)}>Next</button>{kind === 'gallery' && <dialog ref={dialog} aria-label="Image viewer"><h2 data-testid="viewer">{items[index]}</h2><button data-action="close" onClick={() => dialog.current?.close()}>Close viewer</button></dialog>}</section>; }
+
