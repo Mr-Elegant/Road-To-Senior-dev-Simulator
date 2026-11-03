@@ -74,3 +74,8 @@ desktop.ini
 # Rebuilt from source before dev/build/local React tests
 /public/react-practice-runtime.js
 
+# Personal frontend study guide and its authoring/verification files
+/docs/guides/
+/scripts/field-guide/
+/tests/field-guide/
+
