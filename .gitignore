@@ -83,3 +83,18 @@ desktop.ini
 /scripts/field-guide/
 /tests/field-guide/
 
+# Generated Graphify knowledge graph, reports, and caches
+/graphify-out/
+
+# Local Graphify assistant integrations
+/.agents/skills/graphify/
+/.agents/rules/graphify.md
+/.agents/workflows/graphify.md
+/.claude/skills/graphify/
+/.claude/CLAUDE.md
+/.claude/settings.json
+/.codex/skills/graphify/
+/.codex/hooks.json
+/.codex/graphify-project-instructions.md
+/CLAUDE.md
+
