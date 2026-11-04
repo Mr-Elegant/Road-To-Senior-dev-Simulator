@@ -1,0 +1,1 @@
+export default async function Page(){ const item=null; return <h1>{item!.title}</h1>; }

@@ -1,0 +1,134 @@
+# Reference: Assign the same tags that later invalidation targets
+
+Read after attempting the exercise. This is authored guidance, not certification.
+
+```json
+{
+  "solution": {
+    "explanation": "Invalidating a name that was never assigned does not refresh the intended entry. Use a server-owned tag vocabulary and distinguish entity entries from list representations. Tags are invalidation metadata; they do not replace cache keys or authorize the underlying product read.",
+    "codeOrArtifact": "// Corrected review reference: lib/products.ts\nimport { cacheTag,cacheLife } from 'next/cache';\nexport async function product(id:string){'use cache';cacheLife('minutes');cacheTag('products','product:'+id);return {id};}",
+    "architectureNotes": "Verification:\n- Cache two entities and a list in a production server.\n- Invalidate an entity tag and observe the affected representation.\n- Invalidate the list tag after membership changes and verify unrelated domains remain warm.\n\nThis is a focused review reference, not a complete application/service implementation."
+  },
+  "rubric": [
+    {
+      "id": "next-lab-cache-tag-assignment-correctness",
+      "category": "correctness",
+      "label": "Behavior and invariant",
+      "description": "Invalidating a name that was never assigned does not refresh the intended entry. Use a server-owned tag vocabulary and distinguish entity entries from list representations. Tags are invalidation metadata; they do not replace cache keys or authorize the underlying product read.",
+      "weight": 5,
+      "levels": [
+        {
+          "score": 0,
+          "description": "Missing or contradicted by the implementation."
+        },
+        {
+          "score": 1,
+          "description": "Happy path only; important counterexamples remain."
+        },
+        {
+          "score": 2,
+          "description": "Meets the stated contract with evidence and correct version assumptions."
+        },
+        {
+          "score": 3,
+          "description": "Meets the contract and explains failure recovery, limits and the changed requirement."
+        }
+      ]
+    },
+    {
+      "id": "next-lab-cache-tag-assignment-testing",
+      "category": "testing",
+      "label": "Evidence and counterexamples",
+      "description": "Show the authored boundary cases and distinguish policy-model evidence from real Next.js runtime evidence.",
+      "weight": 4,
+      "levels": [
+        {
+          "score": 0,
+          "description": "Missing or contradicted by the implementation."
+        },
+        {
+          "score": 1,
+          "description": "Happy path only; important counterexamples remain."
+        },
+        {
+          "score": 2,
+          "description": "Meets the stated contract with evidence and correct version assumptions."
+        },
+        {
+          "score": 3,
+          "description": "Meets the contract and explains failure recovery, limits and the changed requirement."
+        }
+      ]
+    },
+    {
+      "id": "next-lab-cache-tag-assignment-security",
+      "category": "security",
+      "label": "Isolation and trust boundaries",
+      "description": "Explain caller validation, data exposure, authorization and the limits relevant to this task.",
+      "weight": 3,
+      "levels": [
+        {
+          "score": 0,
+          "description": "Missing or contradicted by the implementation."
+        },
+        {
+          "score": 1,
+          "description": "Happy path only; important counterexamples remain."
+        },
+        {
+          "score": 2,
+          "description": "Meets the stated contract with evidence and correct version assumptions."
+        },
+        {
+          "score": 3,
+          "description": "Meets the contract and explains failure recovery, limits and the changed requirement."
+        }
+      ]
+    },
+    {
+      "id": "next-lab-cache-tag-assignment-tradeoffs",
+      "category": "tradeoffs",
+      "label": "Versions and operational trade-offs",
+      "description": "Explain the 15/16 behavior, configuration assumptions, rollout and the interview variation.",
+      "weight": 3,
+      "levels": [
+        {
+          "score": 0,
+          "description": "Missing or contradicted by the implementation."
+        },
+        {
+          "score": 1,
+          "description": "Happy path only; important counterexamples remain."
+        },
+        {
+          "score": 2,
+          "description": "Meets the stated contract with evidence and correct version assumptions."
+        },
+        {
+          "score": 3,
+          "description": "Meets the contract and explains failure recovery, limits and the changed requirement."
+        }
+      ]
+    }
+  ],
+  "alternatives": [
+    "Include trusted tenant scope in tag names and use bounded server-owned identifiers. Prevent a user-controlled webhook from invalidating every tenant, and monitor invalidation fan-out."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "followUps": [
+    {
+      "id": "next-lab-cache-tag-assignment-extension",
+      "question": "How do tenant tags change the design?",
+      "expectedConcepts": [
+        "Cache Components (16)",
+        "Changed assumptions",
+        "Runtime evidence"
+      ],
+      "sampleStrongAnswer": "Include trusted tenant scope in tag names and use bounded server-owned identifiers. Prevent a user-controlled webhook from invalidating every tenant, and monitor invalidation fan-out."
+    }
+  ]
+}
+```

@@ -87,6 +87,7 @@ export function QuickActionButtons({
       {/* Domain Tracks & Remediation Actions */}
       <div className="flex flex-wrap items-center gap-2">
         {/* Tier 1 Beginner Track */}
+        <button onClick={()=>router.push('/nextjs')} className="flex min-h-11 items-center gap-1.5 rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-500/20 dark:text-blue-300"><Code2 className="h-3.5 w-3.5"/>Next.js Lab (110 challenges)</button>
         <button
           onClick={() => router.push('/interview?tier=tier-1')}
           className="px-3 py-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-semibold text-xs flex items-center gap-1.5 transition-colors"

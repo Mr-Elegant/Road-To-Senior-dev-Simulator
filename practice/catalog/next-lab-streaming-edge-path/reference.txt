@@ -1,0 +1,28 @@
+# Decision record: Design a streaming path through CDN, proxy and server
+
+## Context and scale
+Suspense works locally but users receive the entire response only after the slow report finishes.
+Three network hops; p95 useful shell under 400 ms; report data may take 3 seconds
+
+## Accepted constraints
+- Deliver a meaningful initial shell.
+- Identify buffering and compression boundaries.
+- Contain dependency failures without leaking private data.
+
+## Design and ownership
+Place boundaries below the layouts shared by the relevant navigation, then start only necessary independent work. Trace byte arrival from application through reverse proxy/CDN to the browser; configure supported streaming and inspect compression/buffering behavior. Reserve fallback dimensions and protect private runtime reads. Measure time to useful content rather than equating first byte with a completed interaction. Define how errors after headers commit are represented and observed.
+
+## Failure and recovery
+After streaming begins, the server cannot reliably replace the committed HTTP status with a later error. Use proper error boundaries and correlation, and avoid promising a 404/500 status from an already-committed successful stream.
+
+## Verification gates
+- Use a controlled delayed child and capture chunk arrival at each hop.
+- Compare direct loads and sibling client transitions.
+- Break a late dependency and inspect visible recovery, logs and final response status.
+
+## Interview change
+Does disabling all compression solve it?
+It can reveal a buffering symptom but is not a complete delivery design. Compare supported proxy settings, payload sizes and actual browser performance before accepting a bandwidth or CPU regression.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

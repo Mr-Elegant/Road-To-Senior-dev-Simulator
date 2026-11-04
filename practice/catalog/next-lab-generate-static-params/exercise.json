@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-generate-static-params",
+  "title": "Match generateStaticParams to the dynamic segment",
+  "topic": "Next.js",
+  "subtopic": "App Router foundations",
+  "difficulty": "Beginner",
+  "type": "code_review",
+  "estimatedMinutes": 20,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/docs/[slug]/page.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "export function generateStaticParams(){return [{id:'intro'}];}\nexport default async function Page({params}:{params:Promise<{slug:string}>}){return <h1>{(await params).slug}</h1>;}",
+  "codeReviewFiles": [
+    {
+      "filename": "app/docs/[slug]/page.tsx",
+      "newCode": "export function generateStaticParams(){return [{id:'intro'}];}\nexport default async function Page({params}:{params:Promise<{slug:string}>}){return <h1>{(await params).slug}</h1>;}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Build and inspect generated intro/routing routes.",
+    "Request a slug outside the list and record the configured behavior.",
+    "Repeat after changing the source list; distinguish a new build from cache revalidation."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "The returned object keys must match the filesystem’s dynamic segment names.",
+    "Build and inspect generated intro/routing routes."
+  ],
+  "alternativeApproaches": [
+    "Prebuild a valuable bounded subset or generate on demand under a supported deployment model. Quantify build time, origin load and first-request latency; do not enumerate unbounded tenant data without a budget."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 17,
+    "chapter": "App Router foundations",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Build and inspect generated intro/routing routes.",
+      "Request a slug outside the list and record the configured behavior.",
+      "Repeat after changing the source list; distinguish a new build from cache revalidation."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/functions/generate-static-params"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

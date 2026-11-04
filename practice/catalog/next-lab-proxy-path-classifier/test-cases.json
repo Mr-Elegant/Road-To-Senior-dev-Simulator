@@ -1,0 +1,32 @@
+[
+  {
+    "id": "next-lab-proxy-path-classifier-1",
+    "name": "assets",
+    "inputDescription": "\"/_next/static/a.js\"",
+    "expectedOutput": "\"bypass\""
+  },
+  {
+    "id": "next-lab-proxy-path-classifier-2",
+    "name": "exact root",
+    "inputDescription": "\"/admin\"",
+    "expectedOutput": "\"protected\""
+  },
+  {
+    "id": "next-lab-proxy-path-classifier-3",
+    "name": "descendant",
+    "inputDescription": "\"/account/profile\"",
+    "expectedOutput": "\"protected\""
+  },
+  {
+    "id": "next-lab-proxy-path-classifier-4",
+    "name": "lookalike",
+    "inputDescription": "\"/administrator\"",
+    "expectedOutput": "\"public\""
+  },
+  {
+    "id": "next-lab-proxy-path-classifier-5",
+    "name": "login",
+    "inputDescription": "\"/login\"",
+    "expectedOutput": "\"public\""
+  }
+]

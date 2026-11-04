@@ -1,0 +1,1 @@
+function solution({files,maxBytes,allowed}){const accepted=[],rejected=[];for(const file of files){if(file.size>maxBytes)rejected.push({name:file.name,reason:'size'});else if(!allowed.includes(file.type))rejected.push({name:file.name,reason:'type'});else accepted.push(file.name);}return {accepted,rejected};}

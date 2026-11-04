@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-query-filter-state-1",
+    "name": "replace",
+    "inputDescription": "{\"pairs\":[[\"q\",\"a\"],[\"tag\",\"x\"],[\"q\",\"b\"]],\"key\":\"q\",\"value\":\"new\"}",
+    "expectedOutput": "[[\"tag\",\"x\"],[\"q\",\"new\"]]"
+  },
+  {
+    "id": "next-lab-query-filter-state-2",
+    "name": "clear",
+    "inputDescription": "{\"pairs\":[[\"q\",\"a\"]],\"key\":\"q\",\"value\":\"\"}",
+    "expectedOutput": "[]"
+  },
+  {
+    "id": "next-lab-query-filter-state-3",
+    "name": "duplicates retained",
+    "inputDescription": "{\"pairs\":[[\"tag\",\"a\"],[\"tag\",\"b\"]],\"key\":\"q\",\"value\":\"x\"}",
+    "expectedOutput": "[[\"tag\",\"a\"],[\"tag\",\"b\"],[\"q\",\"x\"]]"
+  },
+  {
+    "id": "next-lab-query-filter-state-4",
+    "name": "empty",
+    "inputDescription": "{\"pairs\":[],\"key\":\"q\",\"value\":\"x\"}",
+    "expectedOutput": "[[\"q\",\"x\"]]"
+  }
+]

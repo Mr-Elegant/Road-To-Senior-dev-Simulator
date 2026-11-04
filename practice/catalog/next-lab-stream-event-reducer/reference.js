@@ -1,0 +1,1 @@
+function solution(events){let text='',status='open';for(const event of events){if(status!=='open')continue;if(event.type==='chunk')text+=event.text;else status=event.type==='cancel'?'cancelled':'complete';}return {text,status};}

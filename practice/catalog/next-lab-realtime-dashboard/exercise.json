@@ -1,0 +1,80 @@
+{
+  "id": "next-lab-realtime-dashboard",
+  "title": "Combine a server-rendered dashboard with live client updates",
+  "topic": "Next.js",
+  "subtopic": "Domain architecture",
+  "difficulty": "Staff/Principal",
+  "type": "system_design",
+  "estimatedMinutes": 60,
+  "businessContext": "A dashboard remounts the full application every few seconds to fetch a new session and replace all data.",
+  "problemStatement": "Design the system for 5,000 connected users; events can be duplicated and delivered out of order. Produce the component/data-flow diagram, request and mutation contracts, cache/trust boundaries, capacity assumptions, failure recovery and rollout gates. State which decisions change between Next.js 15 and 16 instead of using a framework API as a substitute for an architectural guarantee.",
+  "constraints": [
+    "Deliver an authorized initial snapshot.",
+    "Reconcile live events without cross-account leakage.",
+    "Handle disconnect and catch-up explicitly."
+  ],
+  "candidateTasks": [
+    "Draw components and annotate ownership of data, identity, caches and durable work.",
+    "Specify contracts/schema and quantify the capacity/freshness assumptions.",
+    "Walk through the failure scenario and design measurable acceptance tests.",
+    "Compare the reference decisions and answer the changed-requirement interview prompt."
+  ],
+  "systemDesignReqs": {
+    "scale": "5,000 connected users; events can be duplicated and delivered out of order",
+    "functional": [
+      "Deliver an authorized initial snapshot.",
+      "Reconcile live events without cross-account leakage.",
+      "Handle disconnect and catch-up explicitly."
+    ],
+    "nonFunctional": [
+      "State an explicit latency, freshness and recovery budget rather than inventing guarantees.",
+      "Keep actor/tenant isolation and failure ownership observable."
+    ],
+    "assumptions": [
+      "A patched App Router deployment; platform-specific infrastructure support must be verified.",
+      "Next.js version and Cache Components configuration are explicit design inputs."
+    ]
+  },
+  "hints": [
+    "Fetch an authorized versioned initial snapshot on the server and hydrate a small client island for live state.",
+    "A stale connection can deliver events after the user switches tenants. Reject messages by active subscription ownership and server-authorized channel scope; client-side filtering alone cannot secure the upstream stream."
+  ],
+  "alternativeApproaches": [
+    "Use it deliberately for server-owned reconciliation rather than as an unbounded per-event rebuild. Coalesce refreshes, preserve client state and measure server load; some events can update an admitted client projection directly."
+  ],
+  "commonMistakes": [
+    "Claiming a cache API provides transactions, durable delivery or cross-region consistency.",
+    "Omitting authorization, recovery budgets or evidence from an otherwise attractive component diagram."
+  ],
+  "nextjsPractice": {
+    "order": 105,
+    "chapter": "Domain architecture",
+    "mode": "architecture",
+    "versions": "15-and-16",
+    "verification": [
+      "Duplicate/reorder events and introduce sequence gaps.",
+      "Disconnect, reconnect and change accounts during catch-up.",
+      "Measure visible freshness, subscription cleanup and bounded memory growth."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/getting-started/server-and-client-components"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

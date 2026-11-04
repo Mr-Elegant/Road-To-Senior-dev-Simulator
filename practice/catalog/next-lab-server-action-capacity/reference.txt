@@ -1,0 +1,28 @@
+# Decision record: Define Server Action ownership and throughput boundaries
+
+## Context and scale
+A team exposes internal action identifiers as its long-term external batch API and assumes unconstrained parallel dispatch.
+Human form submissions plus a machine client sending hundreds of operations/second
+
+## Accepted constraints
+- Keep UI mutations secure and observable.
+- Provide an intentional external API contract.
+- Bound concurrency and durable work.
+
+## Design and ownership
+Use Server Actions for supported UI mutation flows with input validation, current authorization and serializable state. Expose a separate documented HTTP/job interface for machine clients needing explicit versioning, batching, concurrency and retry semantics. Keep shared business logic behind authorized operations, persist long-running work before acknowledging it, and use transaction/idempotency boundaries appropriate to the resource. Measure actual framework dispatch and platform limits instead of treating an action call as a general unconstrained RPC transport.
+
+## Failure and recovery
+A client retries after navigation or a dropped response while the mutation committed. Stable operation identity, durable outcome lookup and receiver-side uniqueness prevent duplicate effects; action transport alone does not supply them.
+
+## Verification gates
+- Test forged action inputs and current object permissions.
+- Load-test the documented batch API and UI actions separately.
+- Drop responses after commit and verify safe recovery without a second business effect.
+
+## Interview change
+Can both adapters share code?
+Yes, share explicit domain operations and DTOs while preserving each adapter’s authentication, request limits and transport semantics. Do not make the Server Component call its own HTTP adapter merely to reuse logic.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

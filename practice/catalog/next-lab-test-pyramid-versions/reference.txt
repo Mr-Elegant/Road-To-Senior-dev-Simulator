@@ -1,0 +1,28 @@
+# Decision record: Design a versioned Next.js regression and release matrix
+
+## Context and scale
+A unit suite of policy models is labeled proof that every routing, cache and deployment behavior works on both major versions.
+Supported Next.js 15 maintenance and 16 stable; 100 practice scenarios
+
+## Accepted constraints
+- Keep exact policy tests cheap and deterministic.
+- Verify representative real framework boundaries on both versions.
+- Record unperformed integration claims honestly.
+
+## Design and ownership
+Use unit tests for pure input policies and curriculum integrity, production-server tests for routing/metadata/headers/actions/streaming, and deployment integration for CDN/cache handlers/queues/databases. Pin patched 15 and stable 16 in isolated fixtures, with cache/config assumptions in the test names. Keep cold/warm and direct/soft-navigation cases separate. Validate the simulator’s own browser flows and content exports without claiming those checks execute every infrastructure design. Store source links, version snapshot and known verification limits with the curriculum.
+
+## Failure and recovery
+An always-green mock can conceal an unsupported API or a server cache leak. Introduce deliberate negative fixtures, assert real HTTP/output evidence and fail unsupported claims rather than manufacturing a passing score for guided work.
+
+## Verification gates
+- Run the supported-version fixtures from clean installs and production builds.
+- Mutate a policy/reference to prove the intended check fails.
+- Audit report wording against actual executed checks and retained evidence.
+
+## Interview change
+Should latest be an unpinned CI dependency?
+Use a reviewed pinned release matrix and a separate dependency-update job. Unbounded latest installs can change the baseline silently; record exactly what was tested and refresh the version snapshot deliberately.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

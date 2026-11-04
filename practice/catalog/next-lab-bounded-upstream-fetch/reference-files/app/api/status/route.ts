@@ -1,0 +1,2 @@
+// Corrected review reference: app/api/status/route.ts
+export async function GET(){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),1500);try{const response=await fetch('https://status.example.com/public',{signal:controller.signal,cache:'no-store'});if(!response.ok)return Response.json({error:'Upstream unavailable'},{status:502});return Response.json(await response.json(),{headers:{'Cache-Control':'no-store'}});}catch{return Response.json({error:'Upstream unavailable'},{status:504});}finally{clearTimeout(timer);}}

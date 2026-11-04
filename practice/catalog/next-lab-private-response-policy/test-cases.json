@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-private-response-policy-1",
+    "name": "public",
+    "inputDescription": "{\"authenticated\":false,\"publicResource\":true}",
+    "expectedOutput": "{\"cacheControl\":\"public, max-age=60\",\"vary\":[]}"
+  },
+  {
+    "id": "next-lab-private-response-policy-2",
+    "name": "authenticated public endpoint",
+    "inputDescription": "{\"authenticated\":true,\"publicResource\":true}",
+    "expectedOutput": "{\"cacheControl\":\"private, no-store\",\"vary\":[\"Cookie\",\"Authorization\"]}"
+  },
+  {
+    "id": "next-lab-private-response-policy-3",
+    "name": "private anonymous",
+    "inputDescription": "{\"authenticated\":false,\"publicResource\":false}",
+    "expectedOutput": "{\"cacheControl\":\"private, no-store\",\"vary\":[\"Cookie\",\"Authorization\"]}"
+  },
+  {
+    "id": "next-lab-private-response-policy-4",
+    "name": "private authenticated",
+    "inputDescription": "{\"authenticated\":true,\"publicResource\":false}",
+    "expectedOutput": "{\"cacheControl\":\"private, no-store\",\"vary\":[\"Cookie\",\"Authorization\"]}"
+  }
+]

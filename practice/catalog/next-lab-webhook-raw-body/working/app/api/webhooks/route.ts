@@ -1,0 +1,1 @@
+export async function POST(request:Request){const json=await request.json();await processEvent(json);return Response.json({ok:true});}

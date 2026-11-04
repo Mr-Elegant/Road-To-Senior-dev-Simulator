@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-client-prop-contract",
+  "title": "Replace a non-serializable event prop across the boundary",
+  "topic": "Next.js",
+  "subtopic": "Server and client boundaries",
+  "difficulty": "Beginner",
+  "type": "code_review",
+  "estimatedMinutes": 20,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/page.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "import Button from './button';\nexport default function Page(){ return <Button onClick={()=>console.log('clicked')} />; }",
+  "codeReviewFiles": [
+    {
+      "filename": "app/page.tsx",
+      "newCode": "import Button from './button';\nexport default function Page(){ return <Button onClick={()=>console.log('clicked')} />; }",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Split the two files at the annotated boundary and build.",
+    "Confirm the button works after hydration.",
+    "Verify no sensitive object fields are included in the props payload."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "An ordinary server-created callback cannot be serialized as a client event handler.",
+    "Split the two files at the annotated boundary and build."
+  ],
+  "alternativeApproaches": [
+    "Do not reduce the RSC serialization contract to JSON-only folklore. React supports specific richer values; check its current supported types. Still prefer an intentional DTO and avoid arbitrary class instances or ordinary function props."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 12,
+    "chapter": "Server and client boundaries",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Split the two files at the annotated boundary and build.",
+      "Confirm the button works after hydration.",
+      "Verify no sensitive object fields are included in the props payload."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/getting-started/server-and-client-components"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

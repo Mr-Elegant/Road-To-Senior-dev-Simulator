@@ -1,0 +1,1 @@
+export default function Error({error}:{error:Error}){ return <pre>{error.stack}</pre>; }

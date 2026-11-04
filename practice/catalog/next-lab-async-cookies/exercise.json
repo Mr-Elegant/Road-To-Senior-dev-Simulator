@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-async-cookies",
+  "title": "Read request cookies on the server",
+  "topic": "Next.js",
+  "subtopic": "Server and client boundaries",
+  "difficulty": "Beginner",
+  "type": "code_review",
+  "estimatedMinutes": 20,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/preferences/page.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "'use client';\nimport { cookies } from 'next/headers';\nexport default function Page(){ return <p>{cookies().get('theme')?.value}</p>; }",
+  "codeReviewFiles": [
+    {
+      "filename": "app/preferences/page.tsx",
+      "newCode": "'use client';\nimport { cookies } from 'next/headers';\nexport default function Page(){ return <p>{cookies().get('theme')?.value}</p>; }",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Set light, dark and unknown theme cookies and inspect rendered text.",
+    "Confirm the client bundle contains no next/headers import.",
+    "Repeat with Cache Components explicitly enabled and add the required runtime boundary."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "next/headers is a server request API, not a client storage library.",
+    "Set light, dark and unknown theme cookies and inspect rendered text."
+  ],
+  "alternativeApproaches": [
+    "A display preference is not an identity proof. Authentication cookies need integrity, secure attributes, expiry and server-side verification; never trust a role string merely because it arrived in a cookie."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 11,
+    "chapter": "Server and client boundaries",
+    "mode": "framework-review",
+    "versions": "15-to-16",
+    "verification": [
+      "Set light, dark and unknown theme cookies and inspect rendered text.",
+      "Confirm the client bundle contains no next/headers import.",
+      "Repeat with Cache Components explicitly enabled and add the required runtime boundary."
+    ],
+    "next15": "cookies() is asynchronous; synchronous access is temporary compatibility, not a stable pattern.",
+    "next16": "Await cookies(). With Cache Components enabled, read request data in a runtime subtree behind Suspense instead of inside use cache.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/functions/cookies"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

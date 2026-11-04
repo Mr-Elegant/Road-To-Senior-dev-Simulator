@@ -1,0 +1,1 @@
+export default async function Page(){const result=await fetch('http://localhost:3000/api/products');return <pre>{await result.text()}</pre>;}

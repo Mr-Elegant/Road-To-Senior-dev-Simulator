@@ -1,0 +1,91 @@
+{
+  "id": "next-lab-duplicate-webhook-events",
+  "title": "Deduplicate a bounded webhook event batch",
+  "difficulty": "Mid-Level",
+  "topic": "Next.js",
+  "subtopic": "Route handlers and APIs",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input {seen,events}, arrays of event ID strings. Return {accepted,seen}; accepted contains each unseen ID once in incoming order; seen contains original IDs once, followed by accepted IDs. This is an in-memory batch policy, not durable exactly-once processing.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-duplicate-webhook-events-1",
+      "name": "first",
+      "inputDescription": "{\"seen\":[],\"events\":[\"a\",\"b\"]}",
+      "expectedOutput": "{\"accepted\":[\"a\",\"b\"],\"seen\":[\"a\",\"b\"]}"
+    },
+    {
+      "id": "next-lab-duplicate-webhook-events-2",
+      "name": "duplicates",
+      "inputDescription": "{\"seen\":[\"a\"],\"events\":[\"a\",\"b\",\"b\"]}",
+      "expectedOutput": "{\"accepted\":[\"b\"],\"seen\":[\"a\",\"b\"]}"
+    },
+    {
+      "id": "next-lab-duplicate-webhook-events-3",
+      "name": "empty",
+      "inputDescription": "{\"seen\":[\"a\",\"a\"],\"events\":[]}",
+      "expectedOutput": "{\"accepted\":[],\"seen\":[\"a\"]}"
+    },
+    {
+      "id": "next-lab-duplicate-webhook-events-4",
+      "name": "order",
+      "inputDescription": "{\"seen\":[\"z\"],\"events\":[\"b\",\"a\"]}",
+      "expectedOutput": "{\"accepted\":[\"b\",\"a\"],\"seen\":[\"z\",\"b\",\"a\"]}"
+    }
+  ],
+  "hints": [
+    "Admit an event ID before admitting another copy in the same batch.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "Verify the signature over raw bytes, then insert a unique provider/event key and perform the business mutation in a transaction or durable workflow. A retry after a crash must observe the stored outcome, not a process-local Set."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 29,
+    "chapter": "Route handlers and APIs",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/file-conventions/route"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

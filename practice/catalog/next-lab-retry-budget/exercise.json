@@ -1,0 +1,97 @@
+{
+  "id": "next-lab-retry-budget",
+  "title": "Bound retries by attempts, deadline and idempotency",
+  "difficulty": "Senior",
+  "topic": "Next.js",
+  "subtopic": "Testing and operations",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input {method,status,attempt,maxAttempts,remainingMs,delayMs,idempotencyKey}. Return retry:true only for GET/HEAD or a nonempty string idempotencyKey, status 429 or >=500, attempt<maxAttempts, and delayMs<remainingMs. Otherwise false. Return a boolean, not a retry schedule.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-retry-budget-1",
+      "name": "safe retry",
+      "inputDescription": "{\"method\":\"GET\",\"status\":503,\"attempt\":1,\"maxAttempts\":3,\"remainingMs\":500,\"delayMs\":100}",
+      "expectedOutput": "true"
+    },
+    {
+      "id": "next-lab-retry-budget-2",
+      "name": "unsafe write",
+      "inputDescription": "{\"method\":\"POST\",\"status\":503,\"attempt\":1,\"maxAttempts\":3,\"remainingMs\":500,\"delayMs\":100}",
+      "expectedOutput": "false"
+    },
+    {
+      "id": "next-lab-retry-budget-3",
+      "name": "keyed write",
+      "inputDescription": "{\"method\":\"POST\",\"status\":503,\"attempt\":1,\"maxAttempts\":3,\"remainingMs\":500,\"delayMs\":100,\"idempotencyKey\":\"x\"}",
+      "expectedOutput": "true"
+    },
+    {
+      "id": "next-lab-retry-budget-4",
+      "name": "budget boundary",
+      "inputDescription": "{\"method\":\"GET\",\"status\":429,\"attempt\":3,\"maxAttempts\":3,\"remainingMs\":500,\"delayMs\":100}",
+      "expectedOutput": "false"
+    },
+    {
+      "id": "next-lab-retry-budget-5",
+      "name": "deadline boundary",
+      "inputDescription": "{\"method\":\"GET\",\"status\":503,\"attempt\":1,\"maxAttempts\":3,\"remainingMs\":100,\"delayMs\":100}",
+      "expectedOutput": "false"
+    }
+  ],
+  "hints": [
+    "Retry eligibility is a conjunction of semantic safety and resource budgets.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "Record an unknown outcome and reconcile using the provider’s idempotency key or status API. Do not treat a timeout as proof of rollback or generate a new key on every retry."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 60,
+    "chapter": "Testing and operations",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/backend-for-frontend"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

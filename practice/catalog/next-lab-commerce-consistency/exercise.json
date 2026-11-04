@@ -1,0 +1,80 @@
+{
+  "id": "next-lab-commerce-consistency",
+  "title": "Separate a cached storefront from authoritative checkout",
+  "topic": "Next.js",
+  "subtopic": "Domain architecture",
+  "difficulty": "Staff/Principal",
+  "type": "system_design",
+  "estimatedMinutes": 60,
+  "businessContext": "A fast cached product page is being used as proof that an item is still available when payment begins.",
+  "problemStatement": "Design the system for 50,000 visitors/minute during a launch; inventory must never go negative. Produce the component/data-flow diagram, request and mutation contracts, cache/trust boundaries, capacity assumptions, failure recovery and rollout gates. State which decisions change between Next.js 15 and 16 instead of using a framework API as a substitute for an architectural guarantee.",
+  "constraints": [
+    "Keep product browsing fast.",
+    "Reserve stock atomically with bounded expiry.",
+    "Handle payment timeouts without duplicate charges."
+  ],
+  "candidateTasks": [
+    "Draw components and annotate ownership of data, identity, caches and durable work.",
+    "Specify contracts/schema and quantify the capacity/freshness assumptions.",
+    "Walk through the failure scenario and design measurable acceptance tests.",
+    "Compare the reference decisions and answer the changed-requirement interview prompt."
+  ],
+  "systemDesignReqs": {
+    "scale": "50,000 visitors/minute during a launch; inventory must never go negative",
+    "functional": [
+      "Keep product browsing fast.",
+      "Reserve stock atomically with bounded expiry.",
+      "Handle payment timeouts without duplicate charges."
+    ],
+    "nonFunctional": [
+      "State an explicit latency, freshness and recovery budget rather than inventing guarantees.",
+      "Keep actor/tenant isolation and failure ownership observable."
+    ],
+    "assumptions": [
+      "A patched App Router deployment; platform-specific infrastructure support must be verified.",
+      "Next.js version and Cache Components configuration are explicit design inputs."
+    ]
+  },
+  "hints": [
+    "Serve public catalog content under a measured caching policy while treating displayed availability as advisory.",
+    "The payment provider may commit a charge before the response times out. Do not release stock or create a second charge solely because the HTTP call failed; reconcile the stored order/payment attempt and handle reservation expiry with a defined compensation policy."
+  ],
+  "alternativeApproaches": [
+    "It can show a pending interaction, but paid must come from an authoritative confirmed transition. Client optimism, Next.js revalidation and a disabled button cannot establish a financial outcome."
+  ],
+  "commonMistakes": [
+    "Claiming a cache API provides transactions, durable delivery or cross-region consistency.",
+    "Omitting authorization, recovery budgets or evidence from an otherwise attractive component diagram."
+  ],
+  "nextjsPractice": {
+    "order": 93,
+    "chapter": "Domain architecture",
+    "mode": "architecture",
+    "versions": "15-and-16",
+    "verification": [
+      "Race many buyers for the last unit in real database integration tests.",
+      "Crash between reservation, outbox delivery and provider response.",
+      "Replay provider webhooks and verify exactly-once business effects through constraints, not process memory."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/backend-for-frontend"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

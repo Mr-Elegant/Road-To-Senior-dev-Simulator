@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-tenant-cache-key-1",
+    "name": "normal",
+    "inputDescription": "{\"tenant\":\"t1\",\"resource\":\"products\",\"locale\":\"en\"}",
+    "expectedOutput": "\"[\\\"t1\\\",\\\"products\\\",\\\"en\\\"]\""
+  },
+  {
+    "id": "next-lab-tenant-cache-key-2",
+    "name": "delimiter in tenant",
+    "inputDescription": "{\"tenant\":\"a:b\",\"resource\":\"c\",\"locale\":\"en\"}",
+    "expectedOutput": "\"[\\\"a:b\\\",\\\"c\\\",\\\"en\\\"]\""
+  },
+  {
+    "id": "next-lab-tenant-cache-key-3",
+    "name": "delimiter in resource",
+    "inputDescription": "{\"tenant\":\"a\",\"resource\":\"b:c\",\"locale\":\"en\"}",
+    "expectedOutput": "\"[\\\"a\\\",\\\"b:c\\\",\\\"en\\\"]\""
+  },
+  {
+    "id": "next-lab-tenant-cache-key-4",
+    "name": "case sensitive",
+    "inputDescription": "{\"tenant\":\"T1\",\"resource\":\"products\",\"locale\":\"EN\"}",
+    "expectedOutput": "\"[\\\"T1\\\",\\\"products\\\",\\\"EN\\\"]\""
+  }
+]

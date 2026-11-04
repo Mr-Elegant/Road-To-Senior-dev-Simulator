@@ -1,0 +1,103 @@
+{
+  "id": "next-lab-safe-return-path",
+  "title": "Validate a post-login return path",
+  "difficulty": "Beginner",
+  "topic": "Next.js",
+  "subtopic": "Routing and URL state",
+  "type": "coding",
+  "estimatedMinutes": 20,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input is a string. Return it unchanged only if one decodeURIComponent pass succeeds and the decoded path starts with one slash, does not start //, and contains neither backslashes nor U+0000..U+0020. Otherwise return /. Query strings and fragments are allowed under this policy.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-safe-return-path-1",
+      "name": "internal",
+      "inputDescription": "\"/account?tab=billing\"",
+      "expectedOutput": "\"/account?tab=billing\""
+    },
+    {
+      "id": "next-lab-safe-return-path-2",
+      "name": "external",
+      "inputDescription": "\"https://evil.test\"",
+      "expectedOutput": "\"/\""
+    },
+    {
+      "id": "next-lab-safe-return-path-3",
+      "name": "protocol relative",
+      "inputDescription": "\"//evil.test\"",
+      "expectedOutput": "\"/\""
+    },
+    {
+      "id": "next-lab-safe-return-path-4",
+      "name": "encoded slashes",
+      "inputDescription": "\"/%2Fevil.test\"",
+      "expectedOutput": "\"/\""
+    },
+    {
+      "id": "next-lab-safe-return-path-5",
+      "name": "backslash",
+      "inputDescription": "\"/\\\\evil.test\"",
+      "expectedOutput": "\"/\""
+    },
+    {
+      "id": "next-lab-safe-return-path-6",
+      "name": "malformed encoding",
+      "inputDescription": "\"/%\"",
+      "expectedOutput": "\"/\""
+    }
+  ],
+  "hints": [
+    "A return URL is untrusted input, even when it comes from your own login query string.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "Admit only paths under that basePath with a segment boundary, and construct the final redirect against a configured trusted origin. Avoid a second inconsistent decoder in the redirect layer."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 2,
+    "chapter": "Routing and URL state",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/functions/redirect"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

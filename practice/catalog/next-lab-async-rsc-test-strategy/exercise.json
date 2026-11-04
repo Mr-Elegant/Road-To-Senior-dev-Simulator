@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-async-rsc-test-strategy",
+  "title": "Choose a real-server test for async Server Component behavior",
+  "topic": "Next.js",
+  "subtopic": "Testing and operations",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed tests/product.spec.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "// A mocked React render is being presented as proof of routing, server caching and streaming correctness.\nexpect(mockedProduct).toEqual({id:'one'});",
+  "codeReviewFiles": [
+    {
+      "filename": "tests/product.spec.ts",
+      "newCode": "// A mocked React render is being presented as proof of routing, server caching and streaming correctness.\nexpect(mockedProduct).toEqual({id:'one'});",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Run the test against a production build.",
+    "Add missing-resource, failure and soft-navigation journeys.",
+    "Use an origin counter or controlled clock for cache claims rather than inferring them from a visible heading."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "A pure unit test is valuable for policy logic but cannot establish the framework’s async rendering, route conventions, response headers or caching.",
+    "Run the test against a production build."
+  ],
+  "alternativeApproaches": [
+    "No. Test pure transformations and authorization matrices cheaply at unit level, then cover the small number of real framework and deployment boundaries with integration/E2E evidence. Mocks and real-server evidence answer different questions."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 85,
+    "chapter": "Testing and operations",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Run the test against a production build.",
+      "Add missing-resource, failure and soft-navigation journeys.",
+      "Use an origin counter or controlled clock for cache claims rather than inferring them from a visible heading."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/testing/playwright"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

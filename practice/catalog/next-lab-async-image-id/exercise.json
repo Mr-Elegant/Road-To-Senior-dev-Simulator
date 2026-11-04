@@ -1,0 +1,71 @@
+{
+  "id": "next-lab-async-image-id",
+  "title": "Await the generated image id during the 16 migration",
+  "topic": "Next.js",
+  "subtopic": "Versions and migrations",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/icon.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "import { ImageResponse } from 'next/og';\nexport default function Icon({id}:{id:string}){return new ImageResponse(<div>{id}</div>,{width:64,height:64});}",
+  "codeReviewFiles": [
+    {
+      "filename": "app/icon.tsx",
+      "newCode": "import { ImageResponse } from 'next/og';\nexport default function Icon({id}:{id:string}){return new ImageResponse(<div>{id}</div>,{width:64,height:64});}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Build and request the generated icon URL.",
+    "Decode the returned image and confirm 64×64 pixels.",
+    "Test every declared metadata variant and the dynamic params contract if present."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "An image-generation function is part of the route migration surface, not an exemption from asynchronous prop changes.",
+    "Build and request the generated icon URL."
+  ],
+  "alternativeApproaches": [
+    "Image generation is a server-side resource consumer. Bound destinations, response sizes, timeouts and rendering work; treat user text and URLs as untrusted inputs rather than unrestricted server fetch instructions."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 78,
+    "chapter": "Versions and migrations",
+    "mode": "framework-review",
+    "versions": "15-to-16",
+    "verification": [
+      "Build and request the generated icon URL.",
+      "Decode the returned image and confirm 64×64 pixels.",
+      "Test every declared metadata variant and the dynamic params contract if present."
+    ],
+    "next15": "Image generation props must be reviewed against the 15 API; the id contract differs from the 16 form.",
+    "next16": "The generated image function receives id as a promise. Await id and review promised params as described in the upgrade guide.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      }
+    ]
+  }
+}

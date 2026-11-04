@@ -1,0 +1,1 @@
+function solution(input) { if(typeof input!=='string')return '/'; try {const decoded=decodeURIComponent(input);return decoded.startsWith('/')&&!decoded.startsWith('//')&&!/[\\\u0000-\u0020]/.test(decoded)?input:'/';}catch{return '/';} }

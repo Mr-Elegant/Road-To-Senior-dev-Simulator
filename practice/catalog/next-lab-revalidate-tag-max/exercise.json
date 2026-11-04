@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-revalidate-tag-max",
+  "title": "Choose stale-while-revalidate rather than accidental immediate expiry",
+  "topic": "Next.js",
+  "subtopic": "Caching and revalidation",
+  "difficulty": "Mid-Level",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/actions.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "'use server';\nimport { revalidateTag } from 'next/cache';\nexport async function publish(){revalidateTag('public-posts');}",
+  "codeReviewFiles": [
+    {
+      "filename": "app/actions.ts",
+      "newCode": "'use server';\nimport { revalidateTag } from 'next/cache';\nexport async function publish(){revalidateTag('public-posts');}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Authenticate a publisher and commit an observable versioned record.",
+    "Verify a later visitor can trigger background refresh under the selected profile.",
+    "Prove failed writes do not invalidate or announce a published result."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "Invalidate after the authoritative write commits and choose the consistency contract deliberately.",
+    "Authenticate a publisher and commit an observable versioned record."
+  ],
+  "alternativeApproaches": [
+    "In a 16 Server Action, consider updateTag for read-your-own-writes and test the next read. In other contexts use the appropriate documented revalidation profile and a product-specific consistency strategy."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 47,
+    "chapter": "Caching and revalidation",
+    "mode": "framework-review",
+    "versions": "15-to-16",
+    "verification": [
+      "Authenticate a publisher and commit an observable versioned record.",
+      "Verify a later visitor can trigger background refresh under the selected profile.",
+      "Prove failed writes do not invalidate or announce a published result."
+    ],
+    "next15": "The 15 baseline commonly uses single-argument revalidateTag. Inspect the exact patched 15.x declarations before changing its call shape.",
+    "next16": "Use revalidateTag(tag, profile), commonly max for SWR. The single-argument form is deprecated; immediate read-your-writes has a separate updateTag API in Server Actions.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/functions/revalidateTag"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

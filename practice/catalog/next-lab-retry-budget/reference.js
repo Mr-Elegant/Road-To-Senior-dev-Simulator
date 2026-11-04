@@ -1,0 +1,1 @@
+function solution(x){const safe=['GET','HEAD'].includes(x.method)||(typeof x.idempotencyKey==='string'&&x.idempotencyKey.length>0);return safe&&(x.status===429||x.status>=500)&&x.attempt<x.maxAttempts&&x.delayMs<x.remainingMs;}

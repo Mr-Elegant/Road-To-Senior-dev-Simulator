@@ -70,6 +70,7 @@ export function Navbar() {
     { label: 'Challenges', href: '/library', icon: BookOpen },
     { label: 'Frontend Practice', href: '/frontend-practice', icon: Code2, badge: '203 Qs' },
     { label: 'React + TypeScript', href: '/react-typescript', icon: Code2 },
+    { label: 'Next.js Engineering Lab', href: '/nextjs', icon: Code2, badge: '110 Qs' },
     { label: 'Incidents', href: '/incidents', icon: Flame },
     { label: 'Coding Practice', href: '/practice', icon: Code2 },
     { label: 'AI Interview', href: '/interview', icon: Sparkles, badge: 'Gemini' },
@@ -106,7 +107,7 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden min-[1800px]:flex items-center gap-0.5">
-          {navItems.filter(item => !['/incidents', '/practice', '/progress', '/settings'].includes(item.href)).map((item) => {
+          {navItems.filter(item => !['/incidents', '/practice', '/progress', '/settings', '/nextjs'].includes(item.href)).map((item) => {
             const Icon = item.icon;
             const isActive =
               item.href === '/'

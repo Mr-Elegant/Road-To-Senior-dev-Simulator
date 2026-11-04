@@ -1,0 +1,1 @@
+export default {experimental:{serverActions:{allowedOrigins:['*'],bodySizeLimit:'100mb'}}};

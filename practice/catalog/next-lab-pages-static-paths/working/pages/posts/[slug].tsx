@@ -1,0 +1,1 @@
+export function getStaticPaths(){return {paths:[{id:'intro'}],fallback:'yes'};}

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "next-lab-query-pagination-1",
+    "name": "defaults",
+    "inputDescription": "{}",
+    "expectedOutput": "{\"page\":1,\"size\":20,\"offset\":0}"
+  },
+  {
+    "id": "next-lab-query-pagination-2",
+    "name": "normal",
+    "inputDescription": "{\"page\":\"3\",\"size\":\"10\"}",
+    "expectedOutput": "{\"page\":3,\"size\":10,\"offset\":20}"
+  },
+  {
+    "id": "next-lab-query-pagination-3",
+    "name": "arrays and decimals",
+    "inputDescription": "{\"page\":[\"2\"],\"size\":\"2.5\"}",
+    "expectedOutput": "{\"page\":1,\"size\":20,\"offset\":0}"
+  },
+  {
+    "id": "next-lab-query-pagination-4",
+    "name": "bounds",
+    "inputDescription": "{\"page\":\"0\",\"size\":\"900\"}",
+    "expectedOutput": "{\"page\":1,\"size\":100,\"offset\":0}"
+  },
+  {
+    "id": "next-lab-query-pagination-5",
+    "name": "maximum",
+    "inputDescription": "{\"page\":\"99999\",\"size\":\"2\"}",
+    "expectedOutput": "{\"page\":10000,\"size\":2,\"offset\":19998}"
+  }
+]

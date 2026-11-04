@@ -1,0 +1,44 @@
+[
+  {
+    "id": "next-lab-authorization-matrix-1",
+    "name": "anonymous",
+    "inputDescription": "{\"session\":null,\"tenant\":\"a\",\"operation\":\"read\"}",
+    "expectedOutput": "\"unauthenticated\""
+  },
+  {
+    "id": "next-lab-authorization-matrix-2",
+    "name": "cross tenant",
+    "inputDescription": "{\"session\":{\"tenant\":\"b\",\"role\":\"admin\"},\"tenant\":\"a\",\"operation\":\"read\"}",
+    "expectedOutput": "\"forbidden\""
+  },
+  {
+    "id": "next-lab-authorization-matrix-3",
+    "name": "viewer write",
+    "inputDescription": "{\"session\":{\"tenant\":\"a\",\"role\":\"viewer\"},\"tenant\":\"a\",\"operation\":\"write\"}",
+    "expectedOutput": "\"forbidden\""
+  },
+  {
+    "id": "next-lab-authorization-matrix-4",
+    "name": "admin delete",
+    "inputDescription": "{\"session\":{\"tenant\":\"a\",\"role\":\"admin\"},\"tenant\":\"a\",\"operation\":\"delete\"}",
+    "expectedOutput": "\"allowed\""
+  },
+  {
+    "id": "next-lab-authorization-matrix-5",
+    "name": "unknown operation",
+    "inputDescription": "{\"session\":{\"tenant\":\"a\",\"role\":\"admin\"},\"tenant\":\"a\",\"operation\":\"export\"}",
+    "expectedOutput": "\"forbidden\""
+  },
+  {
+    "id": "next-lab-authorization-matrix-6",
+    "name": "prototype method denied",
+    "inputDescription": "{\"session\":{\"tenant\":\"a\",\"role\":\"admin\"},\"tenant\":\"a\",\"operation\":\"toString\"}",
+    "expectedOutput": "\"forbidden\""
+  },
+  {
+    "id": "next-lab-authorization-matrix-7",
+    "name": "prototype object denied",
+    "inputDescription": "{\"session\":{\"tenant\":\"a\",\"role\":\"admin\"},\"tenant\":\"a\",\"operation\":\"__proto__\"}",
+    "expectedOutput": "\"forbidden\""
+  }
+]

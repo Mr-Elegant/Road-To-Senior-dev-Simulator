@@ -8,7 +8,7 @@ A full-stack learning platform for practicing the work behind senior engineering
 
 The project brings these experiences into one application with authenticated accounts, browser-based execution, persistent progress, and reproducible evaluation. Its engineering focus is **correctness under failure**: stale responses, failed optimistic updates, interrupted sessions, conflicting imports, and untrusted candidate code.
 
-**389 engineering scenarios · 203 frontend topics + 113 TSX copies · 4 enterprise projects · 120 SQL questions · 8 evolving incidents**
+**499 engineering scenarios · 203 frontend topics + 113 TSX copies · 4 enterprise projects · 120 SQL questions · 8 evolving incidents**
 
 **Live demo:** [engineering-interview-lab.vercel.app](https://engineering-interview-lab.vercel.app/)
 
@@ -25,7 +25,7 @@ The poster is a conceptual product visual from the earlier catalog, not a screen
 | Product | A full-stack engineering practice simulator with guided learning, editable exercises, incident response, and interview preparation. |
 | Audience | Developers building foundations and engineers preparing for senior/staff interviews. |
 | Architecture | Modular monolith: one Next.js application, PostgreSQL persistence, browser execution engines, and an optional external AI provider. |
-| Main catalog | 389 scenarios across 10 technical topics and six challenge formats, including all 203 frontend practice topics. |
+| Main catalog | 499 scenarios across 10 technical topics and six challenge formats, including all 203 frontend practice topics. |
 | Enterprise Labs | Four project overviews grouping 22 exercises: eight loan, six commerce/SaaS, and eight collaboration exercises. |
 | SQL track | 120 authored questions across four tiers, with executable, conceptual, and incident formats. |
 | Evolving incidents | Eight simulations, 24 timed developments, and 72 response choices. |
@@ -33,7 +33,7 @@ The poster is a conceptual product visual from the earlier catalog, not a screen
 | Persistence | Account-owned history in PostgreSQL; account-scoped device caches and local drafts. |
 | Current evidence | 491 unit tests across 24 suites; browser verification and qualifications recorded under [Verification](#verification). |
 
-These counts describe different collections and must not be summed into one challenge count. The eight evolving incidents, six commerce/SaaS challenges, eight collaboration challenges, and 203 frontend topics are included in the 389-scenario catalog. The frontend bank reuses the original eight React UI exercise IDs and adds 195 scenarios; the separate React + TypeScript module adds 113 typed copies of those React topics. Enterprise Labs reuses those six commerce/SaaS challenges, eight collaboration scenarios, and the eight separate loan exercises.
+These counts describe different collections and must not be summed into one challenge count. The eight evolving incidents, six commerce/SaaS challenges, eight collaboration challenges, and 203 frontend topics are included in the 499-scenario catalog. The frontend bank reuses the original eight React UI exercise IDs and adds 195 scenarios; the separate React + TypeScript module adds 113 typed copies of those React topics. The Next.js Engineering Lab adds 110 version-aware coding, review and architecture scenarios within the catalog. Enterprise Labs reuses those six commerce/SaaS challenges, eight collaboration scenarios, and the eight separate loan exercises.
 
 ## A five-minute product review
 
@@ -69,7 +69,8 @@ The loan lab is an editable exercise workspace. Each submission executes against
 
 | Area | Implemented behavior |
 |---|---|
-| **Scenario library** | 389 scenarios across JavaScript, TypeScript, React, Next.js, Node.js, databases, integrations, operations, system design, and security. Includes debugging, coding, incident response, code review, architecture, and interview exercises. |
+| **Next.js Engineering Lab** | 110 challenges at `/nextjs`: 20 executable policy models, 70 framework code reviews and 20 architecture exercises. Beginner to architect, Next.js 15/16 version comparisons, official references, acceptance evidence and answered interview variations. [Scope and workflow](docs/NEXTJS_PRACTICE.md). |
+| **Scenario library** | 499 scenarios across JavaScript, TypeScript, React, Next.js, Node.js, databases, integrations, operations, system design, and security. Includes debugging, coding, incident response, code review, architecture, and interview exercises. |
 | **Frontend practice** | All 203 researched topics at `/frontend-practice`: 113 React components with 379 DOM journeys and 90 JavaScript exercises with 333 exact-result/error cases. Search and track/difficulty filters link to full coding workspaces, independently authored contracts, complete references, hints, and follow-up answers. On-demand closable panels, current-code test requirements, and test-derived submission scores. Self-hosted React/ReactDOM/Sucrase runtime in opaque-origin iframes. [Workflow and execution limits](docs/REACT_UI_PRACTICE.md). |
 | **React + TypeScript** | A separate `/react-typescript` module with 113 typed copies: 39 easy, 60 medium, 14 hard. TSX starters and references, exported props contracts, strict compiler checking before tests/preview, 379 copied DOM journeys, independent progress and local IDE copies. Self-hosted TypeScript compiler Worker with cancellation/deadline and React declarations. [Workflow and boundaries](docs/REACT_TYPESCRIPT_PRACTICE.md). |
 | **E-commerce & SaaS** | Six editable challenges with 53 behavioral cases: inventory reservations, payment reconciliation, tenant authorization, subscription entitlements, resumable catalog imports, and safe audit history. [Learning sequence and model boundaries](docs/BUSINESS_CHALLENGES.md). |
@@ -87,7 +88,7 @@ The loan lab is an editable exercise workspace. Each submission executes against
 | **Accounts & progress** | Email/password authentication, revocable database sessions, account-scoped history and drafts, bookmarks, notes, JSON import/export, and explicit anonymous-history import. |
 | **Responsive session loading** | Navigation and public login/signup forms remain available during session checks. Background rechecks preserve an open visitor workspace; account changes still isolate and remount personal content. Session reads and cloud-history initialization have bounded waits, with device-history fallback for failed cloud reads. |
 | **Analytics & usability** | Readiness estimates, topic breakdowns, activity/streak history, recommendations, dark/light themes, and responsive navigation. Scores are practice indicators. |
-| **Local IDE practice** | A separate 586-exercise workspace covering every authored collection, with editable starters/answers, references, terminal tests, save-to-rerun mode, and a generated index. 377 exercises have automated runners, including 226 React/TSX components in local Chromium; 209 use guided review. Website features and cloud progress remain separate. [Local practice guide](practice/README.md). |
+| **Local IDE practice** | A separate 696-exercise workspace covering every authored collection, with editable starters/answers, references, terminal tests, save-to-rerun mode, and a generated index. 397 exercises have automated runners, including 226 React/TSX components in local Chromium; 299 use guided review. Website features and cloud progress remain separate. [Local practice guide](practice/README.md). |
 
 The eight evolving incidents cover connection storms, cache stampedes, migration locks, regional failover, ambiguous payments, poison-message backlogs, restart cascades, and tenant-data exposure.
 
@@ -492,7 +493,9 @@ Catalog pages receive searchable summaries from server components. Full challeng
 
 ## Practice in VS Code or another local IDE
 
-Open [the practice index](practice/INDEX.md) to choose from all **586 authored exercises**: 389 catalog scenarios, eight loan labs, 120 SQL questions, 63 beginner questions, and six standalone coding problems. Enterprise project sequences link to the same exercises. All 203 frontend topics, eight evolving incidents, and six commerce/SaaS scenarios remain included in the catalog count.
+Open [the practice index](practice/INDEX.md) to choose from all **696 authored exercises**: 499 catalog scenarios, eight loan labs, 120 SQL questions, 63 beginner questions, and six standalone coding problems. Enterprise project sequences link to the same exercises. All 203 frontend topics, eight evolving incidents, and six commerce/SaaS scenarios remain included in the catalog count.
+
+Beginner and SQL folders include readable question titles alongside stable IDs. Each collection has a topic index, with Mermaid workflow diagrams and selected visual explanations. Search by title, topic, language, difficulty, or original ID; old collection/ID commands remain supported after renaming.
 
 ```sh
 npm ci
@@ -501,7 +504,7 @@ npm run practice:test -- catalog/commerce-inventory-reservations
 npm run practice:watch -- catalog/commerce-inventory-reservations
 ```
 
-Edit the exercise's `solution.*` file and record your reasoning in `answer.md`. Each folder includes instructions, full authored task data, cases, and separate reference material. Broken starters are expected to fail. The 377 executable exercises use JavaScript/TypeScript, loan harnesses, SQL engines, local Chromium for React UI, or the optional local Python interpreter. React tests require `npx playwright install chromium` and `npm run react:runtime`. The other 209 exercises include review, UI snippets, architecture, incidents, interviews, and foundational questions; use their answer files and reference rubrics rather than treating them as automated passes.
+Edit the exercise's `solution.*` file and record your reasoning in `answer.md`. Each folder includes instructions, full authored task data, cases, and separate reference material. Broken starters are expected to fail. The 397 executable exercises use JavaScript/TypeScript, loan harnesses, SQL engines, local Chromium for React UI, or the optional local Python interpreter. React tests require `npx playwright install chromium` and `npm run react:runtime`. The other 299 exercises include review, UI snippets, architecture, incidents, interviews, and foundational questions; use their answer files and reference rubrics rather than treating them as automated passes.
 
 The local workflow needs no Next.js server, account database, authentication, or AI credentials. It does not update website progress or patch app exercises. Practice code is excluded from the application's TypeScript build, so unfinished solutions remain independent. [The practice guide](practice/README.md) explains dialect differences, manual review, process limits, and regeneration that preserves candidate work.
 
@@ -658,3 +661,6 @@ Possible next stages include interactive commerce/SaaS dashboards, durable loan 
 - [Enterprise Labs: project registry, shared progress, and extension points](docs/ENTERPRISE_LABS.md)
 - [E-commerce and SaaS: exercise sequence and model boundaries](docs/BUSINESS_CHALLENGES.md)
 - [Next.js 16 and Turbopack migration](docs/NEXTJS_UPGRADE.md)
+
+
+Next.js lab verification: the simulator production build, TypeScript checks and lint passed, alongside 25 curriculum checks, 89 policy reference cases and six local workspace checks. Browser checks covered the hub and each practice mode. The isolated Next.js 16 fixture passed a complete production build and runtime checks; Next.js 15 runtime checks passed, but final build tracing timed out. See [the Next.js practice guide](docs/NEXTJS_PRACTICE.md) for scope and limitations.

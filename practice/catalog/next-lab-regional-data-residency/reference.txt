@@ -1,0 +1,28 @@
+# Decision record: Plan regional rendering around data residency and latency
+
+## Context and scale
+The application pushes every request to the nearest compute region while its database and cache remain in one distant region.
+EU and India tenants; p95 private-page latency under 900 ms; residency constraints
+
+## Accepted constraints
+- Keep protected data in admitted regions.
+- Avoid region-to-database waterfalls.
+- Define regional failover and legal constraints explicitly.
+
+## Design and ownership
+Map trusted tenant identity to an allowed home region and locate authorized reads/mutations near its source of truth. Cache only representations allowed in each region and separate public asset delivery from private data. Bound cross-region dependencies and include region/tenant in telemetry. Choose single-writer or explicit conflict resolution instead of assuming globally distributed rendering provides globally consistent writes. Treat deployment-provider region controls as implementation-specific inputs to the design.
+
+## Failure and recovery
+The home region may fail while the nearest region remains healthy. Decide which operations can serve stale public data, which can fail over to an admitted replica and which must be unavailable to preserve correctness or residency.
+
+## Verification gates
+- Inject region latency and loss, measuring end-to-end rather than compute-only time.
+- Inspect cache/object locations and routing decisions for representative tenants.
+- Rehearse a failover and reconciliation of in-flight mutations.
+
+## Interview change
+Is an Edge runtime always faster?
+No. Runtime compatibility, cold starts, data distance and connection constraints matter. A small function near a user can be slower if it repeatedly crosses an ocean to the database.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

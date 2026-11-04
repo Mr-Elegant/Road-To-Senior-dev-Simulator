@@ -1,0 +1,91 @@
+{
+  "id": "next-lab-action-field-validation",
+  "title": "Validate a Server Action payload before mutation",
+  "difficulty": "Mid-Level",
+  "topic": "Next.js",
+  "subtopic": "Mutations and forms",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input {title,quantity}; title and quantity are raw unknown values. Title must be a trimmed nonempty string <=80 characters. Quantity must be a digit string representing 1..999. Return {ok:true,title,quantity:number} or {ok:false,fields:[...]} with title then quantity errors.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-action-field-validation-1",
+      "name": "valid",
+      "inputDescription": "{\"title\":\" Item \",\"quantity\":\"2\"}",
+      "expectedOutput": "{\"ok\":true,\"title\":\"Item\",\"quantity\":2}"
+    },
+    {
+      "id": "next-lab-action-field-validation-2",
+      "name": "empty",
+      "inputDescription": "{\"title\":\" \",\"quantity\":\"\"}",
+      "expectedOutput": "{\"ok\":false,\"fields\":[\"title\",\"quantity\"]}"
+    },
+    {
+      "id": "next-lab-action-field-validation-3",
+      "name": "number not raw string",
+      "inputDescription": "{\"title\":\"Item\",\"quantity\":2}",
+      "expectedOutput": "{\"ok\":false,\"fields\":[\"quantity\"]}"
+    },
+    {
+      "id": "next-lab-action-field-validation-4",
+      "name": "too large",
+      "inputDescription": "{\"title\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"quantity\":\"1000\"}",
+      "expectedOutput": "{\"ok\":false,\"fields\":[\"title\",\"quantity\"]}"
+    }
+  ],
+  "hints": [
+    "Server Actions accept untrusted payloads regardless of the client form’s attributes.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "FormData entries may be Files and keys may repeat. Extract admitted scalar fields deliberately, reject duplicates when relevant, and map validation results into a serializable action state."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 28,
+    "chapter": "Mutations and forms",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/forms"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

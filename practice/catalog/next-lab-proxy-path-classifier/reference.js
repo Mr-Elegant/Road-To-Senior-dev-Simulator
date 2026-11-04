@@ -1,0 +1,1 @@
+function solution(path){const under=prefix=>path===prefix||path.startsWith(prefix+'/');if(under('/_next')||path==='/favicon.ico')return 'bypass';if(path==='/login'||path==='/signup')return 'public';return under('/account')||under('/admin')?'protected':'public';}

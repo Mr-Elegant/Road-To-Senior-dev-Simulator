@@ -1,0 +1,1 @@
+function solution({routes,budget}){const seen=new Set(),out=[];for(const route of routes){if(out.length>=budget)break;if(route.visible&&!seen.has(route.href)){seen.add(route.href);out.push(route.href);}}return out;}

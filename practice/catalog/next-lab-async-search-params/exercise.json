@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-async-search-params",
+  "title": "Read and validate server searchParams",
+  "topic": "Next.js",
+  "subtopic": "Routing and URL state",
+  "difficulty": "Beginner",
+  "type": "code_review",
+  "estimatedMinutes": 20,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/search/page.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "export default function Page({searchParams}: {searchParams:{q:string}}){ return <h1>{searchParams.q.toUpperCase()}</h1>; }",
+  "codeReviewFiles": [
+    {
+      "filename": "app/search/page.tsx",
+      "newCode": "export default function Page({searchParams}: {searchParams:{q:string}}){ return <h1>{searchParams.q.toUpperCase()}</h1>; }",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Request no q, q=books and repeated q values.",
+    "Build with the promised route-prop type.",
+    "Verify hostile text renders as text rather than executable HTML."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "A query parameter can be missing or repeated, and reading it can require request-time rendering.",
+    "Request no q, q=books and repeated q values."
+  ],
+  "alternativeApproaches": [
+    "Separate request-dependent results from the static shell and use a deliberate Suspense boundary when using Cache Components. Cache public results only with keys that include all admitted search/filter dimensions."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 10,
+    "chapter": "Routing and URL state",
+    "mode": "framework-review",
+    "versions": "15-to-16",
+    "verification": [
+      "Request no q, q=books and repeated q values.",
+      "Build with the promised route-prop type.",
+      "Verify hostile text renders as text rather than executable HTML."
+    ],
+    "next15": "Await promised page searchParams even while temporary synchronous access exists.",
+    "next16": "Await is required. Plain-object server searchParams is distinct from the client useSearchParams interface.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/file-conventions/page"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

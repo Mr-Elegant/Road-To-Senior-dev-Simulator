@@ -1,0 +1,1 @@
+export default {webpack(config:any){config.resolve.alias['legacy-parser']='./parser';return config;}};

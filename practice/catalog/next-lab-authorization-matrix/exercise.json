@@ -1,0 +1,109 @@
+{
+  "id": "next-lab-authorization-matrix",
+  "title": "Authorize tenant-scoped resource operations",
+  "difficulty": "Senior",
+  "topic": "Next.js",
+  "subtopic": "Security and identity",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input {session,tenant,operation}. session is null or {tenant,role}; role is viewer, editor or admin. Return unauthenticated when null, forbidden when tenant differs, or when operation is not read/write/delete. read admits all three roles, write editor/admin, delete admin; return allowed or forbidden.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-authorization-matrix-1",
+      "name": "anonymous",
+      "inputDescription": "{\"session\":null,\"tenant\":\"a\",\"operation\":\"read\"}",
+      "expectedOutput": "\"unauthenticated\""
+    },
+    {
+      "id": "next-lab-authorization-matrix-2",
+      "name": "cross tenant",
+      "inputDescription": "{\"session\":{\"tenant\":\"b\",\"role\":\"admin\"},\"tenant\":\"a\",\"operation\":\"read\"}",
+      "expectedOutput": "\"forbidden\""
+    },
+    {
+      "id": "next-lab-authorization-matrix-3",
+      "name": "viewer write",
+      "inputDescription": "{\"session\":{\"tenant\":\"a\",\"role\":\"viewer\"},\"tenant\":\"a\",\"operation\":\"write\"}",
+      "expectedOutput": "\"forbidden\""
+    },
+    {
+      "id": "next-lab-authorization-matrix-4",
+      "name": "admin delete",
+      "inputDescription": "{\"session\":{\"tenant\":\"a\",\"role\":\"admin\"},\"tenant\":\"a\",\"operation\":\"delete\"}",
+      "expectedOutput": "\"allowed\""
+    },
+    {
+      "id": "next-lab-authorization-matrix-5",
+      "name": "unknown operation",
+      "inputDescription": "{\"session\":{\"tenant\":\"a\",\"role\":\"admin\"},\"tenant\":\"a\",\"operation\":\"export\"}",
+      "expectedOutput": "\"forbidden\""
+    },
+    {
+      "id": "next-lab-authorization-matrix-6",
+      "name": "prototype method denied",
+      "inputDescription": "{\"session\":{\"tenant\":\"a\",\"role\":\"admin\"},\"tenant\":\"a\",\"operation\":\"toString\"}",
+      "expectedOutput": "\"forbidden\""
+    },
+    {
+      "id": "next-lab-authorization-matrix-7",
+      "name": "prototype object denied",
+      "inputDescription": "{\"session\":{\"tenant\":\"a\",\"role\":\"admin\"},\"tenant\":\"a\",\"operation\":\"__proto__\"}",
+      "expectedOutput": "\"forbidden\""
+    }
+  ],
+  "hints": [
+    "Authentication, tenant membership and operation capability are separate gates.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "At every read/mutation entry point near the data-access layer, including Server Actions and Route Handlers. Proxy can improve navigation but cannot replace object-level authorization or protect an excluded action path."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 58,
+    "chapter": "Security and identity",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/authentication"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

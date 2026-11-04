@@ -1,0 +1,80 @@
+{
+  "id": "next-lab-deployment-skew",
+  "title": "Handle rolling-deployment client/server version skew",
+  "topic": "Next.js",
+  "subtopic": "Delivery architecture",
+  "difficulty": "Staff/Principal",
+  "type": "system_design",
+  "estimatedMinutes": 60,
+  "businessContext": "An old tab submits an action after the serving deployment has changed and the team assumes every payload is interchangeable.",
+  "problemStatement": "Design the system for Long-lived browser tabs while deployments roll across 20 instances. Produce the component/data-flow diagram, request and mutation contracts, cache/trust boundaries, capacity assumptions, failure recovery and rollout gates. State which decisions change between Next.js 15 and 16 instead of using a framework API as a substitute for an architectural guarantee.",
+  "constraints": [
+    "Preserve a usable old-tab experience.",
+    "Avoid serving mismatched static assets.",
+    "Plan backward-compatible application payloads."
+  ],
+  "candidateTasks": [
+    "Draw components and annotate ownership of data, identity, caches and durable work.",
+    "Specify contracts/schema and quantify the capacity/freshness assumptions.",
+    "Walk through the failure scenario and design measurable acceptance tests.",
+    "Compare the reference decisions and answer the changed-requirement interview prompt."
+  ],
+  "systemDesignReqs": {
+    "scale": "Long-lived browser tabs while deployments roll across 20 instances",
+    "functional": [
+      "Preserve a usable old-tab experience.",
+      "Avoid serving mismatched static assets.",
+      "Plan backward-compatible application payloads."
+    ],
+    "nonFunctional": [
+      "State an explicit latency, freshness and recovery budget rather than inventing guarantees.",
+      "Keep actor/tenant isolation and failure ownership observable."
+    ],
+    "assumptions": [
+      "A patched App Router deployment; platform-specific infrastructure support must be verified.",
+      "Next.js version and Cache Components configuration are explicit design inputs."
+    ]
+  },
+  "hints": [
+    "Keep immutable build assets available for their supported client lifetime and use the deployment platform’s supported version-skew/affinity strategy where available.",
+    "The CDN may retain an old HTML document while its referenced chunks are deleted. Retain assets through the support window, coordinate cache headers and verify that rollback assets remain fetchable."
+  ],
+  "alternativeApproaches": [
+    "Reload is a recovery option, not a consistency protocol. Preserve drafts where appropriate, detect incompatibility before repeating writes and retain old assets while managing application/API compatibility."
+  ],
+  "commonMistakes": [
+    "Claiming a cache API provides transactions, durable delivery or cross-region consistency.",
+    "Omitting authorization, recovery budgets or evidence from an otherwise attractive component diagram."
+  ],
+  "nextjsPractice": {
+    "order": 101,
+    "chapter": "Delivery architecture",
+    "mode": "architecture",
+    "versions": "15-and-16",
+    "verification": [
+      "Open a tab on release A, roll to B, then navigate and mutate.",
+      "Test mixed instances and a partial deployment rollback.",
+      "Verify chunk availability, action error handling and mutation idempotency under skew."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/self-hosting"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

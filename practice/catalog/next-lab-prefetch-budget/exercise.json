@@ -1,0 +1,91 @@
+{
+  "id": "next-lab-prefetch-budget",
+  "title": "Choose distinct visible routes within a prefetch budget",
+  "difficulty": "Mid-Level",
+  "topic": "Next.js",
+  "subtopic": "Navigation and performance",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input {routes,budget}. routes is an ordered array of {href,visible}; budget is a nonnegative integer. Return the first budget distinct href strings whose visible is true, preserving order. Invisible occurrences do not reserve a route.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-prefetch-budget-1",
+      "name": "budget",
+      "inputDescription": "{\"routes\":[{\"href\":\"/a\",\"visible\":true},{\"href\":\"/b\",\"visible\":true}],\"budget\":1}",
+      "expectedOutput": "[\"/a\"]"
+    },
+    {
+      "id": "next-lab-prefetch-budget-2",
+      "name": "dedupe",
+      "inputDescription": "{\"routes\":[{\"href\":\"/a\",\"visible\":true},{\"href\":\"/a\",\"visible\":true},{\"href\":\"/b\",\"visible\":true}],\"budget\":2}",
+      "expectedOutput": "[\"/a\",\"/b\"]"
+    },
+    {
+      "id": "next-lab-prefetch-budget-3",
+      "name": "invisible first",
+      "inputDescription": "{\"routes\":[{\"href\":\"/a\",\"visible\":false},{\"href\":\"/a\",\"visible\":true}],\"budget\":1}",
+      "expectedOutput": "[\"/a\"]"
+    },
+    {
+      "id": "next-lab-prefetch-budget-4",
+      "name": "zero",
+      "inputDescription": "{\"routes\":[{\"href\":\"/a\",\"visible\":true}],\"budget\":0}",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "A catalog with hundreds of links needs an explicit bandwidth policy.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "Measure prefetch traffic in a production build, disable blanket prefetch where appropriate, and consider intent-based admission. Preserve accessible ordinary navigation even when prefetch is disabled."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 26,
+    "chapter": "Navigation and performance",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/components/link"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

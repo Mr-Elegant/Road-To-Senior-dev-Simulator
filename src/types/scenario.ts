@@ -1,4 +1,5 @@
 import type { IncidentPlaybook, IncidentSimulation } from './incident';
+import type { NextjsPracticeInfo } from '@/data/nextjsPractice/types';
 
 export type ChallengeType = 
   | 'debugging' 
@@ -106,6 +107,8 @@ export interface Scenario {
   subtopic: string;
   difficulty: Difficulty;
   estimatedMinutes: number;
+  /** Version-aware Next.js exercises distinguish runnable policy models from real framework verification. */
+  nextjsPractice?: NextjsPracticeInfo;
   businessContext: string;
   problemStatement: string;
   constraints: string[];

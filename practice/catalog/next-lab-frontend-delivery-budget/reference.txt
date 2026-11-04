@@ -1,0 +1,28 @@
+# Decision record: Reduce JavaScript and prefetch cost without weakening features
+
+## Context and scale
+The dashboard imports full answers, fixtures, editors and compilers for every challenge into its client bundle.
+500 challenge routes; 200 KB compressed initial-route budget; low-end mobile devices
+
+## Accepted constraints
+- Ship summaries for listing/search.
+- Load only selected challenge details.
+- Preserve practice, search and account isolation.
+
+## Design and ownership
+Keep the full content registry behind server boundaries and pass intentional summary DTOs to client listing controls. Resolve the selected challenge on the server, dynamically load heavy interactive tools when needed, and cache trusted generated runtime assets without rebuilding unchanged inputs. Disable unbounded catalog prefetch where measurements justify it. Separate app build types from unfinished candidate files while retaining full tooling checks. Measure transferred/decoded bytes, interaction latency and cold/warm preparation separately.
+
+## Failure and recovery
+A summary refactor can accidentally remove search fields, progress IDs or badges. Preserve stable IDs and verify search/readiness parity; keep solutions and fixtures out of listing payloads without dropping user-facing functionality.
+
+## Verification gates
+- Compare route bundles before/after in production.
+- Verify search, bookmarks, scores and all challenge entry points.
+- Test cache invalidation for changed inputs and missing generated outputs, and profile low-end CPU hydration.
+
+## Interview change
+Can a development timing prove a production performance win?
+It is useful diagnostic evidence but has different compilation, HMR and transfer characteristics. Report the environment and compare production builds before asserting user-facing production results.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

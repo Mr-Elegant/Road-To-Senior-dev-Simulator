@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-invalidation-tags-1",
+    "name": "trim duplicates",
+    "inputDescription": "[\" posts \",\"posts\",\"Post\"]",
+    "expectedOutput": "[\"posts\",\"Post\"]"
+  },
+  {
+    "id": "next-lab-invalidation-tags-2",
+    "name": "empty",
+    "inputDescription": "[\"\",\"  \"]",
+    "expectedOutput": "[]"
+  },
+  {
+    "id": "next-lab-invalidation-tags-3",
+    "name": "limit",
+    "inputDescription": "[\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"]",
+    "expectedOutput": "[\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+  },
+  {
+    "id": "next-lab-invalidation-tags-4",
+    "name": "order",
+    "inputDescription": "[\"b\",\"a\",\"b\",\"c\"]",
+    "expectedOutput": "[\"b\",\"a\",\"c\"]"
+  }
+]

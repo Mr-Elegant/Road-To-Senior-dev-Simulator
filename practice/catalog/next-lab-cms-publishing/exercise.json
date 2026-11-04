@@ -1,0 +1,80 @@
+{
+  "id": "next-lab-cms-publishing",
+  "title": "Design CMS publishing with draft isolation and bounded freshness",
+  "topic": "Next.js",
+  "subtopic": "Domain architecture",
+  "difficulty": "Staff/Principal",
+  "type": "system_design",
+  "estimatedMinutes": 60,
+  "businessContext": "The CMS webhook invalidates every page and draft content sometimes appears in the public cache.",
+  "problemStatement": "Design the system for 10,000 content routes; editors need immediate previews; public freshness under 60 seconds. Produce the component/data-flow diagram, request and mutation contracts, cache/trust boundaries, capacity assumptions, failure recovery and rollout gates. State which decisions change between Next.js 15 and 16 instead of using a framework API as a substitute for an architectural guarantee.",
+  "constraints": [
+    "Separate draft and published representations.",
+    "Authenticate and deduplicate publishing events.",
+    "Bound invalidation fan-out and observe convergence."
+  ],
+  "candidateTasks": [
+    "Draw components and annotate ownership of data, identity, caches and durable work.",
+    "Specify contracts/schema and quantify the capacity/freshness assumptions.",
+    "Walk through the failure scenario and design measurable acceptance tests.",
+    "Compare the reference decisions and answer the changed-requirement interview prompt."
+  ],
+  "systemDesignReqs": {
+    "scale": "10,000 content routes; editors need immediate previews; public freshness under 60 seconds",
+    "functional": [
+      "Separate draft and published representations.",
+      "Authenticate and deduplicate publishing events.",
+      "Bound invalidation fan-out and observe convergence."
+    ],
+    "nonFunctional": [
+      "State an explicit latency, freshness and recovery budget rather than inventing guarantees.",
+      "Keep actor/tenant isolation and failure ownership observable."
+    ],
+    "assumptions": [
+      "A patched App Router deployment; platform-specific infrastructure support must be verified.",
+      "Next.js version and Cache Components configuration are explicit design inputs."
+    ]
+  },
+  "hints": [
+    "Resolve CMS events through signature verification, durable event admission and a server-owned content/tag map.",
+    "Out-of-order publish/unpublish events can revive withdrawn content. Compare version/sequence semantics at the authoritative boundary and make unpublish/revocation propagation a distinct correctness requirement."
+  ],
+  "alternativeApproaches": [
+    "In Next.js 16 updateTag is Server-Action-only. A Route Handler uses the documented revalidateTag profile; API context and chosen consistency semantics are both part of the design."
+  ],
+  "commonMistakes": [
+    "Claiming a cache API provides transactions, durable delivery or cross-region consistency.",
+    "Omitting authorization, recovery budgets or evidence from an otherwise attractive component diagram."
+  ],
+  "nextjsPractice": {
+    "order": 103,
+    "chapter": "Domain architecture",
+    "mode": "architecture",
+    "versions": "15-and-16",
+    "verification": [
+      "Replay, duplicate and reorder CMS events.",
+      "Warm public caches before opening an authenticated draft preview.",
+      "Unpublish content and measure removal from all supported regions and navigation paths."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/draft-mode"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

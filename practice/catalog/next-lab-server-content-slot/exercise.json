@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-server-content-slot",
+  "title": "Compose server-fetched content through a client slot",
+  "topic": "Next.js",
+  "subtopic": "Server and client boundaries",
+  "difficulty": "Mid-Level",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/page.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "'use client';\nimport SecretReport from './secret-report';\nexport default function Page(){return <SecretReport/>;}",
+  "codeReviewFiles": [
+    {
+      "filename": "app/page.tsx",
+      "newCode": "'use client';\nimport SecretReport from './secret-report';\nexport default function Page(){return <SecretReport/>;}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Mark the report data module server-only and build.",
+    "Verify the toggle remains interactive.",
+    "Inspect the initial payload and prove no unauthorized or secret report is sent."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "A server parent owns the server data component and passes rendered content into the interactive client container.",
+    "Mark the report data module server-only and build."
+  ],
+  "alternativeApproaches": [
+    "Authorize before the read, close to the data source. If the product requires explicit lazy retrieval, design an authenticated read boundary and state flow rather than assuming hidden children are never evaluated."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 36,
+    "chapter": "Server and client boundaries",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Mark the report data module server-only and build.",
+      "Verify the toggle remains interactive.",
+      "Inspect the initial payload and prove no unauthorized or secret report is sent."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/getting-started/server-and-client-components"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

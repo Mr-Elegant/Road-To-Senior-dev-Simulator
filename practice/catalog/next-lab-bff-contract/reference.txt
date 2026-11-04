@@ -1,0 +1,28 @@
+# Decision record: Design a Next.js backend-for-frontend with bounded ownership
+
+## Context and scale
+One Route Handler proxies arbitrary user URLs with server credentials and buffers unlimited responses.
+Web UI plus mobile/external consumers; three upstream services
+
+## Accepted constraints
+- Expose an explicit admitted API surface.
+- Keep credentials server-side.
+- Bound work and separate public consumer contracts from UI composition.
+
+## Design and ownership
+Use server-owned upstream destinations, validated DTOs, per-operation authorization and explicit timeouts/body limits. Keep reusable business/data logic outside the HTTP adapter so Server Components call it directly when appropriate. Expose stable Route Handler contracts to actual HTTP consumers and map upstream errors into documented response shapes. Propagate cancellation and trace context, apply bounded retries only for safe/idempotent operations, and choose streaming versus buffering intentionally.
+
+## Failure and recovery
+A client-supplied destination can become SSRF or credential exfiltration. Reject arbitrary hosts/redirect chains, constrain egress at the infrastructure layer, and avoid forwarding authentication headers to untrusted origins.
+
+## Verification gates
+- Test malformed, oversized and unauthorized requests.
+- Inject stalls, partial bodies and non-JSON upstream failures.
+- Prove no credential crosses an unauthorized host or appears in client errors.
+
+## Interview change
+Should mobile clients depend on React Flight payloads?
+Prefer a documented stable application API for external clients. Framework transport is not a general version-independent public business contract; separate that boundary from internal UI rendering.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

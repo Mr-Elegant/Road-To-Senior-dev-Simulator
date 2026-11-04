@@ -1,0 +1,1 @@
+function solution({title,quantity}){const fields=[];const text=typeof title==='string'?title.trim():'';if(!text||text.length>80)fields.push('title');const n=typeof quantity==='string'&&/^\d+$/.test(quantity)?Number(quantity):0;if(n<1||n>999)fields.push('quantity');return fields.length?{ok:false,fields}:{ok:true,title:text,quantity:n};}

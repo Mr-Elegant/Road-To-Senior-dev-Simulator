@@ -1,0 +1,28 @@
+# Decision record: Design CMS publishing with draft isolation and bounded freshness
+
+## Context and scale
+The CMS webhook invalidates every page and draft content sometimes appears in the public cache.
+10,000 content routes; editors need immediate previews; public freshness under 60 seconds
+
+## Accepted constraints
+- Separate draft and published representations.
+- Authenticate and deduplicate publishing events.
+- Bound invalidation fan-out and observe convergence.
+
+## Design and ownership
+Resolve CMS events through signature verification, durable event admission and a server-owned content/tag map. Keep draft-mode access authenticated and separate from public cache entries. Publish an authoritative content version, then invalidate the affected entity/list/path representations according to the freshness contract. Use current revalidation APIs in allowed contexts, and expose publication version/age in operational telemetry. Preview correctness must not require sharing an editor’s cookie with the public CDN.
+
+## Failure and recovery
+Out-of-order publish/unpublish events can revive withdrawn content. Compare version/sequence semantics at the authoritative boundary and make unpublish/revocation propagation a distinct correctness requirement.
+
+## Verification gates
+- Replay, duplicate and reorder CMS events.
+- Warm public caches before opening an authenticated draft preview.
+- Unpublish content and measure removal from all supported regions and navigation paths.
+
+## Interview change
+Why not call updateTag directly in the webhook?
+In Next.js 16 updateTag is Server-Action-only. A Route Handler uses the documented revalidateTag profile; API context and chosen consistency semantics are both part of the design.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

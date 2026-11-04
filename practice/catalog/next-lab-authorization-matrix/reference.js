@@ -1,0 +1,1 @@
+function solution({session,tenant,operation}){if(!session)return 'unauthenticated';if(session.tenant!==tenant)return 'forbidden';const roles={read:['viewer','editor','admin'],write:['editor','admin'],delete:['admin']};const allowed=Object.hasOwn(roles,operation)?roles[operation]:[];return allowed.includes(session.role)?'allowed':'forbidden';}

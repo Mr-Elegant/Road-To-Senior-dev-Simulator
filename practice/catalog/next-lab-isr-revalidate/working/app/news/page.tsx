@@ -1,0 +1,1 @@
+export default async function Page(){const response=await fetch('https://news.example.com/public',{cache:'no-store',next:{revalidate:60}});return <pre>{await response.text()}</pre>;}

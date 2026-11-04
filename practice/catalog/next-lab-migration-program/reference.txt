@@ -1,0 +1,28 @@
+# Decision record: Plan a reversible Next.js 15-to-16 production migration
+
+## Context and scale
+The team proposes upgrading Next, React, bundler, authentication and caching in one unreviewed commit.
+400 routes; ten teams; zero planned downtime; existing 15.x production deployment
+
+## Accepted constraints
+- Inventory version-sensitive surfaces.
+- Retain a tested rollback artifact.
+- Separate behavioral compatibility from performance adoption.
+
+## Design and ownership
+Capture the exact patched baseline, route inventory, build timings, error rate and critical browser journeys. First migrate async request APIs and remove hidden lint/build assumptions while still on 15. In a separate change switch the major and explicitly review Proxy naming, generated metadata props and custom bundler behavior. Keep Cache Components/partial prefetching adoption as deliberate later rendering changes unless required. Run direct and soft navigation, authorization, cache-isolation and packaged-deployment tests, then stage traffic with automatic rollback gates.
+
+## Failure and recovery
+A rollback of code may encounter data written by the new release. Use backward-compatible schema transitions and versioned payloads; record which changes can actually be reversed rather than equating redeployment with full system rollback.
+
+## Verification gates
+- Compare route status/head/header behavior against the baseline.
+- Run both version production fixtures.
+- Exercise rollback under the same data and cache compatibility assumptions used during rollout.
+
+## Interview change
+Would you use canary as the meaning of latest?
+No for this curriculum’s stable baseline. Record stable version and patch support explicitly; evaluate canary features in isolated experiments with separate expectations and rollback, not as an implicit production upgrade.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

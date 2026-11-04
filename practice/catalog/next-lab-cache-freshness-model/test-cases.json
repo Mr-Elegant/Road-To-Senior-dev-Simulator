@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-cache-freshness-model-1",
+    "name": "fresh",
+    "inputDescription": "{\"age\":9,\"revalidate\":10,\"expire\":20}",
+    "expectedOutput": "\"fresh\""
+  },
+  {
+    "id": "next-lab-cache-freshness-model-2",
+    "name": "revalidate boundary",
+    "inputDescription": "{\"age\":10,\"revalidate\":10,\"expire\":20}",
+    "expectedOutput": "\"stale\""
+  },
+  {
+    "id": "next-lab-cache-freshness-model-3",
+    "name": "expire boundary",
+    "inputDescription": "{\"age\":20,\"revalidate\":10,\"expire\":20}",
+    "expectedOutput": "\"expired\""
+  },
+  {
+    "id": "next-lab-cache-freshness-model-4",
+    "name": "zero windows",
+    "inputDescription": "{\"age\":0,\"revalidate\":0,\"expire\":0}",
+    "expectedOutput": "\"expired\""
+  }
+]

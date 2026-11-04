@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-duplicate-webhook-events-1",
+    "name": "first",
+    "inputDescription": "{\"seen\":[],\"events\":[\"a\",\"b\"]}",
+    "expectedOutput": "{\"accepted\":[\"a\",\"b\"],\"seen\":[\"a\",\"b\"]}"
+  },
+  {
+    "id": "next-lab-duplicate-webhook-events-2",
+    "name": "duplicates",
+    "inputDescription": "{\"seen\":[\"a\"],\"events\":[\"a\",\"b\",\"b\"]}",
+    "expectedOutput": "{\"accepted\":[\"b\"],\"seen\":[\"a\",\"b\"]}"
+  },
+  {
+    "id": "next-lab-duplicate-webhook-events-3",
+    "name": "empty",
+    "inputDescription": "{\"seen\":[\"a\",\"a\"],\"events\":[]}",
+    "expectedOutput": "{\"accepted\":[],\"seen\":[\"a\"]}"
+  },
+  {
+    "id": "next-lab-duplicate-webhook-events-4",
+    "name": "order",
+    "inputDescription": "{\"seen\":[\"z\"],\"events\":[\"b\",\"a\"]}",
+    "expectedOutput": "{\"accepted\":[\"b\",\"a\"],\"seen\":[\"z\",\"b\",\"a\"]}"
+  }
+]

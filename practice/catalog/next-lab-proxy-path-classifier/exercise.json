@@ -1,0 +1,97 @@
+{
+  "id": "next-lab-proxy-path-classifier",
+  "title": "Classify public and protected paths using segment boundaries",
+  "difficulty": "Senior",
+  "topic": "Next.js",
+  "subtopic": "Security and identity",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input is a pathname string. Return bypass for /_next or its descendants and /favicon.ico; public for /login or /signup exactly; protected for /account or /admin and descendants; otherwise public. Query strings are not present. /administrator is public.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-proxy-path-classifier-1",
+      "name": "assets",
+      "inputDescription": "\"/_next/static/a.js\"",
+      "expectedOutput": "\"bypass\""
+    },
+    {
+      "id": "next-lab-proxy-path-classifier-2",
+      "name": "exact root",
+      "inputDescription": "\"/admin\"",
+      "expectedOutput": "\"protected\""
+    },
+    {
+      "id": "next-lab-proxy-path-classifier-3",
+      "name": "descendant",
+      "inputDescription": "\"/account/profile\"",
+      "expectedOutput": "\"protected\""
+    },
+    {
+      "id": "next-lab-proxy-path-classifier-4",
+      "name": "lookalike",
+      "inputDescription": "\"/administrator\"",
+      "expectedOutput": "\"public\""
+    },
+    {
+      "id": "next-lab-proxy-path-classifier-5",
+      "name": "login",
+      "inputDescription": "\"/login\"",
+      "expectedOutput": "\"public\""
+    }
+  ],
+  "hints": [
+    "Prefix matching needs segment boundaries to avoid overmatching lookalike paths.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "Use middleware.ts and the middleware export in 15, and proxy.ts with the proxy export in 16. Keep matcher values statically analyzable and verify data-level authorization even when routing coverage changes."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 59,
+    "chapter": "Security and identity",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/file-conventions/proxy"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

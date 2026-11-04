@@ -3,13 +3,11 @@ const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 const { entries, generate } = require('./catalog.cjs');
 const { root } = require('./load-source.cjs');
+const { selectEntries } = require('./paths.cjs');
 const practice = path.join(root, 'practice');
 
 function select(query) {
-  if (!query || query === 'all') return entries;
-  const exact = entries.filter(e => e.key === query || e.id === query);
-  if (exact.length) return exact;
-  return entries.filter(e => `${e.key} ${e.title}`.toLowerCase().includes(query.toLowerCase()));
+  return selectEntries(entries, query);
 }
 
 function test(selected, reference = false) {

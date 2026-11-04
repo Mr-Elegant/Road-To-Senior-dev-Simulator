@@ -1,0 +1,1 @@
+function solution(x){return [['syncRequestApis','async-request-apis'],['middlewareFile','proxy-rename'],['webpackOnlyConfig','bundler-review'],['nextLintScript','eslint-cli']].filter(([key])=>x[key]===true).map(([,code])=>code);}

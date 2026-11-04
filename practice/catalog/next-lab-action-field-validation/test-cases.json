@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-action-field-validation-1",
+    "name": "valid",
+    "inputDescription": "{\"title\":\" Item \",\"quantity\":\"2\"}",
+    "expectedOutput": "{\"ok\":true,\"title\":\"Item\",\"quantity\":2}"
+  },
+  {
+    "id": "next-lab-action-field-validation-2",
+    "name": "empty",
+    "inputDescription": "{\"title\":\" \",\"quantity\":\"\"}",
+    "expectedOutput": "{\"ok\":false,\"fields\":[\"title\",\"quantity\"]}"
+  },
+  {
+    "id": "next-lab-action-field-validation-3",
+    "name": "number not raw string",
+    "inputDescription": "{\"title\":\"Item\",\"quantity\":2}",
+    "expectedOutput": "{\"ok\":false,\"fields\":[\"quantity\"]}"
+  },
+  {
+    "id": "next-lab-action-field-validation-4",
+    "name": "too large",
+    "inputDescription": "{\"title\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"quantity\":\"1000\"}",
+    "expectedOutput": "{\"ok\":false,\"fields\":[\"title\",\"quantity\"]}"
+  }
+]

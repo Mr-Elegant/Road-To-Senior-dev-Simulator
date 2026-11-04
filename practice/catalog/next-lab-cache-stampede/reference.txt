@@ -1,0 +1,28 @@
+# Decision record: Protect the origin during cold-cache and invalidation storms
+
+## Context and scale
+Every instance recomputes an expensive dashboard simultaneously after a broad invalidation.
+10,000 requests/second; a shared homepage cache expires during a deploy
+
+## Accepted constraints
+- Bound concurrent origin work.
+- Keep freshness and fairness explicit.
+- Avoid cache locks becoming a permanent failure mode.
+
+## Design and ownership
+Choose cache scopes and invalidation granularity based on actual read graphs. Use supported request coalescing/lease behavior in the shared cache or data layer, bounded concurrency and timeouts. Where the product permits it, serve a bounded stale representation while a controlled refresh runs. Warm only a measured valuable set after deployment and jitter refresh scheduling where appropriate. Preserve actor/tenant partitions and do not claim a process-local promise deduplicates work across all instances.
+
+## Failure and recovery
+A lease owner can crash. Bound lease expiry, prevent obsolete refresh results from overwriting newer versions, and expose refresh queue depth, error rates and served age to operators.
+
+## Verification gates
+- Send a synchronized cold burst across multiple instances.
+- Kill the refresh owner and verify eventual progress.
+- Trigger narrow and broad invalidations while measuring database connections and p99 latency.
+
+## Interview change
+Can a very long TTL solve the incident?
+It can hide load by accepting more staleness, but may violate freshness or revocation. Define the product’s stale-service budget and durable source behavior before treating TTL as a capacity strategy.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

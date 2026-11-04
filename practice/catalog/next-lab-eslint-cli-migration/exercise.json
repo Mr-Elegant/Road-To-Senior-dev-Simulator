@@ -1,0 +1,71 @@
+{
+  "id": "next-lab-eslint-cli-migration",
+  "title": "Preserve lint as an explicit quality gate after next lint removal",
+  "topic": "Next.js",
+  "subtopic": "Versions and migrations",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed package.json change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "json",
+  "starterCode": "{\"scripts\":{\"lint\":\"next lint\",\"build\":\"next build\"}}",
+  "codeReviewFiles": [
+    {
+      "filename": "package.json",
+      "newCode": "{\"scripts\":{\"lint\":\"next lint\",\"build\":\"next build\"}}",
+      "language": "json",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Introduce a known lint violation and prove the check command fails.",
+    "Introduce a type error and prove the separate gate fails.",
+    "Restore both and run the production build."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "A successful framework build is not evidence that a removed lint step still ran.",
+    "Introduce a known lint violation and prove the check command fails."
+  ],
+  "alternativeApproaches": [
+    "Choose deliberate project scopes. Exclude candidate practice code from the app build, but retain a separate full tooling/test typecheck so reducing build scope does not silently abandon quality coverage."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 75,
+    "chapter": "Versions and migrations",
+    "mode": "framework-review",
+    "versions": "15-to-16",
+    "verification": [
+      "Introduce a known lint violation and prove the check command fails.",
+      "Introduce a type error and prove the separate gate fails.",
+      "Restore both and run the production build."
+    ],
+    "next15": "An existing project may use next lint and version-specific build integration. Record the actual quality gates before migration.",
+    "next16": "next lint is removed and next build does not run lint for you. Use an explicit ESLint CLI command and keep CI invoking it.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-route-handler-validation",
+  "title": "Validate JSON Route Handler requests without leaking exceptions",
+  "topic": "Next.js",
+  "subtopic": "Route handlers and APIs",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/api/notes/route.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "export async function POST(request:Request){const body=await request.json();return Response.json({title:body.title.trim()});}",
+  "codeReviewFiles": [
+    {
+      "filename": "app/api/notes/route.ts",
+      "newCode": "export async function POST(request:Request){const body=await request.json();return Response.json({title:body.title.trim()});}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Send missing/wrong content type, invalid JSON, null and a valid title.",
+    "Enforce body-size limits at the receiving server/deployment boundary.",
+    "Add an authenticated persistence integration and verify transaction failures separately."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "A TypeScript expectation does not validate an HTTP body.",
+    "Send missing/wrong content type, invalid JSON, null and a valid title."
+  ],
+  "alternativeApproaches": [
+    "Publish a schema with status/error shapes and use contract tests. Bound reads before parsing large bodies, and avoid claiming that a Content-Length header alone enforces a trustworthy size limit."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 66,
+    "chapter": "Route handlers and APIs",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Send missing/wrong content type, invalid JSON, null and a valid title.",
+      "Enforce body-size limits at the receiving server/deployment boundary.",
+      "Add an authenticated persistence integration and verify transaction failures separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/file-conventions/route"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

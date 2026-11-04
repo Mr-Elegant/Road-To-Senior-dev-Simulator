@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-migration-audit-1",
+    "name": "none",
+    "inputDescription": "{}",
+    "expectedOutput": "[]"
+  },
+  {
+    "id": "next-lab-migration-audit-2",
+    "name": "all",
+    "inputDescription": "{\"syncRequestApis\":true,\"middlewareFile\":true,\"webpackOnlyConfig\":true,\"nextLintScript\":true}",
+    "expectedOutput": "[\"async-request-apis\",\"proxy-rename\",\"bundler-review\",\"eslint-cli\"]"
+  },
+  {
+    "id": "next-lab-migration-audit-3",
+    "name": "one",
+    "inputDescription": "{\"nextLintScript\":true}",
+    "expectedOutput": "[\"eslint-cli\"]"
+  },
+  {
+    "id": "next-lab-migration-audit-4",
+    "name": "explicit boolean",
+    "inputDescription": "{\"middlewareFile\":\"true\"}",
+    "expectedOutput": "[]"
+  }
+]

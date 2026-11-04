@@ -1,0 +1,80 @@
+{
+  "id": "next-lab-search-architecture",
+  "title": "Design URL-driven search with safe caching and indexing lag",
+  "topic": "Next.js",
+  "subtopic": "Domain architecture",
+  "difficulty": "Staff/Principal",
+  "type": "system_design",
+  "estimatedMinutes": 60,
+  "businessContext": "Each keystroke requests a full server page, mixes tenant results in one cache key and loses filters on navigation.",
+  "problemStatement": "Design the system for 10 million documents; p95 search under 600 ms; index lag up to 30 seconds. Produce the component/data-flow diagram, request and mutation contracts, cache/trust boundaries, capacity assumptions, failure recovery and rollout gates. State which decisions change between Next.js 15 and 16 instead of using a framework API as a substitute for an architectural guarantee.",
+  "constraints": [
+    "Preserve shareable admitted query state.",
+    "Bound request/caching cardinality.",
+    "Communicate stale index semantics and authorization."
+  ],
+  "candidateTasks": [
+    "Draw components and annotate ownership of data, identity, caches and durable work.",
+    "Specify contracts/schema and quantify the capacity/freshness assumptions.",
+    "Walk through the failure scenario and design measurable acceptance tests.",
+    "Compare the reference decisions and answer the changed-requirement interview prompt."
+  ],
+  "systemDesignReqs": {
+    "scale": "10 million documents; p95 search under 600 ms; index lag up to 30 seconds",
+    "functional": [
+      "Preserve shareable admitted query state.",
+      "Bound request/caching cardinality.",
+      "Communicate stale index semantics and authorization."
+    ],
+    "nonFunctional": [
+      "State an explicit latency, freshness and recovery budget rather than inventing guarantees.",
+      "Keep actor/tenant isolation and failure ownership observable."
+    ],
+    "assumptions": [
+      "A patched App Router deployment; platform-specific infrastructure support must be verified.",
+      "Next.js version and Cache Components configuration are explicit design inputs."
+    ]
+  },
+  "hints": [
+    "Keep draft input separate from committed URL query state, debounce navigation deliberately and preserve unrelated filters.",
+    "A deleted or newly restricted document may remain in the index. Enforce result visibility at a trusted boundary and define removal/permission propagation bounds, rather than assuming eventual indexing lag is acceptable for private data."
+  ],
+  "alternativeApproaches": [
+    "It changes bundle and hydration cost, not search correctness. Use server-owned search data and small client interactions, then measure rendering cost and pagination/virtualization needs independently."
+  ],
+  "commonMistakes": [
+    "Claiming a cache API provides transactions, durable delivery or cross-region consistency.",
+    "Omitting authorization, recovery budgets or evidence from an otherwise attractive component diagram."
+  ],
+  "nextjsPractice": {
+    "order": 107,
+    "chapter": "Domain architecture",
+    "mode": "architecture",
+    "versions": "15-and-16",
+    "verification": [
+      "Race old/new queries and confirm late results cannot overwrite the current query.",
+      "Warm one tenant’s query then repeat it from another.",
+      "Delete or revoke indexed content and measure the visibility boundary."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/functions/use-search-params"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

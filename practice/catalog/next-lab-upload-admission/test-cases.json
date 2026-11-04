@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-upload-admission-1",
+    "name": "accepted",
+    "inputDescription": "{\"files\":[{\"name\":\"a\",\"size\":10,\"type\":\"image/png\"}],\"maxBytes\":10,\"allowed\":[\"image/png\"]}",
+    "expectedOutput": "{\"accepted\":[\"a\"],\"rejected\":[]}"
+  },
+  {
+    "id": "next-lab-upload-admission-2",
+    "name": "size first",
+    "inputDescription": "{\"files\":[{\"name\":\"a\",\"size\":11,\"type\":\"x\"}],\"maxBytes\":10,\"allowed\":[]}",
+    "expectedOutput": "{\"accepted\":[],\"rejected\":[{\"name\":\"a\",\"reason\":\"size\"}]}"
+  },
+  {
+    "id": "next-lab-upload-admission-3",
+    "name": "type",
+    "inputDescription": "{\"files\":[{\"name\":\"a\",\"size\":1,\"type\":\"x\"}],\"maxBytes\":10,\"allowed\":[\"image/png\"]}",
+    "expectedOutput": "{\"accepted\":[],\"rejected\":[{\"name\":\"a\",\"reason\":\"type\"}]}"
+  },
+  {
+    "id": "next-lab-upload-admission-4",
+    "name": "empty",
+    "inputDescription": "{\"files\":[],\"maxBytes\":0,\"allowed\":[]}",
+    "expectedOutput": "{\"accepted\":[],\"rejected\":[]}"
+  }
+]

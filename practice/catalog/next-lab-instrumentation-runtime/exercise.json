@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-instrumentation-runtime",
+  "title": "Load server instrumentation in its supported runtime",
+  "topic": "Next.js",
+  "subtopic": "Testing and operations",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed instrumentation.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "import './lib/node-tracing';\nexport function register(){console.log(process.env.DATABASE_URL);}",
+  "codeReviewFiles": [
+    {
+      "filename": "instrumentation.ts",
+      "newCode": "import './lib/node-tracing';\nexport function register(){console.log(process.env.DATABASE_URL);}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Build every configured runtime without unsupported imports.",
+    "Verify one intended initialization lifecycle per process.",
+    "Inspect exported spans/logs for redaction and useful route/dependency attribution."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "Instrumentation initialization runs in framework-managed environments.",
+    "Build every configured runtime without unsupported imports."
+  ],
+  "alternativeApproaches": [
+    "They measure different boundaries: queueing, network, hydration, prefetch and cache hits may occur outside one server span. Join correlated telemetry and compare distributions instead of treating a single duration as the whole user experience."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 83,
+    "chapter": "Testing and operations",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Build every configured runtime without unsupported imports.",
+      "Verify one intended initialization lifecycle per process.",
+      "Inspect exported spans/logs for redaction and useful route/dependency attribution."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/instrumentation"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

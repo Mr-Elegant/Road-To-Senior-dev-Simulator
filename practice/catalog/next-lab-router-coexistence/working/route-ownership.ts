@@ -1,0 +1,1 @@
+export const routeFiles=['pages/products.tsx','app/products/page.tsx'];

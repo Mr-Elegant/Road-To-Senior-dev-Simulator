@@ -40,7 +40,7 @@ export function AuthBoundary({ children, navigation, footer }: { children: React
   }, []);
   const ready = readyFor !== undefined && readyFor.accountId === accountId && storage.getAccountId() === accountId;
   // These pages do not read personal history and can render before identity resolves.
-  const publicEntry = pathname === '/login' || pathname === '/signup' || pathname === '/enterprise-labs';
+  const publicEntry = pathname === '/login' || pathname === '/signup' || pathname === '/enterprise-labs' || pathname === '/nextjs';
   return <WorkspaceScope.Provider value={{ accountId: isPending && readyFor === undefined ? undefined : accountId, ready }}>
     {navigation}
     {syncMessage && <div role="status" className="border-b border-amber-500/30 bg-amber-500/10 px-4 py-2 text-center text-sm text-amber-800 dark:text-amber-300">{syncMessage} <button className="ml-2 underline" onClick={() => setSyncMessage('')}>Dismiss</button></div>}

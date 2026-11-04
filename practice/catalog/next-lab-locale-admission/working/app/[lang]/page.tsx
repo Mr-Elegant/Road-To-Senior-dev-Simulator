@@ -1,0 +1,1 @@
+export default async function Page({params}:any){const dictionary=await import('../../dictionaries/'+params.lang+'.json');return <h1>{dictionary.title}</h1>;}

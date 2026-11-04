@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-public-env-freeze",
+  "title": "Distinguish build-time public environment values from runtime secrets",
+  "topic": "Next.js",
+  "subtopic": "Deployment and runtime",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/config-client.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "'use client';\nexport default function Config(){return <pre>{process.env.NEXT_PUBLIC_DATABASE_URL}</pre>;}",
+  "codeReviewFiles": [
+    {
+      "filename": "app/config-client.tsx",
+      "newCode": "'use client';\nexport default function Config(){return <pre>{process.env.NEXT_PUBLIC_DATABASE_URL}</pre>;}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Build with a sentinel public value, change it at start and inspect the client bundle.",
+    "Search generated assets for a sentinel secret and prove it is absent.",
+    "Promote the same artifact between environments and verify the documented runtime/public configuration path."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "A public prefix is an exposure decision, not a runtime injection mechanism.",
+    "Build with a sentinel public value, change it at start and inspect the client bundle."
+  ],
+  "alternativeApproaches": [
+    "No. It is not a supported security or runtime configuration strategy. Browser code has no trustworthy secret boundary; use server-side reads and intentionally public DTOs."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 88,
+    "chapter": "Deployment and runtime",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Build with a sentinel public value, change it at start and inspect the client bundle.",
+      "Search generated assets for a sentinel secret and prove it is absent.",
+      "Promote the same artifact between environments and verify the documented runtime/public configuration path."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/environment-variables"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

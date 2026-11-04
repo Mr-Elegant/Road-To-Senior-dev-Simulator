@@ -1,0 +1,91 @@
+{
+  "id": "next-lab-cache-freshness-model",
+  "title": "Model cache freshness at exact time boundaries",
+  "difficulty": "Mid-Level",
+  "topic": "Next.js",
+  "subtopic": "Caching and revalidation",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input {age,revalidate,expire} contains nonnegative finite seconds with revalidate <= expire. Return fresh when age < revalidate, stale when revalidate <= age < expire, otherwise expired. This is a simplified policy, not all cacheLife fields.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-cache-freshness-model-1",
+      "name": "fresh",
+      "inputDescription": "{\"age\":9,\"revalidate\":10,\"expire\":20}",
+      "expectedOutput": "\"fresh\""
+    },
+    {
+      "id": "next-lab-cache-freshness-model-2",
+      "name": "revalidate boundary",
+      "inputDescription": "{\"age\":10,\"revalidate\":10,\"expire\":20}",
+      "expectedOutput": "\"stale\""
+    },
+    {
+      "id": "next-lab-cache-freshness-model-3",
+      "name": "expire boundary",
+      "inputDescription": "{\"age\":20,\"revalidate\":10,\"expire\":20}",
+      "expectedOutput": "\"expired\""
+    },
+    {
+      "id": "next-lab-cache-freshness-model-4",
+      "name": "zero windows",
+      "inputDescription": "{\"age\":0,\"revalidate\":0,\"expire\":0}",
+      "expectedOutput": "\"expired\""
+    }
+  ],
+  "hints": [
+    "Use half-open intervals so each timestamp has one state.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "Define a bounded stale-if-error policy, mark the served version and monitor its age. For authorization, pricing or revoked entitlements, stale service may violate correctness even when availability improves."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 25,
+    "chapter": "Caching and revalidation",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/functions/cacheLife"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

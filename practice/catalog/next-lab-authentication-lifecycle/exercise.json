@@ -1,0 +1,80 @@
+{
+  "id": "next-lab-authentication-lifecycle",
+  "title": "Design session verification, rotation and account switching",
+  "topic": "Next.js",
+  "subtopic": "Security architecture",
+  "difficulty": "Staff/Principal",
+  "type": "system_design",
+  "estimatedMinutes": 60,
+  "businessContext": "A global client loading gate blocks navigation on every session refresh and briefly shows the previous account’s history.",
+  "problemStatement": "Design the system for 100,000 active sessions; shared-device usage and immediate privileged revocation. Produce the component/data-flow diagram, request and mutation contracts, cache/trust boundaries, capacity assumptions, failure recovery and rollout gates. State which decisions change between Next.js 15 and 16 instead of using a framework API as a substitute for an architectural guarantee.",
+  "constraints": [
+    "Keep navigation usable during background verification.",
+    "Prevent cross-account state reuse.",
+    "Define sensitive-operation revocation semantics."
+  ],
+  "candidateTasks": [
+    "Draw components and annotate ownership of data, identity, caches and durable work.",
+    "Specify contracts/schema and quantify the capacity/freshness assumptions.",
+    "Walk through the failure scenario and design measurable acceptance tests.",
+    "Compare the reference decisions and answer the changed-requirement interview prompt."
+  ],
+  "systemDesignReqs": {
+    "scale": "100,000 active sessions; shared-device usage and immediate privileged revocation",
+    "functional": [
+      "Keep navigation usable during background verification.",
+      "Prevent cross-account state reuse.",
+      "Define sensitive-operation revocation semantics."
+    ],
+    "nonFunctional": [
+      "State an explicit latency, freshness and recovery budget rather than inventing guarantees.",
+      "Keep actor/tenant isolation and failure ownership observable."
+    ],
+    "assumptions": [
+      "A patched App Router deployment; platform-specific infrastructure support must be verified.",
+      "Next.js version and Cache Components configuration are explicit design inputs."
+    ]
+  },
+  "hints": [
+    "Use a server-verified session boundary for privileged reads/actions and a client session state machine distinguishing initial unknown, verified, refreshing and signed-out states.",
+    "An old history response can arrive after a second account signs in. Associate each request and merge operation with its initiating actor/version, reject stale ownership and clear private state deliberately on switch."
+  ],
+  "alternativeApproaches": [
+    "It does not solve expiry, revocation, changing entitlements or XSS exposure. Choose the session model against explicit requirements and keep current server authorization regardless of client transport."
+  ],
+  "commonMistakes": [
+    "Claiming a cache API provides transactions, durable delivery or cross-region consistency.",
+    "Omitting authorization, recovery budgets or evidence from an otherwise attractive component diagram."
+  ],
+  "nextjsPractice": {
+    "order": 100,
+    "chapter": "Security architecture",
+    "mode": "architecture",
+    "versions": "15-and-16",
+    "verification": [
+      "Delay session and history responses while navigating.",
+      "Switch accounts rapidly and replay late responses.",
+      "Revoke a privileged session and test real action/data endpoints, not just hidden navigation controls."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/authentication"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

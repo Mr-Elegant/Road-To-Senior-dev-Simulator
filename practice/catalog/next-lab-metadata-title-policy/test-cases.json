@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-metadata-title-policy-1",
+    "name": "fallback",
+    "inputDescription": "{\"brand\":\"Atlas\"}",
+    "expectedOutput": "\"Atlas\""
+  },
+  {
+    "id": "next-lab-metadata-title-policy-2",
+    "name": "template",
+    "inputDescription": "{\"title\":\" Products \",\"brand\":\"Atlas\"}",
+    "expectedOutput": "\"Products | Atlas\""
+  },
+  {
+    "id": "next-lab-metadata-title-policy-3",
+    "name": "absolute",
+    "inputDescription": "{\"title\":\"Receipt\",\"brand\":\"Atlas\",\"absolute\":true}",
+    "expectedOutput": "\"Receipt\""
+  },
+  {
+    "id": "next-lab-metadata-title-policy-4",
+    "name": "blank",
+    "inputDescription": "{\"title\":\" \",\"brand\":\"Atlas\"}",
+    "expectedOutput": "\"Atlas\""
+  }
+]

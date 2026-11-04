@@ -1,0 +1,32 @@
+[
+  {
+    "id": "next-lab-catch-all-segments-1",
+    "name": "optional",
+    "inputDescription": "{}",
+    "expectedOutput": "\"/\""
+  },
+  {
+    "id": "next-lab-catch-all-segments-2",
+    "name": "empty",
+    "inputDescription": "{\"segments\":[]}",
+    "expectedOutput": "\"/\""
+  },
+  {
+    "id": "next-lab-catch-all-segments-3",
+    "name": "nested",
+    "inputDescription": "{\"segments\":[\"docs\",\"next-16\"]}",
+    "expectedOutput": "\"/docs/next-16\""
+  },
+  {
+    "id": "next-lab-catch-all-segments-4",
+    "name": "traversal",
+    "inputDescription": "{\"segments\":[\"..\"]}",
+    "expectedOutput": "null"
+  },
+  {
+    "id": "next-lab-catch-all-segments-5",
+    "name": "encoded separators",
+    "inputDescription": "{\"segments\":[\"a%2Fb\"]}",
+    "expectedOutput": "null"
+  }
+]

@@ -1,0 +1,1 @@
+export async function GET(){return new Response(await (await fetch('https://status.example.com')).text());}

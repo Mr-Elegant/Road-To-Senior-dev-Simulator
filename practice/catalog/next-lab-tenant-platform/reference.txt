@@ -1,0 +1,28 @@
+# Decision record: Architect an isolated multi-tenant Next.js SaaS
+
+## Context and scale
+A SaaS proposes deriving its tenant from an arbitrary Host header and caching every dashboard by pathname.
+2,000 tenants; 10,000 peak reads/second; private account data
+
+## Accepted constraints
+- Resolve only admitted domains to tenants.
+- Enforce tenant membership on every read and mutation.
+- Keep public assets cacheable without caching private dashboards globally.
+
+## Design and ownership
+Terminate traffic at a trusted ingress and resolve a normalized, allowlisted domain to a server-owned tenant ID. Verify the current actor and tenant membership in the data-access boundary, then constrain database predicates by tenant. Partition cached public representations by tenant, locale and schema/version; keep sensitive per-user data outside shared entries. Separate public shells from runtime private subtrees, document cookie domain/SameSite policy, and never trust a proxy rewrite as object authorization.
+
+## Failure and recovery
+A custom domain can change ownership while an old cache entry remains. Make domain changes an audited workflow with verification, cache/version rotation and a bounded propagation SLO. Reject ambiguous Host/forwarded-host inputs at the trusted boundary.
+
+## Verification gates
+- Attempt cross-tenant IDs, forged domains and action calls outside Proxy coverage.
+- Warm caches in tenant A before requesting the same pathname in B.
+- Revoke membership and verify the documented access-revocation bound.
+
+## Interview change
+Should all tenants share one deployment?
+Compare isolation needs, regional requirements, noisy-neighbor budgets and operational cost. Shared infrastructure can work with strong logical boundaries; high-risk tenants may justify separate deployments and data partitions. Deployment isolation does not remove application authorization.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

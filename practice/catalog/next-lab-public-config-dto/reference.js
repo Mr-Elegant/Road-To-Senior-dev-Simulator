@@ -1,0 +1,1 @@
+function solution(input){return {publishableKey:typeof input.publishableKey==='string'&&input.publishableKey.startsWith('pk_')?input.publishableKey:null,currency:typeof input.currency==='string'&&/^[A-Z]{3}$/.test(input.currency)?input.currency:'USD'};}

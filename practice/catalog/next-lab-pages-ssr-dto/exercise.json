@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-pages-ssr-dto",
+  "title": "Keep Pages Router SSR props serializable and public",
+  "topic": "Next.js",
+  "subtopic": "Pages Router and migration",
+  "difficulty": "Beginner",
+  "type": "code_review",
+  "estimatedMinutes": 20,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed pages/account.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "export async function getServerSideProps(){return {props:{createdAt:new Date(),secret:'database-password'}};}\nexport default function Page(props:unknown){return <h1>Account</h1>;}",
+  "codeReviewFiles": [
+    {
+      "filename": "pages/account.tsx",
+      "newCode": "export async function getServerSideProps(){return {props:{createdAt:new Date(),secret:'database-password'}};}\nexport default function Page(props:unknown){return <h1>Account</h1>;}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Build and request the Pages route on both supported majors.",
+    "Inspect the document and data-navigation payload for only generatedAt.",
+    "Add a real private read and test current actor ownership before returning its DTO."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "Pages Router getServerSideProps runs on the server, but its returned props are delivered to the browser.",
+    "Build and request the Pages route on both supported majors."
+  ],
+  "alternativeApproaches": [
+    "No. The App Router uses its server rendering/data APIs instead. Migrate the route ownership and data-access boundary deliberately; copying a Pages export into app is not a compatible hybrid."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 21,
+    "chapter": "Pages Router and migration",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Build and request the Pages route on both supported majors.",
+      "Inspect the document and data-navigation payload for only generatedAt.",
+      "Add a real private read and test current actor ownership before returning its DTO."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/pages/api-reference/functions/get-server-side-props"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

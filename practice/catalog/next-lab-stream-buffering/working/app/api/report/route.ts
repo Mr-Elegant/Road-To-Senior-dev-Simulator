@@ -1,0 +1,2 @@
+import { createReportStream } from '@/lib/reports';
+export async function GET(request:Request){const stream=await createReportStream(request.signal);const text=await new Response(stream).text();return new Response(text);}

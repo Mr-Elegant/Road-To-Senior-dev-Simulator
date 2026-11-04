@@ -1,0 +1,1 @@
+// No default.tsx exists; the team only tested soft navigation.

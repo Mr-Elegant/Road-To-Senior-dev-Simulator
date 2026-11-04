@@ -1,10 +1,10 @@
 # Practice in your local IDE
 
-This workspace contains **all 586 authored exercises** from the app, grouped into five collections. The website and its progress remain independent. Open [INDEX.md](INDEX.md) in VS Code to find an exercise; Enterprise Labs project sequences appear at the bottom.
+This workspace contains **all 696 authored exercises** from the app, grouped into five collections. The website and its progress remain independent. Open [INDEX.md](INDEX.md) in VS Code to find an exercise; Enterprise Labs project sequences appear at the bottom.
 
 | Directory | Exercises | Workflow |
 |---|---:|---|
-| `catalog/` | 389 | Coding, debugging, React UI, incidents, reviews, design, and interviews |
+| `catalog/` | 499 | Coding, debugging, React UI, incidents, reviews, design, and interviews |
 | `loan/` | 8 | Function bugs with the same frozen-input behavioral harness as the app |
 | `sql/` | 120 | Executable SQL fixtures plus conceptual, incident, and design answers |
 | `beginner/` | 63 | Written questions and optional JavaScript/TypeScript/HTML/CSS exercises |
@@ -15,6 +15,10 @@ The eight evolving incidents, six commerce/SaaS challenges, and eight collaborat
 A separate React + TypeScript module adds 113 automated TSX copies of the React topics, each with strict type checking, 379 reused DOM cases and its own files. Use `npm run practice:list -- react-ts` to find them.
 
 ## Start
+
+Folders with opaque beginner or SQL IDs now include readable question titles, for example `beginner/semantic-html-and-why-is-it-important--t1-hc-01`. Existing descriptive names are retained. Each collection has its own topic index in `README.md`; use [the complete index](INDEX.md) to browse all collections.
+
+Search multiple words with quotes, for example `npm run practice:list -- "html css"`. Titles, topics, difficulty, language and IDs are searchable. Old commands such as `npm run practice:list -- beginner/t1-hc-01` still resolve to the renamed exercise. The application IDs and website routes are unchanged.
 
 Use the repository's supported Node.js version and install dependencies from the repository root:
 
@@ -42,7 +46,11 @@ npm run practice:verify
 
 `practice:test` accepts a full key, unique ID, collection, or title search. With no selector it runs all executable exercises. A failed case returns a nonzero exit code. Guided exercises are counted separately and are never reported as passed tests. `practice:verify` checks the tooling and authored reference solutions without replacing your work. It requires Python for the Python reference check.
 
-There are 377 automated exercises and 209 guided exercises. All 203 frontend topics are automated: 113 React components plus 90 JavaScript functions. Use `npm run practice:list -- frontend` for the new additions, or `npm run practice:list -- react-ui` for the eight reused React IDs.
+There are 397 automated exercises and 299 guided exercises. All 203 frontend topics are automated: 113 React components plus 90 JavaScript functions. Use `npm run practice:list -- frontend` for the new additions, or `npm run practice:list -- react-ui` for the eight reused React IDs.
+
+## Next.js engineering practice
+
+The 110 `catalog/next-lab-*` exercises cover Next.js 15 and 16. Twenty application-policy functions have exact-result tests; 70 framework reviews and 20 architecture challenges require manual/real-server verification. Open each README for version notes, official references and acceptance evidence. Review candidates are preserved under `working/`; corrected files live under `reference-files/`. These are focused review files, not 70 preinstalled Next.js applications. See [the Next.js guide](../docs/NEXTJS_PRACTICE.md).
 
 ## What the tests mean
 
@@ -68,5 +76,7 @@ npm run practice:generate
 ```
 
 Refresh updates generated briefs, fixture files, references, datasets, `manifest.json`, and `INDEX.md` from the application source. Existing `solution.*` and `answer.md` files are preserved. Added exercises receive new starters; removed source exercises are not deleted from your disk. Keep custom notes/tests in separate files, because generated documentation and fixtures are refreshed. If an upstream starter changes, compare it in `exercise.json` before adapting your solution.
+
+Refresh also migrates old folder names using the previous manifest and original IDs. It moves complete exercise folders, including your custom files. If both an old and new folder exist, it stops before moving any folders so you can reconcile them. Mermaid diagrams in collection guides and selected questions provide visual explanations; use a Mermaid-capable Markdown preview to render them.
 
 The generated pack is included with the project, so you can begin immediately after installing dependencies. Changes here do not patch the application, update cloud progress, or affect `npm test`. The app TypeScript configuration excludes this directory so unfinished practice code does not break website builds. Additional local tests can be written with Node's built-in test runner (`node --test path/to/your.test.cjs`) or your preferred language tooling.

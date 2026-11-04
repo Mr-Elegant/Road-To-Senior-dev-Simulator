@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-proxy-migration",
+  "title": "Rename Middleware to Proxy without changing routing intent",
+  "topic": "Next.js",
+  "subtopic": "Versions and migrations",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed proxy.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "import { NextResponse } from 'next/server';\nexport const runtime='edge';\nexport function middleware(){return NextResponse.next();}",
+  "codeReviewFiles": [
+    {
+      "filename": "proxy.ts",
+      "newCode": "import { NextResponse } from 'next/server';\nexport const runtime='edge';\nexport function middleware(){return NextResponse.next();}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Compare the 15 middleware and 16 proxy path coverage.",
+    "Build without an unsupported Proxy runtime export.",
+    "Verify unrelated assets are not intercepted and protected actions still authorize internally."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "Filename, export and runtime rules migrate together.",
+    "Compare the 15 middleware and 16 proxy path coverage."
+  ],
+  "alternativeApproaches": [
+    "Prefer bounded lightweight routing checks and enforce real authorization near data access. Database work in the routing layer can become a latency and availability dependency for every matched request."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 69,
+    "chapter": "Versions and migrations",
+    "mode": "framework-review",
+    "versions": "15-to-16",
+    "verification": [
+      "Compare the 15 middleware and 16 proxy path coverage.",
+      "Build without an unsupported Proxy runtime export.",
+      "Verify unrelated assets are not intercepted and protected actions still authorize internally."
+    ],
+    "next15": "Keep this logic in middleware.ts with the middleware export. Runtime support depends on the exact 15.x release; do not assume all 15 patches share Node middleware support.",
+    "next16": "Use proxy.ts and proxy. Proxy defaults to Node.js; setting the runtime export in the Proxy file is unsupported.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/file-conventions/proxy"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

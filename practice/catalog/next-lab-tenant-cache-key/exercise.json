@@ -1,0 +1,91 @@
+{
+  "id": "next-lab-tenant-cache-key",
+  "title": "Partition a shared cache key by tenant and locale",
+  "difficulty": "Mid-Level",
+  "topic": "Next.js",
+  "subtopic": "Caching and revalidation",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input {tenant,resource,locale} contains nonempty strings. Return JSON.stringify([tenant,resource,locale]). The tuple encoding must avoid delimiter collisions; do not lowercase identifiers.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-tenant-cache-key-1",
+      "name": "normal",
+      "inputDescription": "{\"tenant\":\"t1\",\"resource\":\"products\",\"locale\":\"en\"}",
+      "expectedOutput": "\"[\\\"t1\\\",\\\"products\\\",\\\"en\\\"]\""
+    },
+    {
+      "id": "next-lab-tenant-cache-key-2",
+      "name": "delimiter in tenant",
+      "inputDescription": "{\"tenant\":\"a:b\",\"resource\":\"c\",\"locale\":\"en\"}",
+      "expectedOutput": "\"[\\\"a:b\\\",\\\"c\\\",\\\"en\\\"]\""
+    },
+    {
+      "id": "next-lab-tenant-cache-key-3",
+      "name": "delimiter in resource",
+      "inputDescription": "{\"tenant\":\"a\",\"resource\":\"b:c\",\"locale\":\"en\"}",
+      "expectedOutput": "\"[\\\"a\\\",\\\"b:c\\\",\\\"en\\\"]\""
+    },
+    {
+      "id": "next-lab-tenant-cache-key-4",
+      "name": "case sensitive",
+      "inputDescription": "{\"tenant\":\"T1\",\"resource\":\"products\",\"locale\":\"EN\"}",
+      "expectedOutput": "\"[\\\"T1\\\",\\\"products\\\",\\\"EN\\\"]\""
+    }
+  ],
+  "hints": [
+    "A cache key is part of the data-isolation boundary.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "Include entitlement/version dimensions where representations differ, or keep personalized data outside a shared entry. Adding a tenant key does not authorize a caller or bound cache cardinality."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 23,
+    "chapter": "Caching and revalidation",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/getting-started/caching"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-public-config-dto-1",
+    "name": "safe subset",
+    "inputDescription": "{\"publishableKey\":\"pk_test_x\",\"currency\":\"INR\",\"secretKey\":\"secret\"}",
+    "expectedOutput": "{\"publishableKey\":\"pk_test_x\",\"currency\":\"INR\"}"
+  },
+  {
+    "id": "next-lab-public-config-dto-2",
+    "name": "defaults",
+    "inputDescription": "{}",
+    "expectedOutput": "{\"publishableKey\":null,\"currency\":\"USD\"}"
+  },
+  {
+    "id": "next-lab-public-config-dto-3",
+    "name": "secret in wrong field",
+    "inputDescription": "{\"publishableKey\":\"sk_x\",\"currency\":\"usd\"}",
+    "expectedOutput": "{\"publishableKey\":null,\"currency\":\"USD\"}"
+  },
+  {
+    "id": "next-lab-public-config-dto-4",
+    "name": "unknown data",
+    "inputDescription": "{\"publishableKey\":\"pk_x\",\"currency\":\"EUR\",\"nested\":{\"secret\":1}}",
+    "expectedOutput": "{\"publishableKey\":\"pk_x\",\"currency\":\"EUR\"}"
+  }
+]

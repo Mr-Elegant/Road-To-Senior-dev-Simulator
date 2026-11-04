@@ -1,0 +1,91 @@
+{
+  "id": "next-lab-private-response-policy",
+  "title": "Prevent shared caching of authenticated responses",
+  "difficulty": "Senior",
+  "topic": "Next.js",
+  "subtopic": "Security and identity",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input {authenticated,publicResource}. Return {cacheControl:\"public, max-age=60\",vary:[]} only when authenticated is false and publicResource is true. Otherwise return {cacheControl:\"private, no-store\",vary:[\"Cookie\",\"Authorization\"]}. Both fields are booleans.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-private-response-policy-1",
+      "name": "public",
+      "inputDescription": "{\"authenticated\":false,\"publicResource\":true}",
+      "expectedOutput": "{\"cacheControl\":\"public, max-age=60\",\"vary\":[]}"
+    },
+    {
+      "id": "next-lab-private-response-policy-2",
+      "name": "authenticated public endpoint",
+      "inputDescription": "{\"authenticated\":true,\"publicResource\":true}",
+      "expectedOutput": "{\"cacheControl\":\"private, no-store\",\"vary\":[\"Cookie\",\"Authorization\"]}"
+    },
+    {
+      "id": "next-lab-private-response-policy-3",
+      "name": "private anonymous",
+      "inputDescription": "{\"authenticated\":false,\"publicResource\":false}",
+      "expectedOutput": "{\"cacheControl\":\"private, no-store\",\"vary\":[\"Cookie\",\"Authorization\"]}"
+    },
+    {
+      "id": "next-lab-private-response-policy-4",
+      "name": "private authenticated",
+      "inputDescription": "{\"authenticated\":true,\"publicResource\":false}",
+      "expectedOutput": "{\"cacheControl\":\"private, no-store\",\"vary\":[\"Cookie\",\"Authorization\"]}"
+    }
+  ],
+  "hints": [
+    "Shared-cache admission must depend on the response representation, not merely on using GET.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "No. HTTP cache headers and server data caching are different layers. Audit the fetch/use-cache policy, full-route output, CDN overrides and browser behavior independently; test tenant-switch and sign-out flows."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 63,
+    "chapter": "Security and identity",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/data-security"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

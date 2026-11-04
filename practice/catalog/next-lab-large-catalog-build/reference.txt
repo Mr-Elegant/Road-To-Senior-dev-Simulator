@@ -1,0 +1,28 @@
+# Decision record: Control build cost for a million-page catalog
+
+## Context and scale
+generateStaticParams enumerates every record and each page performs several serial network calls.
+1,000,000 slugs; 10-minute build budget; origin limited to 100 concurrent reads
+
+## Accepted constraints
+- Bound build time and origin concurrency.
+- Serve useful cold routes.
+- Preserve missing/deleted resource semantics.
+
+## Design and ownership
+Measure a representative cold/warm build and enumerate only a bounded valuable set when the deployment model supports on-demand generation. Batch or deduplicate shared build reads, keep origins within concurrency budgets and avoid calling a local Route Handler during prerender. Choose route cache lifetimes and invalidation based on content volatility; a static export is a different deployment with no request-time server fallback. Record how unknown slugs, deletions and origin failures behave before promising arbitrary page coverage.
+
+## Failure and recovery
+A broad rebuild during an origin incident can turn a serving site into a failed deployment. Retain the last verified artifact and separate deploy-time availability from the ongoing stale/fresh serving policy.
+
+## Verification gates
+- Run an origin-counted scale sample and extrapolate with measured bottlenecks.
+- Request unenumerated and deleted slugs after deployment.
+- Fail the origin mid-build and test rollback/retained-serving behavior.
+
+## Interview change
+Would increasing worker count always help?
+It may move the bottleneck to memory, the database or remote rate limits. Increase concurrency only against measured capacity and error/latency budgets; cached inputs and smaller graphs can be more effective.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

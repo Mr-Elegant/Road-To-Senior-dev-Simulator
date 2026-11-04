@@ -1,0 +1,28 @@
+# Decision record: Design session verification, rotation and account switching
+
+## Context and scale
+A global client loading gate blocks navigation on every session refresh and briefly shows the previous account’s history.
+100,000 active sessions; shared-device usage and immediate privileged revocation
+
+## Accepted constraints
+- Keep navigation usable during background verification.
+- Prevent cross-account state reuse.
+- Define sensitive-operation revocation semantics.
+
+## Design and ownership
+Use a server-verified session boundary for privileged reads/actions and a client session state machine distinguishing initial unknown, verified, refreshing and signed-out states. Scope local caches/history by actor identity, cancel or ignore stale responses on account changes, and keep usable public shell/UI mounted during refresh. Prefer secure HTTP-only cookie transport when using cookie sessions and define rotation, expiry and revocation checks. Never treat a cached client session display as authoritative permission to mutate.
+
+## Failure and recovery
+An old history response can arrive after a second account signs in. Associate each request and merge operation with its initiating actor/version, reject stale ownership and clear private state deliberately on switch.
+
+## Verification gates
+- Delay session and history responses while navigating.
+- Switch accounts rapidly and replay late responses.
+- Revoke a privileged session and test real action/data endpoints, not just hidden navigation controls.
+
+## Interview change
+Would storing a JWT in localStorage remove the need to check?
+It does not solve expiry, revocation, changing entitlements or XSS exposure. Choose the session model against explicit requirements and keep current server authorization regardless of client transport.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

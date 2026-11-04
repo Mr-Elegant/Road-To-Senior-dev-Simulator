@@ -1,0 +1,71 @@
+{
+  "id": "next-lab-async-route-params",
+  "title": "Migrate dynamic route params from 15 compatibility to 16",
+  "topic": "Next.js",
+  "subtopic": "Routing and URL state",
+  "difficulty": "Beginner",
+  "type": "code_review",
+  "estimatedMinutes": 20,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/products/[id]/page.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "export default function Page({params}: {params:{id:string}}){ return <h1>Product {params.id}</h1>; }",
+  "codeReviewFiles": [
+    {
+      "filename": "app/products/[id]/page.tsx",
+      "newCode": "export default function Page({params}: {params:{id:string}}){ return <h1>Product {params.id}</h1>; }",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Build a dynamic route and directly request /products/abc.",
+    "Verify generated route types accept the promised params signature.",
+    "Test a missing resource separately from an invalid identifier."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "Update the route-prop type and implementation together.",
+    "Build a dynamic route and directly request /products/abc."
+  ],
+  "alternativeApproaches": [
+    "Their dynamic params are also asynchronous in the migration. Update page, layout, route and metadata consumers consistently; next typegen can help validate generated contracts on supported versions."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 9,
+    "chapter": "Routing and URL state",
+    "mode": "framework-review",
+    "versions": "15-to-16",
+    "verification": [
+      "Build a dynamic route and directly request /products/abc.",
+      "Verify generated route types accept the promised params signature.",
+      "Test a missing resource separately from an invalid identifier."
+    ],
+    "next15": "Next.js 15 introduces promised params with temporary synchronous compatibility. Migrate callers and types instead of relying on that compatibility.",
+    "next16": "Synchronous params access is removed. Await the promise, or unwrap with React use in an appropriate synchronous component.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      }
+    ]
+  }
+}

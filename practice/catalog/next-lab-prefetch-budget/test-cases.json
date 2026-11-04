@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-prefetch-budget-1",
+    "name": "budget",
+    "inputDescription": "{\"routes\":[{\"href\":\"/a\",\"visible\":true},{\"href\":\"/b\",\"visible\":true}],\"budget\":1}",
+    "expectedOutput": "[\"/a\"]"
+  },
+  {
+    "id": "next-lab-prefetch-budget-2",
+    "name": "dedupe",
+    "inputDescription": "{\"routes\":[{\"href\":\"/a\",\"visible\":true},{\"href\":\"/a\",\"visible\":true},{\"href\":\"/b\",\"visible\":true}],\"budget\":2}",
+    "expectedOutput": "[\"/a\",\"/b\"]"
+  },
+  {
+    "id": "next-lab-prefetch-budget-3",
+    "name": "invisible first",
+    "inputDescription": "{\"routes\":[{\"href\":\"/a\",\"visible\":false},{\"href\":\"/a\",\"visible\":true}],\"budget\":1}",
+    "expectedOutput": "[\"/a\"]"
+  },
+  {
+    "id": "next-lab-prefetch-budget-4",
+    "name": "zero",
+    "inputDescription": "{\"routes\":[{\"href\":\"/a\",\"visible\":true}],\"budget\":0}",
+    "expectedOutput": "[]"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-stream-event-reducer-1",
+    "name": "empty",
+    "inputDescription": "[]",
+    "expectedOutput": "{\"text\":\"\",\"status\":\"open\"}"
+  },
+  {
+    "id": "next-lab-stream-event-reducer-2",
+    "name": "complete",
+    "inputDescription": "[{\"type\":\"chunk\",\"text\":\"a\"},{\"type\":\"complete\"},{\"type\":\"chunk\",\"text\":\"b\"}]",
+    "expectedOutput": "{\"text\":\"a\",\"status\":\"complete\"}"
+  },
+  {
+    "id": "next-lab-stream-event-reducer-3",
+    "name": "cancel",
+    "inputDescription": "[{\"type\":\"chunk\",\"text\":\"a\"},{\"type\":\"cancel\"},{\"type\":\"complete\"}]",
+    "expectedOutput": "{\"text\":\"a\",\"status\":\"cancelled\"}"
+  },
+  {
+    "id": "next-lab-stream-event-reducer-4",
+    "name": "ordered chunks",
+    "inputDescription": "[{\"type\":\"chunk\",\"text\":\"a\"},{\"type\":\"chunk\",\"text\":\"b\"}]",
+    "expectedOutput": "{\"text\":\"ab\",\"status\":\"open\"}"
+  }
+]

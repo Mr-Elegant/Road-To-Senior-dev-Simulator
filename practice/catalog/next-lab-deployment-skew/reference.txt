@@ -1,0 +1,28 @@
+# Decision record: Handle rolling-deployment client/server version skew
+
+## Context and scale
+An old tab submits an action after the serving deployment has changed and the team assumes every payload is interchangeable.
+Long-lived browser tabs while deployments roll across 20 instances
+
+## Accepted constraints
+- Preserve a usable old-tab experience.
+- Avoid serving mismatched static assets.
+- Plan backward-compatible application payloads.
+
+## Design and ownership
+Keep immutable build assets available for their supported client lifetime and use the deployment platform’s supported version-skew/affinity strategy where available. Version business payloads and keep additive schema transitions during rolling release. Design user recovery for incompatible action/navigation attempts and avoid silently retrying non-idempotent writes. Observe build/deployment IDs on errors without exposing secrets or assuming a deployment ID alone migrates sessions and data.
+
+## Failure and recovery
+The CDN may retain an old HTML document while its referenced chunks are deleted. Retain assets through the support window, coordinate cache headers and verify that rollback assets remain fetchable.
+
+## Verification gates
+- Open a tab on release A, roll to B, then navigate and mutate.
+- Test mixed instances and a partial deployment rollback.
+- Verify chunk availability, action error handling and mutation idempotency under skew.
+
+## Interview change
+Can you fix all skew with a forced reload?
+Reload is a recovery option, not a consistency protocol. Preserve drafts where appropriate, detect incompatibility before repeating writes and retain old assets while managing application/API compatibility.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

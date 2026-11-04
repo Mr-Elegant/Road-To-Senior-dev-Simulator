@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-matcher-security",
+  "title": "Keep authorization when a Proxy matcher excludes an action path",
+  "topic": "Next.js",
+  "subtopic": "Security and identity",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/public-actions.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "'use server';\nexport async function exportCustomers(){return await database.customer.findMany();}\n// Proxy only matches /admin, but this action is used on /exports.",
+  "codeReviewFiles": [
+    {
+      "filename": "app/public-actions.ts",
+      "newCode": "'use server';\nexport async function exportCustomers(){return await database.customer.findMany();}\n// Proxy only matches /admin, but this action is used on /exports.",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Invoke the action from its actual route as an unauthorized caller.",
+    "Move the action’s call site outside the matcher in a disposable lab.",
+    "Verify the protected export remains tenant-scoped in both versions."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "A matcher change or moving a Server Action to another route can change routing-layer coverage.",
+    "Invoke the action from its actual route as an unauthorized caller."
+  ],
+  "alternativeApproaches": [
+    "Centralize an explicit authorized data-access operation or capability policy and invoke it from every entry point. Centralization should reduce duplication without hiding which actor and object scope a call uses."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 70,
+    "chapter": "Security and identity",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Invoke the action from its actual route as an unauthorized caller.",
+      "Move the action’s call site outside the matcher in a disposable lab.",
+      "Verify the protected export remains tenant-scoped in both versions."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/authentication"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "id": "next-lab-fetch-cache-default",
+  "title": "Make Next.js 15 fetch freshness explicit",
+  "topic": "Next.js",
+  "subtopic": "Caching and revalidation",
+  "difficulty": "Mid-Level",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed lib/public-catalog.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "export async function getCatalog(){return (await fetch('https://catalog.example.com/public')).json();}\n// The team assumes this fetch is persistently cached by default.",
+  "codeReviewFiles": [
+    {
+      "filename": "lib/public-catalog.ts",
+      "newCode": "export async function getCatalog(){return (await fetch('https://catalog.example.com/public')).json();}\n// The team assumes this fetch is persistently cached by default.",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Use an origin request counter across production requests.",
+    "Compare uncached and explicitly cached variants.",
+    "Invalidate the assigned tag from an authenticated allowed context and observe a later read."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "The absence of an explicit cache option is not evidence of persistent data caching in Next.js 15.",
+    "Use an origin request counter across production requests."
+  ],
+  "alternativeApproaches": [
+    "Do not share a public catalog cache entry with personalized prices. Separate public data from tenant/user entitlements and verify all representation dimensions, authorization and HTTP cache layers."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 40,
+    "chapter": "Caching and revalidation",
+    "mode": "framework-review",
+    "versions": "15-to-16",
+    "verification": [
+      "Use an origin request counter across production requests.",
+      "Compare uncached and explicitly cached variants.",
+      "Invalidate the assigned tag from an authenticated allowed context and observe a later read."
+    ],
+    "next15": "Fetch is no longer persistently cached by default. Choose force-cache, revalidation or no-store deliberately.",
+    "next16": "The explicit fetch policy still matters. Cache Components adds a separate opt-in rendering/caching model; do not assume enabling it is a syntax-only migration.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-streaming-metadata",
+  "title": "Diagnose slow metadata without forcing every page fully dynamic",
+  "topic": "Next.js",
+  "subtopic": "Metadata and assets",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/products/[id]/page.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "export async function generateMetadata(){await new Promise(r=>setTimeout(r,3000));return {title:'Product'};}\nexport default function Page(){return <h1>Catalog</h1>;}",
+  "codeReviewFiles": [
+    {
+      "filename": "app/products/[id]/page.tsx",
+      "newCode": "export async function generateMetadata(){await new Promise(r=>setTimeout(r,3000));return {title:'Product'};}\nexport default function Page(){return <h1>Catalog</h1>;}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Compare a browser and representative documented HTML-limited bot user agents.",
+    "Inspect title/description presence and timing on the actual production server.",
+    "Count shared product reads and test origin failure."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "Remove artificial or redundant work and share an admitted data function.",
+    "Compare a browser and representative documented HTML-limited bot user agents."
+  ],
+  "alternativeApproaches": [
+    "It can change metadata behavior for many crawlers and should not be a reflex latency fix. Verify the crawler requirement and official matching behavior, then change the narrowest necessary policy."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 77,
+    "chapter": "Metadata and assets",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Compare a browser and representative documented HTML-limited bot user agents.",
+      "Inspect title/description presence and timing on the actual production server.",
+      "Count shared product reads and test origin failure."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/functions/generate-metadata"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

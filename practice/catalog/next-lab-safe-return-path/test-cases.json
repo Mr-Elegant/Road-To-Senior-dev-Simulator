@@ -1,0 +1,38 @@
+[
+  {
+    "id": "next-lab-safe-return-path-1",
+    "name": "internal",
+    "inputDescription": "\"/account?tab=billing\"",
+    "expectedOutput": "\"/account?tab=billing\""
+  },
+  {
+    "id": "next-lab-safe-return-path-2",
+    "name": "external",
+    "inputDescription": "\"https://evil.test\"",
+    "expectedOutput": "\"/\""
+  },
+  {
+    "id": "next-lab-safe-return-path-3",
+    "name": "protocol relative",
+    "inputDescription": "\"//evil.test\"",
+    "expectedOutput": "\"/\""
+  },
+  {
+    "id": "next-lab-safe-return-path-4",
+    "name": "encoded slashes",
+    "inputDescription": "\"/%2Fevil.test\"",
+    "expectedOutput": "\"/\""
+  },
+  {
+    "id": "next-lab-safe-return-path-5",
+    "name": "backslash",
+    "inputDescription": "\"/\\\\evil.test\"",
+    "expectedOutput": "\"/\""
+  },
+  {
+    "id": "next-lab-safe-return-path-6",
+    "name": "malformed encoding",
+    "inputDescription": "\"/%\"",
+    "expectedOutput": "\"/\""
+  }
+]

@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-partial-prefetching",
+  "title": "Adopt modern partial prefetching without losing the initial UI",
+  "topic": "Next.js",
+  "subtopic": "Navigation and performance",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed next.config.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "export default {cacheComponents:true};\n// Every large catalog Link has prefetch={true}; the team assumes all links share one inexpensive shell automatically.",
+  "codeReviewFiles": [
+    {
+      "filename": "next.config.ts",
+      "newCode": "export default {cacheComponents:true};\n// Every large catalog Link has prefetch={true}; the team assumes all links share one inexpensive shell automatically.",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Compare cold direct, warm direct and sibling client navigation.",
+    "Inspect prefetch requests across many parameterized links.",
+    "Use the documented instant-navigation assertions/insights to preserve intended initial UI while adopting the flag."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "The initial UI of a direct load and a client navigation can differ below shared layouts.",
+    "Compare cold direct, warm direct and sibling client navigation."
+  ],
+  "alternativeApproaches": [
+    "No. Make the shell useful and stream request-dependent work into correctly placed fallbacks. A prefetch flag cannot repair an unbounded blocking dependency or eliminate cold-cache computation."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 87,
+    "chapter": "Navigation and performance",
+    "mode": "framework-review",
+    "versions": "16-only",
+    "verification": [
+      "Compare cold direct, warm direct and sibling client navigation.",
+      "Inspect prefetch requests across many parameterized links.",
+      "Use the documented instant-navigation assertions/insights to preserve intended initial UI while adopting the flag."
+    ],
+    "next15": "This current 16.x adoption pattern is not a stable 15 substitute. Use the version-matched Link/loading/cache behavior and measure its actual prefetch traffic.",
+    "next16": "The 16.4 documentation describes partialPrefetching with Cache Components. Verify exact patch support before copying this configuration to an older 16 minor.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/adopting-partial-prefetching"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

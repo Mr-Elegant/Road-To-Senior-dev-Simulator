@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-draft-mode-entry",
+  "title": "Authenticate draft-mode activation and constrain its destination",
+  "topic": "Next.js",
+  "subtopic": "Metadata and assets",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/api/draft/route.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "import { draftMode } from 'next/headers';\nexport async function GET(){(await draftMode()).enable();return Response.redirect('https://untrusted.example');}",
+  "codeReviewFiles": [
+    {
+      "filename": "app/api/draft/route.ts",
+      "newCode": "import { draftMode } from 'next/headers';\nexport async function GET(){(await draftMode()).enable();return Response.redirect('https://untrusted.example');}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Reject invalid and expired preview credentials.",
+    "Try an external return destination and a missing draft.",
+    "Verify draft cookies, public isolation and explicit disable/exit behavior."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "Draft mode changes the rendering/data-view context and must be granted only after verifying the CMS preview request.",
+    "Reject invalid and expired preview credentials."
+  ],
+  "alternativeApproaches": [
+    "Define expiry, replay and actor authorization appropriate to the CMS workflow. Do not assume a long-lived secret query parameter safely represents the current user’s permission to every draft."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 82,
+    "chapter": "Metadata and assets",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Reject invalid and expired preview credentials.",
+      "Try an external return destination and a missing draft.",
+      "Verify draft cookies, public isolation and explicit disable/exit behavior."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/draft-mode"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

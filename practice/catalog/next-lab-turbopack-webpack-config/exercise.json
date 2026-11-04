@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-turbopack-webpack-config",
+  "title": "Audit a custom Webpack hook before a Turbopack build",
+  "topic": "Next.js",
+  "subtopic": "Versions and migrations",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed next.config.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "export default {webpack(config:any){config.resolve.alias['legacy-parser']='./parser';return config;}};",
+  "codeReviewFiles": [
+    {
+      "filename": "next.config.ts",
+      "newCode": "export default {webpack(config:any){config.resolve.alias['legacy-parser']='./parser';return config;}};",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Build and execute an import that depends on the alias.",
+    "Compare development and production resolution.",
+    "Check loaders, Sass imports and source maps used by the real app before retiring the fallback."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "A bundler switch can change module resolution, loaders and emitted assets even when TypeScript succeeds.",
+    "Build and execute an import that depends on the alias."
+  ],
+  "alternativeApproaches": [
+    "Separate cold and warm measurements. Repeatedly deleting caches can hide the benefit of incremental builds and distort the normal workflow; invalidate deliberately when diagnosing stale outputs."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 74,
+    "chapter": "Versions and migrations",
+    "mode": "framework-review",
+    "versions": "15-to-16",
+    "verification": [
+      "Build and execute an import that depends on the alias.",
+      "Compare development and production resolution.",
+      "Check loaders, Sass imports and source maps used by the real app before retiring the fallback."
+    ],
+    "next15": "Turbopack availability/defaults differ by 15.x release and command. Record whether development and production use the same bundler.",
+    "next16": "Turbopack is the default for dev/build. Review unsupported custom Webpack behavior rather than assuming a webpack hook is applied to the Turbopack graph.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

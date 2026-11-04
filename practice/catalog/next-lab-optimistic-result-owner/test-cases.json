@@ -1,0 +1,26 @@
+[
+  {
+    "id": "next-lab-optimistic-result-owner-1",
+    "name": "stale success",
+    "inputDescription": "{\"current\":2,\"pendingId\":\"b\",\"result\":{\"id\":\"a\",\"ok\":true,\"value\":1}}",
+    "expectedOutput": "{\"value\":2,\"pendingId\":\"b\"}"
+  },
+  {
+    "id": "next-lab-optimistic-result-owner-2",
+    "name": "current success",
+    "inputDescription": "{\"current\":2,\"pendingId\":\"b\",\"result\":{\"id\":\"b\",\"ok\":true,\"value\":3}}",
+    "expectedOutput": "{\"value\":3,\"pendingId\":null}"
+  },
+  {
+    "id": "next-lab-optimistic-result-owner-3",
+    "name": "current failure",
+    "inputDescription": "{\"current\":2,\"pendingId\":\"b\",\"result\":{\"id\":\"b\",\"ok\":false,\"value\":0}}",
+    "expectedOutput": "{\"value\":2,\"pendingId\":null}"
+  },
+  {
+    "id": "next-lab-optimistic-result-owner-4",
+    "name": "no pending",
+    "inputDescription": "{\"current\":2,\"pendingId\":null,\"result\":{\"id\":\"a\",\"ok\":true,\"value\":3}}",
+    "expectedOutput": "{\"value\":2,\"pendingId\":null}"
+  }
+]

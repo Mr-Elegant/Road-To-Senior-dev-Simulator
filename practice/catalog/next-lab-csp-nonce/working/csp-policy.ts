@@ -1,0 +1,1 @@
+export const csp="script-src 'nonce-fixed-for-all-users' 'unsafe-inline'";

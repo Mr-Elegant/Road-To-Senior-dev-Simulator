@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-metadata-server-boundary",
+  "title": "Keep metadata exports in a Server Component",
+  "topic": "Next.js",
+  "subtopic": "Metadata and assets",
+  "difficulty": "Beginner",
+  "type": "code_review",
+  "estimatedMinutes": 20,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/about/page.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "'use client';\nexport const metadata={title:'About'};\nexport default function Page(){return <h1>About</h1>;}",
+  "codeReviewFiles": [
+    {
+      "filename": "app/about/page.tsx",
+      "newCode": "'use client';\nexport const metadata={title:'About'};\nexport default function Page(){return <h1>About</h1>;}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Build without a client metadata-export error.",
+    "Inspect the rendered title and description on a direct request.",
+    "Navigate client-side to and from the route and verify the head updates."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "Metadata exports belong to the server route module.",
+    "Build without a client metadata-export error."
+  ],
+  "alternativeApproaches": [
+    "Share the appropriate server data function and understand request memoization versus persistent caching. Both consumers must use the same admitted key and error policy; do not create a second public HTTP hop to your own Route Handler."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 18,
+    "chapter": "Metadata and assets",
+    "mode": "framework-review",
+    "versions": "15-and-16",
+    "verification": [
+      "Build without a client metadata-export error.",
+      "Inspect the rendered title and description on a direct request.",
+      "Navigate client-side to and from the route and verify the head updates."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/functions/generate-metadata"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

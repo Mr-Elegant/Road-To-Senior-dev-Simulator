@@ -1,0 +1,28 @@
+# Decision record: Build an actionable Next.js latency and reliability SLO
+
+## Context and scale
+The only metric is next build duration, yet users report slow navigation and intermittent action failures.
+p95 route interaction under 1 second; 99.9% successful authenticated operations
+
+## Accepted constraints
+- Measure user-visible and server dependency boundaries.
+- Separate cold/warm and direct/soft navigation.
+- Link alerts to operational response.
+
+## Design and ownership
+Define successful operations, excluded conditions and a measurement window before choosing an error budget. Collect real-user navigation/LCP/interaction signals, server route/action traces, dependency duration and cache hit/age data with correlated request and deployment IDs. Segment by region and route family, sample responsibly and redact sensitive attributes. Alert on burn rate and sustained user impact, with runbooks that distinguish origin latency, buffering, hydration, session gates and cache misses.
+
+## Failure and recovery
+A global average can hide a tenant-specific outage or a cold-cache tail. Preserve bounded-cardinality cohorts and inspect distributions; do not attach arbitrary user emails or full URLs as unbounded metric labels.
+
+## Verification gates
+- Inject latency separately into auth, database and client code.
+- Confirm an alert points to useful diagnostic evidence and a bounded mitigation.
+- Compare cold/warm and direct/client navigation measurements without combining unlike events.
+
+## Interview change
+Would more telemetry always improve diagnosis?
+Unbounded logs and high-cardinality metrics can create cost, privacy and reliability problems. Instrument a causal model with useful sampling and retention, and measure the telemetry pipeline’s own failure behavior.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

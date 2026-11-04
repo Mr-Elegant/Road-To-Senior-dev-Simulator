@@ -1,0 +1,91 @@
+{
+  "id": "next-lab-stream-event-reducer",
+  "title": "Reject late stream chunks after cancellation",
+  "difficulty": "Senior",
+  "topic": "Next.js",
+  "subtopic": "Rendering and streaming",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input is ordered events {type:\"chunk\",text:string}|{type:\"cancel\"}|{type:\"complete\"}. Start {text:\"\",status:\"open\"}. Append chunks only while open; the first cancel or complete is terminal and changes status to cancelled or complete. Ignore all later events. Return the state.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-stream-event-reducer-1",
+      "name": "empty",
+      "inputDescription": "[]",
+      "expectedOutput": "{\"text\":\"\",\"status\":\"open\"}"
+    },
+    {
+      "id": "next-lab-stream-event-reducer-2",
+      "name": "complete",
+      "inputDescription": "[{\"type\":\"chunk\",\"text\":\"a\"},{\"type\":\"complete\"},{\"type\":\"chunk\",\"text\":\"b\"}]",
+      "expectedOutput": "{\"text\":\"a\",\"status\":\"complete\"}"
+    },
+    {
+      "id": "next-lab-stream-event-reducer-3",
+      "name": "cancel",
+      "inputDescription": "[{\"type\":\"chunk\",\"text\":\"a\"},{\"type\":\"cancel\"},{\"type\":\"complete\"}]",
+      "expectedOutput": "{\"text\":\"a\",\"status\":\"cancelled\"}"
+    },
+    {
+      "id": "next-lab-stream-event-reducer-4",
+      "name": "ordered chunks",
+      "inputDescription": "[{\"type\":\"chunk\",\"text\":\"a\"},{\"type\":\"chunk\",\"text\":\"b\"}]",
+      "expectedOutput": "{\"text\":\"ab\",\"status\":\"open\"}"
+    }
+  ],
+  "hints": [
+    "Cancellation is a terminal state, not an empty successful result.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "This models an application text-stream protocol. React/Next.js streaming carries a framework protocol and rendering boundaries; do not invent or manually parse Flight frames from this reducer."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 62,
+    "chapter": "Rendering and streaming",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/file-conventions/route"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

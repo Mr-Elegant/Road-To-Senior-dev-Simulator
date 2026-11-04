@@ -1,0 +1,28 @@
+# Decision record: Design an auditable RSC data-exposure boundary
+
+## Context and scale
+Developers assume that anything computed in a Server Component cannot reach a browser.
+A regulated portal with internal account records and public client islands
+
+## Accepted constraints
+- Prevent sensitive props and errors from crossing the boundary.
+- Centralize authorized data access.
+- Provide reviewable DTO contracts and regression evidence.
+
+## Design and ownership
+Mark server data modules server-only and define explicit public/actor-scoped DTO projections near the data-access boundary. Authorize before fetching or projecting, then send only values required by the rendered representation. Review children, action results, metadata, errors and RSC payloads as exposure channels. Treat server-only and optional taint mechanisms as guardrails, not substitutes for projection and object authorization. Log redacted identifiers and versioned policy decisions, not raw records.
+
+## Failure and recovery
+A future database column can silently leak if a DTO spreads a record. Use allowlist construction and a sensitive-field regression fixture; never rely on the client ignoring fields or on collapsed UI hiding serialized content.
+
+## Verification gates
+- Insert sentinel secrets and inspect HTML, RSC, script chunks and action responses.
+- Test different actors against the same resource ID.
+- Fail a server read and verify production error redaction.
+
+## Interview change
+Would encryption of transport eliminate the risk?
+TLS protects transport against intermediaries; the authorized browser is still the receiver. Encrypting or hiding framework payload syntax does not authorize delivering secrets to that receiver.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

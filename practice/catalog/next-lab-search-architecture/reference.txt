@@ -1,0 +1,28 @@
+# Decision record: Design URL-driven search with safe caching and indexing lag
+
+## Context and scale
+Each keystroke requests a full server page, mixes tenant results in one cache key and loses filters on navigation.
+10 million documents; p95 search under 600 ms; index lag up to 30 seconds
+
+## Accepted constraints
+- Preserve shareable admitted query state.
+- Bound request/caching cardinality.
+- Communicate stale index semantics and authorization.
+
+## Design and ownership
+Keep draft input separate from committed URL query state, debounce navigation deliberately and preserve unrelated filters. Normalize and bound query length, filters and pagination before server reads. Authorize tenant/resource scope in the search query and result projection; cache only eligible bounded representations with complete keys. Use a dedicated index for search while treating its lag as an explicit product property, and revalidate sensitive object access against the authoritative system before actions.
+
+## Failure and recovery
+A deleted or newly restricted document may remain in the index. Enforce result visibility at a trusted boundary and define removal/permission propagation bounds, rather than assuming eventual indexing lag is acceptable for private data.
+
+## Verification gates
+- Race old/new queries and confirm late results cannot overwrite the current query.
+- Warm one tenant’s query then repeat it from another.
+- Delete or revoke indexed content and measure the visibility boundary.
+
+## Interview change
+Would rendering every result as a Client Component improve it?
+It changes bundle and hydration cost, not search correctness. Use server-owned search data and small client interactions, then measure rendering cost and pagination/virtualization needs independently.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

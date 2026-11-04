@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-cache-tag-assignment",
+  "title": "Assign the same tags that later invalidation targets",
+  "topic": "Next.js",
+  "subtopic": "Cache Components (16)",
+  "difficulty": "Mid-Level",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed lib/products.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "import { cacheTag } from 'next/cache';\nexport async function product(id:string){'use cache';cacheTag('products');return {id};}\n// Mutation invalidates product:<id>, a tag never assigned above.",
+  "codeReviewFiles": [
+    {
+      "filename": "lib/products.ts",
+      "newCode": "import { cacheTag } from 'next/cache';\nexport async function product(id:string){'use cache';cacheTag('products');return {id};}\n// Mutation invalidates product:<id>, a tag never assigned above.",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Cache two entities and a list in a production server.",
+    "Invalidate an entity tag and observe the affected representation.",
+    "Invalidate the list tag after membership changes and verify unrelated domains remain warm."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "Invalidating a name that was never assigned does not refresh the intended entry.",
+    "Cache two entities and a list in a production server."
+  ],
+  "alternativeApproaches": [
+    "Include trusted tenant scope in tag names and use bounded server-owned identifiers. Prevent a user-controlled webhook from invalidating every tenant, and monitor invalidation fan-out."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 46,
+    "chapter": "Cache Components (16)",
+    "mode": "framework-review",
+    "versions": "16-only",
+    "verification": [
+      "Cache two entities and a list in a production server.",
+      "Invalidate an entity tag and observe the affected representation.",
+      "Invalidate the list tag after membership changes and verify unrelated domains remain warm."
+    ],
+    "next15": "This stable API is a Next.js 16 exercise. Do not copy it into a 15 project; design a version-appropriate alternative and verify patch-specific types.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/functions/cacheTag"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "id": "next-lab-regional-data-residency",
+  "title": "Plan regional rendering around data residency and latency",
+  "topic": "Next.js",
+  "subtopic": "Delivery architecture",
+  "difficulty": "Staff/Principal",
+  "type": "system_design",
+  "estimatedMinutes": 60,
+  "businessContext": "The application pushes every request to the nearest compute region while its database and cache remain in one distant region.",
+  "problemStatement": "Design the system for EU and India tenants; p95 private-page latency under 900 ms; residency constraints. Produce the component/data-flow diagram, request and mutation contracts, cache/trust boundaries, capacity assumptions, failure recovery and rollout gates. State which decisions change between Next.js 15 and 16 instead of using a framework API as a substitute for an architectural guarantee.",
+  "constraints": [
+    "Keep protected data in admitted regions.",
+    "Avoid region-to-database waterfalls.",
+    "Define regional failover and legal constraints explicitly."
+  ],
+  "candidateTasks": [
+    "Draw components and annotate ownership of data, identity, caches and durable work.",
+    "Specify contracts/schema and quantify the capacity/freshness assumptions.",
+    "Walk through the failure scenario and design measurable acceptance tests.",
+    "Compare the reference decisions and answer the changed-requirement interview prompt."
+  ],
+  "systemDesignReqs": {
+    "scale": "EU and India tenants; p95 private-page latency under 900 ms; residency constraints",
+    "functional": [
+      "Keep protected data in admitted regions.",
+      "Avoid region-to-database waterfalls.",
+      "Define regional failover and legal constraints explicitly."
+    ],
+    "nonFunctional": [
+      "State an explicit latency, freshness and recovery budget rather than inventing guarantees.",
+      "Keep actor/tenant isolation and failure ownership observable."
+    ],
+    "assumptions": [
+      "A patched App Router deployment; platform-specific infrastructure support must be verified.",
+      "Next.js version and Cache Components configuration are explicit design inputs."
+    ]
+  },
+  "hints": [
+    "Map trusted tenant identity to an allowed home region and locate authorized reads/mutations near its source of truth.",
+    "The home region may fail while the nearest region remains healthy. Decide which operations can serve stale public data, which can fail over to an admitted replica and which must be unavailable to preserve correctness or residency."
+  ],
+  "alternativeApproaches": [
+    "No. Runtime compatibility, cold starts, data distance and connection constraints matter. A small function near a user can be slower if it repeatedly crosses an ocean to the database."
+  ],
+  "commonMistakes": [
+    "Claiming a cache API provides transactions, durable delivery or cross-region consistency.",
+    "Omitting authorization, recovery budgets or evidence from an otherwise attractive component diagram."
+  ],
+  "nextjsPractice": {
+    "order": 97,
+    "chapter": "Delivery architecture",
+    "mode": "architecture",
+    "versions": "15-and-16",
+    "verification": [
+      "Inject region latency and loss, measuring end-to-end rather than compute-only time.",
+      "Inspect cache/object locations and routing decisions for representative tenants.",
+      "Rehearse a failover and reconciliation of in-flight mutations."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/self-hosting"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

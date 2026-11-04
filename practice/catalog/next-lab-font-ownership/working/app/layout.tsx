@@ -1,0 +1,1 @@
+export default function Layout({children}:{children:React.ReactNode}){return <html><body><link rel="stylesheet" href="https://fonts.example.com/font.css"/>{children}</body></html>;}

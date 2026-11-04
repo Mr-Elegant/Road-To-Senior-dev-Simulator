@@ -1,0 +1,28 @@
+# Decision record: Combine a server-rendered dashboard with live client updates
+
+## Context and scale
+A dashboard remounts the full application every few seconds to fetch a new session and replace all data.
+5,000 connected users; events can be duplicated and delivered out of order
+
+## Accepted constraints
+- Deliver an authorized initial snapshot.
+- Reconcile live events without cross-account leakage.
+- Handle disconnect and catch-up explicitly.
+
+## Design and ownership
+Fetch an authorized versioned initial snapshot on the server and hydrate a small client island for live state. Use an authenticated supported real-time service/transport, resource-scoped sequence/version checks and idempotent event application. Keep subscriptions and reconnect timers owned by the active actor/resource, with cleanup on unmount or account switch. On a gap, fetch a bounded reconciliation snapshot instead of assuming every missed event is still available. Avoid presenting serverless request instances as durable socket infrastructure without platform support.
+
+## Failure and recovery
+A stale connection can deliver events after the user switches tenants. Reject messages by active subscription ownership and server-authorized channel scope; client-side filtering alone cannot secure the upstream stream.
+
+## Verification gates
+- Duplicate/reorder events and introduce sequence gaps.
+- Disconnect, reconnect and change accounts during catch-up.
+- Measure visible freshness, subscription cleanup and bounded memory growth.
+
+## Interview change
+Should every event call router.refresh?
+Use it deliberately for server-owned reconciliation rather than as an unbounded per-event rebuild. Coalesce refreshes, preserve client state and measure server load; some events can update an admitted client projection directly.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

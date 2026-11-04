@@ -1,0 +1,1 @@
+function solution({segments}) { if(segments===undefined)return '/';if(!Array.isArray(segments)||segments.some(s=>typeof s!=='string'||!/^[-_a-zA-Z0-9]+$/.test(s)))return null;return '/'+segments.join('/'); }

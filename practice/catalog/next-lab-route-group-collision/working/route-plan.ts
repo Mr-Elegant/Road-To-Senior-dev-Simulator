@@ -1,0 +1,1 @@
+export const files=['app/(shop)/about/page.tsx','app/(marketing)/about/page.tsx'];

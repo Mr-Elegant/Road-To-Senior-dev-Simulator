@@ -15,6 +15,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { Scenario } from '@/types/scenario';
+import { NextjsVersionPanel } from '@/components/nextjsPractice/NextjsVersionPanel';
 
 interface ProblemStatementPanelProps {
   scenario: Scenario;
@@ -80,6 +81,7 @@ export function ProblemStatementPanel({
       <div className="flex-1 overflow-y-auto p-5 space-y-6">
         {activeTab === 'problem' && (
           <>
+            {scenario.nextjsPractice && <NextjsVersionPanel info={scenario.nextjsPractice}/>}
             {/* Live Interactive Application Banner for Enterprise Loan Management */}
             {scenario.id === 'enterprise-loan-management' && (
               <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-900/40 via-purple-900/30 to-zinc-900 border border-blue-500/40 shadow-xl">

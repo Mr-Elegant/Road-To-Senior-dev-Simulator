@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-cache-life-scope",
+  "title": "Place cacheLife inside the cached function",
+  "topic": "Next.js",
+  "subtopic": "Cache Components (16)",
+  "difficulty": "Mid-Level",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed lib/catalog.ts change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "import { cacheLife } from 'next/cache';\ncacheLife('hours');\nexport async function getCatalog(){'use cache';return ['one'];}",
+  "codeReviewFiles": [
+    {
+      "filename": "lib/catalog.ts",
+      "newCode": "import { cacheLife } from 'next/cache';\ncacheLife('hours');\nexport async function getCatalog(){'use cache';return ['one'];}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Build with Cache Components enabled.",
+    "Verify the function is called in a cache directive scope.",
+    "Test cold, warm, stale and expired reads with a controllable origin and documented timing tolerances."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "cacheLife belongs inside the function or component whose cache policy it configures, not module initialization.",
+    "Build with Cache Components enabled."
+  ],
+  "alternativeApproaches": [
+    "Inspect the framework’s nested lifetime rules and measure the outer representation’s effective policy. Avoid hiding unrelated cacheLife calls in generic utilities; keep the lifetime visible at each cached boundary."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 45,
+    "chapter": "Cache Components (16)",
+    "mode": "framework-review",
+    "versions": "16-only",
+    "verification": [
+      "Build with Cache Components enabled.",
+      "Verify the function is called in a cache directive scope.",
+      "Test cold, warm, stale and expired reads with a controllable origin and documented timing tolerances."
+    ],
+    "next15": "This stable API is a Next.js 16 exercise. Do not copy it into a 15 project; design a version-appropriate alternative and verify patch-specific types.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/functions/cacheLife"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

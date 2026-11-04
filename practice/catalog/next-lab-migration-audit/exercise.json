@@ -1,0 +1,87 @@
+{
+  "id": "next-lab-migration-audit",
+  "title": "Audit Next.js 15-to-16 migration blockers",
+  "difficulty": "Senior",
+  "topic": "Next.js",
+  "subtopic": "Versions and migrations",
+  "type": "coding",
+  "estimatedMinutes": 35,
+  "businessContext": "Implement a deterministic application policy used around a Next.js request boundary. The Worker executes your policy function, not a Next.js server.",
+  "problemStatement": "Implement solution(input). Input {syncRequestApis,middlewareFile,webpackOnlyConfig,nextLintScript}; values are booleans. Return ordered blocker codes: async-request-apis, proxy-rename, bundler-review, eslint-cli for each true flag. Empty input has no blockers. This is an explicit input audit, not source-code analysis.",
+  "codeLanguage": "javascript",
+  "javascriptExercise": true,
+  "starterCode": "function solution(input) {\n  // Implement the documented policy without mutating input.\n  return null;\n}",
+  "constraints": [
+    "Return exactly the documented JSON value, including every field.",
+    "Do not mutate input. Inputs follow the shapes described in the task.",
+    "These tests do not establish RSC rendering, cache invalidation, distributed concurrency or server authorization."
+  ],
+  "candidateTasks": [
+    "Implement the policy and trace every boundary case.",
+    "Explain where this function would run in a Next.js application and which checks remain server-side.",
+    "Answer the interview variation without changing the base contract."
+  ],
+  "testCases": [
+    {
+      "id": "next-lab-migration-audit-1",
+      "name": "none",
+      "inputDescription": "{}",
+      "expectedOutput": "[]"
+    },
+    {
+      "id": "next-lab-migration-audit-2",
+      "name": "all",
+      "inputDescription": "{\"syncRequestApis\":true,\"middlewareFile\":true,\"webpackOnlyConfig\":true,\"nextLintScript\":true}",
+      "expectedOutput": "[\"async-request-apis\",\"proxy-rename\",\"bundler-review\",\"eslint-cli\"]"
+    },
+    {
+      "id": "next-lab-migration-audit-3",
+      "name": "one",
+      "inputDescription": "{\"nextLintScript\":true}",
+      "expectedOutput": "[\"eslint-cli\"]"
+    },
+    {
+      "id": "next-lab-migration-audit-4",
+      "name": "explicit boolean",
+      "inputDescription": "{\"middlewareFile\":\"true\"}",
+      "expectedOutput": "[]"
+    }
+  ],
+  "hints": [
+    "Inventory migration blockers before running codemods so review and rollback have a finite target.",
+    "Trace the smallest empty, repeated or invalid case before adding branches."
+  ],
+  "alternativeApproaches": [
+    "Separate compatibility cleanup on 15 from switching the major and bundler. Establish baseline routes and performance budgets, migrate in small commits and keep a verified previous deployment available for rollback."
+  ],
+  "commonMistakes": [
+    "Treating a passing model as proof of framework or distributed-system behavior.",
+    "Silently coercing values outside the explicitly allowed input policy."
+  ],
+  "nextjsPractice": {
+    "order": 61,
+    "chapter": "Versions and migrations",
+    "mode": "policy",
+    "versions": "15-and-16",
+    "verification": [
+      "Run every exact-result case.",
+      "Run the same policy at its real request boundary and test forged/untrusted inputs separately."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      }
+    ]
+  }
+}

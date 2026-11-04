@@ -1,0 +1,80 @@
+{
+  "id": "next-lab-test-pyramid-versions",
+  "title": "Design a versioned Next.js regression and release matrix",
+  "topic": "Next.js",
+  "subtopic": "Platform architecture",
+  "difficulty": "Staff/Principal",
+  "type": "system_design",
+  "estimatedMinutes": 60,
+  "businessContext": "A unit suite of policy models is labeled proof that every routing, cache and deployment behavior works on both major versions.",
+  "problemStatement": "Design the system for Supported Next.js 15 maintenance and 16 stable; 100 practice scenarios. Produce the component/data-flow diagram, request and mutation contracts, cache/trust boundaries, capacity assumptions, failure recovery and rollout gates. State which decisions change between Next.js 15 and 16 instead of using a framework API as a substitute for an architectural guarantee.",
+  "constraints": [
+    "Keep exact policy tests cheap and deterministic.",
+    "Verify representative real framework boundaries on both versions.",
+    "Record unperformed integration claims honestly."
+  ],
+  "candidateTasks": [
+    "Draw components and annotate ownership of data, identity, caches and durable work.",
+    "Specify contracts/schema and quantify the capacity/freshness assumptions.",
+    "Walk through the failure scenario and design measurable acceptance tests.",
+    "Compare the reference decisions and answer the changed-requirement interview prompt."
+  ],
+  "systemDesignReqs": {
+    "scale": "Supported Next.js 15 maintenance and 16 stable; 100 practice scenarios",
+    "functional": [
+      "Keep exact policy tests cheap and deterministic.",
+      "Verify representative real framework boundaries on both versions.",
+      "Record unperformed integration claims honestly."
+    ],
+    "nonFunctional": [
+      "State an explicit latency, freshness and recovery budget rather than inventing guarantees.",
+      "Keep actor/tenant isolation and failure ownership observable."
+    ],
+    "assumptions": [
+      "A patched App Router deployment; platform-specific infrastructure support must be verified.",
+      "Next.js version and Cache Components configuration are explicit design inputs."
+    ]
+  },
+  "hints": [
+    "Use unit tests for pure input policies and curriculum integrity, production-server tests for routing/metadata/headers/actions/streaming, and deployment integration for CDN/cache handlers/queues/databases.",
+    "An always-green mock can conceal an unsupported API or a server cache leak. Introduce deliberate negative fixtures, assert real HTTP/output evidence and fail unsupported claims rather than manufacturing a passing score for guided work."
+  ],
+  "alternativeApproaches": [
+    "Use a reviewed pinned release matrix and a separate dependency-update job. Unbounded latest installs can change the baseline silently; record exactly what was tested and refresh the version snapshot deliberately."
+  ],
+  "commonMistakes": [
+    "Claiming a cache API provides transactions, durable delivery or cross-region consistency.",
+    "Omitting authorization, recovery budgets or evidence from an otherwise attractive component diagram."
+  ],
+  "nextjsPractice": {
+    "order": 110,
+    "chapter": "Platform architecture",
+    "mode": "architecture",
+    "versions": "15-and-16",
+    "verification": [
+      "Run the supported-version fixtures from clean installs and production builds.",
+      "Mutate a policy/reference to prove the intended check fails.",
+      "Audit report wording against actual executed checks and retained evidence."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/testing/playwright"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

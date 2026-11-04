@@ -22,7 +22,9 @@
     "practice:test": "node scripts/practice/cli.cjs test",
     "practice:test:all": "node scripts/practice/cli.cjs test all",
     "practice:watch": "node scripts/practice/cli.cjs watch",
-    "practice:verify": "node --test tests/practice/*.test.cjs"
+    "practice:verify": "node --test tests/practice/*.test.cjs",
+    "nextjs:prepare-versions": "node scripts/nextjs-practice/verify-versions.cjs --prepare",
+    "nextjs:verify-versions": "node scripts/nextjs-practice/verify-versions.cjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.14",

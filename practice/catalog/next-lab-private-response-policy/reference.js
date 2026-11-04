@@ -1,0 +1,1 @@
+function solution({authenticated,publicResource}){return !authenticated&&publicResource?{cacheControl:'public, max-age=60',vary:[]}:{cacheControl:'private, no-store',vary:['Cookie','Authorization']};}

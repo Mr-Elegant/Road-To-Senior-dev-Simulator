@@ -1,0 +1,75 @@
+{
+  "id": "next-lab-image-preload-16",
+  "title": "Migrate a critical image loading hint with measured intent",
+  "topic": "Next.js",
+  "subtopic": "Metadata and assets",
+  "difficulty": "Senior",
+  "type": "code_review",
+  "estimatedMinutes": 35,
+  "businessContext": "Review a focused Next.js application change before it reaches production. The proposed file below contains the defect or unsupported assumption; external application services, where imported, are integration boundaries.",
+  "problemStatement": "Review the proposed app/hero.tsx change. Identify the incorrect framework assumption, propose a minimal corrected implementation, and provide evidence for the selected version scope and its 15/16 differences. Explain the interview variation after solving the base task. This is a framework code review: actual rendering, routing and cache behavior must be checked in a real Next.js build, not a browser function sandbox.",
+  "codeLanguage": "typescript",
+  "starterCode": "import Image from 'next/image';\nexport default function Hero(){return <Image src=\"/hero.jpg\" alt=\"Product workspace\" width={1200} height={800} priority loading=\"lazy\"/>;}",
+  "codeReviewFiles": [
+    {
+      "filename": "app/hero.tsx",
+      "newCode": "import Image from 'next/image';\nexport default function Hero(){return <Image src=\"/hero.jpg\" alt=\"Product workspace\" width={1200} height={800} priority loading=\"lazy\"/>;}",
+      "language": "typescript",
+      "reviewPointsCount": 3
+    }
+  ],
+  "constraints": [
+    "Preserve the stated user behavior and keep trust boundaries explicit.",
+    "Use the selected version’s documented API; do not suppress build/type failures to hide the defect.",
+    "Inspect the head preload and image request in a production build.",
+    "Compare LCP and bandwidth on a small viewport.",
+    "Verify below-the-fold images do not all receive the same critical hint."
+  ],
+  "candidateTasks": [
+    "Add actionable line-level review comments explaining impact and correction.",
+    "Write the corrected file in the local IDE copy; split annotated companion files where instructed.",
+    "Record actual build/request/navigation evidence against the acceptance checks and compare version notes."
+  ],
+  "hints": [
+    "Loading hints are a resource-priority decision, not a badge to apply to every image.",
+    "Inspect the head preload and image request in a production build."
+  ],
+  "alternativeApproaches": [
+    "Avoid preloading a resource before you know it will be used. Measure which representation becomes LCP and consider fetchPriority or eager loading where the current docs recommend them."
+  ],
+  "commonMistakes": [
+    "Verifying only next dev when the behavior depends on production rendering or bundling.",
+    "Treating a visible UI state, matcher or TypeScript type as a substitute for server-side validation and authorization."
+  ],
+  "nextjsPractice": {
+    "order": 73,
+    "chapter": "Metadata and assets",
+    "mode": "framework-review",
+    "versions": "15-to-16",
+    "verification": [
+      "Inspect the head preload and image request in a production build.",
+      "Compare LCP and bandwidth on a small viewport.",
+      "Verify below-the-fold images do not all receive the same critical hint."
+    ],
+    "next15": "Use the documented priority behavior for a deliberate critical image. Do not combine an intended eager critical resource with lazy loading.",
+    "next16": "priority is deprecated in favor of the current loading guidance including preload. Choose preload/fetchPriority/loading deliberately and avoid competing hints.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/api-reference/components/image"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}

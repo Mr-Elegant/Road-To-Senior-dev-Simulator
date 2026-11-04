@@ -1,0 +1,28 @@
+# Decision record: Partition route failures without hiding data integrity errors
+
+## Context and scale
+A notification outage turns every account page into a blank loading screen indefinitely.
+Dashboard with billing, reports and notifications; dependencies have independent SLOs
+
+## Accepted constraints
+- Keep essential navigation usable.
+- Define which partial failures are tolerable.
+- Preserve error ownership, retry and cancellation.
+
+## Design and ownership
+Place Suspense/error boundaries around independently valuable subtrees below shared layouts, and start independent work without a parent waterfall. Give each dependency a bounded deadline and define a visible empty/error/retry state. Keep critical billing authorization and mutation failures distinct from optional notification availability. Preserve the actor/resource context during retry and avoid remounting a whole authenticated shell for background refresh. Correlate failures without exposing sensitive stack details.
+
+## Failure and recovery
+A fallback can hide an endless request and make a broken page appear merely slow. Track pending age and terminal outcomes, propagate cancellation and alert on sustained failure rather than leaving unbounded spinners.
+
+## Verification gates
+- Fail each dependency independently and in combinations.
+- Retry after recovery without losing unrelated client state.
+- Test navigation/account changes while old requests remain in flight.
+
+## Interview change
+Should Promise.allSettled replace every error boundary?
+No. It is a promise-composition tool, not an ownership or UX policy. Decide which partial results are safe and useful, then choose boundaries and response handling that express that decision.
+
+## Evidence boundary
+This artifact is a reference design. It is not a claim of deployed, concurrent or multi-region verification.

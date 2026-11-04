@@ -1,0 +1,1 @@
+function solution({page,size}) { const parse=(v,f,max)=>typeof v==='string'&&/^\d+$/.test(v)?Math.max(1,Math.min(max,Number(v))):f; const p=parse(page,1,10000), s=parse(size,20,100); return {page:p,size:s,offset:(p-1)*s}; }

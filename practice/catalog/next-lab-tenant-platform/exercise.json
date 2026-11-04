@@ -1,0 +1,80 @@
+{
+  "id": "next-lab-tenant-platform",
+  "title": "Architect an isolated multi-tenant Next.js SaaS",
+  "topic": "Next.js",
+  "subtopic": "Platform architecture",
+  "difficulty": "Staff/Principal",
+  "type": "system_design",
+  "estimatedMinutes": 60,
+  "businessContext": "A SaaS proposes deriving its tenant from an arbitrary Host header and caching every dashboard by pathname.",
+  "problemStatement": "Design the system for 2,000 tenants; 10,000 peak reads/second; private account data. Produce the component/data-flow diagram, request and mutation contracts, cache/trust boundaries, capacity assumptions, failure recovery and rollout gates. State which decisions change between Next.js 15 and 16 instead of using a framework API as a substitute for an architectural guarantee.",
+  "constraints": [
+    "Resolve only admitted domains to tenants.",
+    "Enforce tenant membership on every read and mutation.",
+    "Keep public assets cacheable without caching private dashboards globally."
+  ],
+  "candidateTasks": [
+    "Draw components and annotate ownership of data, identity, caches and durable work.",
+    "Specify contracts/schema and quantify the capacity/freshness assumptions.",
+    "Walk through the failure scenario and design measurable acceptance tests.",
+    "Compare the reference decisions and answer the changed-requirement interview prompt."
+  ],
+  "systemDesignReqs": {
+    "scale": "2,000 tenants; 10,000 peak reads/second; private account data",
+    "functional": [
+      "Resolve only admitted domains to tenants.",
+      "Enforce tenant membership on every read and mutation.",
+      "Keep public assets cacheable without caching private dashboards globally."
+    ],
+    "nonFunctional": [
+      "State an explicit latency, freshness and recovery budget rather than inventing guarantees.",
+      "Keep actor/tenant isolation and failure ownership observable."
+    ],
+    "assumptions": [
+      "A patched App Router deployment; platform-specific infrastructure support must be verified.",
+      "Next.js version and Cache Components configuration are explicit design inputs."
+    ]
+  },
+  "hints": [
+    "Terminate traffic at a trusted ingress and resolve a normalized, allowlisted domain to a server-owned tenant ID.",
+    "A custom domain can change ownership while an old cache entry remains. Make domain changes an audited workflow with verification, cache/version rotation and a bounded propagation SLO. Reject ambiguous Host/forwarded-host inputs at the trusted boundary."
+  ],
+  "alternativeApproaches": [
+    "Compare isolation needs, regional requirements, noisy-neighbor budgets and operational cost. Shared infrastructure can work with strong logical boundaries; high-risk tenants may justify separate deployments and data partitions. Deployment isolation does not remove application authorization."
+  ],
+  "commonMistakes": [
+    "Claiming a cache API provides transactions, durable delivery or cross-region consistency.",
+    "Omitting authorization, recovery budgets or evidence from an otherwise attractive component diagram."
+  ],
+  "nextjsPractice": {
+    "order": 91,
+    "chapter": "Platform architecture",
+    "mode": "architecture",
+    "versions": "15-and-16",
+    "verification": [
+      "Attempt cross-tenant IDs, forged domains and action calls outside Proxy coverage.",
+      "Warm caches in tenant A before requesting the same pathname in B.",
+      "Revoke membership and verify the documented access-revocation bound."
+    ],
+    "next15": "Use patched Next.js 15 and the router family named by the file path. Await request APIs where the App Router contract requires it; validate behavior in a production build.",
+    "next16": "Applies to Next.js 16.4.5. Cache Components is disabled unless the exercise explicitly enables it. The simulator itself remains on 16.4.3.",
+    "sources": [
+      {
+        "title": "Topic documentation",
+        "url": "https://nextjs.org/docs/app/guides/multi-tenant"
+      },
+      {
+        "title": "Next.js 15 documentation",
+        "url": "https://nextjs.org/docs/15"
+      },
+      {
+        "title": "Next.js 15 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-15"
+      },
+      {
+        "title": "Next.js 16 migration",
+        "url": "https://nextjs.org/docs/app/guides/upgrading/version-16"
+      }
+    ]
+  }
+}
