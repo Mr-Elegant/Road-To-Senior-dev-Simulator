@@ -3,11 +3,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { Bookmark, Clock, CheckCircle2, ChevronRight, AlertCircle } from 'lucide-react';
-import { Scenario } from '@/types/scenario';
+import type { ScenarioSummary } from '@/types/scenarioSummary';
 import { getDifficultyColor, getTypeBadge } from '@/lib/utils';
 
 interface ChallengeCardProps {
-  scenario: Scenario;
+  scenario: ScenarioSummary;
   isBookmarked: boolean;
   onToggleBookmark: (id: string) => void;
   bestScore?: number;
@@ -30,7 +30,7 @@ export function ChallengeCard({
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-1.5 flex-wrap">
             {scenario.reactExercise && <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold border border-cyan-500/40 text-cyan-700 dark:text-cyan-200">React UI · Preview + tests</span>}
-            {scenario.incidentSimulation && <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold border border-amber-500/40 text-amber-700 dark:text-amber-200">Evolving · {scenario.incidentSimulation.stages.length} stages</span>}
+            {scenario.incidentStageCount > 0 && <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold border border-amber-500/40 text-amber-700 dark:text-amber-200">Evolving · {scenario.incidentStageCount} stages</span>}
             <span
               className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider border ${typeBadge.color}`}
             >
@@ -61,7 +61,7 @@ export function ChallengeCard({
         </div>
 
         {/* Title */}
-        <Link href={`/challenge/${scenario.id}`} className="block group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+        <Link href={`/challenge/${scenario.id}`} prefetch={false} className="block group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
           <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 line-clamp-1 leading-snug">
             {scenario.title}
           </h3>
@@ -106,6 +106,7 @@ export function ChallengeCard({
 
         <Link
           href={`/challenge/${scenario.id}`}
+          prefetch={false}
           className="inline-flex items-center gap-1 font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
         >
           <span>Solve</span>

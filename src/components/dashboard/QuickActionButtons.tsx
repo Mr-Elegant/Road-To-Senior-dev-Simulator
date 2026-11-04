@@ -7,7 +7,7 @@ import { Scenario } from '@/types/scenario';
 import { UserProgressData } from '@/types/userProgress';
 
 interface QuickActionButtonsProps {
-  allScenarios: Scenario[];
+  allScenarios: Pick<Scenario, 'id' | 'topic'>[];
   progress: UserProgressData | null;
   weakestTopic?: string;
 }

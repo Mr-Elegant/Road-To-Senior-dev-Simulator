@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { AlertTriangle, ArrowRight, ShieldCheck } from 'lucide-react';
-import { Scenario } from '@/types/scenario';
+import type { ScenarioSummary } from '@/types/scenarioSummary';
 
 interface WeakAreasPanelProps {
   weakestAreas: string[];
-  allScenarios: Scenario[];
+  allScenarios: ScenarioSummary[];
 }
 
 export function WeakAreasPanel({ weakestAreas, allScenarios }: WeakAreasPanelProps) {

@@ -4,11 +4,11 @@ import { frontendExercises } from '@/data/frontendPractice/exercises';
 import { reactPracticeScenarios } from '@/data/scenarios/reactPractice';
 import { frontendCodingScenarios } from '@/data/scenarios/frontendPractice';
 import type { Scenario } from '@/types/scenario';
+import { reactTypescriptTopics } from './topics';
+export { reactTypescriptTopics } from './topics';
 
 export interface TypedReactReference { code: string; starter: string }
 export const reactTypescriptReferences = references as Record<string, TypedReactReference>;
-export const reactTypescriptTopics = frontendPracticeTopics.filter(topic => topic.language === 'React.js')
-  .map(topic => ({ ...topic, scenarioId: `react-ts-${topic.slug}` }));
 export const reactTypescriptScenarios: Scenario[] = reactTypescriptTopics.map(topic => {
   const sourceTopic = frontendPracticeTopics.find(item => item.slug === topic.slug)!;
   const source = [...reactPracticeScenarios, ...frontendCodingScenarios].find(item => item.id === sourceTopic.scenarioId)!;

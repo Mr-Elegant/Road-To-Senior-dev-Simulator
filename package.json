@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "typecheck": "tsc --noEmit --incremental false",
+    "typecheck": "tsc --noEmit -p tsconfig.checks.json",
+    "typecheck:app": "tsc --noEmit",
     "db:generate": "prisma generate",
     "db:migrate": "node scripts/prisma-auth.mjs migrate deploy",
     "dev": "node scripts/build-react-runtime.mjs && next dev",

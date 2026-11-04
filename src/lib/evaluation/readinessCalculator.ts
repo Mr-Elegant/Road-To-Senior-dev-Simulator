@@ -2,7 +2,7 @@ import { Scenario, Topic } from '@/types/scenario';
 import { UserProgressData, InterviewReadinessReport } from '@/types/userProgress';
 
 export function calculateReadinessReport(
-  allScenarios: Scenario[],
+  allScenarios: Pick<Scenario, 'id' | 'topic'>[],
   progress: UserProgressData
 ): InterviewReadinessReport {
   const attempts = progress.attempts || [];

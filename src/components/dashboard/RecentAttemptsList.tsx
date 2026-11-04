@@ -2,15 +2,17 @@ import React from 'react';
 import Link from 'next/link';
 import { History, CheckCircle2, XCircle, ArrowUpRight, Clock } from 'lucide-react';
 import { AttemptSubmission } from '@/types/userProgress';
-import { scenarioMap } from '@/data';
+import type { ScenarioIdentity } from '@/types/scenarioSummary';
 import { formatDuration } from '@/lib/utils';
 import { loanLabAttemptInfo } from '@/lib/loanLab/attempts';
 
 interface RecentAttemptsListProps {
   attempts: AttemptSubmission[];
+  scenarios: ScenarioIdentity[];
 }
 
-export function RecentAttemptsList({ attempts }: RecentAttemptsListProps) {
+export function RecentAttemptsList({ attempts, scenarios }: RecentAttemptsListProps) {
+  const scenarioMap = React.useMemo(() => new Map(scenarios.map(scenario => [scenario.id, scenario])), [scenarios]);
   if (attempts.length === 0) {
     return (
       <div className="rounded-2xl glass-card p-6 shadow-sm text-center">

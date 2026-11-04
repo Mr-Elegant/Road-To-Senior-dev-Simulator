@@ -470,10 +470,15 @@ For an existing database, follow the [baseline and migration procedure](docs/AUT
 
 ### Commands
 
+Development and build commands prepare the browser practice runtimes automatically. Unchanged runtime assets are reused from `.next/cache`; the first run, dependency changes, or missing outputs require regeneration. Keep `.next` between ordinary local runs to retain incremental compilation and runtime caches.
+
+Catalog pages receive searchable summaries from server components. Full challenge definitions, reference solutions, and test fixtures stay out of listing-page JavaScript; opening a workspace sends only the selected challenge. Next.js checks application types during builds, while `npm run typecheck` also checks tests and authoring scripts.
+
 | Command | Purpose |
 |---|---|
 | `npm run dev` | Start Turbopack development. |
-| `npm run typecheck` | Run standalone TypeScript checks. |
+| `npm run typecheck` | Check application, tests, and authoring scripts. |
+| `npm run typecheck:app` | Check the application with the same scope used by Next.js builds. |
 | `npm run lint` | Run ESLint against application source. |
 | `npm test` | Run the unit suite. |
 | `npm run build` / `npm start` | Build and serve production output. |

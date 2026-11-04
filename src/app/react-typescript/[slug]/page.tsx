@@ -1,5 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
-import { reactTypescriptTopics } from '@/data/reactTypescript';
+import { reactTypescriptTopics } from '@/data/reactTypescript/topics';
 
 export default async function ReactTypescriptQuestionPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
